@@ -6,7 +6,10 @@
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+		<param-value>
+		/WEB-INF/spring/root-context.xml
+		/WEB-INF/spring/security-context.xml
+		</param-value>
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
@@ -59,9 +62,5 @@
 	</filter-mapping>
 	<!-- 시큐리티 필터 설정 -->	
 	
-	<servlet>
-  		<servlet-name>MainController</servlet-name>
-  		<servlet-class>com.itwillbs.controller.MainController</servlet-class>
-	</servlet>
 
 </web-app>

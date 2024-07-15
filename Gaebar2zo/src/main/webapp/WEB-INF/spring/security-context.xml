@@ -5,17 +5,70 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<security:http>
-		<security:form-login/>
+		<!-- 시큐리티에 필요한 객체 선언 -->
+		<bean id="customAccessDenied" class="com.itwillbs.security.CustomAccessDeniedHandler"/>
+		<bean id="customLoginSuccess" class="com.itwillbs.security.CustomLoginSuccessHandler"/>
+	
+<!-- 		<bean id="customNoPasswordEncoder" class="com.itwillbs.security.CustomNoPasswordEncoder"/> -->
 
-	</security:http>
+		<!-- 암호화 처리를 위한 객체 생성 -->
+		<bean id="bcryptPasswordEncoder"
+			class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+		
 
-	<security:authentication-manager>
-		<security:authentication-provider>
-		   <security:user-service>
-		   	  <security:user name="1234" authorities="q"/>
-		   </security:user-service>
-		</security:authentication-provider>	
-	</security:authentication-manager>
+
+
+		
+		<!-- 시큐리티 관련 설정 -->
+		<security:http>
+<!-- 			<security:intercept-url pattern="/all" access="permitAll"/> -->
+<!-- 			<security:intercept-url pattern="/member" access="hasRole('ROLE_MEMBER')"/> -->
+			<security:intercept-url pattern="/Styleboso/system/main" access="hasRole('ROLE_ADMIN')"/>
+			
+<!-- 			<security:intercept-url pattern="/teamA/*" access="hasRole('ROLE_ADMIN')"/> -->
+			
+<!-- 			<security:form-login/> -->
+<!-- 			<security:form-login login-page="/customLogin"/> -->
+			<security:form-login login-page="/Styleboso/system/login" authentication-success-handler-ref="customLoginSuccess"/>
+			
+	
+	
+	
+	
+			<!-- 로그아웃 -->
+			<security:logout  logout-url="/Styleboso/system/logout" invalidate-session="true"/>
+			
+			
+
+			<!-- 접근권한이 없는 경우 처리 -->
+<!-- 			<security:access-denied-handler error-page="/accessErr" /> -->
+			<security:access-denied-handler ref="customAccessDenied" />
+						
+			
+			
+		</security:http>
+
+		<!-- 인증관리자 (1층 경비실)  -->
+		<security:authentication-manager>
+			<security:authentication-provider>
+<!-- 				<security:user-service> -->
+<!-- 					<security:user name="itwill" password="{noop}1234" authorities="ROLE_MEMBER"/> -->
+<!-- 					<security:user name="admin" password="{noop}1234" authorities="ROLE_ADMIN,ROLE_MEMBER"/> -->
+<!-- 				</security:user-service> -->
+		
+			<security:jdbc-user-service data-source-ref="dataSource"
+							users-by-username-query="select username,password,enabled from users where username=?"
+							authorities-by-username-query="select username,authority from authorities where username=?"/>
+							
+<!-- 			<security:password-encoder ref="customNoPasswordEncoder"/> -->
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
+		
+		
+		
+			</security:authentication-provider>
+
+		</security:authentication-manager>
+
+
 
 </beans>

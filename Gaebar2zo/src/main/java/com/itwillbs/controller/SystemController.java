@@ -12,6 +12,30 @@ public class SystemController {
 
 
 	private static final Logger logger = LoggerFactory.getLogger(SystemController.class);
+	
+	// 로그인
+	@RequestMapping(value="/login",method=RequestMethod.GET)
+	public void login() throws Exception{
+		System.out.println(" login() 실행 ");
+	
+	}
+	
+
+	// 대시보드 ( 메인 페이지 )
+	@RequestMapping(value="/main",method=RequestMethod.GET)
+	public void main_GET() throws Exception{
+		logger.debug(" main_GET() 실행 ");
+
+
+	}
+	
+	
+
+	
+	
+	
+	
+	
 	// 사용자 관리
 	@RequestMapping(value="/employeeList",method=RequestMethod.GET)
 	public void employeeList_GET() throws Exception{

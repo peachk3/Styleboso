@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class SystemController {
 
-
+	//http://localhost:8088/Styleboso/system/login
 	private static final Logger logger = LoggerFactory.getLogger(SystemController.class);
 	
 	// 로그인
@@ -19,7 +19,7 @@ public class SystemController {
 		System.out.println(" login() 실행 ");
 	
 	}
-	
+
 
 	// 대시보드 ( 메인 페이지 )
 	@RequestMapping(value="/main",method=RequestMethod.GET)
@@ -28,14 +28,8 @@ public class SystemController {
 
 
 	}
-	
-	
 
-	
-	
-	
-	
-	
+	//http://localhost:8088/Styleboso/system/employeeList
 	// 사용자 관리
 	@RequestMapping(value="/employeeList",method=RequestMethod.GET)
 	public void employeeList_GET() throws Exception{
@@ -58,7 +52,6 @@ public class SystemController {
 	@RequestMapping(value="/code/item",method=RequestMethod.GET)
 	public void code_item_GET() throws Exception{
 		logger.debug(" code_item_GET() 실행 ");
-
 
 
 	}

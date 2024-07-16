@@ -92,7 +92,7 @@
             <li class="nav-item"><a class="nav-link" href="buttons/dropdowns.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Dropdowns</a></li>
           </ul>
         </li>
-        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#"> 
             <svg class="nav-icon">
               <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-notes"></use>
             </svg><span data-coreui-i18n="forms">Forms</span></a>

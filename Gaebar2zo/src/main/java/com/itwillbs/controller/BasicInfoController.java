@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class BasicInfoController {
 
 	private static final Logger logger = LoggerFactory.getLogger(BasicInfoController.class);
-
-	// ㅇ
 	
+	//http://localhost:8088/Styleboso/basicInfo/itemList
 	// 품목 관리
 	@RequestMapping(value="/itemList",method=RequestMethod.GET)
 	public void itemList_GET() throws Exception{
@@ -28,6 +27,7 @@ public class BasicInfoController {
 
 	}
 
+	//http://localhost:8088/Styleboso/basicInfo/clientList
 	// 거래처 관리
 	@RequestMapping(value="/clientList",method=RequestMethod.GET)
 	public void clientList_GET() throws Exception{
@@ -44,6 +44,9 @@ public class BasicInfoController {
 
 
 	// 창고 관리
+	//http://localhost:8088/Styleboso/system/login
+	// user1 pw1
+	//http://localhost:8088/Styleboso/basicInfo/warehouseList
 	@RequestMapping(value="/warehouseList",method=RequestMethod.GET)
 	public void warehouseList_GET() throws Exception{
 		logger.debug(" warehouseList_GET() 실행 ");

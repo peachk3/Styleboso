@@ -12,7 +12,7 @@ public class BasicInfoController {
 
 	private static final Logger logger = LoggerFactory.getLogger(BasicInfoController.class);
 
-	
+	// ㅇ
 	
 	// 품목 관리
 	@RequestMapping(value="/itemList",method=RequestMethod.GET)

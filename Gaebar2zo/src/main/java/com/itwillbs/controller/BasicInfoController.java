@@ -1,16 +1,29 @@
 package com.itwillbs.controller;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.itwillbs.domain.WarehouseCodeVO;
+import com.itwillbs.service.BasicInfoService;
+
 
 @RequestMapping(value="/Styleboso/basicInfo/*")
 @Controller
 public class BasicInfoController {
 
 	private static final Logger logger = LoggerFactory.getLogger(BasicInfoController.class);
+	
+	
+	@Inject
+	private BasicInfoService bService;
 	
 	//http://localhost:8088/Styleboso/basicInfo/itemList
 	// 품목 관리
@@ -32,6 +45,7 @@ public class BasicInfoController {
 	@RequestMapping(value="/clientList",method=RequestMethod.GET)
 	public void clientList_GET() throws Exception{
 		logger.debug(" clientList_GET() 실행 ");
+		
 
 	}
 
@@ -48,9 +62,13 @@ public class BasicInfoController {
 	// user1 pw1
 	//http://localhost:8088/Styleboso/basicInfo/warehouseList
 	@RequestMapping(value="/warehouseList",method=RequestMethod.GET)
-	public void warehouseList_GET() throws Exception{
+	public void warehouseList_GET(Model model) throws Exception{
 		logger.debug(" warehouseList_GET() 실행 ");
-
+		
+		List<WarehouseCodeVO> whCodeList = bService.listAll();
+		
+		model.addAttribute("whCodeList",whCodeList);
+		
 	}
 
 	// 창고 추가

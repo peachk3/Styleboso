@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,15 +24,17 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td><input type="checkbox"></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>			
+			<c:forEach var="vo" items="${whCodeList }">
+				<tr>
+					<td><input type="checkbox"></td>
+					<td>${vo.m_cate_wh_code }${vo.s_cate_wh_code }</td>
+					<td>${vo.s_cate_wh_name }</td>
+					<td>${vo.wh_tel }</td>
+					<td>${vo.wh_add1 } ${vo.wh_add2 }</td>
+					<td>${vo.wh_man }</td>
+					<td>${vo.wh_status }</td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 	

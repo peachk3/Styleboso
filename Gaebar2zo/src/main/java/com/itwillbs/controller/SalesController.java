@@ -28,14 +28,14 @@ public class SalesController {
 		}
 
 		// 발주 관리
-		@RequestMapping(value="/puchaseOrderList",method=RequestMethod.GET)
+		@RequestMapping(value="/purchaseOrderList",method=RequestMethod.GET)
 		public void puchaseOrderList_GET() throws Exception{
 			logger.debug(" puchaseOrderList_GET() 실행 ");
 
 		}
 
 		// 발주 추가
-		@RequestMapping(value="/puchaseOrderAdd",method=RequestMethod.GET)
+		@RequestMapping(value="/purchaseOrderAdd",method=RequestMethod.GET)
 		public void puchaseOrder_GET() throws Exception{
 			logger.debug(" puchaseOrderAdd_GET() 실행 ");
 

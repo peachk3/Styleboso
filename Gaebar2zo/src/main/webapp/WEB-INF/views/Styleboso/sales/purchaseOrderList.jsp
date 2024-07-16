@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>/Styleboso/sales/puchaseOrderList.jsp</h1>
+	<h1>/Styleboso/sales/purchaseOrderList.jsp</h1>
 </body>
 </html>

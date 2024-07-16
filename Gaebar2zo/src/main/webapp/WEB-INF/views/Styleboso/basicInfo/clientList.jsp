@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<body>
- 
+	<h1>/Styleboso/basicInfo/clientList.jsp</h1>
+	
 	<input type="text" placeholder="">
 	<input type="button" value="검색">
 	<table border="1">

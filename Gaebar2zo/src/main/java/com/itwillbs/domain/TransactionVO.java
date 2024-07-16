@@ -1,6 +1,8 @@
 package com.itwillbs.domain;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.Data;
 
@@ -11,12 +13,18 @@ public class TransactionVO {
 	private	String	top_tran_num;
 	private	String	cli_num;
 	private	String	pic_username;
-	private	LocalDateTime	tran_date;
-	private	LocalDateTime	rec_date;
-	private	LocalDateTime	rel_date;
-	private	LocalDateTime	due_date;
+	private	Timestamp	tran_date;
+	private	Timestamp	rec_date;
+	private	Timestamp	rel_date;
+	private	Timestamp	due_date;
 	private	String	pro_status;
 	private	String	tran_cate_code;
 	private	String	comm;
 
+
+	private List<TransactionGoodsVO> goodsList;
+	
+	
+	
+	
 }

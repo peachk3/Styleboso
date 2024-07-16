@@ -2,11 +2,43 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
   <mapper namespace="com.itwillbs.mapper.stockMapper">
+	
+	<resultMap type="com.itwillbs.domain.TransactionVO" id="transMap">
+	<id property="tran_num" column="tran_num"/>
+	<result property="tran_num" column="tran_num"/>
+	<result property="top_tran_num" column="top_tran_num"/>
+	<result property="cli_num" column="cli_num"/>
+	<result property="pic_username" column="pic_username"/>
+	<result property="tran_date" column="tran_date"/>
+	<result property="rec_date" column="rec_date"/>
+	<result property="rel_date" column="rel_date"/>
+	<result property="due_date" column="due_date"/>
+	<result property="pro_status" column="pro_status"/>
+	<result property="tran_cate_code" column="tran_cate_code"/>
+	<result property="comm" column="comm"/>
+	<collection property="goodsList" resultMap="goodsMap"></collection>
+	</resultMap>
 
+	<resultMap type="com.itwillbs.domain.TransactionGoodsVO" id="goodsMap">
+		<id property="tran_num" column="tran_num"/>
+		<id property="goods_num" column="goods_num"/>
+		<result property="tran_num" column="tran_num"/>
+		<result property="goods_num" column="goods_num"/>
+		<result property="goods_qty" column="goods_qty"/>
+	</resultMap>
 
-
+	
+	
+	<!-- 입고 리스트 호출 -->
+	<select id="transactionList" resultMap="transMap">
+		select tr.tran_num,top_tran_num,cli_num,pic_username,tran_date,
+		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,trg.goods_num,trg.goods_qty
+		from transaction tr
+		join transaction_goods trg
+		on tr.tran_num = trg.tran_num
+		where tran_cate_code="RC";
+</select>
 
 
 

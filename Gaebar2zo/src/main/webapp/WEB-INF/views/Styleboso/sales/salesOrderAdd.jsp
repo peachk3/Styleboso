@@ -47,76 +47,122 @@
 								<div class="invalid-feedback">납기일자를 입력해주세요</div>
 							</div>
 							<div class="col-md-6">
-								<label for="validationCustom01" class="form-label">수주일자</label> 
+								<label for="validationCustom02" class="form-label">수주일자</label> 
 									<input type="date" class="form-control"
-									id="validationCustom01" required>
+									id="validationCustom02" required>
 								<div class="invalid-feedback">수주일자를 입력해주세요</div>
 							</div>
 							<div class="col-md-6">
-								<label for="validationCustom02" class="form-label">거래처</label>
-									<input type="text" class="form-control custom-btn" id="validationCustom02" value=""
-										   data-coreui-toggle="modal" data-coreui-target="#exampleModal" required>
+								<label for="validationCustom03" class="form-label">거래처</label>
+									<input type="text" class="form-control custom-btn" id="validationCustom03" value="-"
+										   data-coreui-toggle="modal" data-coreui-target="#exampleModal1" readonly required>
 								<div class="invalid-feedback">거래처를 입력해주세요</div>
 							</div>
 							<div class="col-md-6">
-								<label for="validationCustom03" class="form-label">담당자</label>
-									<input type="text" class="form-control" id="validationCustom03" required>
+								<label for="validationCustom04" class="form-label">담당자</label>
+									<input type="text" class="form-control" id="validationCustom04"
+										   data-coreui-toggle="modal" data-coreui-target="#exampleModal2" readonly required>
 								<div class="invalid-feedback">담당자를 입력해주세요</div>
 							</div>
 						<div class="example">
 							<ul class="nav nav-underline-border" role="tablist">
-<!-- 								<li class="nav-item" role="presentation"> -->
-<!-- 								<a class="nav-link active" data-coreui-toggle="tab" -->
-<!-- 									href="#preview-1000" role="tab" aria-selected="true"> -->
-<!-- 								<svg class="icon me-2"> -->
-<!-- 		                        	<use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-media-play"></use> -->
-<!-- 		                        </svg>Preview -->
-<!-- 								</a></li> -->
-<!-- 								<li class="nav-item" role="presentation"><a -->
-<!-- 									class="nav-link" -->
-<!-- 									href="https://coreui.io/docs/forms/select/#default" -->
-<!-- 									target="_blank" aria-selected="false" tabindex="-1" role="tab"> -->
-<!-- 										<svg class="icon me-2"> -->
-<!--                             <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-code"></use> -->
-<!--                           </svg>Code -->
-<!-- 								</a></li> -->
 							</ul>
 							<div class="tab-content rounded-bottom">
 								<div class="tab-pane p-3 active preview" role="tabpanel"
 									id="preview-1000">
-									<select class="form-select" aria-label="Default select example">
-										<option selected="">Open this select menu</option>
-										<option value="1">One</option>
-										<option value="2">Two</option>
-										<option value="3">Three</option>
-									</select>
-								</div>
+										<table class="table">
+											<thead class="table-light">
+												<tr>
+													<th scope="col">#</th>
+													<th scope="col">First</th>
+													<th scope="col">Last</th>
+													<th scope="col">Handle</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<th scope="row">1</th>
+													<td>Mark</td>
+													<td>Otto</td>
+													<td>@mdo</td>
+												</tr>
+												<tr>
+													<th scope="row">2</th>
+													<td>Jacob</td>
+													<td>Thornton</td>
+													<td>@fat</td>
+												</tr>
+												<tr>
+													<th scope="row">3</th>
+													<td>Larry</td>
+													<td>the Bird</td>
+													<td>@twitter</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
 							</div>
 						</div>
 							<div class="col-12">
 								<button class="btn btn-primary" type="submit" id="submitFormBtn">Submit form</button>
 							</div>
-							<!-- Modal -->
-							<div class="modal fade" id="exampleModal" tabindex="-1"
+							<!-- Modal1 -->
+							<div class="modal fade" id="exampleModal1" tabindex="-1"
 								aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog">
+								<div class="modal-dialog modal-dialog-scrollable">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">New message</h5>
+											<h5 class="modal-title" id="exampleModalLabel">거래처</h5>
 											<button type="button" class="btn-close"
 												data-coreui-dismiss="modal" aria-label="Close"></button>
 										</div>
 										<div class="modal-body">
-											<form>
-												<div class="mb-3">
-													<label for="recipient-name" class="col-form-label">Recipient:</label>
-													<input type="text" class="form-control" id="recipient-name">
-												</div>
-											</form>
+											<table class="table table-hover" id="modal1-table">
+												<thead class="table-light">
+													<tr>
+														<th scope="col"></th>
+														<th scope="col">거래처 코드</th>
+														<th scope="col">거래처 명</th>
+													</tr>
+												</thead>
+												<tbody>
+													
+												</tbody>
+											</table>
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
-											<button type="button" class="btn btn-primary" id="saveChangesBtn">Send message</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Modal2 -->
+							<div class="modal fade" id="exampleModal2" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">담당자</h5>
+											<button type="button" class="btn-close"
+												data-coreui-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<table class="table table-hover" id="modal1-table">
+												<thead class="table-light">
+													<tr>
+														<th scope="col"></th>
+														<th scope="col">거래처 코드</th>
+														<th scope="col">거래처 명</th>
+													</tr>
+												</thead>
+												<tbody>
+													
+												</tbody>
+											</table>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-primary" id="sendBtn">Send message</button>
 										</div>
 									</div>
 								</div>
@@ -141,71 +187,75 @@
 </style>
 
 <!-- <script src="path/to/bootstrap.bundle.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script type="text/javascript">
-
-// 	//필요한 유효성 검사를 적용할 모든 폼을 가져오기
-// 	const forms = document.querySelectorAll('.needs-validation');
-	
-// 	// NodeList를 배열로 변환하고 각각의 폼에 대해 처리
-// 	Array.from(forms).forEach(form => {
-// 	  form.addEventListener('submit', event => {
-// 	    // 유효성 검사 통과 여부 확인
-// 	    if (!form.checkValidity()) {
-// 	      event.preventDefault(); // 폼 제출 방지
-// 	      event.stopPropagation(); // 상위 요소로 이벤트 전파 방지
-// 	    }
-	
-// 	    // Bootstrap의 'was-validated' 클래스 추가
-// 	    form.classList.add('was-validated');
-// 	  }, false);
-// 	});
 	
 	document.addEventListener('DOMContentLoaded', function() {
+		
 	    const submitFormBtn = document.getElementById('submitFormBtn');
 	
 	    submitFormBtn.addEventListener('click', function(event) {
-	      event.preventDefault(); // 기본 제출 동작 방지
+			event.preventDefault(); // 기본 제출 동작 방지
 	
-	      // 필요한 유효성 검사를 적용할 모든 폼을 가져오기
-	      const forms = document.querySelectorAll('.needs-validation');
-	
-	      // NodeList를 배열로 변환하고 각각의 폼에 대해 처리
-	      Array.from(forms).forEach(form => {
-	        // 유효성 검사 통과 여부 확인
-	        if (!form.checkValidity()) {
-	          event.stopPropagation(); // 상위 요소로 이벤트 전파 방지
-	        }
-	
-	        // Bootstrap의 'was-validated' 클래스 추가
-	        form.classList.add('was-validated');
-	      });
+			// 필요한 유효성 검사를 적용할 모든 폼을 가져오기
+			const forms = document.querySelectorAll('.needs-validation');
+			
+			// NodeList를 배열로 변환하고 각각의 폼에 대해 처리
+			Array.from(forms).forEach(form => {
+				// 유효성 검사 통과 여부 확인
+				if (!form.checkValidity()) {
+				  event.stopPropagation(); // 상위 요소로 이벤트 전파 방지
+				}
+				
+				// Bootstrap의 'was-validated' 클래스 추가
+				form.classList.add('was-validated');
+			});
 	    });
 
-		const saveChangesBtn = document.getElementById('saveChangesBtn');
-	    const recipientInput = document.getElementById('recipient-name');
+		$('#modal1-table tbody').on('click', 'tr', function() {
+	 		var targetInput = document.getElementById('validationCustom03');
+	 		var cliNum = $(this).find('td:nth-child(2)').text(); // 두 번째 열(거래처 코드)
 
-	    saveChangesBtn.addEventListener('click', function() {
-	      const recipient = recipientInput.value;
-
-	      // 모달 버튼의 텍스트를 입력받은 값으로 변경합니다.
-	      const modalBtn = document.querySelector('[data-bs-target="#exampleModal"]');
-	      if (modalBtn) {
-	          modalBtn.textContent = recipient;
-	        } else {
-	          console.error('모달 버튼을 찾을 수 없습니다.');
-	        }
-
-	      // 모달을 닫습니다.
-// 	      const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
-// 	      if (modal) {
-// 	        modal.hide();
-// 	      } else {
-// 	        console.error('모달 인스턴스를 찾을 수 없습니다.');
-// 	      }
-	      const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
-	      modal.hide();
-	    });
+		    // Modal에서 입력된 값을 가져와서 다른 input 요소에 설정
+		    targetInput.value = cliNum;
+		
+		    // Modal 닫기 (Optional)
+		    var modal = document.getElementById('exampleModal1');
+		    var modalInstance = coreui.Modal.getInstance(modal);
+		    modalInstance.hide();
+		});
+		
+		
+		
+		function getClientList() {
+			
+		    $('#modal1-table tbody tr').remove();
+		    
+		    $.ajax({
+		        url: "/Styleboso/common/clientList",
+		        type: "get",
+		        contentType: 'application/json; charset=utf-8',
+		        dataType: "json",
+		        success: function(data) {
+		            // body 태그에 내용 추가
+	            	console.log(data);
+	            	data.forEach(function(item, idx){
+		            	console.log(idx);
+		            	var row = "<tr><th scope='row'>" + (parseInt(idx)+1) + "</th><td>" + item.cli_num + "</td><td>" + item.cli_name + "</td></tr>"
+		                $('#modal1-table tbody').append(row);
+		            });
+		            
+		        },
+		        error: function(jqXHR, textStatus, errorThrown) {
+		            console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
+		            alert("AJAX 요청 실패!");
+		        }
+		    });
+		}
+		
+		getClientList();
+		
 	});
 	
 </script>

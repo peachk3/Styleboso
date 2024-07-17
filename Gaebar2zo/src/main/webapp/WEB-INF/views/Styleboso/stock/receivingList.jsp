@@ -26,13 +26,13 @@
 	
 	<table class="table table-hover">
 		<tr>
+			<td><button class="btn btn-secondary" type="button">선택</button></td>
 			<td>입고번호</td>
 			<td>품목코드</td>
 			<td>품목명</td>
-			<td>입고 예정 수량</td>
-			<td>입고 예정일</td>
+			<td>입고 수량</td>
+			<td>입고일</td>
 			<td>발주 번호</td>
-			<td>단가</td>
 			<td>재고 번호</td>
 			<td>비고</td>
 			<td>상태</td>
@@ -40,29 +40,31 @@
 		
 		
 		<c:forEach var="rc" items="${rc}">
-		${rc }
 		<tr>
+			
+			<td><button class="btn btn-secondary" type="button"></button></td>
 			<td>${rc.tran_num }</td>
-			<td>${rc.cli_num }</td>
-			<td>${rc.cli_num }</td>
-			<td>${rc.pic_username }</td>
-			<td>${rc.tran_date }</td>
-			<td>${rc.rel_date }</td>
-			<td>${rc.due_date }</td>
-			<td>${rc.pro_status }</td>
-<%-- 			<td>${rc.goodsList.goods_num }</td> --%>
-<%-- 			<td>${rc.pro_status }</td> --%>
+			
+      <c:forEach var="item" items="${rc.itemList}">
+			<td>${item.item_num }</td>
+			<td>${item.item_name }</td>
+	 </c:forEach>
+			
       <c:forEach var="goods" items="${rc.goodsList}">
-            <td>${goods.goods_num }</td>
-            <td>${goods.goods_num }</td>
+            <td>${goods.goods_qty }</td>
       </c:forEach>
-<!-- 		</tr> -->
+			<td>${rc.rec_date }</td>
+			<td>${rc.top_tran_num }</td>
+			
+      <c:forEach var="inchange" items="${rc.inchangeList}">
+            <td>${inchange.inven_num }</td>
+      </c:forEach>
+      
+			<td>${rc.comm }</td>
+			<td>${rc.pro_status }</td>
+		</tr>
 		</c:forEach>
 	</table>
-	
-	
-	
-	
 	
 	
 	

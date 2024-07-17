@@ -18,6 +18,8 @@
 	<result property="tran_cate_code" column="tran_cate_code"/>
 	<result property="comm" column="comm"/>
 	<collection property="goodsList" resultMap="goodsMap"></collection>
+	<collection property="itemList" resultMap="itemMap"></collection>
+	<collection property="inchangeList" resultMap="inchangeMap"></collection>
 	</resultMap>
 
 	<resultMap type="com.itwillbs.domain.TransactionGoodsVO" id="goodsMap">
@@ -28,15 +30,44 @@
 		<result property="goods_qty" column="goods_qty"/>
 	</resultMap>
 
+	<resultMap type="com.itwillbs.domain.ItemVO" id="itemMap">
+		<id property="item_num" column="item_num"/>
+		<result property="item_num" column="item_num"/>
+		<result property="item_cate_code" column="item_cate_code"/>
+		<result property="item_cli_code" column="item_cli_code"/>
+		<result property="item_name" column="item_name"/>
+		<result property="item_mat" column="item_mat"/>
+		<result property="comm" column="comm"/>
+	</resultMap>
+	
+	<resultMap type="com.itwillbs.domain.InventoryChangeVO" id="inchangeMap">
+		<id property="tran_num" column="tran_num"/>
+		<id property="inven_num" column="inven_num"/>
+		<result property="tran_num" column="tran_num"/>
+		<result property="inven_num" column="inven_num"/>
+		<result property="inven_qty" column="inven_qty"/>
+	</resultMap>
+	
+	
+<!-- 		item / inventory_change -->
+	
+	
+	
+	
 	
 	
 	<!-- 입고 리스트 호출 -->
 	<select id="transactionList" resultMap="transMap">
-		select tr.tran_num,top_tran_num,cli_num,pic_username,tran_date,
-		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,trg.goods_num,trg.goods_qty
+		select tr.tran_num,top_tran_num,cli_num,pic_username,tran_date,rec_date,
+		tran_date,rel_date,due_date,pro_status,tran_cate_code,tr.comm,trg.goods_num,trg.goods_qty,
+		it.item_num,it.item_name,inc.inven_num
 		from transaction tr
 		join transaction_goods trg
 		on tr.tran_num = trg.tran_num
+		join item it
+		on it.item_cli_code = tr.cli_num
+		join inventory_change inc
+		on inc.tran_num = tr.tran_num
 		where tran_cate_code="RC";
 </select>
 

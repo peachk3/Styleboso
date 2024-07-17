@@ -3,8 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-  <mapper namespace="com.itwillbs.mapper.salesMapper">
-
+<mapper namespace="com.itwillbs.mapper.salesMapper">
+	
+	<!-- 거래처 리스트 조회 -->
+<!-- 	<select id="clientList" resultType="ClientVO"> -->
+<!-- 		SELECT cli_num, cli_name FROM client -->
+<!-- 	</select> -->
 
 
 

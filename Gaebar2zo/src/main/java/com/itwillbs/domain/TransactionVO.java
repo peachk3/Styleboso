@@ -21,10 +21,14 @@ public class TransactionVO {
 	private	String	tran_cate_code;
 	private	String	comm;
 
-
+	// TransactionGoodsVO 조인
 	private List<TransactionGoodsVO> goodsList;
 	
+	// ItemVO 조인
+	private List<ItemVO> itemList;
 	
+	// InventoryChangeVO 조인
+	private List<InventoryChangeVO> inchangeList;
 	
 	
 }

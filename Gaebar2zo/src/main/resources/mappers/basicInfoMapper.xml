@@ -5,10 +5,14 @@
 
   <mapper namespace="com.itwillbs.mapper.basicInfoMapper">
 
+	<select id="listALL" resultType="WarehouseCodeVO">
+		select * from warehouse_code
+	</select>
 
 
-
-
+	<select id="cliListALL" resultType="ClientVO">
+		select * from client
+	</select>
 
 
 

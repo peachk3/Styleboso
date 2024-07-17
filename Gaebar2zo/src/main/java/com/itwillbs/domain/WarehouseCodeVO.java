@@ -12,5 +12,6 @@ public class WarehouseCodeVO {
 	private	String	wh_add2;
 	private	String	wh_man;
 	private	Integer	wh_status;
+	private String m_cate_wh_code;
 	
 }

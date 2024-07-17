@@ -161,7 +161,6 @@
       </div>
    </div>
    <h1>/Styleboso/sales/salesOrderAdd.jsp</h1>
-
 </body>
 
 <style>

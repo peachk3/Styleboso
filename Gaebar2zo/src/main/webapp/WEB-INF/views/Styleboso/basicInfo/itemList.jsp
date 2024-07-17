@@ -1,9 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.0.2/dist/css/coreui.min.css"
+	rel="stylesheet" integrity="sha384-39e9UaGkm/+yp6spIsVfzcs3j7ac7G2cg0hzmDvtG11pT1d7YMnOC26w4wMPhzsL" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.0.2/dist/js/coreui.bundle.min.js"
+	integrity="sha384-/lLdeDXcg75fFKvNaXc6K+P80Jk8U+1mKJUYqkLSxqr18HIUvJYVN42+m23Zbw4b" crossorigin="anonymous"></script>
+
 <title>Insert title here</title>
 </head>
 <body>
@@ -29,7 +34,24 @@
 			</tr>
 		</thead>
 		<tbody>
-		
+			<c:forEach var="itl" items="${itemList }">
+				<tr>
+					<td>
+				  		<div class="form-check">
+                  			<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked> 
+                  			<label class="form-check-label" for="flexCheckChecked"> Checked checkbox </label>
+               			</div>
+               		</td>
+               		<td>${itl.item_num }</td>
+               		<td>${itl.item_cli_code }</td>
+               		<td>${itl.item_name }</td>
+               		<td>${itl.group_name }</td>
+               		<td>${itl.item_mat }</td>
+               		<td>${itl.comm }</td>
+               		<td></td>
+				</tr>	
+			</c:forEach>
+
 		</tbody>
 	</table>
 	

@@ -64,7 +64,3 @@
 	</table>
 </body>
 </html>
-
-
-
-

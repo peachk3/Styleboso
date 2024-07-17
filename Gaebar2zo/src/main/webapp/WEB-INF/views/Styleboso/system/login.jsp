@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,6 +46,7 @@
     </script>
     <script src="js/config.js"></script>
     <script src="js/color-modes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <style>
 .segoe-font {
@@ -67,7 +71,7 @@
                                                 <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
                                             </svg>
                                         </span>
-                                        <input class="form-control" type="text" id="username" name="username" placeholder="Username">
+                                        <input class="form-control" type="text" id="username" name="username" placeholder="Username" required="required">
                                         <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
                                     </div>
                                     <div class="input-group mb-4">
@@ -76,7 +80,7 @@
                                                 <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
                                             </svg>
                                         </span>
-                                        <input class="form-control" type="password" id="password" name="password" placeholder="Password">
+                                        <input class="form-control" type="password" id="password" name="password" placeholder="Password" required="required">
                                     </div>
                                     <div class="input-checkbox">
 									    <input type="checkbox" id="saveId" name="saveId" style="margin-right:10px;">
@@ -108,6 +112,15 @@
         </div>
     </div><!--min-vh-100 d-flex flex-row align-items-center  -->
    
+   
+    <!-- Jquery사용 / 모달창-->
+<script>
+Swal.fire({
+  'Alert가 실행되었습니다.',         // Alert 제목
+  '이곳은 내용이 나타나는 곳입니다.',  // Alert 내용
+  'success',                         // Alert 타입
+});
+</script>   
    <!-- 아이디 저장 -->
    <script>
    $(document).ready(function() {

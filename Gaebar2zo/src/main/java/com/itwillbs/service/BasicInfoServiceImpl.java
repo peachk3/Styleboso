@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.ClientVO;
+import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
 import com.itwillbs.persistence.BasicInfoDAO;
 
@@ -20,6 +21,7 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 	@Inject
 	private BasicInfoDAO bidao;
 
+	// 창고코드 리스트 출력
 	@Override
 	public List<WarehouseCodeVO> listAll() {
 		logger.debug("창고 리스트 조회");
@@ -27,11 +29,20 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		return bidao.listAll();
 	}
 
+	// 거래처 리스트 출력
 	@Override
 	public List<ClientVO> cliListAll() {
 		logger.debug("고객사 리스트 조회");
 		
 		return bidao.cliListAll();
+	}
+
+	// 품목 리스트 출력
+	@Override
+	public List<ItemVO> itemListAll() {
+		logger.debug(" 품목 리스트 조회 ");
+		
+		return bidao.itemListAll();
 	}
 
  

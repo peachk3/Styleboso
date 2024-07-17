@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.itwillbs.domain.ClientVO;
+import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
 import com.itwillbs.service.BasicInfoService;
 
@@ -29,9 +30,12 @@ public class BasicInfoController {
 	//http://localhost:8088/Styleboso/basicInfo/itemList
 	// 품목 관리
 	@RequestMapping(value="/itemList",method=RequestMethod.GET)
-	public void itemList_GET() throws Exception{
+	public void itemList_GET(Model model) throws Exception{
 		logger.debug(" itemList_GET() 실행 ");
 
+		List<ItemVO> itemList = bService.itemListAll();
+		
+		model.addAttribute("itemList", itemList);
 	}
 
 	// 품목 추가

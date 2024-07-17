@@ -4,43 +4,45 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.0.2/dist/css/coreui.min.css"
+	rel="stylesheet" integrity="sha384-39e9UaGkm/+yp6spIsVfzcs3j7ac7G2cg0hzmDvtG11pT1d7YMnOC26w4wMPhzsL" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.0.2/dist/js/coreui.bundle.min.js"
+	integrity="sha384-/lLdeDXcg75fFKvNaXc6K+P80Jk8U+1mKJUYqkLSxqr18HIUvJYVN42+m23Zbw4b" crossorigin="anonymous"></script>
+
 <title>Insert title here</title>
 </head>
 <body>
 	<h1>/Styleboso/basicInfo/clientList.jsp</h1>
-	
-	<input type="text" placeholder="">
+
 	<input type="button" value="검색">
-	<table border="1">
+	<input type="button" value="등록" onclick="openCliRegModal()">
+	<table class="table table-hover">
 		<thead>
 			<tr>
-				<th><input type="checkbox"></th>
-				<th>거래처 코드</th>
-				<th>거래처명</th>
-				<th>구분</th>
-				<th>사업자 번호</th>
-				<th>업태</th>
-				<th>종목</th>
-				<th>대표자</th>
-				<th>담당자</th>
-				<th>전화번호</th>
+				<th scope="col">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value=""
+							id="flexCheckDisabled" disabled> <label
+							class="form-check-label" for="flexCheckDisabled">
+							Disabled checkbox </label>
+					</div>
+				</th>
+				<th scope="col">거래처 코드</th>
+				<th scope="col">거래처명</th>
+				<th scope="col">거래처 사업자 등록 번호</th>
+				<th scope="col">거래처 구분</th>
+				<th scope="col">거래처 업종</th>
+				<th scope="col">거래처 주소</th>
+				<th scope="col">연락처</th>
+				<th scope="col">대표자</th>
+				<th scope="col">이메일</th>
+				<th scope="col">담당자</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td><input type="checkbox"></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>			
+
 		</tbody>
 	</table>
-	
+
 </body>
 </html>

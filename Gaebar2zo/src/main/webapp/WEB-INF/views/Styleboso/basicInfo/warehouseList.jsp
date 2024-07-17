@@ -70,14 +70,46 @@
 					<table class="table">
 						<tbody>
 							<tr>
-								<td><label for="itemName">상품명</label></td>
-								<td><input type="text" class="form-control" id="itemName"
-									name="itemName" required></td>
+								<td><label for="warehouseCode">창고코드</label></td>
+								<td><input type="text" class="form-control" id="warehouseCode"
+									name="warehouseCode" required></td>
 							</tr>
 							<tr>
-								<td><label for="itemDescription">상품 설명</label></td>
-								<td><textarea class="form-control" id="itemDescription"
-										name="itemDescription" rows="3" required></textarea></td>
+								<td><label for="warehouseName">창고명</label></td>
+								<td><input type="text" class="form-control" id="warehouseName"
+										name="warehouseName" required></td>
+							</tr>
+							<tr>
+								<td><label for="warehouseTel">연락처</label></td>
+								<td><input type="text" class="form-control" id="warehouseTel"
+										name="warehouseTel" required></td>
+							</tr>
+							<tr>
+								<td><label for="warehouseAdd1">창고 주소</label></td>
+								<td>
+									<div class="input-group">
+										<input type="text" class="form-control" id="warehouseAdd1" name="warehouseAdd1" required>
+										<div class="input-group-append">
+											<input type="button" value="주소 찾기">
+										</div>
+									</div>	
+								</td>
+							</tr>
+							<tr>
+								<td><label for="warehouseAdd2">창고 상세 주소</label></td>
+								<td><input type="text" class="form-control" id="warehouseAdd2"
+										name="warehouseAdd2" required></td>
+							</tr>
+							<tr>
+								<td><label for="warehouseAdd2">창고 담당자</label></td>
+								<td>
+									<div class="input-group">
+										<input type="text" class="form-control" id="warehouseAdd2" name="warehouseAdd2" required>
+										<div class="input-group-append">
+										<input type="button" value="찾기" onclick="openManModal()">
+										</div>
+									</div>
+								</td>
 							</tr>
 							<!-- 추가 필드 추가 가능 -->
 						</tbody>
@@ -93,6 +125,37 @@
 			</div>
 		</div>
 	</div>
+	<!-- Modal2 -->
+                    <div class="modal fade" id="manModal" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h5 class="modal-title" id="exampleModalLabel">담당자</h5>
+                                 <button type="button" class="btn-close"
+                                    data-coreui-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                 <table class="table table-hover" id="modal1-table">
+                                    <thead class="table-light">
+                                       <tr>
+                                          <th scope="col"></th>
+                                          <th scope="col">거래처 코드</th>
+                                          <th scope="col">거래처 명</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       
+                                    </tbody>
+                                 </table>
+                              </div>
+                              <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+                                 <button type="button" class="btn btn-primary" id="sendBtn">Send message</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
 
 	<!-- <script src="path/to/bootstrap.bundle.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -108,6 +171,10 @@ function submitForm() {
   // 여기서 폼 데이터를 처리하는 JavaScript 코드를 작성할 수 있습니다.
   // 예: AJAX를 사용하여 서버로 데이터 전송 등
   $('#regModal').modal('hide'); // 폼을 제출한 후 모달 창 닫기
+}
+
+function openManModal() {
+	$('#manModal').modal('show');
 }
 </script>
 

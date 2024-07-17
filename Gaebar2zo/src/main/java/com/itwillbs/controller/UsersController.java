@@ -29,6 +29,8 @@ public class UsersController {
 		
 		}
 		
+		
+		
 		//로그아웃 
 		@RequestMapping(value = "logout", method = RequestMethod.POST)
 		public String logout_POST(HttpSession session) throws Exception{

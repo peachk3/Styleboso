@@ -67,7 +67,7 @@
                                                 <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
                                             </svg>
                                         </span>
-                                        <input class="form-control" type="text" id="username" name="username" placeholder="Username" required="required">
+                                        <input class="form-control" type="text" id="username" name="username" placeholder="Username">
                                         <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
                                     </div>
                                     <div class="input-group mb-4">
@@ -76,7 +76,7 @@
                                                 <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
                                             </svg>
                                         </span>
-                                        <input class="form-control" type="password" id="password" name="password" placeholder="Password" required="required">
+                                        <input class="form-control" type="password" id="password" name="password" placeholder="Password">
                                     </div>
                                     <div class="input-checkbox">
 									    <input type="checkbox" id="saveId" name="saveId" style="margin-right:10px;">
@@ -84,7 +84,7 @@
 									</div>
                                     <div class="row">
                                         <div class="col-6">
-                                            <button type="submit" class="btn btn-primary px-4" style="margin-top:15px;">Login</button>
+                                            <button type="submit" class="btn btn-primary px-4" style="margin-top:15px;" disabled>Login</button>
                                         </div>
                                         <div class="col-6 text-end">
                                             <button class="btn btn-link px-0" type="button">Forgot password?</button>
@@ -101,73 +101,104 @@
 <!--                                     <button class="btn btn-lg btn-outline-light mt-3" type="button">Register Now!</button> -->
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </div><!-- card col-md-5 text-white bg-primary py-5 끝 -->
+                    </div><!-- "card-group d-block d-md-flex row" 끝 -->
+                </div><!-- col-lg-8 끝 -->
+            </div><!-- row justify-content-center -->
         </div>
-    </div>
-    <!-- 아이디 저장  -->
+    </div><!--min-vh-100 d-flex flex-row align-items-center  -->
+   
+   <!-- 아이디 저장 -->
+   <script>
+   $(document).ready(function() {
+       function toggleSubmitButton() {
+           if ($("#username").val() && $("#password").val()) {
+               $("button[type='submit']").addClass("active");
+           } else {
+               $("button[type='submit']").removeClass("active");
+           }
+       }
+
+       $("#username, #password").on("keyup change", toggleSubmitButton);
+
+       var key = getCookie("key");
+       $("#username").val(key); 
+         
+       if($("#username").val() != ""){
+           $("#saveId").attr("checked", true); 
+       }
+         
+       $("#saveId").change(function(){ 
+           if($("#saveId").is(":checked")){ 
+               setCookie("key", $("#username").val(), 7); 
+           }else{ 
+               deleteCookie("key");
+           }
+       });
+         
+       $("#username").keyup(function(){ 
+           if($("#saveId").is(":checked")){ 
+               setCookie("key", $("#username").val(), 7); 
+           }
+       });
+   });
+     
+   function setCookie(cookieName, value, exdays){
+       var exdate = new Date();
+       exdate.setDate(exdate.getDate() + exdays);
+       var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
+       document.cookie = cookieName + "=" + cookieValue;
+   }
+     
+   function deleteCookie(cookieName){
+       var expireDate = new Date();
+       expireDate.setDate(expireDate.getDate() - 1);
+       document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+   }
+     
+   function getCookie(cookieName) {
+       cookieName = cookieName + '=';
+       var cookieData = document.cookie;
+       var start = cookieData.indexOf(cookieName);
+       var cookieValue = '';
+       if(start != -1){
+           start += cookieName.length;
+           var end = cookieData.indexOf(';', start);
+           if(end == -1) end = cookieData.length;
+           cookieValue = cookieData.substring(start, end);
+       }
+       return unescape(cookieValue);
+   }
+   </script>
+   
+   <!--  로그인 - 로그인 버튼 활성/비활성화 -->
     <script>
-      $(document).ready(function() {
-            function toggleSubmitButton() {
-                if ($("#username").val() && $("#password").val()) {
-                    $("input[type='submit']").addClass("active");
-                } else {
-                    $("input[type='submit']").removeClass("active");
-                }
-            }
+    document.addEventListener('DOMContentLoaded', function () {
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const loginButton = document.querySelector('button[type="submit"]');
 
-            $("#username, #password").on("keyup change", toggleSubmitButton);
+        function toggleButtonState() {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+            const isActive = username && password;
 
-            var key = getCookie("key");
-            $("#username").val(key); 
-              
-            if($("#username").val() != ""){
-                $("#saveId").attr("checked", true); 
+            loginButton.disabled = !isActive;
+
+            if (isActive) {
+                loginButton.classList.add('btn-active');
+            } else {
+                loginButton.classList.remove('btn-active');
             }
-              
-            $("#saveId").change(function(){ 
-                if($("#saveId").is(":checked")){ 
-                    setCookie("key", $("#username").val(), 7); 
-                }else{ 
-                    deleteCookie("key");
-                }
-            });
-              
-            $("#username").keyup(function(){ 
-                if($("#saveId").is(":checked")){ 
-                    setCookie("key", $("#username").val(), 7); 
-                }
-            });
-        });
-          
-        function setCookie(cookieName, value, exdays){
-            var exdate = new Date();
-            exdate.setDate(exdate.getDate() + exdays);
-            var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
-            document.cookie = cookieName + "=" + cookieValue;
         }
-          
-        function deleteCookie(cookieName){
-            var expireDate = new Date();
-            expireDate.setDate(expireDate.getDate() - 1);
-            document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
-        }
-          
-        function getCookie(cookieName) {
-            cookieName = cookieName + '=';
-            var cookieData = document.cookie;
-            var start = cookieData.indexOf(cookieName);
-            var cookieValue = '';
-            if(start != -1){
-                start += cookieName.length;
-                var end = cookieData.indexOf(';', start);
-                if(end == -1) end = cookieData.length;
-                cookieValue = cookieData.substring(start, end);
-            }
-            return unescape(cookieValue);
-        }
+
+        // 초기 상태 설정
+        toggleButtonState();
+
+        // 입력 필드 변화 감지
+        usernameInput.addEventListener('input', toggleButtonState);
+        passwordInput.addEventListener('input', toggleButtonState);
+    });
     </script>
     <!-- CoreUI and necessary plugins-->
     <script src="vendors/@coreui/coreui-pro/js/coreui.bundle.min.js"></script>
@@ -176,5 +207,6 @@
     <script src="vendors/i18next-http-backend/js/i18nextHttpBackend.js"></script>
     <script src="vendors/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.js"></script>
     <script src="js/i18next.js"></script>
+    <script src="js/login.js"></script>
 </body>
 </html>

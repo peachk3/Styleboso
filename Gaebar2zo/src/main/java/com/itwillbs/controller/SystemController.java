@@ -1,10 +1,15 @@
 package com.itwillbs.controller;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+
+
+
 
 @RequestMapping(value="/Styleboso/system/*")
 @Controller
@@ -12,15 +17,11 @@ public class SystemController {
 
 	//http://localhost:8088/Styleboso/system/login
 	private static final Logger logger = LoggerFactory.getLogger(SystemController.class);
-	
-	// 로그인
-	@RequestMapping(value="/login",method=RequestMethod.GET)
-	public void login() throws Exception{
-		System.out.println(" login() 실행 ");
-	
-	}
 
+	
+	
 
+	//http://localhost:8088/Styleboso/system/main
 	// 대시보드 ( 메인 페이지 )
 	@RequestMapping(value="/main",method=RequestMethod.GET)
 	public void main_GET() throws Exception{

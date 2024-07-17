@@ -29,6 +29,7 @@ public class UsersDAO {
 		return sqlSession.selectOne(NAMESPACE+"readMemberAuth",username);
 	}
 	
+
 	
 	
 	

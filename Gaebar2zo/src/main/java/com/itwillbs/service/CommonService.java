@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import com.itwillbs.domain.ClientVO;
 
 @Service
-public interface SalesService {
+public interface CommonService {
 
 	// 거래처 리스트 조회
-//	public List<ClientVO> ClientList() throws Exception;
+	public List<ClientVO> ClientList() throws Exception;
 
 }

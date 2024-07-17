@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +40,28 @@
 			</tr>
 		</thead>
 		<tbody>
-
+			<c:forEach var="cli" items="${clientList }">
+				<tr>
+					<td>
+				  		<div class="form-check">
+                  			<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked> 
+                  			<label class="form-check-label" for="flexCheckChecked"> Checked checkbox </label>
+               			</div>
+               		</td>
+               		<td>${cli.cli_num }</td>
+               		<td>${cli.cli_name }</td>
+               		<td>${cli.cli_crn }</td>
+               		<td>${cli.cli_cate }</td>
+               		<td>${cli.cli_ind }</td>
+               		<td>${cli.cli_add1 } ${cli.cli_add2 }</td>
+               		<td>${cli.cli_tel }</td>
+               		<td>${cli.cli_rep }</td>
+               		<td>${cli.cli_email }</td>
+               		<td>${cli.pic_username }</td>
+               		
+				</tr>
+			
+			</c:forEach>
 		</tbody>
 	</table>
 

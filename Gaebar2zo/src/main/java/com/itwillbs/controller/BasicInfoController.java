@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.WarehouseCodeVO;
 import com.itwillbs.service.BasicInfoService;
 
@@ -43,9 +44,12 @@ public class BasicInfoController {
 	//http://localhost:8088/Styleboso/basicInfo/clientList
 	// 거래처 관리
 	@RequestMapping(value="/clientList",method=RequestMethod.GET)
-	public void clientList_GET() throws Exception{
+	public void clientList_GET(Model model) throws Exception{
 		logger.debug(" clientList_GET() 실행 ");
 		
+		List<ClientVO> clientList = bService.cliListAll();
+		
+		model.addAttribute("clientList", clientList);	
 
 	}
 

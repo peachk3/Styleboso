@@ -30,7 +30,7 @@ public class CommonController {
 	// 거래처 리스트 조회
 	@ResponseBody
 	@RequestMapping(value="/clientList",method=RequestMethod.GET,
-			produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public List<ClientVO> clientList_GET(Model model) throws Exception{
 		logger.debug(" clientList_GET() 실행 ");
 		

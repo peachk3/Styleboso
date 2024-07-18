@@ -24,21 +24,7 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="card mb-4">
-<!-- 					<div class="card-header"> -->
-<!-- 						<strong>수주관리</strong><span class="small ms-1">등록</span> -->
-<!-- 					</div> -->
 					<div class="card-body">
-<!-- 						<p class="text-body-secondary small"> -->
-<!-- 							Custom -->
-<!-- 							<code>&lt;select&gt;</code> -->
-<!-- 							menus need only a custom class, -->
-<!-- 							<code>.form-select</code> -->
-<!-- 							to trigger the custom styles.Custom styles are limited to the -->
-<!-- 							<code>&lt;select&gt;</code> -->
-<!-- 							’s initial appearance and cannot modify the -->
-<!-- 							<code>&lt;option&gt;</code> -->
-<!-- 							s due to browser limitations. -->
-<!-- 						</p> -->
 						<form class="row g-3 needs-validation" novalidate>
 							<div class="col-md-6">
 								<label for="validationCustom01" class="form-label">납기일자</label> 
@@ -54,7 +40,7 @@
 							</div>
 							<div class="col-md-6">
 								<label for="validationCustom03" class="form-label">거래처</label>
-									<input type="text" class="form-control custom-btn" id="validationCustom03" value="-"
+									<input type="text" class="form-control custom-btn" id="validationCustom03" 
 										   data-coreui-toggle="modal" data-coreui-target="#exampleModal1" readonly required>
 								<div class="invalid-feedback">거래처를 입력해주세요</div>
 							</div>
@@ -234,8 +220,7 @@
 		    
 		    $.ajax({
 		        url: "/Styleboso/common/clientList",
-		        type: "get",
-		        contentType: 'application/json; charset=utf-8',
+		        type: "GET",
 		        dataType: "json",
 		        success: function(data) {
 		            // body 태그에 내용 추가

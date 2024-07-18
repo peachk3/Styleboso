@@ -23,7 +23,7 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 
 	// 창고코드 리스트 출력
 	@Override
-	public List<WarehouseCodeVO> listAll() {
+	public List<WarehouseCodeVO> listAll() throws Exception {
 		logger.debug("창고 리스트 조회");
 		
 		return bidao.listAll();
@@ -31,7 +31,7 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 
 	// 거래처 리스트 출력
 	@Override
-	public List<ClientVO> cliListAll() {
+	public List<ClientVO> cliListAll() throws Exception {
 		logger.debug("고객사 리스트 조회");
 		
 		return bidao.cliListAll();
@@ -39,7 +39,7 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 
 	// 품목 리스트 출력
 	@Override
-	public List<ItemVO> itemListAll() {
+	public List<ItemVO> itemListAll() throws Exception {
 		logger.debug(" 품목 리스트 조회 ");
 		
 		return bidao.itemListAll();

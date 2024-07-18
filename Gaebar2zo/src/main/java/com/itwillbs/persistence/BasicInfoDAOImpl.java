@@ -25,7 +25,7 @@ public class BasicInfoDAOImpl implements BasicInfoDAO{
 
 	// 창고코드 리스트 출력
 	@Override
-	public List<WarehouseCodeVO> listAll() {
+	public List<WarehouseCodeVO> listAll() throws Exception {
 		logger.debug(" listAll() 실행 ");
 		
 		return sqlSession.selectList(NAMESPACE + "listALL");
@@ -33,7 +33,7 @@ public class BasicInfoDAOImpl implements BasicInfoDAO{
 
 	// 거래처 리스트 출력
 	@Override
-	public List<ClientVO> cliListAll() {
+	public List<ClientVO> cliListAll() throws Exception {
 		logger.debug(" cliListAll() 실행 ");
 		
 		return sqlSession.selectList(NAMESPACE + "cliListALL");
@@ -41,7 +41,7 @@ public class BasicInfoDAOImpl implements BasicInfoDAO{
 
 	// 품목 리스트 출력
 	@Override
-	public List<ItemVO> itemListAll() {
+	public List<ItemVO> itemListAll() throws Exception {
 		logger.debug(" itemListAll() 실행 ");
 		
 		return sqlSession.selectList(NAMESPACE + "itemListALL");

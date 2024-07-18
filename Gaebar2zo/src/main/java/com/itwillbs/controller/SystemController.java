@@ -9,17 +9,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 
-
-
 @RequestMapping(value="/Styleboso/system/*")
 @Controller
 public class SystemController {
 
-	//http://localhost:8088/Styleboso/system/login
+	
 	private static final Logger logger = LoggerFactory.getLogger(SystemController.class);
-
-	
-	
 
 	//http://localhost:8088/Styleboso/system/main
 	// 대시보드 ( 메인 페이지 )

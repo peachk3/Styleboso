@@ -18,7 +18,14 @@ public class SystemController {
 	//http://localhost:8088/Styleboso/system/login
 	private static final Logger logger = LoggerFactory.getLogger(SystemController.class);
 
-	
+   // http://localhost:8088/Styleboso/system/login
+   // 로그인
+   @RequestMapping(value = "/login", method = RequestMethod.GET)
+   public void login() throws Exception {
+      logger.debug(" login() 실행 ");
+
+   }
+
 	
 
 	//http://localhost:8088/Styleboso/system/main

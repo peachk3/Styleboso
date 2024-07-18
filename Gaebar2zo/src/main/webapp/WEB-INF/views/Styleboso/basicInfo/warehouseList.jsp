@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../include/header.jsp"%>
+
 <body>
 	<h1>/Styleboso/basicInfo/warehouseList.jsp</h1>
 
@@ -143,7 +144,7 @@
 	
 	<!-- Modal2 -->
 	<div class="modal fade" id="manModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+	<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">담당자</h5>

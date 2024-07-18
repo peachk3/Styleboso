@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.itwillbs.domain.UsersVO;
 import com.itwillbs.service.UsersService;
 
-@RequestMapping(value="/Styleboso/system/*")
+@RequestMapping(value="/system/*")
 @Controller
 public class UsersController {
 	
@@ -24,7 +24,7 @@ public class UsersController {
 		@Inject
 		private UsersService uService;
 		
-		//http://localhost:8088/Styleboso/system/login
+		//http://localhost:8088/system/login
 		// 로그인
 		@RequestMapping(value="/login",method=RequestMethod.GET)
 		public void login() throws Exception{

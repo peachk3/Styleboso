@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.service.CommonService;
 
-@RequestMapping(value="/Styleboso/common/*")
+@RequestMapping(value="/common/*")
 @Controller
 public class CommonController {
 

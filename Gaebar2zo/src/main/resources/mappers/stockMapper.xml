@@ -5,21 +5,21 @@
   <mapper namespace="com.itwillbs.mapper.stockMapper">
 	
 	<resultMap type="com.itwillbs.domain.TransactionVO" id="transMap">
-	<id property="tran_num" column="tran_num"/>
-	<result property="tran_num" column="tran_num"/>
-	<result property="top_tran_num" column="top_tran_num"/>
-	<result property="cli_num" column="cli_num"/>
-	<result property="pic_username" column="pic_username"/>
-	<result property="tran_date" column="tran_date"/>
-	<result property="rec_date" column="rec_date"/>
-	<result property="rel_date" column="rel_date"/>
-	<result property="due_date" column="due_date"/>
-	<result property="pro_status" column="pro_status"/>
-	<result property="tran_cate_code" column="tran_cate_code"/>
-	<result property="comm" column="comm"/>
-	<collection property="goodsList" resultMap="goodsMap"></collection>
-	<collection property="itemList" resultMap="itemMap"></collection>
-	<collection property="inchangeList" resultMap="inchangeMap"></collection>
+		<id property="tran_num" column="tran_num"/>
+		<result property="tran_num" column="tran_num"/>
+		<result property="top_tran_num" column="top_tran_num"/>
+		<result property="cli_num" column="cli_num"/>
+		<result property="pic_username" column="pic_username"/>
+		<result property="tran_date" column="tran_date"/>
+		<result property="rec_date" column="rec_date"/>
+		<result property="rel_date" column="rel_date"/>
+		<result property="due_date" column="due_date"/>
+		<result property="pro_status" column="pro_status"/>
+		<result property="tran_cate_code" column="tran_cate_code"/>
+		<result property="comm" column="comm"/>
+		<collection property="goodsList" resultMap="goodsMap"></collection>
+		<collection property="itemList" resultMap="itemMap"></collection>
+		<collection property="inchangeList" resultMap="inchangeMap"></collection>
 	</resultMap>
 
 	<resultMap type="com.itwillbs.domain.TransactionGoodsVO" id="goodsMap">
@@ -57,19 +57,26 @@
 	
 	
 	<!-- 입고 리스트 호출 -->
-	<select id="transactionList" resultMap="transMap">
-		select tr.tran_num,top_tran_num,cli_num,pic_username,tran_date,rec_date,
-		tran_date,rel_date,due_date,pro_status,tran_cate_code,tr.comm,trg.goods_num,trg.goods_qty,
-		it.item_num,it.item_name,inc.inven_num
-		from transaction tr
-		join transaction_goods trg
-		on tr.tran_num = trg.tran_num
-		join item it
-		on it.item_cli_code = tr.cli_num
-		join inventory_change inc
-		on inc.tran_num = tr.tran_num
-		where tran_cate_code="RC";
-</select>
+	<select id="transactionList" resultMap="transMap" >
+		select tran_num,top_tran_num,cli_num,pic_username,
+		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
+		go.item_num,go.item_name
+		from (select  tr.tran_num,top_tran_num,cli_num,pic_username,
+		   tran_date,rel_date,due_date,pro_status,tran_cate_code,comm, goods_num, goods_qty
+		                     from transaction tr
+		                     join transaction_goods trg
+		                     on tr.top_tran_num = trg.tran_num) tr
+		join (select item.item_num, goods_num, item_name
+		   from item join goods
+		   on item.item_num = goods.item_num
+		   where goods.item_num in (select item_num
+		                     from goods go
+		                     where goods_num in (select  trg.goods_num
+		                                    from transaction tr
+		                                    join transaction_goods trg
+		                                    on tr.top_tran_num = trg.tran_num))) go
+		on tr.goods_num = go.goods_num
+	</select>
 
 
 

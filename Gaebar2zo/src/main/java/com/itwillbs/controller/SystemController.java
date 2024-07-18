@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 
-@RequestMapping(value="/Styleboso/system/*")
+@RequestMapping(value="/system/*")
 @Controller
 public class SystemController {
 
@@ -21,7 +21,7 @@ public class SystemController {
 	
 	
 
-	//http://localhost:8088/Styleboso/system/main
+	//http://localhost:8088/system/main
 	// 대시보드 ( 메인 페이지 )
 	@RequestMapping(value="/main",method=RequestMethod.GET)
 	public void main_GET() throws Exception{
@@ -30,7 +30,7 @@ public class SystemController {
 
 	}
 
-	//http://localhost:8088/Styleboso/system/employeeList
+	//http://localhost:8088/system/employeeList
 	// 사용자 관리
 	@RequestMapping(value="/employeeList",method=RequestMethod.GET)
 	public void employeeList_GET() throws Exception{

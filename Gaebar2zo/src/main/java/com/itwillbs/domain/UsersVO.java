@@ -24,6 +24,8 @@ public class UsersVO {
 //	private AuthVO authVO; 1:1 구조
 	private List<AuthoritiesVO> authList; // 1:N구조
 	
+
+	
 	
 
 

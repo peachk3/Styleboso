@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="../views/Styleboso/include/header.jsp" %>
+<%@ include file="../views/include/header.jsp" %>
 
 	<body>
       <div class="body flex-grow-1">
@@ -749,6 +749,6 @@
         </div>
       </div>
       
-<%@ include file="../views/Styleboso/include/footer.jsp" %>
+<%@ include file="../views/include/footer.jsp" %>
   </body>
 </html>

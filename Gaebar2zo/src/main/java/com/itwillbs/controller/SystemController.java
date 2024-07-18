@@ -1,9 +1,14 @@
 package com.itwillbs.controller;
 
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -11,17 +16,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 
-@RequestMapping(value="/Styleboso/system/*")
+@RequestMapping(value="/system/*")
 @Controller
 public class SystemController {
 
-	//http://localhost:8088/Styleboso/system/login
+	//http://localhost:8088/system/login
 	private static final Logger logger = LoggerFactory.getLogger(SystemController.class);
 
 	
 	
 
-	//http://localhost:8088/Styleboso/system/main
+	//http://localhost:8088/system/main
 	// 대시보드 ( 메인 페이지 )
 	@RequestMapping(value="/main",method=RequestMethod.GET)
 	public void main_GET() throws Exception{
@@ -30,7 +35,7 @@ public class SystemController {
 
 	}
 
-	//http://localhost:8088/Styleboso/system/employeeList
+	//http://localhost:8088/system/employeeList
 	// 사용자 관리
 	@RequestMapping(value="/employeeList",method=RequestMethod.GET)
 	public void employeeList_GET() throws Exception{

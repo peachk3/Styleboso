@@ -17,7 +17,7 @@ import com.itwillbs.domain.WarehouseCodeVO;
 import com.itwillbs.service.BasicInfoService;
 
 
-@RequestMapping(value="/Styleboso/basicInfo/*")
+@RequestMapping(value="/basicInfo/*")
 @Controller
 public class BasicInfoController {
 
@@ -27,7 +27,7 @@ public class BasicInfoController {
 	@Inject
 	private BasicInfoService bService;
 	
-	//http://localhost:8088/Styleboso/basicInfo/itemList
+	//http://localhost:8088/basicInfo/itemList
 	// 품목 관리
 	@RequestMapping(value="/itemList",method=RequestMethod.GET)
 	public void itemList_GET(Model model) throws Exception{

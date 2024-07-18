@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.service.StockService;
 
-@RequestMapping(value="/Styleboso/stock/*")
+@RequestMapping(value="/stock/*")
 @Controller
 public class StockController {
 

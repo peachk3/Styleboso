@@ -37,7 +37,7 @@
 					<td>${item.item_num }</td>
 					<td>${item.item_name }</td>
 				</c:forEach>
-
+				
 				<c:forEach var="goods" items="${rc.goodsList}">
 					<td>${goods.goods_qty }</td>
 				</c:forEach>

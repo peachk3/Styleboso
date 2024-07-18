@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.ClientVO;
+import com.itwillbs.domain.UsersVO;
 import com.itwillbs.service.CommonService;
 
 @RequestMapping(value="/Styleboso/common/*")
@@ -43,6 +44,21 @@ public class CommonController {
 
 	}
 
+	// 담당자 리스트 조회
+	@ResponseBody
+	@RequestMapping(value="/managerList",method=RequestMethod.GET,
+	produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public List<UsersVO> managerList_GET(Model model) throws Exception{
+		logger.debug(" managerList_GET() 실행 ");
+		
+		// 서비스 -> DB의 정보를 가져오기
+		List<UsersVO> mList = cService.ManagerList();
+		logger.debug("size : "+ mList.size());
+		logger.debug("mList : "+ mList);
+		
+		return mList;
+		
+	}
 
 
 

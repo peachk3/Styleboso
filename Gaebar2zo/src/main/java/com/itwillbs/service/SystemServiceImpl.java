@@ -1,16 +1,34 @@
 package com.itwillbs.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.itwillbs.domain.UsersVO;
 import com.itwillbs.persistence.SystemDAO;
 
 @Service
 public class SystemServiceImpl implements SystemService{
+
+	private static final Logger logger = LoggerFactory.getLogger(SystemServiceImpl.class);
 	
 	@Inject
 	private SystemDAO sdao;
+
+	//운영자,관리자,사원 전체 리스트 출력
+	@Override
+	public List<UsersVO> employeeListAll() throws Exception {
+		logger.debug("운영자/관리자/사원 전체 리스트 출력");
+	
+		return sdao.employeeListAll();
+	}
+	
+	
+	
 
 
 

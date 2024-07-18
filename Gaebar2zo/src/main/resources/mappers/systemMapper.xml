@@ -5,7 +5,9 @@
 
   <mapper namespace="com.itwillbs.mapper.systemMapper">
 
-
+<select id="employeeListAll" resultType="UsersVO">
+select * from users
+</select>
 
 
 

@@ -24,16 +24,28 @@
 									id="validationCustom02" required>
 								<div class="invalid-feedback">수주일자를 입력해주세요</div>
 							</div>
-							<div class="col-md-6">
-								<label for="validationCustom03" class="form-label">거래처</label>
-									<input type="text" class="form-control custom-btn" id="validationCustom03" 
-										   data-coreui-toggle="modal" data-coreui-target="#exampleModal1" readonly required>
+							<div class="col-md-3">
+								<label for="validationCustom03" class="form-label">거래처 코드</label>
+									<input type="text" class="form-control" id="validationCustom03" 
+										   data-coreui-toggle="modal" data-coreui-target="#exampleModal1" required>
 								<div class="invalid-feedback">거래처를 입력해주세요</div>
 							</div>
-							<div class="col-md-6">
-								<label for="validationCustom04" class="form-label">담당자</label>
-									<input type="text" class="form-control" id="validationCustom04"
-										   data-coreui-toggle="modal" data-coreui-target="#exampleModal2" readonly required>
+							<div class="col-md-3">
+								<label for="validationCustom04" class="form-label">거래처 명</label>
+									<input type="text" class="form-control" id="validationCustom04" 
+										   data-coreui-toggle="modal" data-coreui-target="#exampleModal1" required>
+								<div class="invalid-feedback">거래처를 입력해주세요</div>
+							</div>
+							<div class="col-md-3">
+								<label for="validationCustom05" class="form-label">담당자 아이디</label>
+									<input type="text" class="form-control" id="validationCustom05"
+										   data-coreui-toggle="modal" data-coreui-target="#exampleModal2" required>
+								<div class="invalid-feedback">담당자를 입력해주세요</div>
+							</div>
+							<div class="col-md-3">
+								<label for="validationCustom06" class="form-label">담당자 명</label>
+									<input type="text" class="form-control" id="validationCustom06"
+										   data-coreui-toggle="modal" data-coreui-target="#exampleModal2" required>
 								<div class="invalid-feedback">담당자를 입력해주세요</div>
 							</div>
 						<div class="example">
@@ -119,12 +131,12 @@
 												data-coreui-dismiss="modal" aria-label="Close"></button>
 										</div>
 										<div class="modal-body">
-											<table class="table table-hover" id="modal1-table">
+											<table class="table table-hover" id="modal2-table">
 												<thead class="table-light">
 													<tr>
 														<th scope="col"></th>
-														<th scope="col">거래처 코드</th>
-														<th scope="col">거래처 명</th>
+														<th scope="col">담당자 아이디</th>
+														<th scope="col">담당자 명</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -134,7 +146,6 @@
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
-											<button type="button" class="btn btn-primary" id="sendBtn">Send message</button>
 										</div>
 									</div>
 								</div>
@@ -184,19 +195,38 @@
        });
 
       $('#modal1-table tbody').on('click', 'tr', function() {
-          var targetInput = document.getElementById('validationCustom03');
-          var cliNum = $(this).find('td:nth-child(2)').text(); // 두 번째 열(거래처 코드)
+          var targetInput1 = document.getElementById('validationCustom03');
+          var targetInput2 = document.getElementById('validationCustom04');
+          var cliNum1 = $(this).find('td:nth-child(2)').text(); // 두 번째 열(거래처 코드)
+          var cliNum2 = $(this).find('td:nth-child(3)').text(); // 두 번째 열(거래처 코드)
 
           // Modal에서 입력된 값을 가져와서 다른 input 요소에 설정
-          targetInput.value = cliNum;
+          targetInput1.value = cliNum1;
+          targetInput2.value = cliNum2;
       
           // Modal 닫기 (Optional)
           var modal = document.getElementById('exampleModal1');
           var modalInstance = coreui.Modal.getInstance(modal);
           modalInstance.hide();
       });
+
+      $('#modal2-table tbody').on('click', 'tr', function() {
+          var targetInput1 = document.getElementById('validationCustom05');
+          var targetInput2 = document.getElementById('validationCustom06');
+          var cliNum1 = $(this).find('td:nth-child(2)').text(); // 두 번째 열(거래처 코드)
+          var cliNum2 = $(this).find('td:nth-child(3)').text(); // 두 번째 열(거래처 코드)
+
+          // Modal에서 입력된 값을 가져와서 다른 input 요소에 설정
+          targetInput1.value = cliNum1;
+          targetInput2.value = cliNum2;
       
+          // Modal 닫기 (Optional)
+          var modal = document.getElementById('exampleModal2');
+          var modalInstance = coreui.Modal.getInstance(modal);
+          modalInstance.hide();
+      });
       
+      getClientList();
       
       function getClientList() {
          
@@ -224,7 +254,33 @@
           });
       }
       
-      getClientList();
+      getManagerList();
+      
+      function getManagerList() {
+         
+          $('#modal2-table tbody tr').remove();
+          
+          $.ajax({
+              url: "/Styleboso/common/managerList",
+              type: "get",
+              contentType: 'application/json; charset=utf-8',
+              dataType: "json",
+              success: function(data) {
+                  // body 태그에 내용 추가
+                  console.log(data);
+                  data.forEach(function(item, idx){
+                     console.log(idx);
+                     var row = "<tr><th scope='row'>" + (parseInt(idx)+1) + "</th><td>" + item.username + "</td><td>" + item.user_per_name + "</td></tr>"
+                      $('#modal2-table tbody').append(row);
+                  });
+                  
+              },
+              error: function(jqXHR, textStatus, errorThrown) {
+                  console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
+                  alert("AJAX 요청 실패!");
+              }
+          });
+      }
       
    });
    

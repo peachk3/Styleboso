@@ -10,10 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.ClientVO;
+import com.itwillbs.domain.UsersVO;
 
 @Repository
 public class CommonDAOImpl implements CommonDAO{
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(CommonDAOImpl.class);
 	
 	public static final String NAMESPACE="com.itwillbs.mapper.commonMapper.";
@@ -26,6 +27,13 @@ public class CommonDAOImpl implements CommonDAO{
 		logger.debug("DAO : ClientList() 호출");
 		
 		return sqlSession.selectList(NAMESPACE + "clientList");
+	}
+	
+	@Override
+	public List<UsersVO> ManagerList() throws Exception {
+		logger.debug("DAO : ManagerList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "managerList");
 	}
 
 

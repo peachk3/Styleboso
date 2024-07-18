@@ -5,13 +5,19 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.ClientVO;
+import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
 
 @Service
 public interface BasicInfoService {
-
+	
+	// 창고코드 리스트 출력
 	List<WarehouseCodeVO> listAll();
 
+	// 거래처 리스트 출력
 	List<ClientVO> cliListAll();
+
+	// 품목 리스트 출력
+	List<ItemVO> itemListAll();
 
 }

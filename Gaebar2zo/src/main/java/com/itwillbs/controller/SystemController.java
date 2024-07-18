@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class SystemController {
 
-	//http://localhost:8088/Styleboso/system/login
+	//http://localhost:8088/system/login
 	private static final Logger logger = LoggerFactory.getLogger(SystemController.class);
 
 	

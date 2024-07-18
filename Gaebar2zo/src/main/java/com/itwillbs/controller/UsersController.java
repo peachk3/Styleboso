@@ -38,7 +38,7 @@ public class UsersController {
 			//파라미터에 전달할 정보 저장(아이디, 비밀번호)
 			
 			
-			return "redirect:/Styleboso/system/main";
+			return "redirect:/stystem/main";
 		}
 		
 		
@@ -53,7 +53,7 @@ public class UsersController {
 			logger.debug("/logout -> logoutPOST() 호출");
 			session.invalidate(); // 세션 무효화
 			
-			return "redirect:/Styleboso/system/main";
+			return "redirect:/stystem/main";
 		}
 		
 		

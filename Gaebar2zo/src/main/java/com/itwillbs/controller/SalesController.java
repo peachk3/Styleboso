@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.service.SalesService;
 
-@RequestMapping(value="/Styleboso/sales/*")
+@RequestMapping(value="/sales/*")
 @Controller
 public class SalesController {
 

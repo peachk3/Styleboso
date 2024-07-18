@@ -56,8 +56,8 @@
               <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-puzzle"></use>
             </svg><span data-coreui-i18n="시스템 관리">시스템 관리</span></a>
           <ul class="nav-group-items compact">
-            <li class="nav-item"><a class="nav-link" href="/Styleboso/system/employeeList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 사용자 관리</a></li>
-            <li class="nav-item"><a class="nav-link" href="/Styleboso/system/code/common"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 공통 코드 관리</a></li>
+            <li class="nav-item"><a class="nav-link" href="/system/employeeList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 사용자 관리</a></li>
+            <li class="nav-item"><a class="nav-link" href="/system/code/common"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 공통 코드 관리</a></li>
           </ul>
         </li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
@@ -65,14 +65,14 @@
               <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-cursor"></use>
             </svg><span data-coreui-i18n="기본정보 관리">기본정보 관리</span></a>
           <ul class="nav-group-items compact">
-            <li class="nav-item"><a class="nav-link" href="/Styleboso/basicInfo/itemList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 품목 관리</a></li>
-            <li class="nav-item"><a class="nav-link" href="/Styleboso/basicInfo/clientList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 거래처 관리</a></li>
+            <li class="nav-item"><a class="nav-link" href="/basicInfo/itemList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 품목 관리</a></li>
+            <li class="nav-item"><a class="nav-link" href="/basicInfo/clientList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 거래처 관리</a></li>
             <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
-	              <span class="nav-icon"><span class="nav-icon-bullet"></span></span><span data-coreui-i18n="창고 관리" onclick="location.href='/Styleboso/basicInfo/warehouseList'">창고 관리</span></a>
+	              <span class="nav-icon"><span class="nav-icon-bullet"></span></span><span data-coreui-i18n="창고 관리" onclick="location.href='/basicInfo/warehouseList'">창고 관리</span></a>
 	          <ul class="nav-group-items compact">
-	            <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/Styleboso/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 김포 창고</a></li>
-	            <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/Styleboso/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 대구 창고</a></li>
-	            <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/Styleboso/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 양산 창고</a></li>
+	            <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 김포 창고</a></li>
+	            <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 대구 창고</a></li>
+	            <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 양산 창고</a></li>
 	          </ul>
 	        </li>
           </ul>
@@ -82,9 +82,9 @@
               <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-notes"></use>
             </svg><span data-coreui-i18n="영업 관리">영업 관리</span></a>
           <ul class="nav-group-items compact">
-            <li class="nav-item"><a class="nav-link" href="/Styleboso/sales/salesOrderList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 수주 관리</a></li>
-            <li class="nav-item"><a class="nav-link" href="/Styleboso/sales/purchaseOrderList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 발주 관리</a></li>
-            <li class="nav-item"><a class="nav-link" href="/Styleboso/sales/shipmentList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 출하 관리</a></li>
+            <li class="nav-item"><a class="nav-link" href="/sales/salesOrderList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 수주 관리</a></li>
+            <li class="nav-item"><a class="nav-link" href="/sales/purchaseOrderList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 발주 관리</a></li>
+            <li class="nav-item"><a class="nav-link" href="/sales/shipmentList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 출하 관리</a></li>
           </ul>
         </li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
@@ -92,16 +92,16 @@
               <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-star"></use>
             </svg><span data-coreui-i18n="재고 관리">재고 관리</span></a>
           <ul class="nav-group-items compact">
-            <li class="nav-item"><a class="nav-link" href="/Styleboso/stock/status"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 재고 현황</a></li>
+            <li class="nav-item"><a class="nav-link" href="/stock/status"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 재고 현황</a></li>
 	        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
 	              <span class="nav-icon"><span class="nav-icon-bullet"></span></span><span data-coreui-i18n="재고 조정">재고 조정</span></a>
 	          <ul class="nav-group-items compact">
-	            <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/Styleboso/stock/adjustment/exchange"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 교환</a></li>
-	            <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/Styleboso/stock/adjustment/return"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 반품</a></li>
+	            <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/stock/adjustment/exchange"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 교환</a></li>
+	            <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/stock/adjustment/return"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 반품</a></li>
 	          </ul>
 	        </li>
-            <li class="nav-item"><a class="nav-link" href="/Styleboso/stock/receivingList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 입고 관리</a></li>
-            <li class="nav-item"><a class="nav-link" href="/Styleboso/stock/releaseList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 출고 관리</a></li>
+            <li class="nav-item"><a class="nav-link" href="/stock/receivingList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 입고 관리</a></li>
+            <li class="nav-item"><a class="nav-link" href="/stock/releaseList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 출고 관리</a></li>
             
           </ul>
         </li>
@@ -586,7 +586,7 @@
         <div class="container-fluid px-4">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0">
-              <li class="breadcrumb-item"><a href="/Styleboso/system/main" data-coreui-i18n="home">Home</a>
+              <li class="breadcrumb-item"><a href="/system/main" data-coreui-i18n="home">Home</a>
               </li>
               <li class="breadcrumb-item active"><span data-coreui-i18n="dashboard">Dashboard</span>
               </li>

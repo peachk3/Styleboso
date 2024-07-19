@@ -41,16 +41,20 @@
 						</label>
 						</td>
 				</td>
-				  <td class="clickable-cell">${rs.tran_num}</td>
-                    <td class="clickable-cell">${item.item_num}</td>
-                    <td class="clickable-cell">${item.item_name}</td>
-                    <c:forEach var="goods" items="${item.goodsList}">
-                        <td class="clickable-cell">${goods.goods_qty}</td>
-                        <td class="clickable-cell">${rs.rel_date}</td>
-                        <td class="clickable-cell">${rs.top_tran_num}</td>
-                        <td class="clickable-cell">${inchange.inven_num}</td>
-                        <td class="clickable-cell">${rs.comm}</td>
-                        <td class="clickable-cell">${rs.pro_status}</td>
+
+				<td>${rs.tran_num }</td>
+
+					<td>${item.item_num }</td>
+					<td>${item.item_name }</td>
+				
+				<c:forEach var="goods" items="${item.tranGoodsList}">
+					<td>${goods.goods_qty }</td>
+				<td>${rs.rel_date }</td>
+				<td>${rs.top_tran_num }</td>
+
+				<td>${inchange.inven_num }</td>
+				<td>${rs.comm }</td>
+				<td>${rs.pro_status }</td>
 
 				</c:forEach>
 			</c:forEach>

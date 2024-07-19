@@ -9,6 +9,13 @@
 	<select id="clientList" resultType="ClientVO">
 		SELECT cli_num, cli_name FROM client
 	</select>
+	
+	<!-- 거래처 리스트 조회 -->
+	<select id="managerList" resultType="UsersVO">
+		select username, user_per_name
+		from users
+		where username in (select username from authorities where authority = "ROLE_MANAGER")
+	</select>
 
 
 

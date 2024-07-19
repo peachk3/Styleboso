@@ -25,32 +25,37 @@
 			<td>상태</td>
 		</tr>
 
-    <c:forEach var="rc" items="${rc}" >
-        <c:forEach var="item" items="${rc.itemList}" varStatus="rcStatus">
-            <tr>
-                <c:forEach var="inchange" items="${rc.inchangeList}">
-                    <td>
-                        <label class="form-check-label" for="flexCheckDefault${rcStatus.index}">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault${rcStatus.index}">
-                            Default checkbox
-                        </label>
-                    </td>
-                    <td class="clickable-cell">${rc.tran_num}</td>
-                    <td class="clickable-cell">${item.item_num}</td>
-                    <td class="clickable-cell">${item.item_name}</td>
-                    <c:forEach var="goods" items="${item.goodsList}">
-                        <td class="clickable-cell">${goods.goods_qty}</td>
-                        <td class="clickable-cell">${rc.rec_date}</td>
-                        <td class="clickable-cell">${rc.top_tran_num}</td>
-                        <td class="clickable-cell">${inchange.inven_num}</td>
-                        <td class="clickable-cell">${rc.comm}</td>
-                        <td class="clickable-cell">${rc.pro_status}</td>
-                    </c:forEach>
-                </c:forEach>
-            </tr>
-        </c:forEach>
-    </c:forEach>
-</table>
+
+		<c:forEach var="rc" items="${rc}">
+				<c:forEach var="item" items="${rc.itemList}">
+			<tr>
+				<c:forEach var="inchange" items="${rc.inchangeList}">
+				<td>
+				<label class="form-check-label" for="flexCheckDefault"> 
+				<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"> 
+					Default checkbox 
+				</label>
+				</td>
+				<td>${rc.tran_num }</td>
+
+					<td>${item.item_num }</td>
+					<td>${item.item_name }</td>
+				
+				<c:forEach var="goods" items="${item.tranGoodsList}">
+					<td>${goods.goods_qty }</td>
+				<td>${rc.rec_date }</td>
+				<td>${rc.top_tran_num }</td>
+
+				<td>${inchange.inven_num }</td>
+				<td>${rc.comm }</td>
+				<td>${rc.pro_status }</td>
+
+				</c:forEach>
+			</c:forEach>
+					</tr>
+			</c:forEach>
+		</c:forEach>
+	</table>
 	
 	<div>
 	    <button id="addRowBtn" class="btn btn-outline-info" type="button" onclick="location.href='/stock/receivingAdd'">입고 등록</button>

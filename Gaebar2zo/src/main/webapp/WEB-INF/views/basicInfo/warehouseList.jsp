@@ -52,7 +52,7 @@
 					<td>${whc.wh_man }</td>
 					<td>
 						<c:choose>
-							<c:when test="${vo.wh_status == 1 }">사용중</c:when>
+							<c:when test="${whc.wh_status == 1 }">사용중</c:when>
 				    		<c:otherwise> 사용 중지</c:otherwise>
 						</c:choose>
 				    </td> 

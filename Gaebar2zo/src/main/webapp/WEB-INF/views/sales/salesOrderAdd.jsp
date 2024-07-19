@@ -4,7 +4,7 @@
 
 <body>
   
-  <h1>/Styleboso/sales/salesOrderAdd.jsp</h1>
+  <h1>/sales/salesOrderAdd.jsp</h1>
 
 	<div class="container-lg px-4">
 		<div class="row">
@@ -34,7 +34,6 @@
 								<label for="validationCustom04" class="form-label">거래처 명</label>
 									<input type="text" class="form-control" id="validationCustom04" 
 										   data-coreui-toggle="modal" data-coreui-target="#exampleModal1" required>
-								<div class="invalid-feedback">거래처를 입력해주세요</div>
 							</div>
 							<div class="col-md-3">
 								<label for="validationCustom05" class="form-label">담당자 아이디</label>
@@ -46,45 +45,44 @@
 								<label for="validationCustom06" class="form-label">담당자 명</label>
 									<input type="text" class="form-control" id="validationCustom06"
 										   data-coreui-toggle="modal" data-coreui-target="#exampleModal2" required>
-								<div class="invalid-feedback">담당자를 입력해주세요</div>
 							</div>
 						<div class="example">
+							<div class="tab-content rounded-bottom">
+
+								<button id="addRowBtn" class="btn btn-outline-info"
+									type="button" style="margin-bottom: 10px;" onclick="addRow();">품목 추가</button>
+									
 							<ul class="nav nav-underline-border" role="tablist">
 							</ul>
-							<div class="tab-content rounded-bottom">
-								<div class="tab-pane p-3 active preview" role="tabpanel"
-									id="preview-1000">
-										<table class="table">
-											<thead class="table-light">
-												<tr>
-													<th scope="col">#</th>
-													<th scope="col">First</th>
-													<th scope="col">Last</th>
-													<th scope="col">Handle</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<th scope="row">1</th>
-													<td>Mark</td>
-													<td>Otto</td>
-													<td>@mdo</td>
-												</tr>
-												<tr>
-													<th scope="row">2</th>
-													<td>Jacob</td>
-													<td>Thornton</td>
-													<td>@fat</td>
-												</tr>
-												<tr>
-													<th scope="row">3</th>
-													<td>Larry</td>
-													<td>the Bird</td>
-													<td>@twitter</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
+								<table class="table item-table">
+									<thead class="table-light">
+										<tr>
+											<th scope="col">#</th>
+											<th scope="col">제품번호</th>
+											<th scope="col">제품명</th>
+											<th scope="col">수량</th>
+											<th scope="col">비고</th>
+										</tr>
+									</thead>
+									<tbody id="tableBody">
+											<tr>
+												<th scope="row"><input class="form-check-input"
+													type="checkbox" id="row1"></th>
+												<td> <div class="col-auto">
+												    <input type="text" id="goods-num1" class="form-control form-control-sm" required>
+												  </div></td>
+												<td><div class="col-auto">
+												    <input type="text" id="goods-name1" class="form-control form-control-sm" disabled>
+												  </div></td>
+												<td><div class="col-auto">
+												    <input type="text" id="goods-qty1" class="form-control form-control-sm" required>
+												  </div></td>
+												<td><div class="col-auto">
+												    <input type="text" id="goods-comm1" class="form-control form-control-sm">
+												  </div></td>
+											</tr>
+									</tbody>
+								</table>
 							</div>
 						</div>
 							<div class="col-12">
@@ -115,7 +113,7 @@
 											</table>
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
 										</div>
 									</div>
 								</div>
@@ -145,7 +143,7 @@
 											</table>
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
 										</div>
 									</div>
 								</div>
@@ -169,12 +167,14 @@
 
 <!-- <script src="path/to/bootstrap.bundle.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="path/to/jquery.min.js"></script>
+<script src="path/to/your-custom-script.js"></script>
 
 <script type="text/javascript">
    
    document.addEventListener('DOMContentLoaded', function() {
       
-       const submitFormBtn = document.getElementById('submitFormBtn');
+		const submitFormBtn = document.getElementById('submitFormBtn');
    
        submitFormBtn.addEventListener('click', function(event) {
          event.preventDefault(); // 기본 제출 동작 방지
@@ -282,8 +282,31 @@
           });
       }
       
+      
    });
    
+	var cnt = 1;
+      
+	function addRow() {
+		alert("제품 추가");
+		var row = "<tr>" +
+			"<th scope='row'><input class='form-check-input' type='checkbox' id='row"+ cnt +"'></th>" +
+			"<td> <div class='col-auto'>" +
+			"<input type='text' id='goods-num"+ cnt +"' class='form-control form-control-sm' required>" +
+			"</div></td>" +
+			"<td><div class='col-auto'>" +
+			"<input type='text' id='goods-num"+ cnt +"' class='form-control form-control-sm' disabled>" +
+			"</div></td>" +
+			"<td><div class='col-auto'>" +
+			"<input type='text' id='goods-num"+ cnt +"' class='form-control form-control-sm' required>" +
+			"</div></td>" +
+			"<td><div class='col-auto'>" +
+			"<input type='text' id='goods-num"+ cnt +"' class='form-control form-control-sm'>" +
+			"</div></td>" +
+		"</tr>";
+		$(".item-table tbody").append(row);
+		cnt++;
+	}
 </script>
 
 <%@ include file="../include/footer.jsp" %>

@@ -12,8 +12,7 @@
 			<tr>
 				<th scope="col"> 
 					<div class="form-check">
-               			<input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" > 
-               			<label class="form-check-label" for="flexCheckDisabled"> </label>
+               			<input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled> <label class="form-check-label" for="flexCheckDisabled"> Disabled checkbox </label>
             		</div>
 				</th>
 				<th scope="col">품목 코드</th>
@@ -30,8 +29,8 @@
 				<tr>
 					<td>
 				  		<div class="form-check">
-                  			<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault${itl.item_num }" > 
-                  			<!-- <label class="form-check-label" for="flexCheckChecked"> Checked checkbox </label> -->
+                  			<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked> 
+                  			<label class="form-check-label" for="flexCheckChecked"> Checked checkbox </label>
                			</div>
                		</td>
                		<td>${itl.item_num }</td>

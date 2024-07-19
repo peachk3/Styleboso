@@ -13,8 +13,9 @@
             <th scope="col">
                <div class="form-check">
                   <input class="form-check-input" type="checkbox" value=""
-                     id="flexCheckDisabled" > 
-                     <label class="form-check-label" for="flexCheckDisabled"> </label>
+                     id="flexCheckDisabled" disabled> <label
+                     class="form-check-label" for="flexCheckDisabled">
+                     Disabled checkbox </label>
                </div>
             </th>
             <th scope="col">거래처 코드</th>
@@ -34,8 +35,8 @@
             <tr>
                <td>
                     <div class="form-check">
-                           <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault${cli.cli_num}"> 
-                           <!-- <label class="form-check-label" for="flexCheckChecked"> Checked checkbox </label> -->
+                           <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked> 
+                           <label class="form-check-label" for="flexCheckChecked"> Checked checkbox </label>
                         </div>
                      </td>
                      <td>${cli.cli_num }</td>

@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.service.StockService;
 
@@ -29,8 +30,11 @@ public class StockController {
 
 	// 재고 현황
 	@RequestMapping(value="/status",method=RequestMethod.GET)
-	public void status_GET() throws Exception{
+	public void status_GET(Model model) throws Exception{
 		logger.debug(" status_GET() 실행 ");
+		
+		List<InventoryVO> sl = sService.getStockList();
+		model.addAttribute("sl", sl);
 
 	}
 

@@ -41,7 +41,7 @@
 					<td>${item.item_num }</td>
 					<td>${item.item_name }</td>
 				
-				<c:forEach var="goods" items="${item.goodsList}">
+				<c:forEach var="goods" items="${item.tranGoodsList}">
 					<td>${goods.goods_qty }</td>
 				<td>${rc.rec_date }</td>
 				<td>${rc.top_tran_num }</td>

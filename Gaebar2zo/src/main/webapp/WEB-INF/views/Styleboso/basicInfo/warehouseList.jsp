@@ -18,8 +18,7 @@
 		</nav>
 	</div>
 
-	<input type="button" value="등록" onclick="openRegModal()"
-		class="btn btn-primary">
+	<input type="button" value="등록" onclick="openRegModal()" class="btn btn-primary">
 	<input type="button" value="삭제">
 	<table class="table table-hover">
 		<thead>
@@ -27,9 +26,7 @@
 				<th scope="col">
 					<div class="form-check">
 						<input class="form-check-input" type="checkbox" value=""
-							id="flexCheckDisabled" disabled> <label
-							class="form-check-label" for="flexCheckDisabled">
-							Disabled checkbox </label>
+							id="selectAll" onclick = "toggleCheckboxes(this)"> 
 					</div>
 				</th>
 				<th scope="col">창고 코드</th>
@@ -41,30 +38,31 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="vo" items="${whCodeList }">
+			<c:forEach var="whc" items="${whCodeList }">
 				<tr>
 					<td>
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value=""
-								id="flexCheckChecked" checked> 
-								<label class="form-check-label" for="flexCheckChecked"> 
-								Checked checkbox </label>
+							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault${whc.m_cate_wh_code }"> 
 						</div>
 					</td>
-					<td>${vo.m_cate_wh_code }${vo.s_cate_wh_code }</td>
-					<td>${vo.s_cate_wh_name }</td>
-					<td>${vo.wh_tel }</td>
-					<td>${vo.wh_add1 }${vo.wh_add2 }</td>
-					<td>${vo.wh_man }</td>
-					<td>${vo.wh_status }</td>
+					<td>${whc.m_cate_wh_code }${whc.s_cate_wh_code }</td>
+					<td>${whc.s_cate_wh_name }</td>
+					<td>${whc.wh_tel }</td>
+					<td>${whc.wh_add1 }${whc.wh_add2 }</td>
+					<td>${whc.wh_man }</td>
+					<td>
+						<c:choose>
+							<c:when test="${vo.wh_status == 1 }">사용중</c:when>
+				    		<c:otherwise> 사용 중지</c:otherwise>
+						</c:choose>
+				    </td> 
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 
 	<!-- 모달 창 -->
-	<div class="modal fade" id="regModal" tabindex="-1" role="dialog"
-		aria-labelledby="regModalLabel" aria-hidden="true">
+	<div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="regModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -72,26 +70,38 @@
 				</div>
 				<div class="modal-body">
 					<!-- 등록 폼 -->
-					<form id="regForm">
+					<form id="regForm" onsubmit="return submitForm()">
 						<table class="table">
 							<tbody>
 								<tr>
 									<td><label for="warehouseCode">창고코드</label></td>
-									<td><input type="text" class="form-control" id="warehouseCode" name="warehouseCode" required readonly="readonly"></td>
+									<td><input type="text" class="form-control" id="warehouseCode" name="warehouseCode" readonly="readonly"></td>
 								</tr>
 								<tr>
-									<td><label for="warehouseName">창고명</label></td>
-									<td><input type="text" class="form-control" id="warehouseName" name="warehouseName" required></td>
+									<td><label for="s_cate_wh_code">창고 지역명</label></td>
+									<td><input type="text" class="form-control" id="s_cate_wh_code" name="s_cate_wh_code" maxlength="2" placeholder="ex) 김포 -> GP" required>
+									<div id="whLocalNameError" class="text-danger" style="display: none;">창고 지역명을 입력하세요</div>
+									<div id="whCodeError" class="text-danger" style="display: none;">영어로 입력하시오</div>
+									</td>
 								</tr>
 								<tr>
-									<td><label for="warehouseTel">연락처</label></td>
-									<td><input type="tel" class="form-control" id="warehouseTel" name="warehouseTel" maxlength="11" placeholder="ex) 01012341234" required></td>
+									<td><label for="s_cate_wh_name">창고명</label></td>
+									<td><input type="text" class="form-control" id="s_cate_wh_name" name="s_cate_wh_name" required>
+									<div id="whNameError" class="text-danger" style="display: none;">창고명을 입력하세요</div></td>
 								</tr>
 								<tr>
-									<td><label for="warehouseAdd1">창고 주소</label></td>
+									<td><label for="wh_tel">연락처</label></td>
+									<td>
+									<input type="tel" class="form-control" id="wh_tel" name="wh_tel" maxlength="11" placeholder="ex) 01012341234" required>
+									</td>
+								</tr>
+								<tr>
+									<td><label for="wh_add1">창고 주소</label></td>
 									<td>
 										<div class="input-group">
-											<input type="text" class="form-control" id="warehouseAdd1" name="warehouseAdd1" required>
+											<div class="input">
+											<input type="text" class="form-control" id="wh_add1" name="wh_add1" required>
+											</div>
 											<div class="input-group-append">
 												<input type="button" value="주소 찾기">
 											</div>
@@ -99,14 +109,16 @@
 									</td>
 								</tr>
 								<tr>
-									<td><label for="warehouseAdd2">창고 상세 주소</label></td>
-									<td><input type="text" class="form-control" id="warehouseAdd2" name="warehouseAdd2" required></td>
+									<td><label for="wh_add2">창고 상세 주소</label></td>
+									<td><input type="text" class="form-control" id="wh_add2" name="wh_add2" required></td>
 								</tr>
 								<tr>
-									<td><label for="warehouseAdd2">창고 담당자</label></td>
+									<td><label for="wh_man">창고 담당자</label></td>
 									<td>
 										<div class="input-group">
-											<input type="text" class="form-control" id="warehouseAdd2" name="warehouseAdd2" required>
+											<div class="input">
+											<input type="text" class="form-control" id="wh_man" name="wh_man" required>
+											</div>
 											<div class="input-group-append">
 												<input type="button" value="찾기" onclick="openManModal()">
 											</div>
@@ -176,37 +188,121 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-	// 모달 열기 함수
-	function openRegModal() {
-	  $('#regModal').modal('show'); // jQuery를 사용하여 모달 창 열기
-	}
+
+// 모달창 외의 영역/esc 클릭시 창 닫힘 차단
 	
-	// 폼 제출 함수 (실제로는 서버로 데이터를 전송할 수 있습니다)
-	function submitForm() {
-	  // 여기서 폼 데이터를 처리하는 JavaScript 코드를 작성할 수 있습니다.
-	  // 예: AJAX를 사용하여 서버로 데이터 전송 등
-	  $('#regModal').modal('hide'); // 폼을 제출한 후 모달 창 닫기
-	}
 	$(document).ready(function(){
+	    $('#regModal').modal({
+	         backdrop: 'static',
+	        keyboard: false 
+	    });
+	    
+	    // 취소 버튼 클릭시 확인 모달 열기
 	    $("#cancelButton").click(function(){
 	        $("#confirmationModal").modal('show');
 	    });
 	    
-	    $("#warehouseTel").on("input", function() {
+	    // 전화번호 숫자만 입력 허용
+	    $("#wh_tel").on("input", function() {
 	        this.value = this.value.replace(/[^0-9]/g, '');
 	    });
 	
+	    // 창고 지역 코드명 대문자 영어 2자리만 입력 허용
+	    $("#s_cate_wh_code").on("input", function() {
+	    	
+	    	// 입력값을 대문자로 변환
+	        let inputValue = this.value.toUpperCase();
+	        
+	        // 영어 대문자 2자리만 허용
+	        inputValue = inputValue.replace(/[^A-Z]/g, '');
+
+	        // 한글이 포함된 경우
+	        const hasHangul = /[가-힣]/.test(this.value);
+	        
+	        // 자음과 모음만 포함된 경우
+	        const hasConsonantOrVowel = /[ㄱ-ㅎㅏ-ㅣ]/.test(this.value);
+
+	        // 오류 메시지 요소
+	        const errorMessage = document.getElementById('whCodeError');
+
+	        // 한글이나 자음/모음이 포함된 경우 오류 메시지 표시
+	        if (hasHangul || hasConsonantOrVowel) {
+	            errorMessage.style.display = 'block';
+	        } else {
+	            errorMessage.style.display = 'none';
+	        }
+
+	        // 필드 값 업데이트
+	        this.value = inputValue;
+	    	
+	    });
+	    
+	    // 확인 클릭시 모달 리셋
 	    $("#confirmCancelButton").click(function(){
 	        $("#confirmationModal").modal('hide');
 	        $("#regModal").modal('hide');
 	        resetForm();
 	    });
 	
+	    // 확인 모달의 아니오 버튼 클릭시 모달 숨기기
 	    $("#denyButton").click(function(){
 	        $("#confirmationModal").modal('hide');
 	        $("#regModal").modal('show');
 	    });
+	    
+/* 	    $('#regModal').on('shown.bs.modal', function () {
+	        $('#s_cate_wh_name').trigger('focus');
+	    }); */
 	});
+
+
+	// 전체 선택/해제 기능
+	function toggleCheckboxes(source) {
+	    const checkboxes = document.querySelectorAll('.form-check-input');
+	    checkboxes.forEach(checkbox => {
+	        checkbox.checked = source.checked;
+	    });
+	}
+
+	// 모달 열기 함수
+	function openRegModal() {
+	  $('#regModal').modal('show'); // jQuery를 사용하여 모달 창 열기
+	}
+	
+
+	// 폼 제출 함수 (실제로는 서버로 데이터를 전송할 수 있습니다)
+	function submitForm() {
+        const whNameInput = document.getElementById('s_cate_wh_name');
+        const errorMessage = document.getElementById('whNameError');
+        
+        const whLocalNameInput = document.getElementById('s_cate_wh_code');
+        const errorMessageLocal = document.getElementById('whLocalNameError');
+
+        
+ 		if (whLocalNameInput.value.trim() === '') {
+            errorMessageLocal.style.display = 'block';
+            return false; // 폼 제출을 막음
+		} else {
+            errorMessageLocal.style.display = 'none';
+           
+            // 여기서 폼 데이터를 처리하는 JavaScript 코드를 작성할 수 있습니다.
+            // 예: AJAX를 사용하여 서버로 데이터 전송 등
+            // $('#regModal').modal('hide'); // 폼을 제출한 후 모달 창 닫기
+            //return true; // 폼 제출을 진행
+        }
+/* 	  // 여기서 폼 데이터를 처리하는 JavaScript 코드를 작성할 수 있습니다.
+	  // 예: AJAX를 사용하여 서버로 데이터 전송 등
+	  
+	  $('#regModal').modal('hide'); // 폼을 제출한 후 모달 창 닫기 */
+	  
+        if (whNameInput.value.trim() === '') {
+            errorMessage.style.display = 'block';
+            return false; // 폼 제출을 막음
+        } else {
+            errorMessage.style.display = 'none';
+        }
+	}
+	
 	
 	function openManModal() {
 		$('#manModal').modal('show');

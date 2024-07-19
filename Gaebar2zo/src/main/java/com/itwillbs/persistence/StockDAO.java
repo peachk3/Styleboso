@@ -2,6 +2,7 @@ package com.itwillbs.persistence;
 
 import java.util.List;
 
+import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.TransactionVO;
 
 public interface StockDAO {
@@ -11,6 +12,9 @@ public interface StockDAO {
 
 	// 출고 리스트 호출
 	List<TransactionVO> rsList() throws Exception;
+
+	// 재고 리스트 호출
+	List<InventoryVO> getStockList() throws Exception;
 	
 	
 	

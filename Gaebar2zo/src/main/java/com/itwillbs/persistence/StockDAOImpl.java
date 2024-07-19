@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.TransactionVO;
 
 @Repository
@@ -31,7 +32,8 @@ public class StockDAOImpl implements StockDAO{
 		
 		return sqlSession.selectList(NAMESPACE+"receivingList");
 	}
-
+	
+	// 출고 리스트 호출
 	@Override
 	public List<TransactionVO> rsList() throws Exception {
 		logger.debug("DAOImpl : 출고 리스트 호출");
@@ -39,6 +41,16 @@ public class StockDAOImpl implements StockDAO{
 		
 		return sqlSession.selectList(NAMESPACE+"releaseList");
 	}
+
+	// 재고 리스트 호출
+	@Override
+	public List<InventoryVO> getStockList() throws Exception {
+		logger.debug("DAOImpl : 입고 리스트 호출");
+		
+		return sqlSession.selectList(NAMESPACE+"getStockList");
+	}
+	
+	
 
 	
 	

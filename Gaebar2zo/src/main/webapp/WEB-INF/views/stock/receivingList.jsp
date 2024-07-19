@@ -7,8 +7,6 @@
 
 
 
-
-
 	<table class="table table-hover">
 		<tr>
 			<td>
@@ -21,7 +19,7 @@
 			<td>품목명</td>
 			<td>입고 수량</td>
 			<td>입고일</td>
-			<td>발주 번호</td>
+			<td>거래 번호</td>
 			<td>재고 번호</td>
 			<td>비고</td>
 			<td>상태</td>
@@ -29,39 +27,43 @@
 
 
 		<c:forEach var="rc" items="${rc}">
+				<c:forEach var="item" items="${rc.itemList}">
 			<tr>
-				<td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"> <label class="form-check-label" for="flexCheckDefault"> Default checkbox </label></td>
+				<c:forEach var="inchange" items="${rc.inchangeList}">
+				<td>
+				<label class="form-check-label" for="flexCheckDefault"> 
+				<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"> 
+					Default checkbox 
+				</label>
+				</td>
 				<td>${rc.tran_num }</td>
 
-				<c:forEach var="item" items="${rc.itemList}">
 					<td>${item.item_num }</td>
 					<td>${item.item_name }</td>
-				</c:forEach>
 				
-				<c:forEach var="goods" items="${rc.goodsList}">
+				<c:forEach var="goods" items="${item.goodsList}">
 					<td>${goods.goods_qty }</td>
-				</c:forEach>
 				<td>${rc.rec_date }</td>
 				<td>${rc.top_tran_num }</td>
 
-				<c:forEach var="inchange" items="${rc.inchangeList}">
-					<td>${inchange.inven_num }</td>
-				</c:forEach>
-
+				<td>${inchange.inven_num }</td>
 				<td>${rc.comm }</td>
 				<td>${rc.pro_status }</td>
-			</tr>
+
+				</c:forEach>
+			</c:forEach>
+					</tr>
+			</c:forEach>
 		</c:forEach>
 	</table>
 	
-	
-	
-	
-	
-	
-	
+	<div>
+	    <button id="addRowBtn" class="btn btn-outline-info" type="button" onclick="location.href='/stock/receivingAdd'">입고 등록</button>
+	</div>
 	
 	
 <%@ include file="../include/footer.jsp" %>	
 </body>
+
+
 </html>

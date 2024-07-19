@@ -17,18 +17,11 @@
 		<result property="pro_status" column="pro_status"/>
 		<result property="tran_cate_code" column="tran_cate_code"/>
 		<result property="comm" column="comm"/>
-		<collection property="goodsList" resultMap="goodsMap"></collection>
+<!-- 		<collection property="goodsList" resultMap="goodsMap"></collection> -->
 		<collection property="itemList" resultMap="itemMap"></collection>
 		<collection property="inchangeList" resultMap="inchangeMap"></collection>
 	</resultMap>
 
-	<resultMap type="com.itwillbs.domain.TransactionGoodsVO" id="goodsMap">
-		<id property="tran_num" column="tran_num"/>
-		<id property="goods_num" column="goods_num"/>
-		<result property="tran_num" column="tran_num"/>
-		<result property="goods_num" column="goods_num"/>
-		<result property="goods_qty" column="goods_qty"/>
-	</resultMap>
 
 	<resultMap type="com.itwillbs.domain.ItemVO" id="itemMap">
 		<id property="item_num" column="item_num"/>
@@ -38,6 +31,15 @@
 		<result property="item_name" column="item_name"/>
 		<result property="item_mat" column="item_mat"/>
 		<result property="comm" column="comm"/>
+				<collection property="goodsList" resultMap="goodsMap"></collection>
+	</resultMap>
+
+	<resultMap type="com.itwillbs.domain.TransactionGoodsVO" id="goodsMap">
+		<id property="tran_num" column="tran_num"/>
+		<id property="goods_num" column="goods_num"/>
+		<result property="tran_num" column="tran_num"/>
+		<result property="goods_num" column="goods_num"/>
+		<result property="goods_qty" column="goods_qty"/>
 	</resultMap>
 	
 	<resultMap type="com.itwillbs.domain.InventoryChangeVO" id="inchangeMap">
@@ -57,12 +59,12 @@
 	
 	
 	<!-- 입고 리스트 호출 -->
-	<select id="transactionList" resultMap="transMap" >
-		select tran_num,top_tran_num,cli_num,pic_username,
+	<select id="receivingList" resultMap="transMap" >
+		select tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
 		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
-		go.item_num,go.item_name
+		go.item_num,go.item_name,inven_num
 		from (select  tr.tran_num,top_tran_num,cli_num,pic_username,
-		   tran_date,rel_date,due_date,pro_status,tran_cate_code,comm, goods_num, goods_qty
+		   tran_date,rel_date,due_date,pro_status,tran_cate_code,comm, goods_num, goods_qty,rec_date
 		                     from transaction tr
 		                     join transaction_goods trg
 		                     on tr.top_tran_num = trg.tran_num) tr
@@ -76,10 +78,35 @@
 		                                    join transaction_goods trg
 		                                    on tr.top_tran_num = trg.tran_num))) go
 		on tr.goods_num = go.goods_num
+		join inventory_change ic
+		on tr.tran_num = ic.tran_num
+        WHERE tr.tran_num like 'RC%'
 	</select>
 
-
-
+	<!-- 출고 리스트 호출 -->
+	<select id="releaseList" resultMap="transMap" >
+		select tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
+		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
+		go.item_num,go.item_name,inven_num
+		from (select  tr.tran_num,top_tran_num,cli_num,pic_username,
+		   tran_date,rel_date,due_date,pro_status,tran_cate_code,comm, goods_num, goods_qty,rec_date
+		                     from transaction tr
+		                     join transaction_goods trg
+		                     on tr.top_tran_num = trg.tran_num) tr
+		join (select item.item_num, goods_num, item_name
+		   from item join goods
+		   on item.item_num = goods.item_num
+		   where goods.item_num in (select item_num
+		                     from goods go
+		                     where goods_num in (select  trg.goods_num
+		                                    from transaction tr
+		                                    join transaction_goods trg
+		                                    on tr.top_tran_num = trg.tran_num))) go
+		on tr.goods_num = go.goods_num
+		join inventory_change ic
+		on tr.tran_num = ic.tran_num
+        WHERE tr.tran_num like 'RL%'
+	</select>
 
 
 

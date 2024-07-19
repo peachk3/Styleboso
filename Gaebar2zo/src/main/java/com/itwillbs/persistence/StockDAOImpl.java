@@ -27,10 +27,17 @@ public class StockDAOImpl implements StockDAO{
 	// 입고 리스트 호출
 	@Override
 	public List<TransactionVO> rcList() throws Exception {
+		logger.debug("DAOImpl : 입고 리스트 호출");
 		
-		logger.debug("호출 : "+sqlSession.selectList(NAMESPACE+"transactionList"));
+		return sqlSession.selectList(NAMESPACE+"receivingList");
+	}
+
+	@Override
+	public List<TransactionVO> rsList() throws Exception {
+		logger.debug("DAOImpl : 출고 리스트 호출");
+
 		
-		return sqlSession.selectList(NAMESPACE+"transactionList");
+		return sqlSession.selectList(NAMESPACE+"releaseList");
 	}
 
 	

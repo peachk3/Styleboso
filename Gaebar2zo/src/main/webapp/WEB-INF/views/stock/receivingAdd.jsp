@@ -171,13 +171,13 @@
                 newRow.innerHTML = `
                     <td>${rowCount}</td>
                     <td>새로운 입고번호</td>
-                    <td>새로운 품목코드</td> 
+                    <td>새로운 품목코드</td>
                     <td>새로운 품목명</td>
                     <td>새로운 입고 수량</td>
                     <td>새로운 입고일</td>
                     <td>새로운 발주 번호</td>
                     <td>새로운 재고 번호</td>
-                    <td>새로운 비고</td>
+                    <td>새로운 비고</td> 
                     <td>새로운 상태</td>
                 `;
                 tableBody.appendChild(newRow);

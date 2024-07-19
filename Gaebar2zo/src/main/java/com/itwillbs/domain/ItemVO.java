@@ -19,4 +19,7 @@ public class ItemVO {
 	private List<ItemCodeVO> itemCodeList;
 	private List<CodeVO> codeList;
 	
+	private List<TransactionGoodsVO> goodsList;
+
+	
 }

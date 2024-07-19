@@ -67,13 +67,21 @@ public class StockController {
 		// 입고 리스트 호출
 	    List<TransactionVO> rc = sService.rcList();
 		logger.debug("size : "+ rc.size());
-
-		
-//	   	List<Post_boardDTO> pBoardList = cService.PostList(cate, cri);
-
-	    		
 	    model.addAttribute("rc", rc);
 	    		
+		
+		// 입고 리스트 ( 3개로 나눠서 )
+//		List<TransactionVO> trn = sService.trnList();
+//		
+//		logger.debug("size : "+ trn.size());
+//		
+//		logger.debug("trn : "+trn);
+//		
+//		model.addAttribute("trn",trn);
+		
+		
+	    
+	    
 	}
 
 	
@@ -94,9 +102,15 @@ public class StockController {
 	
 	// 출고 관리
 	@RequestMapping(value="/releaseList",method=RequestMethod.GET)
-	public void releaseList_GET() throws Exception{
+	public void releaseList_GET(Model model) throws Exception{
 		logger.debug(" releaseList_GET() 실행 ");
 
+		
+		// 출고 리스트 호출
+	    List<TransactionVO> rs = sService.rsList();
+		logger.debug("size : "+ rs.size());
+	    model.addAttribute("rs", rs);
+		
 
 	}
 

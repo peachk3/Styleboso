@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.ClientVO;
+import com.itwillbs.domain.GoodsVO;
 import com.itwillbs.domain.UsersVO;
 
 @Repository
@@ -34,6 +35,13 @@ public class CommonDAOImpl implements CommonDAO{
 		logger.debug("DAO : ManagerList() 호출");
 		
 		return sqlSession.selectList(NAMESPACE + "managerList");
+	}
+
+	@Override
+	public List<GoodsVO> GoodsList() throws Exception {
+		logger.debug("DAO : GoodsList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "goodsList");
 	}
 
 

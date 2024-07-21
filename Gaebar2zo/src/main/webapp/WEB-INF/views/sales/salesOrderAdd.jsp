@@ -65,11 +65,12 @@
 										</tr>
 									</thead>
 									<tbody id="tableBody">
-											<tr>
+											<tr id="row1">
 												<th scope="row"><input class="form-check-input"
-													type="checkbox" id="row1"></th>
+													type="checkbox" id="check1"></th>
 												<td> <div class="col-auto">
-												    <input type="text" id="goods-num1" class="form-control form-control-sm" required>
+												    <input type="text" id="goods-num1" class="form-control form-control-sm" 
+												    		data-coreui-toggle="modal" data-coreui-target="#exampleModal3" required>
 												  </div></td>
 												<td><div class="col-auto">
 												    <input type="text" id="goods-name1" class="form-control form-control-sm" disabled>
@@ -99,7 +100,7 @@
 												data-coreui-dismiss="modal" aria-label="Close"></button>
 										</div>
 										<div class="modal-body">
-											<table class="table table-hover" id="modal1-table">
+											<table class="table table-hover text-center" id="modal1-table">
 												<thead class="table-light">
 													<tr>
 														<th scope="col"></th>
@@ -121,7 +122,7 @@
 							<!-- Modal2 -->
 							<div class="modal fade" id="exampleModal2" tabindex="-1"
 								aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog">
+								<div class="modal-dialog modal-dialog-scrollable">
 									<div class="modal-content">
 										<div class="modal-header">
 											<h5 class="modal-title" id="exampleModalLabel">담당자</h5>
@@ -129,7 +130,7 @@
 												data-coreui-dismiss="modal" aria-label="Close"></button>
 										</div>
 										<div class="modal-body">
-											<table class="table table-hover" id="modal2-table">
+											<table class="table table-hover text-center" id="modal2-table">
 												<thead class="table-light">
 													<tr>
 														<th scope="col"></th>
@@ -148,27 +149,62 @@
 									</div>
 								</div>
 							</div>
+							<!-- Modal3 -->
+							<div class="modal fade" id="exampleModal3" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-scrollable modal-lg">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">제품<input  id="click-row" value=""></h5> <!-- class="hidden" -->
+											<button type="button" class="btn-close"
+												data-coreui-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<table class="table table-hover text-center" id="modal3-table">
+												<thead class="table-light">
+													<tr>
+														<th scope="col"></th>
+														<th scope="col">제품 번호</th>
+														<th scope="col">제품 명</th>
+														<th scope="col">제품 사이즈</th>
+														<th scope="col">제품 색상</th>
+													</tr>
+												</thead>
+												<tbody>
+													
+												</tbody>
+											</table>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							
 						</form>
 					</div>
 				</div>
 			</div>
    
 
-   <h1>/Styleboso/sales/salesOrderAdd.jsp</h1>
+   <h1>/sales/salesOrderAdd.jsp</h1>
 </body>
 
 <style>
-  .custom-btn {
-    text-align: left; /* 텍스트를 왼쪽으로 정렬합니다 */
-    padding-left: 10px; /* 왼쪽 여백을 추가합니다 */
-    width: 100%; /* 버튼이 부모 요소에 맞게 전체 너비를 가지도록 설정합니다 */
-  }
+	.custom-btn {
+		text-align: left; /* 텍스트를 왼쪽으로 정렬합니다 */
+		padding-left: 10px; /* 왼쪽 여백을 추가합니다 */
+		width: 100%; /* 버튼이 부모 요소에 맞게 전체 너비를 가지도록 설정합니다 */
+	}
+  
+	.hidden {
+		display: none;
+	}
 </style>
 
 <!-- <script src="path/to/bootstrap.bundle.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="path/to/jquery.min.js"></script>
-<script src="path/to/your-custom-script.js"></script>
 
 <script type="text/javascript">
    
@@ -233,7 +269,7 @@
           $('#modal1-table tbody tr').remove();
           
           $.ajax({
-              url: "/Styleboso/common/clientList",
+              url: "/common/clientList",
               type: "get",
               contentType: 'application/json; charset=utf-8',
               dataType: "json",
@@ -261,7 +297,7 @@
           $('#modal2-table tbody tr').remove();
           
           $.ajax({
-              url: "/Styleboso/common/managerList",
+              url: "/common/managerList",
               type: "get",
               contentType: 'application/json; charset=utf-8',
               dataType: "json",
@@ -282,17 +318,44 @@
           });
       }
       
+      getGoodsList();
+      
+      function getGoodsList() {
+         
+          $('#modal3-table tbody tr').remove();
+          
+          $.ajax({
+              url: "/common/goodsList",
+              type: "get",
+              contentType: 'application/json; charset=utf-8',
+              dataType: "json",
+              success: function(data) {
+                  // body 태그에 내용 추가
+                  console.log(data);
+                  data.forEach(function(item, idx){
+                     console.log(idx);
+                     var row = "<tr><th scope='row'>" + (parseInt(idx)+1) + "</th><td>" + item.goods_num + "</td><td>" + item.itemList.map(itemVO => itemVO.item_name).join(', ') + "</td><td>" + item.goods_size + "</td><td>" + item.goods_color + "</td></tr>"
+                      $('#modal3-table tbody').append(row);
+                  });
+                  
+              },
+              error: function(jqXHR, textStatus, errorThrown) {
+                  console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
+                  alert("AJAX 요청 실패!");
+              }
+          });
+      }
+      
       
    });
    
-	var cnt = 1;
+	var cnt = 2;
       
 	function addRow() {
-		alert("제품 추가");
-		var row = "<tr>" +
-			"<th scope='row'><input class='form-check-input' type='checkbox' id='row"+ cnt +"'></th>" +
+		var row = "<tr id='row"+ cnt +"'>" +
+			"<th scope='row'><input class='form-check-input' type='checkbox' id='check"+ cnt +"'></th>" +
 			"<td> <div class='col-auto'>" +
-			"<input type='text' id='goods-num"+ cnt +"' class='form-control form-control-sm' required>" +
+			"<input type='text' id='goods-num"+ cnt +"' class='form-control form-control-sm' data-coreui-toggle='modal' data-coreui-target='#exampleModal3' required>" +
 			"</div></td>" +
 			"<td><div class='col-auto'>" +
 			"<input type='text' id='goods-num"+ cnt +"' class='form-control form-control-sm' disabled>" +
@@ -307,6 +370,23 @@
 		$(".item-table tbody").append(row);
 		cnt++;
 	}
+	
+    // 모달이 열릴 때 이벤트 처리
+    $('#exampleModal3').on('show.bs.modal', function(event) {
+    	alert("모달창 띄우기");
+    	
+        // 클릭된 버튼 요소
+        var triggerElement = $(event.relatedTarget);
+        // 클릭된 버튼 요소의 부모 tr에서 goods-num1의 값을 가져옴
+        var numArr = triggerElement.closest('tr').attr('id').match(/\d+/g);
+        var num = parseInt(numArr[0], 10);
+        
+        console.log(num);
+        
+        // 모달 내의 특정 위치에 가져온 값을 넣어줌
+        $('#exampleModal3').find('#click-row').val(num);
+    });
+    
 </script>
 
 <%@ include file="../include/footer.jsp" %>

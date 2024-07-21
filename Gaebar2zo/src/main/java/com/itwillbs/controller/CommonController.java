@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.ClientVO;
+import com.itwillbs.domain.GoodsVO;
 import com.itwillbs.domain.UsersVO;
 import com.itwillbs.service.CommonService;
 
-@RequestMapping(value="/Styleboso/common/*")
+@RequestMapping(value="/common/*")
 @Controller
 public class CommonController {
 
@@ -57,6 +58,22 @@ public class CommonController {
 		logger.debug("mList : "+ mList);
 		
 		return mList;
+		
+	}
+	
+	// 제품 리스트 조회
+	@ResponseBody
+	@RequestMapping(value="/goodsList",method=RequestMethod.GET,
+	produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public List<GoodsVO> goodsList_GET(Model model) throws Exception{
+		logger.debug(" goodsList_GET() 실행 ");
+		
+		// 서비스 -> DB의 정보를 가져오기
+		List<GoodsVO> gList = cService.GoodsList();
+		logger.debug("size : "+ gList.size());
+		logger.debug("mList : "+ gList);
+		
+		return gList;
 		
 	}
 

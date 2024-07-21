@@ -3,6 +3,9 @@
 <%@ include file="../include/header.jsp" %>
 <!-- JQuery 추가 -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<!-- sweet alert 추가 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <body>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
 		<button class="btn btn-primary" type="button" onclick="openFormModal()">추가</button>
@@ -63,29 +66,27 @@
                 </div>
                 <div class="modal-body">
                     <form class="row g-3 needs-validation" novalidate>
-						<!-- <div class="col-md-4">
-							<label for="validationCustom01" class="form-label">이름</label> <input
-								type="text" class="form-control" id="validationCustom01" placeholder="홍길동" required>
-						</div> -->
 						<div class="form-floating">
-						  <input type="text" class="form-control" id="floatingInput" placeholder="이름" required>
+						  <input type="text" class="form-control" id="user_per_name" name="user_per_name" placeholder="이름" required>
 						  <label for="floatingInput">이름</label>
+						   	<span id="nameError" class="text-danger" style="display: none;">유효하지 않은 이름입니다.</span>
+                            <span id="nameSuccess" class="text-success" style="display: none;">사용 가능한 이름입니다.</span>
 						</div>
 						<div class="form-floating">
-						  <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+						  <input type="password" class="form-control" id="inputPw" placeholder="Password" required>
 						  <label for="floatingPassword">비밀번호</label>
 						  <span></span>
 						</div>
 						<div class="form-floating">
-						  <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+						  <input type="password" class="form-control" id="inputPwCheck" placeholder="Password" required>
 						  <label for="floatingPassword">비밀번호 재확인</label>
 						</div>
 						<div class="form-floating mb-3">
-						  <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+						  <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com" required>
 						  <label for="floatingInput">이메일</label>
 						</div>
 						<div class="form-floating mb-3">
-						  <input type="email" class="form-control" id="floatingInput" placeholder="010-1111-2222" required>
+						  <input type="email" class="form-control" id="inputTel" placeholder="010-1111-2222" required>
 						  <label for="floatingInput">전화번호</label>
 						</div>
 					
@@ -98,10 +99,11 @@
 								<option value="4">대리</option>
 								<option value="5">사원</option>
 							</select>
-							<div class="invalid-feedback">Example invalid select feedback</div>
+							<div class="invalid-feedback">직책을 선택해 주세요</div>
 						</div>
 						<div class="col-12">
 							<button class="btn btn-primary" type="submit">Submit Form</button>
+							
 						</div>
 					</form>
                 </div>
@@ -117,7 +119,61 @@
             $('#formModal').modal('hide');
         }
     </script>
-    
+  <!--   <script>
+    function validateForm() {
+        let isValid = true;  // 유효성 검사 상태를 나타내는 변수입니다. 기본값은 true입니다.
+        const formElements = document.querySelectorAll('#registerForm .form-control');
+        // '#registerForm' 폼 내의 모든 .form-control 및 .form-select 요소를 선택합니다.
+
+        for (let element of formElements) {  // 각 요소를 순회하면서 유효성 검사를 수행합니다.
+            if (!element.checkValidity()) {  // 요소의 유효성을 검사합니다.
+                element.focus();  // 유효하지 않은 요소로 포커스를 이동시킵니다.
+                isValid = false;  // 유효성 검사 상태를 false로 설정합니다.
+                break;  // 유효하지 않은 첫 번째 요소를 찾으면 반복문을 종료합니다.
+            }
+        }
+
+        // 이름 유효성 검사
+        const nameElement = document.getElementById('inputName');
+        const nameValue = nameElement.value;
+        const nameRegex = /^[가-힣]{1,10}$/;
+
+        if (!nameRegex.test(nameValue)) {
+            nameElement.setCustomValidity("Invalid field.");
+            nameElement.focus();
+            isValid = false;
+        } else {
+            nameElement.setCustomValidity("");
+        }
+
+        return isValid;  // 유효성 검사 상태를 반환합니다.
+    }
+     
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // 기본 폼 제출 동작 방지
+
+            if (validateForm()) {
+                closeFormModal();
+                Swal.fire({
+                    title: '사용자 등록 완료',
+                    icon: 'success',
+                    confirmButtonText: '확인'
+                }).then(function() {
+                    location.reload(); // 페이지를 새로고침하여 변경 사항을 반영합니다.
+                });
+		    } else {
+		        Swal.fire({
+		            title: '오류',
+		            text: '모든 필드를 입력해 주세요.',
+		            icon: 'error',
+		            confirmButtonText: '확인'
+		        });
+		    }
+		});
+
+    </script> -->
+    <!-- addEmp.js 연결 -->   
+    <script src="../resources/js/addEmp.js"></script>
     
 <%@ include file="../include/footer.jsp" %>
 </body>

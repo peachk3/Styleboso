@@ -111,16 +111,7 @@
             </div><!-- row justify-content-center -->
         </div>
     </div><!--min-vh-100 d-flex flex-row align-items-center  -->
-   
-   
-    <!-- Jquery사용 / 모달창-->
-<script>
-Swal.fire({
-  'Alert가 실행되었습니다.',         // Alert 제목
-  '이곳은 내용이 나타나는 곳입니다.',  // Alert 내용
-  'success',                         // Alert 타입
-});
-</script>   
+  
    <!-- 아이디 저장 -->
    <script>
    $(document).ready(function() {

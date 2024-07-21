@@ -1,73 +1,65 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="../include/header.jsp" %>
-    <style>
-        .status-buttons {
-            display: none;
-        }
-    </style>
+<%@ include file="../include/header.jsp"%>
+
+
+
+
 <body>
 	<h1>/Styleboso/stock/releaseList.jsp</h1>
 
 
+<table class="table table-hover">
+    <tr>
+        <td>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
+                <label class="form-check-label" for="flexCheckDisabled"> Disabled checkbox </label>
+            </div>
+        </td>
+        <td>출고번호</td>
+        <td>품목코드</td>
+        <td>품목명</td>
+        <td>출고 수량</td>
+        <td>출고일</td>
+        <td>거래 번호</td>
+        <td>재고 번호</td>
+        <td>비고</td>
+        <td>상태</td>
+    </tr>
 
-	<table class="table table-hover">
-		<tr>
-			<td>
-				<div class="form-check">
-					<input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled> <label class="form-check-label" for="flexCheckDisabled"> Disabled checkbox </label>
-				</div>
-			</td>
-			<td>출고번호</td>
-			<td>품목코드</td>
-			<td>품목명</td>
-			<td>출고 수량</td>
-			<td>출고일</td>
-			<td>거래 번호</td>
-			<td>재고 번호</td>
-			<td>비고</td>
-			<td>상태</td>
-		</tr>
+    <c:forEach var="rs" items="${rs}" varStatus="rsStatus">
+        <c:forEach var="item" items="${rs.itemList}">
+            <tr>
+                <c:forEach var="inchange" items="${rs.inchangeList}">
+                    <td>
+                        <label class="form-check-label" for="flexCheckDefault${rsStatus.index}">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault${rsStatus.index}">
+                            Default checkbox
+                        </label>
+                    </td>
+                    <td class="clickable-cell">${rs.tran_num}</td>
+                    <td class="clickable-cell">${item.item_num}</td>
+                    <td class="clickable-cell">${item.item_name}</td>
+                    <c:forEach var="goods" items="${item.tranGoodsList}">
+                        <td class="clickable-cell">${goods.goods_qty}</td>
+                        <td class="clickable-cell">${rs.rel_date}</td>
+                        <td class="clickable-cell">${rs.top_tran_num}</td>
+                        <td class="clickable-cell">${inchange.inven_num}</td>
+                        <td class="clickable-cell">${rs.comm}</td>
+                        <td class="clickable-cell">${rs.pro_status}</td>
+                    </c:forEach>
+                </c:forEach>
+            </tr>
+        </c:forEach>
+    </c:forEach>
+</table>
 
+<div>
+    <button id="addRowBtn" class="btn btn-outline-info" type="button" onclick="location.href='/stock/releaseAdd'">출고 등록</button>
+</div>
 
-		<c:forEach var="rs" items="${rs}">
-				<c:forEach var="item" items="${rs.itemList}"  varStatus="rsStatus">
-			<tr>
-				<c:forEach var="inchange" items="${rs.inchangeList}" >
-							<td>
-				<label class="form-check-label" for="flexCheckDefault${rsStatus.index}">
-				 <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault${rsStatus.index}"> 
-								 Default checkbox
-						</label>
-						</td>
-				</td>
-
-				<td>${rs.tran_num }</td>
-
-					<td>${item.item_num }</td>
-					<td>${item.item_name }</td>
-				
-				<c:forEach var="goods" items="${item.tranGoodsList}">
-					<td>${goods.goods_qty }</td>
-				<td>${rs.rel_date }</td>
-				<td>${rs.top_tran_num }</td>
-
-				<td>${inchange.inven_num }</td>
-				<td>${rs.comm }</td>
-				<td>${rs.pro_status }</td>
-
-				</c:forEach>
-			</c:forEach>
-					</tr>
-			</c:forEach>
-		</c:forEach>
-	</table>
-	
-	<div>
-	    <button id="addRowBtn" class="btn btn-outline-info" type="button" onclick="location.href='/stock/releaseAdd'">출고 등록</button>
-	</div>
-	
-	
 <!-- Modal1 -->
 <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
@@ -124,29 +116,12 @@
         </div>
     </div>
 </div>
-	
-	
-	
-	
-    <div class="container mt-3">
-        <button id="statusChangeBtn" class="btn btn-outline-info">상태 변경</button>
-        <div class="status-buttons mt-2">
-            <button class="btn btn-outline-info">입고 예정</button>
-            <button class="btn btn-outline-info">입고 완료</button>
-        </div>
-    </div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 <%@ include file="../include/footer.jsp" %>	
 </body>
+</html>
+
+
+
 <!-- jQuery and Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@3.2.2/dist/js/coreui.min.js"></script>
@@ -182,14 +157,5 @@
             // Show the modal
             $("#exampleModal1").modal("show");
         });
-        
-        
-        // Show/hide status buttons
-        $("#statusChangeBtn").click(function() {
-            $(".status-buttons").toggle();
-        });
     });
-    
 </script>
-
-</html>

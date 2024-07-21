@@ -2,154 +2,178 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.itwillbs.mapper.stockMapper">
-	
-	<resultMap type="com.itwillbs.domain.TransactionVO" id="transMap">
-		<id property="tran_num" column="tran_num"/>
-		<result property="tran_num" column="tran_num"/>
-		<result property="top_tran_num" column="top_tran_num"/>
-		<result property="cli_num" column="cli_num"/>
-		<result property="pic_username" column="pic_username"/>
-		<result property="tran_date" column="tran_date"/>
-		<result property="rec_date" column="rec_date"/>
-		<result property="rel_date" column="rel_date"/>
-		<result property="due_date" column="due_date"/>
-		<result property="pro_status" column="pro_status"/>
-		<result property="tran_cate_code" column="tran_cate_code"/>
-		<result property="comm" column="comm"/>
-<!-- 		<collection property="goodsList" resultMap="goodsMap"></collection> -->
+<mapper namespace="com.itwillbs.mapper.stockMapper">
+
+	<resultMap type="com.itwillbs.domain.TransactionVO"
+		id="transMap">
+		<id property="tran_num" column="tran_num" />
+		<result property="tran_num" column="tran_num" />
+		<result property="top_tran_num" column="top_tran_num" />
+		<result property="cli_num" column="cli_num" />
+		<result property="pic_username" column="pic_username" />
+		<result property="tran_date" column="tran_date" />
+		<result property="rec_date" column="rec_date" />
+		<result property="rel_date" column="rel_date" />
+		<result property="due_date" column="due_date" />
+		<result property="pro_status" column="pro_status" />
+		<result property="tran_cate_code" column="tran_cate_code" />
+		<result property="comm" column="comm" />
+		<!-- <collection property="goodsList" resultMap="goodsMap"></collection> -->
 		<collection property="itemList" resultMap="itemMap"></collection>
 		<collection property="inchangeList" resultMap="inchangeMap"></collection>
 	</resultMap>
 
 
 	<resultMap type="com.itwillbs.domain.ItemVO" id="itemMap">
-		<id property="item_num" column="item_num"/>
-		<result property="item_num" column="item_num"/>
-		<result property="item_cate_code" column="item_cate_code"/>
-		<result property="item_cli_code" column="item_cli_code"/>
-		<result property="item_name" column="item_name"/>
-		<result property="item_mat" column="item_mat"/>
-		<result property="comm" column="comm"/>
-				<collection property="tranGoodsList" resultMap="tranGoodsMap"></collection>
+		<id property="item_num" column="item_num" />
+		<result property="item_num" column="item_num" />
+		<result property="item_cate_code" column="item_cate_code" />
+		<result property="item_cli_code" column="item_cli_code" />
+		<result property="item_name" column="item_name" />
+		<result property="item_mat" column="item_mat" />
+		<result property="comm" column="comm" />
+		<collection property="tranGoodsList"
+			resultMap="tranGoodsMap"></collection>
 	</resultMap>
 
-	<resultMap type="com.itwillbs.domain.TransactionGoodsVO" id="tranGoodsMap">
-		<id property="tran_num" column="tran_num"/>
-		<id property="goods_num" column="goods_num"/>
-		<result property="tran_num" column="tran_num"/>
-		<result property="goods_num" column="goods_num"/>
-		<result property="goods_qty" column="goods_qty"/>
+	<resultMap type="com.itwillbs.domain.TransactionGoodsVO"
+		id="tranGoodsMap">
+		<id property="tran_num" column="tran_num" />
+		<id property="goods_num" column="goods_num" />
+		<result property="tran_num" column="tran_num" />
+		<result property="goods_num" column="goods_num" />
+		<result property="goods_qty" column="goods_qty" />
 	</resultMap>
-	
-	<resultMap type="com.itwillbs.domain.InventoryChangeVO" id="inchangeMap">
-		<id property="tran_num" column="tran_num"/>
-		<id property="inven_num" column="inven_num"/>
-		<result property="tran_num" column="tran_num"/>
-		<result property="inven_num" column="inven_num"/>
-		<result property="inven_qty" column="inven_qty"/>
+
+	<resultMap type="com.itwillbs.domain.InventoryChangeVO"
+		id="inchangeMap">
+		<id property="tran_num" column="tran_num" />
+		<id property="inven_num" column="inven_num" />
+		<result property="tran_num" column="tran_num" />
+		<result property="inven_num" column="inven_num" />
+		<result property="inven_qty" column="inven_qty" />
 	</resultMap>
-	
-	
-<!-- 		item / inventory_change -->
-	
-	
-	
-	
-	
-	
+
+
+	<!-- item / inventory_change -->
+
+
+
+
+
+
 	<!-- 입고 리스트 호출 -->
-	<select id="receivingList" resultMap="transMap" >
-		select tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
+	<select id="receivingList" resultMap="transMap">
+		select
+		tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
 		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
 		go.item_num,go.item_name,inven_num
-		from (select  tr.tran_num,top_tran_num,cli_num,pic_username,
-		   tran_date,rel_date,due_date,pro_status,tran_cate_code,comm, goods_num, goods_qty,rec_date
-		                     from transaction tr
-		                     join transaction_goods trg
-		                     on tr.top_tran_num = trg.tran_num) tr
-		join (select item.item_num, goods_num, item_name
-		   from item join goods
-		   on item.item_num = goods.item_num
-		   where goods.item_num in (select item_num
-		                     from goods go
-		                     where goods_num in (select  trg.goods_num
-		                                    from transaction tr
-		                                    join transaction_goods trg
-		                                    on tr.top_tran_num = trg.tran_num))) go
+		from (select
+		tr.tran_num,top_tran_num,cli_num,pic_username,
+		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm, goods_num,
+		goods_qty,rec_date
+		from transaction tr
+		join transaction_goods trg
+		on tr.top_tran_num = trg.tran_num) tr
+		join (select item.item_num,
+		goods_num, item_name
+		from item join goods
+		on item.item_num = goods.item_num
+		where goods.item_num in (select item_num
+		from goods go
+		where goods_num in (select trg.goods_num
+		from transaction tr
+		join transaction_goods trg
+		on tr.top_tran_num = trg.tran_num))) go
 		on tr.goods_num = go.goods_num
 		join inventory_change ic
 		on tr.tran_num = ic.tran_num
-        WHERE tr.tran_num like 'RC%'
+		WHERE tr.tran_num like 'RC%'
 	</select>
 
 	<!-- 출고 리스트 호출 -->
-	<select id="releaseList" resultMap="transMap" >
-		select tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
+	<select id="releaseList" resultMap="transMap">
+		select
+		tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
 		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
 		go.item_num,go.item_name,inven_num
-		from (select  tr.tran_num,top_tran_num,cli_num,pic_username,
-		   tran_date,rel_date,due_date,pro_status,tran_cate_code,comm, goods_num, goods_qty,rec_date
-		                     from transaction tr
-		                     join transaction_goods trg
-		                     on tr.top_tran_num = trg.tran_num) tr
-		join (select item.item_num, goods_num, item_name
-		   from item join goods
-		   on item.item_num = goods.item_num
-		   where goods.item_num in (select item_num
-		                     from goods go
-		                     where goods_num in (select  trg.goods_num
-		                                    from transaction tr
-		                                    join transaction_goods trg
-		                                    on tr.top_tran_num = trg.tran_num))) go
+		from (select
+		tr.tran_num,top_tran_num,cli_num,pic_username,
+		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm, goods_num,
+		goods_qty,rec_date
+		from transaction tr
+		join transaction_goods trg
+		on tr.top_tran_num = trg.tran_num) tr
+		join (select item.item_num,
+		goods_num, item_name
+		from item join goods
+		on item.item_num = goods.item_num
+		where goods.item_num in (select item_num
+		from goods go
+		where goods_num in (select trg.goods_num
+		from transaction tr
+		join transaction_goods trg
+		on tr.top_tran_num = trg.tran_num))) go
 		on tr.goods_num = go.goods_num
 		join inventory_change ic
 		on tr.tran_num = ic.tran_num
-        WHERE tr.tran_num like 'RL%'
+		WHERE tr.tran_num like 'RL%'
 	</select>
-	
-	
+
+
+	<!-- 상태 변경 -->
+<!-- 	<update id="updateStatus"> -->
+<!-- 		UPDATE transaction -->
+<!-- 		SET pro_status = #{status} -->
+<!-- 		WHERE tran_num = #{tranNum} -->
+<!-- 	</update> -->
+
 	<!-- InventoryVO resultMap -->
-	<resultMap type="com.itwillbs.domain.InventoryVO" id="invenMap">
-		<id property="inven_num" column="inven_num"/>
-		<result property="inven_num" column="inven_num"/>
-		<result property="wh_num" column="wh_num"/>
-		<result property="goods_num" column="goods_num"/>
-		<result property="inven_qty" column="inven_qty"/>
+	<resultMap type="com.itwillbs.domain.InventoryVO"
+		id="invenMap">
+		<id property="inven_num" column="inven_num" />
+		<result property="inven_num" column="inven_num" />
+		<result property="wh_num" column="wh_num" />
+		<result property="goods_num" column="goods_num" />
+		<result property="inven_qty" column="inven_qty" />
 		<collection property="itemList" resultMap="itemMap"></collection>
 		<collection property="goodsList" resultMap="goodsMap"></collection>
 		<collection property="warehouseList" resultMap="wareMap"></collection>
 	</resultMap>
-	
+
 	<!-- WarehouseVO resultMap -->
-	<resultMap type="com.itwillbs.domain.WarehouseVO" id="wareMap">
-		<id property="wh_num" column="wh_num"/>
-		<result property="wh_num" column="wh_num"/>
-		<result property="wh_name" column="wh_name"/>
-		<result property="wh_zone" column="wh_zone"/>
-		<result property="wh_rack" column="wh_rack"/>
-		<result property="wh_row" column="wh_row"/>
-		<result property="wh_column" column="wh_column"/>
-		<result property="wh_code" column="wh_code"/>
+	<resultMap type="com.itwillbs.domain.WarehouseVO"
+		id="wareMap">
+		<id property="wh_num" column="wh_num" />
+		<result property="wh_num" column="wh_num" />
+		<result property="wh_name" column="wh_name" />
+		<result property="wh_zone" column="wh_zone" />
+		<result property="wh_rack" column="wh_rack" />
+		<result property="wh_row" column="wh_row" />
+		<result property="wh_column" column="wh_column" />
+		<result property="wh_code" column="wh_code" />
 	</resultMap>
-	
+
 	<!-- GoodsVO resultMap -->
 	<resultMap type="com.itwillbs.domain.GoodsVO" id="goodsMap">
-		<id property="goods_num" column="goods_num"/>
-		<result property="goods_num" column="goods_num"/>
-		<result property="item_num" column="item_num"/>
-		<result property="goods_color" column="goods_color"/>
-		<result property="goods_size" column="goods_size"/>
+		<id property="goods_num" column="goods_num" />
+		<result property="goods_num" column="goods_num" />
+		<result property="item_num" column="item_num" />
+		<result property="goods_color" column="goods_color" />
+		<result property="goods_size" column="goods_size" />
 	</resultMap>
-	
+
 	<!-- 재고 리스트 호출 -->
 	<select id="getStockList" resultMap="invenMap">
-		select i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack, inven_qty
-		from inventory y
+		select i.item_cate_code,
+		i.item_name, w.wh_name, w.wh_zone, w.wh_rack, inven_qty
+		from inventory
+		y
 		join warehouse w
 		on y.wh_num = w.wh_num
 		join goods g
-		on y.goods_num = g.goods_num
+		on y.goods_num =
+		g.goods_num
 		join item i
 		on i.item_num = g.item_num
 	</select>

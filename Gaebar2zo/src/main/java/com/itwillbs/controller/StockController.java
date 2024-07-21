@@ -3,16 +3,22 @@ package com.itwillbs.controller;
 import java.util.ArrayList;
 
 
+
 import java.util.List;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.TransactionVO;
@@ -74,20 +80,24 @@ public class StockController {
 	    model.addAttribute("rc", rc);
 	    		
 		
-		// 입고 리스트 ( 3개로 나눠서 )
-//		List<TransactionVO> trn = sService.trnList();
-//		
-//		logger.debug("size : "+ trn.size());
-//		
-//		logger.debug("trn : "+trn);
-//		
-//		model.addAttribute("trn",trn);
-		
-		
-	    
 	    
 	}
 
+//	@ResponseBody
+//	 @RequestMapping(value="/updateStatus",method=RequestMethod.POST,
+//			 		produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//	    public ResponseEntity<?> updateStatus(@RequestBody StatusUpdateRequest request) {
+//	        try {
+//	            sService.updateStatus(request.getTran_nums(), request.getStatus());
+//	            return ResponseEntity.ok().build();
+//	        } catch (Exception e) {
+//	            e.printStackTrace(); // 예외 로그 출력
+//	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Status update failed");
+//	        }
+//	    }
+//	   
+//	
+	
 	
 	
 	

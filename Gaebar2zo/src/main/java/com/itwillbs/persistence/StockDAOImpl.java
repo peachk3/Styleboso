@@ -1,7 +1,8 @@
 package com.itwillbs.persistence;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -49,9 +50,20 @@ public class StockDAOImpl implements StockDAO{
 		
 		return sqlSession.selectList(NAMESPACE+"getStockList");
 	}
-	
-	
 
+	// 상태 변경
+//	@Override
+//	 public void updateStatus(String tranNum, String status) {
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("tranNum", tranNum);
+//        params.put("status", status);
+//        sqlSession.update(NAMESPACE+"updateStatus", params);
+//    }
+
+	
+	
+	
+	
 	
 	
 	

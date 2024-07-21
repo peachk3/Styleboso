@@ -15,6 +15,10 @@ public interface StockDAO {
 
 	// 재고 리스트 호출
 	List<InventoryVO> getStockList() throws Exception;
+
+	
+	// 상태변경
+//	void updateStatus(String tranNum, String status) throws Exception;
 	
 	
 	

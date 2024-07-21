@@ -19,7 +19,9 @@ public interface StockService {
 	// 재고 리스트 호출
 	List<InventoryVO> getStockList() throws Exception;
 
-
+	
+	// 상태 업데이트
+//    void updateStatus(List<String> tranNums, String status) throws Exception;
 
 
 

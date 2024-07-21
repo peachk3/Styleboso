@@ -49,6 +49,16 @@ public class StockServiceImpl implements StockService{
 		return sdao.getStockList();
 	}
 
+
+//	@Override
+//	  public void updateStatus(List<String> tranNums, String status) throws Exception{
+//        for (String tranNum : tranNums) {
+//            sdao.updateStatus(tranNum, status);
+//        }
+//    }
+
+
+
 	
 	
 	

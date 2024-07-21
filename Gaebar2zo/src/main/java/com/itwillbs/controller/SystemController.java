@@ -25,7 +25,7 @@ public class SystemController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SystemController.class);
 
-	// http://localhost:8088/Styleboso/system/login
+	// http://localhost:8088/system/login
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public void login() throws Exception {
@@ -40,7 +40,7 @@ public class SystemController {
 			throws Exception {
 		// 파라미터에 전달할 정보 저장(아이디, 비밀번호)
 
-		return "redirect:/Styleboso/system/main";
+		return "redirect:/system/main";
 	}
 
 	// -------------------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ public class SystemController {
 		logger.debug("/logout -> logoutPOST() 호출");
 		session.invalidate(); // 세션 무효화
 
-		return "redirect:/Styleboso/system/main";
+		return "redirect:/system/main";
 	}
 
 	// -------------------------------------------------------------------------------------------

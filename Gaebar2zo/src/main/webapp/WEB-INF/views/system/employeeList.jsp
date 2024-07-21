@@ -1,182 +1,124 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
-
+<!-- JQuery 추가 -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <body>
-	<div class="card mb-4">
-            <div class="card-header"> DataTables<a class="badge bg-danger-gradient ms-2 text-decoration-none" href="https://coreui.io/pricing/?framework=bootstrap">CoreUI Pro Integration</a></div>
-            <div class="card-body">
-              <div class="example">
-                <ul class="nav nav-underline-border" role="tablist">
-                  <li class="nav-item" role="presentation"><a class="nav-link active" data-coreui-toggle="tab" href="#preview-1000" role="tab" aria-selected="true">
-                      <svg class="icon me-2">
-                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-media-play"></use>
-                      </svg>Preview</a></li>
-                </ul>
-                <div class="tab-content rounded-bottom">
-                  <div class="tab-pane p-3 active preview" role="tabpanel" id="preview-1000">
-                    <div id="DataTables_Table_0_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer"><div class="row mt-2 justify-content-between"><div class="col-md-auto me-auto "><div class="dt-length"><select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select form-select-sm" id="dt-length-0"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select><label for="dt-length-0"> entries per page</label></div></div><div class="col-md-auto ms-auto "><div class="dt-search"><label for="dt-search-0">Search:</label><input type="search" class="form-control form-control-sm" id="dt-search-0" placeholder="" aria-controls="DataTables_Table_0"></div></div></div><div class="row mt-2 justify-content-md-center"><div class="col-12 "><table class="table table-striped border datatable dataTable" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="border-collapse: collapse !important"><colgroup><col style="width: 306.875px;"><col style="width: 293.906px;"><col style="width: 145.484px;"><col style="width: 159.766px;"><col style="width: 298.969px;"></colgroup>
-                      <thead>
-                        <tr role="row"><th data-dt-column="0" rowspan="1" colspan="1" class="dt-orderable-asc dt-orderable-desc dt-ordering-asc" aria-label="Username: Activate to invert sorting" tabindex="0" aria-sort="ascending"><span class="dt-column-title" role="button">Username</span><span class="dt-column-order"></span></th><th data-dt-column="1" rowspan="1" colspan="1" class="dt-type-date dt-orderable-asc dt-orderable-desc" aria-label="Date registered: Activate to sort" tabindex="0"><span class="dt-column-title" role="button">Date registered</span><span class="dt-column-order"></span></th><th data-dt-column="2" rowspan="1" colspan="1" class="dt-orderable-asc dt-orderable-desc" aria-label="Role: Activate to sort" tabindex="0"><span class="dt-column-title" role="button">Role</span><span class="dt-column-order"></span></th><th data-dt-column="3" rowspan="1" colspan="1" class="dt-orderable-asc dt-orderable-desc" aria-label="Status: Activate to sort" tabindex="0"><span class="dt-column-title" role="button">Status</span><span class="dt-column-order"></span></th><th data-dt-column="4" rowspan="1" colspan="1" class="dt-orderable-asc dt-orderable-desc" aria-label="Actions: Activate to sort" tabindex="0"><span class="dt-column-title" role="button">Actions</span><span class="dt-column-order"></span></th></tr>
-                      </thead>
-                      <tbody><tr class="align-middle">
-                          <td class="sorting_1">사용자ID</td>
-                          <td class="dt-type-date">2012/01/21</td>
-                          <td>Staff</td>
-                          <td><span class="badge bg-success-gradient">Active</span></td>
-                          <td class=""><a class="btn btn-success me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass"></use>
-                              </svg></a><a class="btn btn-info me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-description"></use>
-                              </svg></a><a class="btn btn-danger" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-trash"></use>
-                              </svg></a></td>
-                        </tr><tr class="align-middle">
-                          <td class="sorting_1">Adinah Ralph</td>
-                          <td class="dt-type-date">2012/06/01</td>
-                          <td>Admin</td>
-                          <td><span class="badge bg-dark-gradient">Inactive</span></td>
-                          <td class=""><a class="btn btn-success me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass"></use>
-                              </svg></a><a class="btn btn-info me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-description"></use>
-                              </svg></a><a class="btn btn-danger" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-trash"></use>
-                              </svg></a></td>
-                        </tr><tr class="align-middle">
-                          <td class="sorting_1">Ajith Hristijan</td>
-                          <td class="dt-type-date">2012/03/01</td>
-                          <td>Member</td>
-                          <td><span class="badge bg-warning-gradient">Pending</span></td>
-                          <td class=""><a class="btn btn-success me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass"></use>
-                              </svg></a><a class="btn btn-info me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-description"></use>
-                              </svg></a><a class="btn btn-danger" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-trash"></use>
-                              </svg></a></td>
-                        </tr><tr class="align-middle">
-                          <td class="sorting_1">Alphonse Ivo</td>
-                          <td class="dt-type-date">2012/01/01</td>
-                          <td>Member</td>
-                          <td><span class="badge bg-success-gradient">Active</span></td>
-                          <td class=""><a class="btn btn-success me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass"></use>
-                              </svg></a><a class="btn btn-info me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-description"></use>
-                              </svg></a><a class="btn btn-danger" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-trash"></use>
-                              </svg></a></td>
-                        </tr><tr class="align-middle">
-                          <td class="sorting_1">Anton Phunihel</td>
-                          <td class="dt-type-date">2012/01/01</td>
-                          <td>Member</td>
-                          <td><span class="badge bg-success-gradient">Active</span></td>
-                          <td class=""><a class="btn btn-success me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass"></use>
-                              </svg></a><a class="btn btn-info me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-description"></use>
-                              </svg></a><a class="btn btn-danger" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-trash"></use>
-                              </svg></a></td>
-                        </tr><tr class="align-middle">
-                          <td class="sorting_1">Bao Gaspar</td>
-                          <td class="dt-type-date">2012/01/01</td>
-                          <td>Member</td>
-                          <td><span class="badge bg-success-gradient">Active</span></td>
-                          <td class=""><a class="btn btn-success me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass"></use>
-                              </svg></a><a class="btn btn-info me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-description"></use>
-                              </svg></a><a class="btn btn-danger" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-trash"></use>
-                              </svg></a></td>
-                        </tr><tr class="align-middle">
-                          <td class="sorting_1">Bernhard Shelah</td>
-                          <td class="dt-type-date">2012/06/01</td>
-                          <td>Admin</td>
-                          <td><span class="badge bg-dark-gradient">Inactive</span></td>
-                          <td class=""><a class="btn btn-success me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass"></use>
-                              </svg></a><a class="btn btn-info me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-description"></use>
-                              </svg></a><a class="btn btn-danger" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-trash"></use>
-                              </svg></a></td>
-                        </tr><tr class="align-middle">
-                          <td class="sorting_1">Bünyamin Kasper</td>
-                          <td class="dt-type-date">2012/08/23</td>
-                          <td>Staff</td>
-                          <td><span class="badge bg-danger-gradient">Banned</span></td>
-                          <td class=""><a class="btn btn-success me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass"></use>
-                              </svg></a><a class="btn btn-info me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-description"></use>
-                              </svg></a><a class="btn btn-danger" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-trash"></use>
-                              </svg></a></td>
-                        </tr><tr class="align-middle">
-                          <td class="sorting_1">Carlito Roffe</td>
-                          <td class="dt-type-date">2012/08/23</td>
-                          <td>Staff</td>
-                          <td><span class="badge bg-danger-gradient">Banned</span></td>
-                          <td class=""><a class="btn btn-success me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass"></use>
-                              </svg></a><a class="btn btn-info me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-description"></use>
-                              </svg></a><a class="btn btn-danger" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-trash"></use>
-                              </svg></a></td>
-                        </tr><tr class="align-middle">
-                          <td class="sorting_1">Chidubem Gottlob</td>
-                          <td class="dt-type-date">2012/02/01</td>
-                          <td>Staff</td>
-                          <td><span class="badge bg-danger-gradient">Banned</span></td>
-                          <td class=""><a class="btn btn-success me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass"></use>
-                              </svg></a><a class="btn btn-info me-2" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-description"></use>
-                              </svg></a><a class="btn btn-danger" href="#">
-                              <svg class="icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-trash"></use>
-                              </svg></a></td>
-                        </tr></tbody>
-                    <tfoot></tfoot></table></div></div><div class="row mt-2 justify-content-between"><div class="col-md-auto me-auto "><div class="dt-info" aria-live="polite" id="DataTables_Table_0_info" role="status">Showing 1 to 10 of 32 entries</div></div><div class="col-md-auto ms-auto "><div class="dt-paging paging_full_numbers"><ul class="pagination"><li class="dt-paging-button page-item disabled"><a class="page-link first" aria-controls="DataTables_Table_0" aria-disabled="true" aria-label="First" data-dt-idx="first" tabindex="-1">«</a></li><li class="dt-paging-button page-item disabled"><a class="page-link previous" aria-controls="DataTables_Table_0" aria-disabled="true" aria-label="Previous" data-dt-idx="previous" tabindex="-1">‹</a></li><li class="dt-paging-button page-item active"><a href="#" class="page-link" aria-controls="DataTables_Table_0" aria-current="page" data-dt-idx="0" tabindex="0">1</a></li><li class="dt-paging-button page-item"><a href="#" class="page-link" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">2</a></li><li class="dt-paging-button page-item"><a href="#" class="page-link" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0">3</a></li><li class="dt-paging-button page-item"><a href="#" class="page-link" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0">4</a></li><li class="dt-paging-button page-item"><a href="#" class="page-link next" aria-controls="DataTables_Table_0" aria-label="Next" data-dt-idx="next" tabindex="0">›</a></li><li class="dt-paging-button page-item"><a href="#" class="page-link last" aria-controls="DataTables_Table_0" aria-label="Last" data-dt-idx="last" tabindex="0">»</a></li></ul></div></div></div></div>
-                  </div>
+	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
+		<button class="btn btn-primary" type="button" onclick="openFormModal()">추가</button>
+		<button class="btn btn-primary" type="button">수정</button>
+		<button class="btn btn-primary" type="button">조회</button>
+		<button class="btn btn-primary" type="button">삭제</button>
+	</div>
+	<table class="table table-hover">
+      <thead>
+      	<tr>
+         <th scope="col"> 
+            <div class="form-check">
+               <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled> 
+               <label class="form-check-label" for="flexCheckDisabled"> Disabled checkbox </label>
+            </div>
+         </th>
+	         <th scope="col">사용자ID</th>
+	         <th scope="col">사용자명</th>
+	         <th scope="col">비밀번호</th>
+	         <th scope="col">직책</th>
+	         <th scope="col">E-MAIL</th>
+	         <th scope="col">전화번호</th>
+      	</tr>
+      </thead>
+      <tbody>
+			<c:forEach var="emptbl" items="${employeeList }">
+				<tr>
+					<td>
+				  		<div class="form-check">
+                  			<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"> 
+                  			<label class="form-check-label" for="flexCheckChecked" > Checked checkbox </label>
+               			</div>
+               		</td>
+               		<td>${emptbl.username }</td>
+               		<td>${emptbl.user_per_name}</td>
+               		<td>${emptbl.password }</td>
+               		<td>${emptbl.user_pos}</td>
+               		<td>${emptbl.user_email  }</td>
+               		<td>${emptbl.user_phone }</td>
+               		<td></td>
+				</tr>	
+			</c:forEach>
+
+		</tbody>
+		
+   </table>
+	
+	<!-- 추가 버튼 모달창 -->
+	 <!-- Modal -->
+    <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="formModalLabel">사용자등록</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeFormModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-              </div>
+                <div class="modal-body">
+                    <form class="row g-3 needs-validation" novalidate>
+						<!-- <div class="col-md-4">
+							<label for="validationCustom01" class="form-label">이름</label> <input
+								type="text" class="form-control" id="validationCustom01" placeholder="홍길동" required>
+						</div> -->
+						<div class="form-floating">
+						  <input type="text" class="form-control" id="floatingInput" placeholder="이름" required>
+						  <label for="floatingInput">이름</label>
+						</div>
+						<div class="form-floating">
+						  <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+						  <label for="floatingPassword">비밀번호</label>
+						  <span></span>
+						</div>
+						<div class="form-floating">
+						  <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+						  <label for="floatingPassword">비밀번호 재확인</label>
+						</div>
+						<div class="form-floating mb-3">
+						  <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+						  <label for="floatingInput">이메일</label>
+						</div>
+						<div class="form-floating mb-3">
+						  <input type="email" class="form-control" id="floatingInput" placeholder="010-1111-2222" required>
+						  <label for="floatingInput">전화번호</label>
+						</div>
+					
+						<div class="mb-3">
+							<select class="form-select" required aria-label="select example">
+								<option value="" >직책</option>
+								<option value="1">운영자</option>
+								<option value="2">관리자</option>
+								<option value="3">과장</option>
+								<option value="4">대리</option>
+								<option value="5">사원</option>
+							</select>
+							<div class="invalid-feedback">Example invalid select feedback</div>
+						</div>
+						<div class="col-12">
+							<button class="btn btn-primary" type="submit">Submit Form</button>
+						</div>
+					</form>
+                </div>
             </div>
           </div>
-          
+    </div> 
+    <script>
+        function openFormModal() {
+            $('#formModal').modal('show');
+        }
+        
+        function closeFormModal() {
+            $('#formModal').modal('hide');
+        }
+    </script>
+    
+    
 <%@ include file="../include/footer.jsp" %>
 </body>
 </html>

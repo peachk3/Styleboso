@@ -75,7 +75,8 @@
 						<div class="form-floating">
 						  <input type="password" class="form-control" id="inputPw" placeholder="Password" required>
 						  <label for="floatingPassword">비밀번호</label>
-						  <span></span>
+						 	<span id="pwError" class="text-danger" style="display: none;">비밀번호는 8~16자의 영문, 숫자, 특수기호를 포함해야 합니다.</span>
+                            <span id="pwSuccess" class="text-success" style="display: none;">check</span>
 						</div>
 						<div class="form-floating">
 						  <input type="password" class="form-control" id="inputPwCheck" placeholder="Password" required>

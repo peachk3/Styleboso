@@ -81,6 +81,8 @@
 						<div class="form-floating">
 						  <input type="password" class="form-control" id="inputPwCheck" placeholder="Password" required>
 						  <label for="floatingPassword">비밀번호 재확인</label>
+						 	<span id="pwError" class="text-danger" style="display: none;">비밀번호가 일치하지 않습니다.</span>
+                            <span id="pwSuccess" class="text-success" style="display: none;">비밀번호가 일치합니다.</span>
 						</div>
 						<div class="form-floating mb-3">
 						  <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com" required>

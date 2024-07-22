@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
-${pageVO }
+
 <body>
 	<div class="search_box">
         <form name="searchForm" method="post" action="/status.do">
@@ -30,26 +30,26 @@ ${pageVO }
 
 
 		<c:forEach var="sl" items="${sl}">
-				<c:forEach var="item" items="${sl.itemList}">
-			<tr>
-				<c:forEach var="warehouse" items="${sl.warehouseList}">
-				<td>${item.item_cate_code }</td>
-				<td>${item.item_name }</td>
-				<td>${warehouse.wh_name }</td>
-				<td>${warehouse.wh_zone }</td>
-				<td>${warehouse.wh_rack }</td>
-				<td>${sl.inven_qty }</td>
-			</c:forEach>
-					</tr>
+			<c:forEach var="item" items="${sl.itemList}">
+				<tr>
+					<c:forEach var="warehouse" items="${sl.warehouseList}">
+						<td>${item.item_cate_code }</td>
+						<td>${item.item_name }</td>
+						<td>${warehouse.wh_name }</td>
+						<td>${warehouse.wh_zone }</td>
+						<td>${warehouse.wh_rack }</td>
+						<td>${sl.inven_qty }</td>
+					</c:forEach>
+				</tr>
 			</c:forEach>
 		</c:forEach>
 	</table>
 	
-	<nav aria-label="Page navigation">
-  <ul class="pagination">
+	<nav aria-label="Page navigation" class="pagination-container">
+  <ul class="pagination justify-content-end" style="margin-right:10px;">
     <c:if test="${pageVO.prev}">
       <li class="page-item">
-        <a class="page-link" href="/stock/status/listPage?page=${pageVO.startPage - 1}" aria-label="Previous">
+        <a class="page-link" href="/stock/status?page=${pageVO.startPage - 1}" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
@@ -57,13 +57,13 @@ ${pageVO }
 
     <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
       <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
-        <a class="page-link" href="/stock/status/listPage?page=${i}">${i}</a>
+        <a class="page-link" href="/stock/status?page=${i}">${i}</a>
       </li>
     </c:forEach>
 
     <c:if test="${pageVO.next && pageVO.endPage > 0}">
       <li class="page-item">
-        <a class="page-link" href="/stock/status/listPage?page=${pageVO.endPage + 1}" aria-label="Next">
+        <a class="page-link" href="/stock/status?page=${pageVO.endPage + 1}" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>
       </li>

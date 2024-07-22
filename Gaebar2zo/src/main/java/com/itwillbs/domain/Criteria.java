@@ -32,13 +32,13 @@ public class Criteria {
 		
 		
 		this.page = page;
+		System.out.println(page);;
 	}
 	public int getPageSize() {
 		return pageSize;
 	}
 	public void setPageSize(int pageSize) {
 		if(pageSize <= 0 || pageSize > 100) {
-			this.pageSize = 10;
 			return;
 		}
 		this.pageSize = pageSize;

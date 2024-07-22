@@ -20,6 +20,8 @@ public interface StockService {
 	// 재고 리스트 호출
 	List<InventoryVO> getStockList(Criteria cri) throws Exception;
 
+	int getTotalCount() throws Exception;
+
 
 
 

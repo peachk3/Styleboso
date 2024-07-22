@@ -34,12 +34,16 @@ public class StockController {
 	@RequestMapping(value="/status",method=RequestMethod.GET)
 	public String status_GET(Criteria cri,Model model) throws Exception{
 		logger.debug(" status_GET() 실행 ");
+		logger.debug(" cri " + cri);
 		
 		List<InventoryVO> sl = sService.getStockList(cri);
+		logger.debug(" size : " + sl.size());
 		
 		// 하단 페이징처리 정보객체 생성
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
+		pageVO.setTotalCount(sService.getTotalCount());
+		logger.debug(" cri " + pageVO.getCri());
 		
 		// 연결된 뷰페이지로 정보 전달
 		model.addAttribute("sl", sl);

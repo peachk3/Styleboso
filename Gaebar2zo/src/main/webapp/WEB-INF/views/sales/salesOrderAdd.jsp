@@ -155,7 +155,7 @@
 								<div class="modal-dialog modal-dialog-scrollable modal-lg">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">제품<input  id="click-row" value=""></h5> <!-- class="hidden" -->
+											<h5 class="modal-title" id="exampleModalLabel">제품<input class="hidden" id="click-row" value=""></h5>
 											<button type="button" class="btn-close"
 												data-coreui-dismiss="modal" aria-label="Close"></button>
 										</div>
@@ -209,7 +209,7 @@
 <script type="text/javascript">
    
    document.addEventListener('DOMContentLoaded', function() {
-      
+		
 		const submitFormBtn = document.getElementById('submitFormBtn');
    
        submitFormBtn.addEventListener('click', function(event) {
@@ -233,12 +233,12 @@
       $('#modal1-table tbody').on('click', 'tr', function() {
           var targetInput1 = document.getElementById('validationCustom03');
           var targetInput2 = document.getElementById('validationCustom04');
-          var cliNum1 = $(this).find('td:nth-child(2)').text(); // 두 번째 열(거래처 코드)
-          var cliNum2 = $(this).find('td:nth-child(3)').text(); // 두 번째 열(거래처 코드)
+          var cli1 = $(this).find('td:nth-child(2)').text(); // 두 번째 열(거래처 코드)
+          var cli2 = $(this).find('td:nth-child(3)').text(); // 두 번째 열(거래처 코드)
 
           // Modal에서 입력된 값을 가져와서 다른 input 요소에 설정
-          targetInput1.value = cliNum1;
-          targetInput2.value = cliNum2;
+          targetInput1.value = cli1;
+          targetInput2.value = cli2;
       
           // Modal 닫기 (Optional)
           var modal = document.getElementById('exampleModal1');
@@ -249,15 +249,33 @@
       $('#modal2-table tbody').on('click', 'tr', function() {
           var targetInput1 = document.getElementById('validationCustom05');
           var targetInput2 = document.getElementById('validationCustom06');
-          var cliNum1 = $(this).find('td:nth-child(2)').text(); // 두 번째 열(거래처 코드)
-          var cliNum2 = $(this).find('td:nth-child(3)').text(); // 두 번째 열(거래처 코드)
+          var user1 = $(this).find('td:nth-child(2)').text(); // 두 번째 열(거래처 코드)
+          var user2 = $(this).find('td:nth-child(3)').text(); // 두 번째 열(거래처 코드)
 
           // Modal에서 입력된 값을 가져와서 다른 input 요소에 설정
-          targetInput1.value = cliNum1;
-          targetInput2.value = cliNum2;
+          targetInput1.value = user1;
+          targetInput2.value = user2;
       
           // Modal 닫기 (Optional)
           var modal = document.getElementById('exampleModal2');
+          var modalInstance = coreui.Modal.getInstance(modal);
+          modalInstance.hide();
+      });
+      
+      $('#modal3-table tbody').on('click', 'tr', function() {
+          var rowNum = $('#click-row').val();
+          var targetInput1 = document.getElementById('goods-num'+ rowNum);
+          var targetInput2 = document.getElementById('goods-name'+ rowNum);
+          var goods1 = $(this).find('td:nth-child(2)').text();
+          var goods2 = $(this).find('td:nth-child(3)').text();
+          
+          
+          // Modal에서 입력된 값을 가져와서 다른 input 요소에 설정
+          targetInput1.value = goods1;
+          targetInput2.value = goods2;
+      
+          // Modal 닫기 (Optional)
+          var modal = document.getElementById('exampleModal3');
           var modalInstance = coreui.Modal.getInstance(modal);
           modalInstance.hide();
       });
@@ -358,32 +376,27 @@
 			"<input type='text' id='goods-num"+ cnt +"' class='form-control form-control-sm' data-coreui-toggle='modal' data-coreui-target='#exampleModal3' required>" +
 			"</div></td>" +
 			"<td><div class='col-auto'>" +
-			"<input type='text' id='goods-num"+ cnt +"' class='form-control form-control-sm' disabled>" +
+			"<input type='text' id='goods-name"+ cnt +"' class='form-control form-control-sm' disabled>" +
 			"</div></td>" +
 			"<td><div class='col-auto'>" +
-			"<input type='text' id='goods-num"+ cnt +"' class='form-control form-control-sm' required>" +
+			"<input type='text' id='goods-qty"+ cnt +"' class='form-control form-control-sm' required>" +
 			"</div></td>" +
 			"<td><div class='col-auto'>" +
-			"<input type='text' id='goods-num"+ cnt +"' class='form-control form-control-sm'>" +
+			"<input type='text' id='goods-comm"+ cnt +"' class='form-control form-control-sm'>" +
 			"</div></td>" +
 		"</tr>";
 		$(".item-table tbody").append(row);
 		cnt++;
 	}
 	
-    // 모달이 열릴 때 이벤트 처리
-    $('#exampleModal3').on('show.bs.modal', function(event) {
-    	alert("모달창 띄우기");
+    $('#exampleModal3').on('shown.coreui.modal', function(event) {
     	
         // 클릭된 버튼 요소
         var triggerElement = $(event.relatedTarget);
-        // 클릭된 버튼 요소의 부모 tr에서 goods-num1의 값을 가져옴
+        // 클릭된 버튼 요소의 부모 tr에서 값을 가져옴
         var numArr = triggerElement.closest('tr').attr('id').match(/\d+/g);
         var num = parseInt(numArr[0], 10);
         
-        console.log(num);
-        
-        // 모달 내의 특정 위치에 가져온 값을 넣어줌
         $('#exampleModal3').find('#click-row').val(num);
     });
     

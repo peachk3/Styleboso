@@ -56,17 +56,21 @@
 								<label for="item_size" class="form-label"> 규격 </label> 
 								<input type="text" class="form-control" id="item_size">
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-5">
 								<label for="item_price" class="form-label"> 매입 단가 * </label> 
 								<input type="number" class="form-control" id="item_price" name="item_price" placeholder="ex) 1000" required>
-								만 원
 								<div class="invalid-feedback" >매입 단가를 입력하세요 </div>
 							</div>
-							<div class="col-md-6">
-								<label for="item_price" class="form-label"> 매출 단가 * </label> 
-								<input type="number" class="form-control" id="item_price" name="item_price" placeholder="ex) 1000" required>
+							<div class="col-md-1" id="money" >
 								만 원
+							</div>
+							<div class="col-md-5">
+								<label for="item_price2" class="form-label"> 매출 단가 * </label> 
+								<input type="number" class="form-control" id="item_price2" name="item_price2" placeholder="ex) 1000" required>
 								<div class="invalid-feedback" >매출 단가를 입력하세요 </div>
+							</div>
+							<div class="col-md-1" id="money">
+								만 원
 							</div>
 							<div class="col-md-6">
 								<label for="item_inven_qty" class="form-label"> 현재고 </label> 
@@ -117,6 +121,14 @@
 						<div class="col-12">
 								<button class="btn btn-primary" type="submit" id="submitFormBtn">Submit form</button>
 							</div>
+
+<style>
+#money {
+	
+	padding-top: 45px;
+}
+</style>
+							
 <!-- <script src="path/to/bootstrap.bundle.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -126,7 +138,9 @@
       
        const submitFormBtn = document.getElementById('submitFormBtn');
        const productTypeSelect = document.getElementById('productType');
-       
+       const itemPriceInput = document.getElementById('item_price');
+       const itemPriceInput2 = document.getElementById('item_price2');
+
        submitFormBtn.addEventListener('click', function(event) {
          event.preventDefault(); // 기본 제출 동작 방지
    
@@ -156,6 +170,27 @@
        productTypeSelect.addEventListener('change', function() {
            this.setCustomValidity("");
        });
+    
+    // 매입 단가 음수 입력 불가
+       itemPriceInput.addEventListener('input', function() {
+           if (this.value < 0) {
+               this.value = '';
+               this.setCustomValidity('매입 단가는 음수가 될 수 없습니다');
+           } else {
+               this.setCustomValidity('');
+           }
+           this.reportValidity();
+       });
+    // 매출 단가 음수 입력 불가
+       itemPriceInput2.addEventListener('input', function() {
+           if (this.value < 0) {
+               this.value = '';
+               this.setCustomValidity('매출 단가는 음수가 될 수 없습니다');
+           } else {
+               this.setCustomValidity('');
+           }
+           this.reportValidity();
+       });
        
        getClientList();
        
@@ -164,7 +199,7 @@
            $('#modal1-table tbody tr').remove();
            
            $.ajax({
-               url: "/Styleboso/common/clientList",
+               url: "/common/clientList",
                type: "get",
                contentType: 'application/json; charset=utf-8',
                dataType: "json",

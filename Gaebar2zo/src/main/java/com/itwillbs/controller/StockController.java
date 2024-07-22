@@ -30,7 +30,7 @@ public class StockController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(StockController.class);
 
-	// 재고 현황  2
+	// 재고 현황
 	@RequestMapping(value="/status",method=RequestMethod.GET)
 	public String status_GET(Criteria cri,Model model) throws Exception{
 		logger.debug(" status_GET() 실행 ");

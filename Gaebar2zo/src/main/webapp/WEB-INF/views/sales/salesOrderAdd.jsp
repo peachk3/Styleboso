@@ -4,7 +4,7 @@
 
 <body>
   
-  <h1>/Styleboso/sales/salesOrderAdd.jsp</h1>
+  <h1>/sales/salesOrderAdd.jsp</h1>
 
 	<div class="container-lg px-4">
 		<div class="row">
@@ -34,7 +34,6 @@
 								<label for="validationCustom04" class="form-label">거래처 명</label>
 									<input type="text" class="form-control" id="validationCustom04" 
 										   data-coreui-toggle="modal" data-coreui-target="#exampleModal1" required>
-								<div class="invalid-feedback">거래처를 입력해주세요</div>
 							</div>
 							<div class="col-md-3">
 								<label for="validationCustom05" class="form-label">담당자 아이디</label>
@@ -46,45 +45,45 @@
 								<label for="validationCustom06" class="form-label">담당자 명</label>
 									<input type="text" class="form-control" id="validationCustom06"
 										   data-coreui-toggle="modal" data-coreui-target="#exampleModal2" required>
-								<div class="invalid-feedback">담당자를 입력해주세요</div>
 							</div>
 						<div class="example">
+							<div class="tab-content rounded-bottom">
+
+								<button id="addRowBtn" class="btn btn-outline-info"
+									type="button" style="margin-bottom: 10px;" onclick="addRow();">품목 추가</button>
+									
 							<ul class="nav nav-underline-border" role="tablist">
 							</ul>
-							<div class="tab-content rounded-bottom">
-								<div class="tab-pane p-3 active preview" role="tabpanel"
-									id="preview-1000">
-										<table class="table">
-											<thead class="table-light">
-												<tr>
-													<th scope="col">#</th>
-													<th scope="col">First</th>
-													<th scope="col">Last</th>
-													<th scope="col">Handle</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<th scope="row">1</th>
-													<td>Mark</td>
-													<td>Otto</td>
-													<td>@mdo</td>
-												</tr>
-												<tr>
-													<th scope="row">2</th>
-													<td>Jacob</td>
-													<td>Thornton</td>
-													<td>@fat</td>
-												</tr>
-												<tr>
-													<th scope="row">3</th>
-													<td>Larry</td>
-													<td>the Bird</td>
-													<td>@twitter</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
+								<table class="table item-table">
+									<thead class="table-light">
+										<tr>
+											<th scope="col">#</th>
+											<th scope="col">제품번호</th>
+											<th scope="col">제품명</th>
+											<th scope="col">수량</th>
+											<th scope="col">비고</th>
+										</tr>
+									</thead>
+									<tbody id="tableBody">
+											<tr id="row1">
+												<th scope="row"><input class="form-check-input"
+													type="checkbox" id="check1"></th>
+												<td> <div class="col-auto">
+												    <input type="text" id="goods-num1" class="form-control form-control-sm" 
+												    		data-coreui-toggle="modal" data-coreui-target="#exampleModal3" required>
+												  </div></td>
+												<td><div class="col-auto">
+												    <input type="text" id="goods-name1" class="form-control form-control-sm" disabled>
+												  </div></td>
+												<td><div class="col-auto">
+												    <input type="text" id="goods-qty1" class="form-control form-control-sm" required>
+												  </div></td>
+												<td><div class="col-auto">
+												    <input type="text" id="goods-comm1" class="form-control form-control-sm">
+												  </div></td>
+											</tr>
+									</tbody>
+								</table>
 							</div>
 						</div>
 							<div class="col-12">
@@ -101,7 +100,7 @@
 												data-coreui-dismiss="modal" aria-label="Close"></button>
 										</div>
 										<div class="modal-body">
-											<table class="table table-hover" id="modal1-table">
+											<table class="table table-hover text-center" id="modal1-table">
 												<thead class="table-light">
 													<tr>
 														<th scope="col"></th>
@@ -115,7 +114,7 @@
 											</table>
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
 										</div>
 									</div>
 								</div>
@@ -123,7 +122,7 @@
 							<!-- Modal2 -->
 							<div class="modal fade" id="exampleModal2" tabindex="-1"
 								aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog">
+								<div class="modal-dialog modal-dialog-scrollable">
 									<div class="modal-content">
 										<div class="modal-header">
 											<h5 class="modal-title" id="exampleModalLabel">담당자</h5>
@@ -131,7 +130,7 @@
 												data-coreui-dismiss="modal" aria-label="Close"></button>
 										</div>
 										<div class="modal-body">
-											<table class="table table-hover" id="modal2-table">
+											<table class="table table-hover text-center" id="modal2-table">
 												<thead class="table-light">
 													<tr>
 														<th scope="col"></th>
@@ -145,26 +144,63 @@
 											</table>
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
 										</div>
 									</div>
 								</div>
 							</div>
+							<!-- Modal3 -->
+							<div class="modal fade" id="exampleModal3" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-scrollable modal-lg">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">제품<input class="hidden" id="click-row" value=""></h5>
+											<button type="button" class="btn-close"
+												data-coreui-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<table class="table table-hover text-center" id="modal3-table">
+												<thead class="table-light">
+													<tr>
+														<th scope="col"></th>
+														<th scope="col">제품 번호</th>
+														<th scope="col">제품 명</th>
+														<th scope="col">제품 사이즈</th>
+														<th scope="col">제품 색상</th>
+													</tr>
+												</thead>
+												<tbody>
+													
+												</tbody>
+											</table>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							
 						</form>
 					</div>
 				</div>
 			</div>
    
 
-   <h1>/Styleboso/sales/salesOrderAdd.jsp</h1>
+   <h1>/sales/salesOrderAdd.jsp</h1>
 </body>
 
 <style>
-  .custom-btn {
-    text-align: left; /* 텍스트를 왼쪽으로 정렬합니다 */
-    padding-left: 10px; /* 왼쪽 여백을 추가합니다 */
-    width: 100%; /* 버튼이 부모 요소에 맞게 전체 너비를 가지도록 설정합니다 */
-  }
+	.custom-btn {
+		text-align: left; /* 텍스트를 왼쪽으로 정렬합니다 */
+		padding-left: 10px; /* 왼쪽 여백을 추가합니다 */
+		width: 100%; /* 버튼이 부모 요소에 맞게 전체 너비를 가지도록 설정합니다 */
+	}
+  
+	.hidden {
+		display: none;
+	}
 </style>
 
 <!-- <script src="path/to/bootstrap.bundle.min.js"></script> -->
@@ -173,8 +209,8 @@
 <script type="text/javascript">
    
    document.addEventListener('DOMContentLoaded', function() {
-      
-       const submitFormBtn = document.getElementById('submitFormBtn');
+		
+		const submitFormBtn = document.getElementById('submitFormBtn');
    
        submitFormBtn.addEventListener('click', function(event) {
          event.preventDefault(); // 기본 제출 동작 방지
@@ -197,12 +233,12 @@
       $('#modal1-table tbody').on('click', 'tr', function() {
           var targetInput1 = document.getElementById('validationCustom03');
           var targetInput2 = document.getElementById('validationCustom04');
-          var cliNum1 = $(this).find('td:nth-child(2)').text(); // 두 번째 열(거래처 코드)
-          var cliNum2 = $(this).find('td:nth-child(3)').text(); // 두 번째 열(거래처 코드)
+          var cli1 = $(this).find('td:nth-child(2)').text(); // 두 번째 열(거래처 코드)
+          var cli2 = $(this).find('td:nth-child(3)').text(); // 두 번째 열(거래처 코드)
 
           // Modal에서 입력된 값을 가져와서 다른 input 요소에 설정
-          targetInput1.value = cliNum1;
-          targetInput2.value = cliNum2;
+          targetInput1.value = cli1;
+          targetInput2.value = cli2;
       
           // Modal 닫기 (Optional)
           var modal = document.getElementById('exampleModal1');
@@ -213,15 +249,33 @@
       $('#modal2-table tbody').on('click', 'tr', function() {
           var targetInput1 = document.getElementById('validationCustom05');
           var targetInput2 = document.getElementById('validationCustom06');
-          var cliNum1 = $(this).find('td:nth-child(2)').text(); // 두 번째 열(거래처 코드)
-          var cliNum2 = $(this).find('td:nth-child(3)').text(); // 두 번째 열(거래처 코드)
+          var user1 = $(this).find('td:nth-child(2)').text(); // 두 번째 열(거래처 코드)
+          var user2 = $(this).find('td:nth-child(3)').text(); // 두 번째 열(거래처 코드)
 
           // Modal에서 입력된 값을 가져와서 다른 input 요소에 설정
-          targetInput1.value = cliNum1;
-          targetInput2.value = cliNum2;
+          targetInput1.value = user1;
+          targetInput2.value = user2;
       
           // Modal 닫기 (Optional)
           var modal = document.getElementById('exampleModal2');
+          var modalInstance = coreui.Modal.getInstance(modal);
+          modalInstance.hide();
+      });
+      
+      $('#modal3-table tbody').on('click', 'tr', function() {
+          var rowNum = $('#click-row').val();
+          var targetInput1 = document.getElementById('goods-num'+ rowNum);
+          var targetInput2 = document.getElementById('goods-name'+ rowNum);
+          var goods1 = $(this).find('td:nth-child(2)').text();
+          var goods2 = $(this).find('td:nth-child(3)').text();
+          
+          
+          // Modal에서 입력된 값을 가져와서 다른 input 요소에 설정
+          targetInput1.value = goods1;
+          targetInput2.value = goods2;
+      
+          // Modal 닫기 (Optional)
+          var modal = document.getElementById('exampleModal3');
           var modalInstance = coreui.Modal.getInstance(modal);
           modalInstance.hide();
       });
@@ -233,7 +287,7 @@
           $('#modal1-table tbody tr').remove();
           
           $.ajax({
-              url: "/Styleboso/common/clientList",
+              url: "/common/clientList",
               type: "get",
               contentType: 'application/json; charset=utf-8',
               dataType: "json",
@@ -261,7 +315,7 @@
           $('#modal2-table tbody tr').remove();
           
           $.ajax({
-              url: "/Styleboso/common/managerList",
+              url: "/common/managerList",
               type: "get",
               contentType: 'application/json; charset=utf-8',
               dataType: "json",
@@ -282,8 +336,70 @@
           });
       }
       
+      getGoodsList();
+      
+      function getGoodsList() {
+         
+          $('#modal3-table tbody tr').remove();
+          
+          $.ajax({
+              url: "/common/goodsList",
+              type: "get",
+              contentType: 'application/json; charset=utf-8',
+              dataType: "json",
+              success: function(data) {
+                  // body 태그에 내용 추가
+                  console.log(data);
+                  data.forEach(function(item, idx){
+                     console.log(idx);
+                     var row = "<tr><th scope='row'>" + (parseInt(idx)+1) + "</th><td>" + item.goods_num + "</td><td>" + item.itemList.map(itemVO => itemVO.item_name).join(', ') + "</td><td>" + item.goods_size + "</td><td>" + item.goods_color + "</td></tr>"
+                      $('#modal3-table tbody').append(row);
+                  });
+                  
+              },
+              error: function(jqXHR, textStatus, errorThrown) {
+                  console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
+                  alert("AJAX 요청 실패!");
+              }
+          });
+      }
+      
+      
    });
    
+	var cnt = 2;
+      
+	function addRow() {
+		var row = "<tr id='row"+ cnt +"'>" +
+			"<th scope='row'><input class='form-check-input' type='checkbox' id='check"+ cnt +"'></th>" +
+			"<td> <div class='col-auto'>" +
+			"<input type='text' id='goods-num"+ cnt +"' class='form-control form-control-sm' data-coreui-toggle='modal' data-coreui-target='#exampleModal3' required>" +
+			"</div></td>" +
+			"<td><div class='col-auto'>" +
+			"<input type='text' id='goods-name"+ cnt +"' class='form-control form-control-sm' disabled>" +
+			"</div></td>" +
+			"<td><div class='col-auto'>" +
+			"<input type='text' id='goods-qty"+ cnt +"' class='form-control form-control-sm' required>" +
+			"</div></td>" +
+			"<td><div class='col-auto'>" +
+			"<input type='text' id='goods-comm"+ cnt +"' class='form-control form-control-sm'>" +
+			"</div></td>" +
+		"</tr>";
+		$(".item-table tbody").append(row);
+		cnt++;
+	}
+	
+    $('#exampleModal3').on('shown.coreui.modal', function(event) {
+    	
+        // 클릭된 버튼 요소
+        var triggerElement = $(event.relatedTarget);
+        // 클릭된 버튼 요소의 부모 tr에서 값을 가져옴
+        var numArr = triggerElement.closest('tr').attr('id').match(/\d+/g);
+        var num = parseInt(numArr[0], 10);
+        
+        $('#exampleModal3').find('#click-row').val(num);
+    });
+    
 </script>
 
 <%@ include file="../include/footer.jsp" %>

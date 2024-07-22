@@ -4,19 +4,45 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.itwillbs.mapper.commonMapper">
+
+	<resultMap type="com.itwillbs.domain.GoodsVO" id="goodsMap">
+		<id property="goods_num" column="goods_num"/>
+		<result property="goods_num" column="goods_num"/>
+		<result property="item_num" column="item_num"/>
+		<result property="goods_color" column="goods_color"/>
+		<result property="goods_size" column="goods_size"/>
+		<collection property="itemList" resultMap="itemMap"></collection>
+	</resultMap>
+
+	<resultMap type="com.itwillbs.domain.ItemVO" id="itemMap">
+		<id property="item_num" column="item_num"/>
+		<result property="item_num" column="item_num"/>
+		<result property="item_cate_code" column="item_cate_code"/>
+		<result property="item_cli_code" column="item_cli_code"/>
+		<result property="item_name" column="item_name"/>
+		<result property="item_mat" column="item_mat"/>
+		<result property="comm" column="comm"/>
+	</resultMap>
 	
 	<!-- 거래처 리스트 조회 -->
 	<select id="clientList" resultType="ClientVO">
 		SELECT cli_num, cli_name FROM client
 	</select>
 	
-	<!-- 거래처 리스트 조회 -->
+	<!-- 담당자 리스트 조회 -->
 	<select id="managerList" resultType="UsersVO">
 		select username, user_per_name
 		from users
 		where username in (select username from authorities where authority = "ROLE_MANAGER")
 	</select>
 
+	<!-- 제품 리스트 조회 -->
+	<select id="goodsList" resultMap="goodsMap">
+		select goods_num, item_name, goods_size, goods_color
+        from goods g join item i
+        on g.item_num = i.item_num
+        order by goods_num desc;
+	</select>
 
 
 

@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.TransactionVO;
 
@@ -44,13 +45,12 @@ public class StockDAOImpl implements StockDAO{
 
 	// 재고 리스트 호출
 	@Override
-	public List<InventoryVO> getStockList() throws Exception {
+	public List<InventoryVO> getStockList(Criteria cri) throws Exception {
 		logger.debug("DAOImpl : 입고 리스트 호출");
 		
-		return sqlSession.selectList(NAMESPACE+"getStockList");
+		return sqlSession.selectList(NAMESPACE+"getStockList",cri);
 	}
-	
-	
+
 
 	
 	

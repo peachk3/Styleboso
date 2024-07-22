@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.persistence.StockDAO;
@@ -42,11 +43,11 @@ public class StockServiceImpl implements StockService{
 
 	// 재고 리스트 호출
 	@Override
-	public List<InventoryVO> getStockList() throws Exception {
+	public List<InventoryVO> getStockList(Criteria cri) throws Exception {
 		logger.debug("ServiceImpl + 재고 리스트 호출");
 		
 		
-		return sdao.getStockList();
+		return sdao.getStockList(cri);
 	}
 
 	

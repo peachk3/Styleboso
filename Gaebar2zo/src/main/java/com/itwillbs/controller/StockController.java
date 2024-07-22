@@ -14,7 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryVO;
+import com.itwillbs.domain.PageVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.service.StockService;
 
@@ -30,11 +32,20 @@ public class StockController {
 
 	// 재고 현황
 	@RequestMapping(value="/status",method=RequestMethod.GET)
-	public void status_GET(Model model) throws Exception{
+	public String status_GET(Criteria cri,Model model) throws Exception{
 		logger.debug(" status_GET() 실행 ");
 		
-		List<InventoryVO> sl = sService.getStockList();
+		List<InventoryVO> sl = sService.getStockList(cri);
+		
+		// 하단 페이징처리 정보객체 생성
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		
+		// 연결된 뷰페이지로 정보 전달
 		model.addAttribute("sl", sl);
+		model.addAttribute("pageVO", pageVO);
+		
+		return "/stock/status";
 
 	}
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.TransactionVO;
 
@@ -17,7 +18,7 @@ public interface StockService {
 	List<TransactionVO> rsList() throws Exception;
 
 	// 재고 리스트 호출
-	List<InventoryVO> getStockList() throws Exception;
+	List<InventoryVO> getStockList(Criteria cri) throws Exception;
 
 
 

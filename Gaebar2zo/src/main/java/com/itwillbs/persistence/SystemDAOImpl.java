@@ -21,6 +21,20 @@ public class SystemDAOImpl implements SystemDAO{
 
 	public static final String NAMESPACE="com.itwillbs.mapper.systemMapper.";
 
+	//이메일 중복
+	@Override
+	public int emailCheck(String user_email) throws Exception {
+		int result = sqlSession.selectOne(NAMESPACE + "emailCheck", user_email);
+		
+		logger.info("result :" + result);
+				
+				return result;
+	}
+
+
+
+
+
 	//운영자,관리자,사원 전체 리스트 출력
 	@Override
 	public List<UsersVO> employeeListAll() throws Exception {

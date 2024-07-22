@@ -5,11 +5,16 @@
 
   <mapper namespace="com.itwillbs.mapper.systemMapper">
 
+<!-- 시스템관리 (사용자 등록 - 전체리스트) -->
 <select id="employeeListAll" resultType="UsersVO">
-select * from users
+	select * from users
 </select>
 
-
+<!-- 이메일 중복체크 -->
+<select id="emailCheck" parameterType="String" resultType="int" > 
+	select count (*) from users
+	where user_email =#{user_email}
+</select>
 
 
 

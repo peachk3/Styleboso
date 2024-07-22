@@ -9,9 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.UsersVO;
 import com.itwillbs.service.SystemService;
@@ -53,7 +55,30 @@ public class SystemController {
 
 		return "redirect:/system/main";
 	}
-
+	// -------------------------------------------------------------------------------------------
+	//이메일 중복 체크 
+	@GetMapping("/emailCheck")
+	@ResponseBody
+	public int emailCheck(@RequestParam("user_email")String user_email ) throws Exception {
+		
+		int result = sService.emailCheck(user_email);
+		
+		logger.info(" 결과값 :" + result);
+		
+		return result;
+	}
+	
+	
+	
+	
+	// -------------------------------------------------------------------------------------------
+	//전화번호 중복 
+	
+	
+	
+	
+	
+	
 	// -------------------------------------------------------------------------------------------
 	// http://localhost:8088/Styleboso/system/main
 	// 대시보드 ( 메인 페이지 )

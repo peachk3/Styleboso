@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.Criteria;
@@ -38,9 +39,18 @@ public class StockController {
 
 	// 재고 현황
 	@RequestMapping(value="/status",method=RequestMethod.GET)
-	public String status_GET(Criteria cri,Model model) throws Exception{
+	public String status_GET(Criteria cri,Model model,
+							 @RequestParam(value="searchType", required = false) String searchType,
+							 @RequestParam(value="keyword", required = false) String keyword 
+							) throws Exception{
 		logger.debug(" status_GET() 실행 ");
 		logger.debug(" cri " + cri);
+		
+		// 검색 기능
+		if(searchType != null && keyword != null && !keyword.trim().isEmpty()) {
+			cri.setSearchType(searchType);
+			cri.setKeyword(keyword);
+		}
 		
 		List<InventoryVO> sl = sService.getStockList(cri);
 		logger.debug(" size : " + sl.size());
@@ -54,6 +64,8 @@ public class StockController {
 		// 연결된 뷰페이지로 정보 전달
 		model.addAttribute("sl", sl);
 		model.addAttribute("pageVO", pageVO);
+		model.addAttribute("searchType", searchType);
+		model.addAttribute("keyword", keyword);
 		
 		return "/stock/status";
 

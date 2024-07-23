@@ -11,14 +11,16 @@
 			<div class="col-12">
 				<div class="card mb-4">
 					<div class="card-body">
-						<form class="row g-3 needs-validation" novalidate>
-							<div class="col-md-6">
-								<label for="validationCustom01" class="form-label">납기일자</label> 
-									<input type="date" class="form-control"
-									id="validationCustom01" required>
-								<div class="invalid-feedback">납기일자를 입력해주세요</div>
-							</div>
-							<div class="col-md-6">
+						<form class="row g-3 needs-validation" action="/sales/salesOrderAdd" method="post" novalidate>
+							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">			
+						
+<!-- 							<div class="col-md-6"> -->
+<!-- 								<label for="validationCustom01" class="form-label">납기일자</label>  -->
+<!-- 									<input type="date" class="form-control" -->
+<!-- 									id="validationCustom01" required> -->
+<!-- 								<div class="invalid-feedback">납기일자를 입력해주세요</div> -->
+<!-- 							</div> -->
+							<div class="col-12">
 								<label for="validationCustom02" class="form-label">수주일자</label> 
 									<input type="date" class="form-control"
 									id="validationCustom02" required>
@@ -49,46 +51,30 @@
 						<div class="example">
 							<div class="tab-content rounded-bottom">
 
-								<button id="addRowBtn" class="btn btn-outline-info"
-									type="button" style="margin-bottom: 10px;" onclick="addRow();">품목 추가</button>
+								<button id="addRowBtn" class="btn btn-outline-info btn-sm"
+									type="button" style="margin-bottom: 10px;"
+									data-coreui-toggle="modal" data-coreui-target="#exampleModal3" >품목 선택</button>
 									
 							<ul class="nav nav-underline-border" role="tablist">
 							</ul>
-								<table class="table item-table">
+								<table class="table item-table text-left">
 									<thead class="table-light">
 										<tr>
-											<th scope="col">#</th>
-											<th scope="col">제품번호</th>
-											<th scope="col">제품명</th>
-											<th scope="col">수량</th>
-											<th scope="col">비고</th>
+											<th scope="col" style="width:25%">제품번호</th>
+											<th scope="col" style="width:25%">제품명</th>
+											<th scope="col" style="width:25%">수량</th>
+											<th scope="col" style="width:25%">비고</th>
 										</tr>
 									</thead>
 									<tbody id="tableBody">
-											<tr id="row1">
-												<th scope="row"><input class="form-check-input"
-													type="checkbox" id="check1"></th>
-												<td> <div class="col-auto">
-												    <input type="text" id="goods-num1" class="form-control form-control-sm" 
-												    		data-coreui-toggle="modal" data-coreui-target="#exampleModal3" required>
-												  </div></td>
-												<td><div class="col-auto">
-												    <input type="text" id="goods-name1" class="form-control form-control-sm" disabled>
-												  </div></td>
-												<td><div class="col-auto">
-												    <input type="text" id="goods-qty1" class="form-control form-control-sm" required>
-												  </div></td>
-												<td><div class="col-auto">
-												    <input type="text" id="goods-comm1" class="form-control form-control-sm">
-												  </div></td>
-											</tr>
 									</tbody>
 								</table>
 							</div>
 						</div>
 							<div class="col-12">
-								<button class="btn btn-primary" type="submit" id="submitFormBtn">Submit form</button>
+								<button class="btn btn-primary" type="submit" id="submitFormBtn">등록</button>
 							</div>
+						</form>
 							<!-- Modal1 -->
 							<div class="modal fade" id="exampleModal1" tabindex="-1"
 								aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -176,13 +162,13 @@
 											</table>
 										</div>
 										<div class="modal-footer">
+											<button class="btn btn-primary" type="submit" id="submitModal3Btn" onclick="checkedData();">등록</button>
 											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
 										</div>
 									</div>
 								</div>
 							</div>
 							
-						</form>
 					</div>
 				</div>
 			</div>
@@ -210,24 +196,33 @@
    
    document.addEventListener('DOMContentLoaded', function() {
 		
+		const form = document.querySelector('.needs-validation');
 		const submitFormBtn = document.getElementById('submitFormBtn');
    
-       submitFormBtn.addEventListener('click', function(event) {
-         event.preventDefault(); // 기본 제출 동작 방지
-   
-         // 필요한 유효성 검사를 적용할 모든 폼을 가져오기
-         const forms = document.querySelectorAll('.needs-validation');
+		submitFormBtn.addEventListener('click', function(event) {
+			event.preventDefault(); // 기본 제출 동작 방지
+			
+			// 필요한 유효성 검사를 적용할 모든 폼을 가져오기
+			const forms = document.querySelectorAll('.needs-validation');
+			
+			let allFormsValid = true; // 모든 폼이 유효성 검사를 통과했는지 여부를 저장하는 변수
+			
+			// NodeList를 배열로 변환하고 각각의 폼에 대해 처리
+			Array.from(forms).forEach(form => {
+				// 유효성 검사 통과 여부 확인
+				if (!form.checkValidity()) {
+				  event.stopPropagation(); // 상위 요소로 이벤트 전파 방지
+				  allFormsValid = false; // 하나라도 유효성 검사를 통과하지 못한 경우
+				}
+				
+				// Bootstrap의 'was-validated' 클래스 추가
+				form.classList.add('was-validated');
+			});
+			
+			if (allFormsValid) {
+		        form.submit();
+		    }
          
-         // NodeList를 배열로 변환하고 각각의 폼에 대해 처리
-         Array.from(forms).forEach(form => {
-            // 유효성 검사 통과 여부 확인
-            if (!form.checkValidity()) {
-              event.stopPropagation(); // 상위 요소로 이벤트 전파 방지
-            }
-            
-            // Bootstrap의 'was-validated' 클래스 추가
-            form.classList.add('was-validated');
-         });
        });
 
       $('#modal1-table tbody').on('click', 'tr', function() {
@@ -352,7 +347,7 @@
                   console.log(data);
                   data.forEach(function(item, idx){
                      console.log(idx);
-                     var row = "<tr><th scope='row'>" + (parseInt(idx)+1) + "</th><td>" + item.goods_num + "</td><td>" + item.itemList.map(itemVO => itemVO.item_name).join(', ') + "</td><td>" + item.goods_size + "</td><td>" + item.goods_color + "</td></tr>"
+                     var row = "<tr id='row"+ (parseInt(idx)+1) +"'><th scope='row'><input class='form-check-input'type='checkbox' id='check" + (parseInt(idx)+1) + "'></th><td>" + item.goods_num + "</td><td>" + item.itemList.map(itemVO => itemVO.item_name).join(', ') + "</td><td>" + item.goods_size + "</td><td>" + item.goods_color + "</td></tr>"
                       $('#modal3-table tbody').append(row);
                   });
                   
@@ -367,38 +362,68 @@
       
    });
    
-	var cnt = 2;
-      
-	function addRow() {
-		var row = "<tr id='row"+ cnt +"'>" +
-			"<th scope='row'><input class='form-check-input' type='checkbox' id='check"+ cnt +"'></th>" +
-			"<td> <div class='col-auto'>" +
-			"<input type='text' id='goods-num"+ cnt +"' class='form-control form-control-sm' data-coreui-toggle='modal' data-coreui-target='#exampleModal3' required>" +
-			"</div></td>" +
-			"<td><div class='col-auto'>" +
-			"<input type='text' id='goods-name"+ cnt +"' class='form-control form-control-sm' disabled>" +
-			"</div></td>" +
-			"<td><div class='col-auto'>" +
-			"<input type='text' id='goods-qty"+ cnt +"' class='form-control form-control-sm' required>" +
-			"</div></td>" +
-			"<td><div class='col-auto'>" +
-			"<input type='text' id='goods-comm"+ cnt +"' class='form-control form-control-sm'>" +
-			"</div></td>" +
-		"</tr>";
-		$(".item-table tbody").append(row);
-		cnt++;
+	
+	function checkedData() {
+		var checkedRows = $('#exampleModal3 tbody input[type="checkbox"]:checked').closest('tr'); // 체크된 input의 부모 tr을 선택
+	    var checkedData = [];
+	    
+	    checkedRows.each(function() {
+	        var row = $(this); // 현재 처리 중인 행을 jQuery 객체로 가져옴
+	        var goods_num = row.find('td:eq(0)').text().trim(); // 상품 번호 가져오기
+	        var goods_name = row.find('td:eq(1)').text().trim(); // 상품 이름 가져오기
+	        
+	        // JSON 객체로 데이터 구성
+	        var rowData = {
+	            goods_num: goods_num,
+	            goods_name: goods_name
+	        };
+	        
+	        checkedData.push(rowData); // 배열에 JSON 객체 추가
+	    });
+	    
+	    var checkedDataJSON = JSON.stringify(checkedData);
+
+	    // 배열을 JSON 문자열로 변환하여 출력
+	    console.log(checkedDataJSON);
+	    
+	    $('.item-table tbody tr').remove();
+	    
+	    addRow(JSON.parse(checkedDataJSON));
+        
+		 // Modal 닫기 (Optional)
+        var modal = document.getElementById('exampleModal3');
+        var modalInstance = coreui.Modal.getInstance(modal);
+        modalInstance.hide();
+	    
 	}
 	
-    $('#exampleModal3').on('shown.coreui.modal', function(event) {
-    	
-        // 클릭된 버튼 요소
-        var triggerElement = $(event.relatedTarget);
-        // 클릭된 버튼 요소의 부모 tr에서 값을 가져옴
-        var numArr = triggerElement.closest('tr').attr('id').match(/\d+/g);
-        var num = parseInt(numArr[0], 10);
-        
-        $('#exampleModal3').find('#click-row').val(num);
-    });
+	function addRow(data) {
+	    var cnt = 1;
+	    
+	    data.forEach(function(item, idx){
+			console.log(item);
+			
+			var row ='<tr id="row'+ cnt +'">'+
+			'<td> <div id="goods-num'+ cnt +'" class="col-auto">'+ item.goods_num +
+			'</div></td>'+
+			'<td><div id="goods-name'+ cnt +'">'+ item.goods_name +
+			'</div></td>'+
+			'<td><div>'+
+			'<input type="text" id="goods-qty'+ cnt +'" class="form-control form-control-sm" required>'+
+			'</div></td>'+
+			'<td><div>'+
+			'<input type="text" id="goods-comm'+ cnt +'" class="form-control form-control-sm">'+
+			'</div></td>'+
+			'</tr>';
+			
+			$('.item-table tbody').append(row);
+			cnt++;
+		
+		});
+           
+	}
+	
+
     
 </script>
 

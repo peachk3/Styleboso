@@ -42,9 +42,10 @@ public class SalesController {
 	
 	// 수주 추가
 	@RequestMapping(value="/salesOrderAdd",method=RequestMethod.POST)
-	public void salesOrderAdd_POST() throws Exception{
+	public String salesOrderAdd_POST() throws Exception{
 		logger.debug(" salesOrderAdd_POST() 실행 ");
 		
+		return "redirect:/sales/salesOrderList";
 	}
 
 	// 발주 관리

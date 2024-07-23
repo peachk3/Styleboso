@@ -23,20 +23,20 @@
 		<security:http>
 <!-- 			<security:intercept-url pattern="/all" access="permitAll"/> -->
 <!-- 			<security:intercept-url pattern="/member" access="hasRole('ROLE_MEMBER')"/> -->
-			<security:intercept-url pattern="/Styleboso/system/main" access="hasRole('ROLE_ADMIN')"/>
+			<security:intercept-url pattern="/system/main" access="hasRole('ROLE_ADMIN')"/>
 			
 <!-- 			<security:intercept-url pattern="/teamA/*" access="hasRole('ROLE_ADMIN')"/> -->
 			
 <!-- 			<security:form-login/> -->
 <!-- 			<security:form-login login-page="/customLogin"/> -->
-			<security:form-login login-page="/Styleboso/system/login" authentication-success-handler-ref="customLoginSuccess"/>
+			<security:form-login login-page="/system/login" authentication-success-handler-ref="customLoginSuccess"/>
 			
 	
 	
 	
 	
 			<!-- 로그아웃 -->
-			<security:logout  logout-url="/Styleboso/system/logout" invalidate-session="true"/>
+			<security:logout  logout-url="/system/logout" invalidate-session="true"/>
 			
 			
 

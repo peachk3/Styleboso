@@ -23,11 +23,16 @@
 								<input type="text" class="form-control" id="cli_name" required>
 								<div class="invalid-feedback" >거래처명을 입력하세요 </div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<label for="cli_crn" class="form-label"> 사업자 번호 </label> 
 								<input type="text" class="form-control" id="cli_crn" required>
 								<div class="invalid-feedback" > 사업자 번호를 입력하세요</div>
 								<div id="cliCrnError" class="text-danger" style="display: none;">숫자만 입력하세요</div>
+								<div id="cliCrnDuplicate" class="text-danger" style="display: none;">중복된 사업자입니다</div>
+							</div>
+							<div class="col-md-2">
+								<label class="form-label">&nbsp;</label>
+								<button type="button" id="cliCrnBtn" class="btn btn-primary">중복 확인</button>
 							</div>
 							<div class="col-md-6">
 								<label for="cli_name" class="form-label"> 거래처 구분 </label>
@@ -268,8 +273,7 @@
 	           
 	       });      
 	    
-	       // 사업자 등록 번호 - 숫자만 입력 허용
-	       $("#cli_crn").on("input", function() {
+	     	$("#cli_crn").on("input", function() {
 		    	var value = this.value.replace(/[^0-9]/g, '');
 	 	           const errorMessage = document.getElementById('cliCrnError');
 	               
@@ -280,9 +284,35 @@
 	            	   errorMessage.style.display = 'none';
 	               }
 	               this.reportValidity();
-		           
-		       });  
-	    	
+            });
+	     
+	       $('#cliCrnBtn').click(function() {
+	            var crnValue = $('#cli_crn').val().trim();
+	            
+	            $('#cliCrnError').hide();
+
+	            // 서버에 중복 확인 요청
+	            $.ajax({
+	                url: '/basicInfo/check-crn',
+	                type: 'GET',
+	                data: { cli_crn: crnValue },
+	                dataType: 'json',
+	                success: function(response) {
+	                	//alert('success ' + JSON.stringify(response));
+	               
+	                    if (response === 1) {
+	                    	$('#cliCrnDuplicate').show();
+	                    } else {
+	                        $('#cliCrnDuplicate').hide();
+	                        alert('사용 가능한 사업자 번호입니다.');
+	                    }
+	                } ,
+	                error: function() {
+	                    alert('중복 확인 중 오류가 발생했습니다.');
+	                }
+	            });
+	        });
+	      
 	getManagerList();
 
 	function getManagerList() {

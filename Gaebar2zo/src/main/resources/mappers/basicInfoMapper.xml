@@ -46,6 +46,10 @@
 		join code c on c.group_code = ic.m_cate_item_code
 	</select>
 
-
+	<select id="cliCrnDup" resultType="int">
+		select count(*)
+		from client
+		where cli_crn =#{cli_crn};
+	</select>
 
 </mapper>

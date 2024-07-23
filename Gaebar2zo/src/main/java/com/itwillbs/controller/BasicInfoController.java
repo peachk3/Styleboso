@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.ItemVO;
@@ -63,7 +65,19 @@ public class BasicInfoController {
 		logger.debug(" clientAdd_GET() 실행 ");
 
 	}
-
+	
+	// 사업자 번호 중복 확인
+	@RequestMapping(value="/check-crn", method = RequestMethod.GET)
+	@ResponseBody
+	public int clientCrnCheck(@RequestParam String cli_crn) throws Exception {
+		logger.debug(" clientCrnCheck() 실행 ");
+		
+		boolean isDuplicate = bService.isCliCrnDuplicate(cli_crn);
+	
+		logger.debug(" 결과 : " + isDuplicate);
+		
+		return isDuplicate ? 1 : 0;
+	}
 
 	// 창고 관리
 	//http://localhost:8088/Styleboso/system/login

@@ -17,4 +17,7 @@ public interface BasicInfoDAO {
 	// 품목 리스트 출력
 	List<ItemVO> itemListAll();
 
+	// 거래처 번호 중복 확인
+	public int cliCrnDup(String cli_crn) throws Exception;
+
 }

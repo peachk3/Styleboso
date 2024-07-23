@@ -165,23 +165,75 @@
 
 	<!-- 재고 리스트 호출 -->
 	<select id="getStockList" resultMap="invenMap">
-	  <![CDATA[
-		select i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack, sum(inven_qty) as inven_qty
-		from inventory y
-		join warehouse w
-		on y.wh_num = w.wh_num
-		join goods g
-		on y.goods_num = g.goods_num
-		join item i
-		on i.item_num = g.item_num
-		group by i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
-		having count(y.inven_num) > 0
-		limit #{pageStart}, #{pageSize}
-	  ]]>
+	    <![CDATA[
+	    SELECT i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack, SUM(inven_qty) as inven_qty
+	    FROM inventory y
+	    JOIN warehouse w ON y.wh_num = w.wh_num
+	    JOIN goods g ON y.goods_num = g.goods_num
+	    JOIN item i ON i.item_num = g.item_num
+	    ]]>
+	    <where>
+	        <if test="searchType != null and keyword != null and keyword != ''">
+	            <choose>
+	                <when test="searchType == 'code'">
+	                    AND i.item_cate_code LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'name'">
+	                    AND i.item_name LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'warehouse'">
+	                    AND w.wh_name LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <otherwise>
+	                    AND (i.item_cate_code LIKE CONCAT('%', #{keyword}, '%')
+	                    OR i.item_name LIKE CONCAT('%', #{keyword}, '%')
+	                    OR w.wh_name LIKE CONCAT('%', #{keyword}, '%'))
+	                </otherwise>
+	            </choose>
+	        </if>
+	    </where>
+	    <![CDATA[
+	    GROUP BY i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
+	    HAVING COUNT(y.inven_num) > 0
+	    ORDER BY i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
+	    LIMIT #{pageStart}, #{pageSize}
+	    ]]>
 	</select>
 	
 	<select id="totalCount" resultType="int">
-		select count(inven_num) from inventory
+	    <![CDATA[
+	    SELECT COUNT(*) FROM (
+	        SELECT i.item_cate_code
+	        FROM inventory y
+	        JOIN warehouse w ON y.wh_num = w.wh_num
+	        JOIN goods g ON y.goods_num = g.goods_num
+	        JOIN item i ON i.item_num = g.item_num
+	    ]]>
+	    <where>
+	        <if test="searchType != null and keyword != null and keyword != ''">
+	            <choose>
+	                <when test="searchType == 'code'">
+	                    AND i.item_cate_code LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'name'">
+	                    AND i.item_name LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'warehouse'">
+	                    AND w.wh_name LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <otherwise>
+	                    AND (i.item_cate_code LIKE CONCAT('%', #{keyword}, '%')
+	                    OR i.item_name LIKE CONCAT('%', #{keyword}, '%')
+	                    OR w.wh_name LIKE CONCAT('%', #{keyword}, '%'))
+	                </otherwise>
+	            </choose>
+	        </if>
+	    </where>
+	    <![CDATA[
+	        GROUP BY i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
+	        HAVING COUNT(y.inven_num) > 0
+	    ) AS subquery
+	    ]]>
 	</select>
 
 

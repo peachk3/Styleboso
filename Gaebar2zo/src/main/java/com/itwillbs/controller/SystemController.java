@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itwillbs.domain.CodeVO;
 import com.itwillbs.domain.UsersVO;
 import com.itwillbs.service.SystemService;
 
@@ -106,8 +107,14 @@ public class SystemController {
 
 	// 공통 코드 관리
 	@RequestMapping(value = "/code/common", method = RequestMethod.GET)
-	public void code_common_GET() throws Exception {
+	public void code_common_GET(Model model) throws Exception {
 		logger.debug(" code_common_GET() 실행 ");
+		
+		//공통코드 전체리스트
+		List<CodeVO> codeList =sService.codeListAll();
+		
+		model.addAttribute("codeList", codeList);
+		
 
 	}
 

@@ -87,6 +87,7 @@
 						</div>
 						<div class="form-floating">
 						  <input type="email" class="form-control" id="emailCheck" name="emailCheck" placeholder="name@example.com" required>
+							<label for="floatingInput">이메일</label>
 							<span id="emailError" class="text-danger" style="display: none;">유효한 이메일을 입력해주세요.</span>
                             <span id="emailExists" class="text-danger" style="display: none;">사용중인 이메일입니다.</span>
                             <span id="emailAvailable" class="text-success" style="display: none;">사용 가능한 이메일입니다.</span>

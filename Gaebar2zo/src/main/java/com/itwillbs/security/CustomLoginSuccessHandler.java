@@ -50,7 +50,8 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 			// 관리자 - ROLE_ADMIN
 			if(roleNames.contains("ROLE_ADMIN")) {
 				logger.info("ROLE_ADMIN 권한 -> admin페이지로 이동 ");
-				response.sendRedirect("/Styleboso/system/main");
+//				response.sendRedirect("/Styleboso/system/main");
+				response.sendRedirect("/system/main");
 				return;
 			}
 			

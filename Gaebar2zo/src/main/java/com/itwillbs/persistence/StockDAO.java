@@ -2,6 +2,7 @@ package com.itwillbs.persistence;
 
 import java.util.List;
 
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.TransactionVO;
 
@@ -14,7 +15,10 @@ public interface StockDAO {
 	List<TransactionVO> rsList() throws Exception;
 
 	// 재고 리스트 호출
-	List<InventoryVO> getStockList() throws Exception;
+	List<InventoryVO> getStockList(Criteria cri) throws Exception;
+
+	int getTotalCount() throws Exception;
+
 
 	
 	// 상태변경

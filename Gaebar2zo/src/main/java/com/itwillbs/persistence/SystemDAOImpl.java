@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.CodeVO;
+import com.itwillbs.domain.ItemCodeVO;
 import com.itwillbs.domain.UsersVO;
 
 @Repository
@@ -49,7 +50,15 @@ public class SystemDAOImpl implements SystemDAO{
 		return sqlSession.selectList(NAMESPACE + "codeListAll");
 	}
 
-	
+
+	//품목코드(대,소) 전체 리스트 출력
+	@Override
+	public List<ItemCodeVO> itemCodeListAll() throws Exception {
+		logger.info("Service --> DAOitemCodeListAll() 실행");
+		
+		return sqlSession.selectList(NAMESPACE + "itemCodeListAll");
+	}
+
 	
 
 

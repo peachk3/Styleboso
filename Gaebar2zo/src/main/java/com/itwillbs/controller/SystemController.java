@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.CodeVO;
+import com.itwillbs.domain.ItemCodeVO;
 import com.itwillbs.domain.UsersVO;
 import com.itwillbs.service.SystemService;
 
@@ -92,7 +94,7 @@ public class SystemController {
 	}
 
 	// -------------------------------------------------------------------------------------------
-	// http://localhost:8088/Styleboso/system/employeeList
+	// http://localhost:8088/system/employeeList
 	// 사용자 관리(추가,삭제,조회)
 	@RequestMapping(value = "/employeeList", method = RequestMethod.GET)
 	public void employeeList_GET(Model model) throws Exception {
@@ -119,12 +121,19 @@ public class SystemController {
 	}
 
 
-
 	// 품목 분류 코드 관리
 	@RequestMapping(value = "/code/item", method = RequestMethod.GET)
-	public void code_item_GET() throws Exception {
+	public void code_item_GET(Model model) throws Exception {
 		logger.debug(" code_item_GET() 실행 ");
 
+		//대,소 품목코드 전체리스트
+		List<ItemCodeVO> itemCodeList = sService.itemCodeListAll();
+		
+		model.addAttribute("itemCodeList", itemCodeList);
 	}
+	
+	
+	
+	
 
 }

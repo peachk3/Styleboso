@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.itwillbs.domain.CodeVO;
 import com.itwillbs.domain.UsersVO;
 
 @Repository
@@ -21,6 +22,17 @@ public class SystemDAOImpl implements SystemDAO{
 
 	public static final String NAMESPACE="com.itwillbs.mapper.systemMapper.";
 
+	//이메일 중복
+	@Override
+	public int emailCheck(String user_email) throws Exception {
+		int result = sqlSession.selectOne(NAMESPACE + "emailCheck", user_email);
+		
+		logger.info("result :" + result);
+				
+				return result;
+	}
+
+
 	//운영자,관리자,사원 전체 리스트 출력
 	@Override
 	public List<UsersVO> employeeListAll() throws Exception {
@@ -28,7 +40,14 @@ public class SystemDAOImpl implements SystemDAO{
 		
 		return sqlSession.selectList(NAMESPACE+"employeeListAll");
 	}
-
+	
+	//공통코드 전체 리스트 출력
+	@Override
+	public List<CodeVO> codeListAll() throws Exception {
+		logger.info("codeListAll() 실행");
+		
+		return sqlSession.selectList(NAMESPACE + "codeListAll");
+	}
 
 	
 	

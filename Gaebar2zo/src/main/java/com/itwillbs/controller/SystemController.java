@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -83,7 +84,7 @@ public class SystemController {
 	
 	
 	// -------------------------------------------------------------------------------------------
-	// http://localhost:8088/Styleboso/system/main
+	// http://localhost:8088/system/main
 	// 대시보드 ( 메인 페이지 )
 	@RequestMapping(value="/main",method=RequestMethod.GET)
 
@@ -122,16 +123,33 @@ public class SystemController {
 
 
 	// 품목 분류 코드 관리
-	@RequestMapping(value = "/code/item", method = RequestMethod.GET)
-	public void code_item_GET(Model model) throws Exception {
-		logger.debug(" code_item_GET() 실행 ");
-
-		//대,소 품목코드 전체리스트
-		List<ItemCodeVO> itemCodeList = sService.itemCodeListAll();
-		
-		model.addAttribute("itemCodeList", itemCodeList);
-	}
 	
+	 @RequestMapping(value = "/code/item", method = RequestMethod.GET) 
+	 public void code_item_GET(@RequestParam("group_code") String group_code, Model model) throws Exception {
+	  logger.debug(" code_item_GET() 실행 ");
+	  
+	  List<ItemCodeVO> itemCodeList = sService.itemCodeListAll();
+	  
+	  model.addAttribute("itemCodeList", itemCodeList);
+	  logger.debug(" @@@@@@@itemCodeList : " + itemCodeList);
+//		  //대,소 품목코드 전체리스트 
+//	  		List<ItemCodeVO> itemCodeList = sService.itemCodeListAll();
+//		  model.addAttribute("itemCodeList", itemCodeList);
+//		  logger.debug(" itemCodelist : " + itemCodeList);
+//		
+//		  // 그룹 코드에 따라 품목 정보를 출력 
+//		  List<ItemCodeVO> itemCGroupList = sService.itemCGroupListAll(group_code); model.addAttribute("itemCGroupList",
+//		  itemCGroupList); logger.debug(" groupCode : " + group_code);
+//		  logger.debug(" itemCGroupList : " + itemCGroupList);
+		 
+	  
+	 
+			
+     }
+	 
+
+	 
+	 
 	
 	
 	

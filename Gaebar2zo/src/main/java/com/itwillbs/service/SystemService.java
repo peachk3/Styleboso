@@ -13,14 +13,20 @@ public interface SystemService {
 	//이메일 중복
 	int emailCheck(String user_email) throws Exception;
 	
+	//================================================
 	//운영자,관리자,사원 전체 리스트 출력
 	List<UsersVO> employeeListAll() throws Exception;
 
 	//공통코드 전체 리스트 출력 
 	List<CodeVO> codeListAll() throws Exception;
 
-	//품목코드(대,소) 전체 리스트 출력
-	List<ItemCodeVO> itemCodeListAll() throws Exception;
+	List<ItemCodeVO> itemCodeListAll(/* String group_code */) throws Exception;
+
+//	//품목코드(대,소) 전체 리스트 출력
+//	List<ItemCodeVO> itemCodeListAll() throws Exception;
+//	
+//	// 그룹 코드에 따라 품목 정보를 조회하는 로직
+//	List<ItemCodeVO> itemCGroupListAll(String group_code) throws Exception;
 
 
 

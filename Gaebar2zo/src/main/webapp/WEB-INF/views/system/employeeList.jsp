@@ -83,6 +83,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="row g-3 needs-validation" novalidate>
+                    <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"> <!-- 시큐리티 토큰!! -->
 						<div class="form-floating">
 						  <input type="text" class="form-control" id="user_per_name" name="user_per_name" placeholder="이름" required>
 						  <label for="floatingInput">이름</label>

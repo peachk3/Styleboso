@@ -35,7 +35,7 @@
                     <td>
                         <c:choose>
                             <c:when test="${fn:startsWith(codetbl.group_code, 'I')}">
-                                <a href="item.jsp?group_code=${codetbl.group_code}" style="font-weight: bold; color: red;">
+                                <a href="item?group_code=${codetbl.group_code}" style="font-weight: bold; color: red;">
                                     <strong>${codetbl.group_code}</strong>
                                 </a>
                             </c:when>

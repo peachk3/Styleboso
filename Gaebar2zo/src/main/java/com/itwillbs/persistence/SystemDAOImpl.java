@@ -52,9 +52,10 @@ public class SystemDAOImpl implements SystemDAO{
 
 
 	@Override
-	public List<ItemCodeVO> itemCodeListAll() throws Exception {
-		logger.debug(" itemCodeListAll() 실행 ");
-		return sqlSession.selectList(NAMESPACE + "itemCodeListAll");
+	public List<ItemCodeVO> itemCodeListAll(String group_code) throws Exception {
+		logger.debug(" service --> DAO itemCodeListAll() 실행 ");
+		
+		return sqlSession.selectList(NAMESPACE + "itemCodeListAll", group_code);
 	}
 
 

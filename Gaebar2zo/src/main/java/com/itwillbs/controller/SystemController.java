@@ -5,12 +5,11 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +20,7 @@ import com.itwillbs.domain.CodeVO;
 import com.itwillbs.domain.ItemCodeVO;
 import com.itwillbs.domain.UsersVO;
 import com.itwillbs.service.SystemService;
+
 
 @RequestMapping(value = "/system/*")
 @Controller
@@ -126,12 +126,17 @@ public class SystemController {
 	
 	 @RequestMapping(value = "/code/item", method = RequestMethod.GET) 
 	 public void code_item_GET(@RequestParam("group_code") String group_code, Model model) throws Exception {
+	 
 	  logger.debug(" code_item_GET() 실행 ");
+	  logger.debug("그룹코드 : " + group_code);
 	  
-	  List<ItemCodeVO> itemCodeList = sService.itemCodeListAll();
-	  
+	  List<ItemCodeVO> itemCodeList = sService.itemCodeListAll(group_code);
 	  model.addAttribute("itemCodeList", itemCodeList);
+	  model.addAttribute("groupCode", group_code);
+	  
 	  logger.debug(" @@@@@@@itemCodeList : " + itemCodeList);
+	  
+	  
 //		  //대,소 품목코드 전체리스트 
 //	  		List<ItemCodeVO> itemCodeList = sService.itemCodeListAll();
 //		  model.addAttribute("itemCodeList", itemCodeList);

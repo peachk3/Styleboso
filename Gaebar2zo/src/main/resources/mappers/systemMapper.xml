@@ -31,10 +31,9 @@
 	select * from code
 </select>
 
-<select id="itemCodeListAll" resultType="itemCodeVO">
-	SELECT s_cate_item_code, s_cate_item_name 
-    FROM item_code 
-    WHERE m_cate_item_code =#{group_code}
+<select id="itemCodeListAll" resultType="ItemCodeVO">
+	select * from item_code 
+	where m_cate_item_code = #{group_code}
 </select>
 
 <!-- 그룹(공통코드 대/소) 전체리스트 출력  -->

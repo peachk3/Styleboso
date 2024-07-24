@@ -51,12 +51,12 @@ public class SystemServiceImpl implements SystemService{
 	}
 
 
-
+	// 그룹 코드에 따라 품목 정보를 출력
 	@Override
-	public List<ItemCodeVO> itemCodeListAll(/* String group_code */) throws Exception {
+	public List<ItemCodeVO> itemCodeListAll(String group_code) throws Exception {
 		logger.debug("itemCodeListAll(String group_code) 실행 ");
 		
-		return sdao.itemCodeListAll();
+		return sdao.itemCodeListAll(group_code);
 	}
 
 	

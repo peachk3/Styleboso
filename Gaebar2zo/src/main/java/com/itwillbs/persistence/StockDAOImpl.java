@@ -51,6 +51,15 @@ public class StockDAOImpl implements StockDAO{
 		return sqlSession.selectList(NAMESPACE+"getStockList");
 	}
 
+    // 거래 상세 정보 호출
+    @Override
+    public Map<String, Object> getTransactionDetails(String tran_num) {
+        logger.debug("DAOImpl : 거래 상세 정보 호출");
+        // 쿼리 파라미터로 tran_num을 전달하여 결과를 반환합니다.
+        return sqlSession.selectOne(NAMESPACE + "getTransactionDetails", tran_num);
+    }
+
+
 	// 상태 변경
 //	@Override
 //	 public void updateStatus(String tranNum, String status) {

@@ -21,6 +21,8 @@
 		<!-- <collection property="goodsList" resultMap="goodsMap"></collection> -->
 		<collection property="itemList" resultMap="itemMap"></collection>
 		<collection property="inchangeList" resultMap="inchangeMap"></collection>
+		<collection property="clientList" resultMap="clientMap"></collection>
+		<collection property="userList" resultMap="userMap"></collection>
 	</resultMap>
 
 
@@ -53,11 +55,36 @@
 		<result property="inven_num" column="inven_num" />
 		<result property="inven_qty" column="inven_qty" />
 	</resultMap>
-
-
 	<!-- item / inventory_change -->
 
+	<resultMap type="com.itwillbs.domain.ClientVO"
+		id="clientMap">
+		<id property="cli_num" column="cli_num" />
+		<result property="cli_num" column="cli_num" />
+		<result property="cli_name" column="cli_name" />
+		<result property="cli_crn" column="cli_crn" />
+		<result property="cli_cate" column="cli_cate" />
+		<result property="cli_ind" column="cli_ind" />
+		<result property="cli_add1" column="cli_add1" />
+		<result property="cli_add2" column="cli_add2" />
+		<result property="cli_tel" column="cli_tel" />
+		<result property="cli_rep" column="cli_rep" />
+		<result property="cli_email" column="cli_email" />
+		<result property="pic_username" column="pic_username" />
+		<result property="cli_id" column="cli_id" />
+	</resultMap>
 
+	<resultMap type="com.itwillbs.domain.UsersVO"
+		id="userMap">
+		<id property="username" column="username" />
+		<result property="username" column="username" />
+		<result property="user_per_name" column="user_per_name" />
+		<result property="password" column="password" />
+		<result property="user_email" column="user_email" />
+		<result property="user_pos" column="user_pos" />
+		<result property="user_phone" column="user_phone" />
+		<result property="enabled" column="enabled" />
+	</resultMap>
 
 
 
@@ -176,6 +203,17 @@
 		g.goods_num
 		join item i
 		on i.item_num = g.item_num
+	</select>
+
+	<!-- 모달창 - 발주리스트,거래처,담당자,입고예정일 출력 -->
+	<select id="getTransactionDetails" resultType="map">
+		select top_tran_num,tra.cli_num,cl.cli_name,tra.pic_username,user.user_per_name,tra.rec_date
+		from transaction tra
+		join client cl
+		on tra.cli_num = cl.cli_num
+		join users user
+		on tra.pic_username = user.username
+		WHERE tra.tran_num like 'RC%'  and tra.tran_num = #{tran_num}
 	</select>
 
 

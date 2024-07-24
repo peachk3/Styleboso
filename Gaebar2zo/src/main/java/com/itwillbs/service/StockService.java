@@ -1,6 +1,7 @@
 package com.itwillbs.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,8 @@ public interface StockService {
 
 	// 재고 리스트 호출
 	List<InventoryVO> getStockList() throws Exception;
+
+	Map<String, Object> getTransactionDetails(String tran_num);
 
 	
 	// 상태 업데이트

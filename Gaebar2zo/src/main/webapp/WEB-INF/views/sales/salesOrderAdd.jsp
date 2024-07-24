@@ -14,40 +14,45 @@
 						<form class="row g-3 needs-validation" action="/sales/salesOrderAdd" method="post" novalidate>
 							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">			
 						
-<!-- 							<div class="col-md-6"> -->
-<!-- 								<label for="validationCustom01" class="form-label">납기일자</label>  -->
-<!-- 									<input type="date" class="form-control" -->
-<!-- 									id="validationCustom01" required> -->
-<!-- 								<div class="invalid-feedback">납기일자를 입력해주세요</div> -->
-<!-- 							</div> -->
-							<div class="col-12">
+							<div class="col-md-6">
+								<label for="validationCustom01" class="form-label">납기예정 일자</label> 
+									<input type="date" class="form-control" name="ex_due_date"
+									id="validationCustom01" required>
+								<div class="invalid-feedback">납기예정 일자를 입력해주세요</div>
+							</div>
+							<div class="col-md-6">
 								<label for="validationCustom02" class="form-label">수주일자</label> 
-									<input type="date" class="form-control"
+									<input type="date" class="form-control" name="tran_date"
 									id="validationCustom02" required>
 								<div class="invalid-feedback">수주일자를 입력해주세요</div>
 							</div>
 							<div class="col-md-3">
-								<label for="validationCustom03" class="form-label">거래처 코드</label>
-									<input type="text" class="form-control" id="validationCustom03" 
+								<label for="validationCustom03" class="form-label">거래처 번호</label>
+									<input type="text" class="form-control" id="validationCustom03" name="cli_num"
 										   data-coreui-toggle="modal" data-coreui-target="#exampleModal1" required>
 								<div class="invalid-feedback">거래처를 입력해주세요</div>
 							</div>
 							<div class="col-md-3">
-								<label for="validationCustom04" class="form-label">거래처 명</label>
+								<label for="validationCustom04" class="form-label">거래처명</label>
 									<input type="text" class="form-control" id="validationCustom04" 
 										   data-coreui-toggle="modal" data-coreui-target="#exampleModal1" required>
 							</div>
 							<div class="col-md-3">
 								<label for="validationCustom05" class="form-label">담당자 아이디</label>
-									<input type="text" class="form-control" id="validationCustom05"
+									<input type="text" class="form-control" id="validationCustom05" name="pic_username"
 										   data-coreui-toggle="modal" data-coreui-target="#exampleModal2" required>
 								<div class="invalid-feedback">담당자를 입력해주세요</div>
 							</div>
 							<div class="col-md-3">
-								<label for="validationCustom06" class="form-label">담당자 명</label>
+								<label for="validationCustom06" class="form-label">담당자명</label>
 									<input type="text" class="form-control" id="validationCustom06"
 										   data-coreui-toggle="modal" data-coreui-target="#exampleModal2" required>
 							</div>
+							<div class="col-12">
+								<label for="validationCustom07" class="form-label">비고</label>
+									<input type="text" class="form-control" id="validationCustom07" name="comm">
+							</div>
+							
 						<div class="example">
 							<div class="tab-content rounded-bottom">
 
@@ -62,8 +67,9 @@
 										<tr>
 											<th scope="col" style="width:25%">제품번호</th>
 											<th scope="col" style="width:25%">제품명</th>
+											<th scope="col" style="width:12%"></th>
+											<th scope="col" style="width:12%"></th>
 											<th scope="col" style="width:25%">수량</th>
-											<th scope="col" style="width:25%">비고</th>
 										</tr>
 									</thead>
 									<tbody id="tableBody">
@@ -141,7 +147,7 @@
 								<div class="modal-dialog modal-dialog-scrollable modal-lg">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">제품<input class="hidden" id="click-row" value=""></h5>
+											<h5 class="modal-title" id="exampleModalLabel">제품</h5>
 											<button type="button" class="btn-close"
 												data-coreui-dismiss="modal" aria-label="Close"></button>
 										</div>
@@ -157,8 +163,8 @@
 													</tr>
 												</thead>
 												<tbody>
-													
-												</tbody>
+												
+</tbody>
 											</table>
 										</div>
 										<div class="modal-footer">
@@ -183,9 +189,9 @@
 		padding-left: 10px; /* 왼쪽 여백을 추가합니다 */
 		width: 100%; /* 버튼이 부모 요소에 맞게 전체 너비를 가지도록 설정합니다 */
 	}
-  
+	
 	.hidden {
-		display: none;
+		isplay: none;
 	}
 </style>
 
@@ -193,6 +199,10 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script type="text/javascript">
+
+	const token = $("meta[name='_csrf']").attr("content")
+	const header = $("meta[name='_csrf_header']").attr("content");
+	const name = $("#userName").val();
    
    document.addEventListener('DOMContentLoaded', function() {
 		
@@ -202,10 +212,26 @@
 		submitFormBtn.addEventListener('click', function(event) {
 			event.preventDefault(); // 기본 제출 동작 방지
 			
+			console.log(document.getElementById('validationCustom01').value);
+			console.log(document.getElementById('validationCustom02').value);
+			
+			const formData = {
+					ex_due_date: String(document.getElementById('validationCustom01').value),
+					tran_date: String(document.getElementById('validationCustom02').value),
+					cli_num: document.getElementById('validationCustom03').value,
+					pic_username: document.getElementById('validationCustom05').value,
+					tran_cate_code: "SO",
+			        comm: document.getElementById('validationCustom07').value
+		    };
+			
+			const tableData = dataChangeJSON();
+			
+			
 			// 필요한 유효성 검사를 적용할 모든 폼을 가져오기
 			const forms = document.querySelectorAll('.needs-validation');
 			
-			let allFormsValid = true; // 모든 폼이 유효성 검사를 통과했는지 여부를 저장하는 변수
+			// 모든 폼이 유효성 검사를 통과했는지 여부를 저장하는 변수
+			let allFormsValid = true; 
 			
 			// NodeList를 배열로 변환하고 각각의 폼에 대해 처리
 			Array.from(forms).forEach(form => {
@@ -220,7 +246,28 @@
 			});
 			
 			if (allFormsValid) {
-		        form.submit();
+				
+				var csrfToken = $('input[name="_csrf"]').attr('content');
+				
+				$.ajax({
+                    type: 'POST',
+                    url: '/sales/salesOrderAdd', // 요청을 보낼 URL
+                    beforeSend: function(xhr) {
+                    	xhr.setRequestHeader(header, token);
+                    },
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({
+                    	tvo: JSON.stringify(formData),
+                    	tgvo: JSON.stringify(tableData)
+                    }),
+                    success: function(response) {
+                        console.log('서버 응답:', response);
+                    },
+                    error: function(error) {
+                        console.error('에러 발생:', error);
+                    }
+                });
+				
 		    }
          
        });
@@ -262,7 +309,7 @@
           var targetInput1 = document.getElementById('goods-num'+ rowNum);
           var targetInput2 = document.getElementById('goods-name'+ rowNum);
           var goods1 = $(this).find('td:nth-child(2)').text();
-          var goods2 = $(this).find('td:nth-child(3)').text();
+          var goods2 = $(this).find('td:nth-child(3)').value;
           
           
           // Modal에서 입력된 값을 가져와서 다른 input 요소에 설정
@@ -362,6 +409,31 @@
       
    });
    
+	function dataChangeJSON() {
+		var tableRows = $('.item-table tbody tr'); // 체크된 input의 부모 tr을 선택
+	    var tableData = [];
+	    
+	    tableRows.each(function() {
+	        var row = $(this); // 현재 처리 중인 행을 jQuery 객체로 가져옴
+	        var goods_num = row.find('td:eq(0)').text().trim(); // 상품 번호 가져오기
+	        var goods_qty = row.find('td:eq(4) input').val(); // 상품 이름 가져오기
+	        
+	        // JSON 객체로 데이터 구성
+	        var rowData = {
+	            goods_num: goods_num,
+	            goods_qty: goods_qty,
+	        };
+	        
+	        tableData.push(rowData); // 배열에 JSON 객체 추가
+	    });
+	    
+	    var tableDataJSON = JSON.stringify(tableData);
+		
+	    // 배열을 JSON 문자열로 변환하여 출력
+	    console.log(tableDataJSON);
+	    
+	    return tableData;
+	}
 	
 	function checkedData() {
 		var checkedRows = $('#exampleModal3 tbody input[type="checkbox"]:checked').closest('tr'); // 체크된 input의 부모 tr을 선택
@@ -371,11 +443,15 @@
 	        var row = $(this); // 현재 처리 중인 행을 jQuery 객체로 가져옴
 	        var goods_num = row.find('td:eq(0)').text().trim(); // 상품 번호 가져오기
 	        var goods_name = row.find('td:eq(1)').text().trim(); // 상품 이름 가져오기
+	        var goods_size = row.find('td:eq(2)').text().trim(); // 상품 이름 가져오기
+	        var goods_color = row.find('td:eq(3)').text().trim(); // 상품 이름 가져오기
 	        
 	        // JSON 객체로 데이터 구성
 	        var rowData = {
 	            goods_num: goods_num,
-	            goods_name: goods_name
+	            goods_name: goods_name,
+	            goods_size: goods_size,
+	            goods_color: goods_color
 	        };
 	        
 	        checkedData.push(rowData); // 배열에 JSON 객체 추가
@@ -390,7 +466,7 @@
 	    
 	    addRow(JSON.parse(checkedDataJSON));
         
-		 // Modal 닫기 (Optional)
+		// Modal 닫기 (Optional)
         var modal = document.getElementById('exampleModal3');
         var modalInstance = coreui.Modal.getInstance(modal);
         modalInstance.hide();
@@ -404,16 +480,18 @@
 			console.log(item);
 			
 			var row ='<tr id="row'+ cnt +'">'+
-			'<td> <div id="goods-num'+ cnt +'" class="col-auto">'+ item.goods_num +
+			'<td> <div id="goods-num'+ cnt +'" name="goods_num">'+ item.goods_num +
 			'</div></td>'+
 			'<td><div id="goods-name'+ cnt +'">'+ item.goods_name +
 			'</div></td>'+
-			'<td><div>'+
-			'<input type="text" id="goods-qty'+ cnt +'" class="form-control form-control-sm" required>'+
+			'<td><div id="goods_size'+ cnt +'">'+ item.goods_size +
+			'</div></td>'+
+			'<td><div id="goods_color'+ cnt +'">'+ item.goods_color +
 			'</div></td>'+
 			'<td><div>'+
-			'<input type="text" id="goods-comm'+ cnt +'" class="form-control form-control-sm">'+
+			'<input type="text" id="goods-qty'+ cnt +'" class="form-control form-control-sm" name="goods_qty" required>'+
 			'</div></td>'+
+			'<td><div>'+
 			'</tr>';
 			
 			$('.item-table tbody').append(row);

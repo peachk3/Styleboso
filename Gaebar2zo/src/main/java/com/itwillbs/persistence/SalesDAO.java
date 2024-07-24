@@ -1,12 +1,19 @@
 package com.itwillbs.persistence;
 
-import java.util.List;
-
-import com.itwillbs.domain.ClientVO;
+import com.itwillbs.domain.TransactionGoodsVO;
+import com.itwillbs.domain.TransactionVO;
 
 public interface SalesDAO {
 
-	// 거래처 리스트 조회
-//	public List<ClientVO> ClientList() throws Exception;
+	// 수주 등록_TransactionVO
+	public void salesOrderAdd_TransactionVO(TransactionVO tvo) throws Exception;
+
+	// 수주 등록_TransactionGoodsVO
+	public void salesOrderAdd_TransactionGoodsVO(TransactionGoodsVO newTgvo) throws Exception;
+
+	// GetTranNum 추출
+	public String GetTranNum(TransactionVO tvo);
+
+
 
 }

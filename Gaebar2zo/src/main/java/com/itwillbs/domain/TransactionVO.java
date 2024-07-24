@@ -1,7 +1,6 @@
 package com.itwillbs.domain;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.Data;
@@ -17,12 +16,13 @@ public class TransactionVO {
 	private	Timestamp	rec_date;
 	private	Timestamp	rel_date;
 	private	Timestamp	due_date;
+	private	Timestamp	ex_due_date;
 	private	String	pro_status;
 	private	String	tran_cate_code;
 	private	String	comm;
 
 	// TransactionGoodsVO 조인
-//	private List<TransactionGoodsVO> goodsList;
+	private List<TransactionGoodsVO> tgvo;
 	
 	// ItemVO 조인
 	private List<ItemVO> itemList;

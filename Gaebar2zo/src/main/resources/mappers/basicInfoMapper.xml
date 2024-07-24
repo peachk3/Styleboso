@@ -49,7 +49,20 @@
 	<select id="cliCrnDup" resultType="int">
 		select count(*)
 		from client
-		where cli_crn =#{cli_crn};
+		where cli_crn =#{cli_crn}
 	</select>
-
+	
+	<insert id="cliUpdate" parameterType="map">
+    INSERT INTO client (
+        cli_num, cli_name, cli_crn, cli_cate, cli_ind, cli_postCode, cli_add1, cli_add2, cli_add3, cli_tel, cli_rep, cli_email, pic_username
+    )
+    SELECT
+        CONCAT(
+            #{cli_cate},
+            LPAD(IFNULL(MAX(CAST(SUBSTRING(cli_num, LENGTH(#{cli_cate}) + 1) AS UNSIGNED)), 0) + 1, 4, '0')
+        ),
+        #{cli_name}, #{cli_crn}, #{cli_cate}, #{cli_ind}, #{cli_postCode}, #{cli_add1}, #{cli_add2}, #{cli_add3}, #{cli_tel}, #{cli_rep}, #{cli_email}, #{pic_username}
+    FROM client
+    WHERE cli_cate = #{cli_cate}
+</insert>
 </mapper>

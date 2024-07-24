@@ -55,6 +55,13 @@ public class BasicInfoDAOImpl implements BasicInfoDAO{
 		Integer result = sqlSession.selectOne(NAMESPACE + "cliCrnDup", cli_crn);
 		
 		return result;
+	}
+
+	@Override
+	public void cliInsert(ClientVO vo) throws Exception {
+		logger.debug(" cliInsert() 실행 ");
+		
+		sqlSession.insert(NAMESPACE + "cliUpdate",vo);
 	} 
 	
 

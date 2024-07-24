@@ -23,4 +23,6 @@ public interface BasicInfoService {
 	// 거래처 사업자 번호 중복 확인
 	boolean isCliCrnDuplicate(String cli_crn) throws Exception;
 
+	public void cliInsert(ClientVO vo) throws Exception;
+
 }

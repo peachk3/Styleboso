@@ -54,6 +54,13 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		return count > 0;
 	}
 
+	@Override
+	public void cliInsert(ClientVO vo) throws Exception {
+		logger.debug(" 거래처 등록 ");
+		
+		bidao.cliInsert(vo);
+	}
+
  
 	
 	

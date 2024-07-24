@@ -22,13 +22,17 @@ public class TransactionVO {
 	private	String	comm;
 
 	// TransactionGoodsVO 조인
-//	private List<TransactionGoodsVO> goodsList;
-	
+	private List<TransactionGoodsVO> goodsList;
+	 
 	// ItemVO 조인
 	private List<ItemVO> itemList;
 	
 	// InventoryChangeVO 조인
 	private List<InventoryChangeVO> inchangeList;
+	
+	private List<ClientVO> clientList;
+	
+	private List<UsersVO> userList;
 	
 	
 }

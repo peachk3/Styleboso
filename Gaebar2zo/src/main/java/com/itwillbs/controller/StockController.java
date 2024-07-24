@@ -1,10 +1,13 @@
 package com.itwillbs.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -105,10 +108,29 @@ public class StockController {
 	    List<TransactionVO> rc = sService.rcList();
 		logger.debug("size : "+ rc.size());
 	    model.addAttribute("rc", rc);
-	    		
 		
 	    
 	}
+
+	@RequestMapping(value = "/getTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public Map<String, Object> getTransactionDetails(@RequestParam("tran_num") String tran_num) {
+	    Map<String, Object> details = sService.getTransactionDetails(tran_num);
+
+	    // LocalDateTime을 String으로 변환
+	    LocalDateTime recDate = (LocalDateTime) details.get("rec_date");
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	    String recDateString = recDate.format(formatter);
+
+	    // 변환된 String을 다시 맵에 추가
+	    details.put("rec_date", recDateString);
+
+	    return details;
+	}
+
+	
+	
+	
 
 //	@ResponseBody
 //	 @RequestMapping(value="/updateStatus",method=RequestMethod.POST,

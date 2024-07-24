@@ -1,6 +1,7 @@
 package com.itwillbs.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -60,6 +61,14 @@ public class StockServiceImpl implements StockService{
 		logger.debug(" getTotalCount() 실행 ");
 		return sdao.getTotalCount();
 	}
+
+
+	@Override
+	public Map<String, Object> getTransactionDetails(String tran_num) {
+		// TODO Auto-generated method stub
+        return sdao.getTransactionDetails(tran_num);
+	}
+
 
 
 //	@Override

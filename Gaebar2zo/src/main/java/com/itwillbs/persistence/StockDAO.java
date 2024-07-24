@@ -1,6 +1,7 @@
 package com.itwillbs.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryVO;
@@ -18,6 +19,9 @@ public interface StockDAO {
 	List<InventoryVO> getStockList(Criteria cri) throws Exception;
 
 	int getTotalCount() throws Exception;
+
+
+	Map<String, Object> getTransactionDetails(String tran_num);
 
 
 	

@@ -130,25 +130,13 @@ public class SystemController {
 	  logger.debug(" code_item_GET() 실행 ");
 	  logger.debug("그룹코드 : " + group_code);
 	  
+	// 그룹 코드에 따라 품목 정보를 출력 
 	  List<ItemCodeVO> itemCodeList = sService.itemCodeListAll(group_code);
 	  model.addAttribute("itemCodeList", itemCodeList);
 	  model.addAttribute("groupCode", group_code);
 	  
 	  logger.debug(" @@@@@@@itemCodeList : " + itemCodeList);
 	  
-	  
-//		  //대,소 품목코드 전체리스트 
-//	  		List<ItemCodeVO> itemCodeList = sService.itemCodeListAll();
-//		  model.addAttribute("itemCodeList", itemCodeList);
-//		  logger.debug(" itemCodelist : " + itemCodeList);
-//		
-//		  // 그룹 코드에 따라 품목 정보를 출력 
-//		  List<ItemCodeVO> itemCGroupList = sService.itemCGroupListAll(group_code); model.addAttribute("itemCGroupList",
-//		  itemCGroupList); logger.debug(" groupCode : " + group_code);
-//		  logger.debug(" itemCGroupList : " + itemCGroupList);
-		 
-	  
-	 
 			
      }
 	 

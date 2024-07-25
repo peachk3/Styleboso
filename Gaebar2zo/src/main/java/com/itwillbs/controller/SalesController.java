@@ -1,19 +1,27 @@
 package com.itwillbs.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itwillbs.domain.ClientVO;
+import com.itwillbs.domain.TransactionGoodsVO;
+import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.service.SalesService;
 
 @RequestMapping(value="/sales/*")
@@ -42,9 +50,20 @@ public class SalesController {
 	
 	// 수주 추가
 	@RequestMapping(value="/salesOrderAdd",method=RequestMethod.POST)
-	public void salesOrderAdd_POST() throws Exception{
-		logger.debug(" salesOrderAdd_POST() 실행 ");
-		
+	@ResponseBody
+	public void salesOrderAdd_POST(@RequestBody Map<String, String> requestData) throws Exception {
+	    ObjectMapper mapper = new ObjectMapper();
+	    
+	    TransactionVO tvo = mapper.readValue(requestData.get("tvo"), TransactionVO.class);
+	    List<TransactionGoodsVO> tgvo = mapper.readValue(requestData.get("tgvo"), 
+                						new TypeReference<List<TransactionGoodsVO>>(){});
+	    
+	    tvo.setTgvo(tgvo);
+	    
+	    logger.debug("tvo : " + tvo);
+	    logger.debug("tgvo : " + tgvo);
+	    
+	    sService.SalesOrderAdd(tvo);
 	}
 
 	// 발주 관리

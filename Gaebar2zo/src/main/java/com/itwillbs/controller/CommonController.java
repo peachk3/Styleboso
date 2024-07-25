@@ -36,7 +36,6 @@ public class CommonController {
 	public List<ClientVO> clientList_GET(Model model) throws Exception{
 		logger.debug(" clientList_GET() 실행 ");
 		
-		// 서비스 -> DB의 정보를 가져오기
 		List<ClientVO> cList = cService.ClientList();
 		logger.debug("size : "+ cList.size());
 		logger.debug("cList : "+ cList);
@@ -52,7 +51,6 @@ public class CommonController {
 	public List<UsersVO> managerList_GET(Model model) throws Exception{
 		logger.debug(" managerList_GET() 실행 ");
 		
-		// 서비스 -> DB의 정보를 가져오기
 		List<UsersVO> mList = cService.ManagerList();
 		logger.debug("size : "+ mList.size());
 		logger.debug("mList : "+ mList);
@@ -68,10 +66,9 @@ public class CommonController {
 	public List<GoodsVO> goodsList_GET(Model model) throws Exception{
 		logger.debug(" goodsList_GET() 실행 ");
 		
-		// 서비스 -> DB의 정보를 가져오기
 		List<GoodsVO> gList = cService.GoodsList();
 		logger.debug("size : "+ gList.size());
-		logger.debug("mList : "+ gList);
+		logger.debug("gList : "+ gList);
 		
 		return gList;
 		

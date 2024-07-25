@@ -9,7 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.itwillbs.domain.ClientVO;
+import com.itwillbs.domain.TransactionGoodsVO;
+import com.itwillbs.domain.TransactionVO;
 
 @Repository
 public class SalesDAOImpl implements SalesDAO{
@@ -20,13 +21,41 @@ public class SalesDAOImpl implements SalesDAO{
 
 	@Inject
 	public SqlSession sqlSession;
-	
-//	@Override
-//	public List<ClientVO> ClientList() throws Exception {
-//		logger.debug("DAO : ClientList() 호출");
-//		
-//		return sqlSession.selectList(NAMESPACE + "clientList");
-//	}
+
+	@Override
+	public void salesOrderAdd_TransactionVO(TransactionVO tvo) throws Exception {
+		logger.debug("DAO : salesOrderAdd_TransactionVO() 호출");
+		
+		logger.debug("tvo : "+ tvo);
+		
+		sqlSession.insert(NAMESPACE + "salesOrderAdd_TransactionVO", tvo);
+		
+		logger.debug("DAO : 수주 거래 테이블 등록 완료");
+		
+	}
+
+	@Override
+	public void salesOrderAdd_TransactionGoodsVO(TransactionGoodsVO tgvo) throws Exception {
+		logger.debug("DAO : salesOrderAdd_TransactionGoodsVO() 호출");
+		
+		logger.debug("tgvo : "+ tgvo);
+		
+		sqlSession.insert(NAMESPACE + "salesOrderAdd_TransactionGoodsVO", tgvo);
+		
+		logger.debug("DAO : 수주 거래 품목 테이블 등록 완료");	
+	}
+
+	@Override
+	public String GetTranNum(TransactionVO tvo) {
+		logger.debug("DAO : GetTranNum() 호출");
+		logger.debug("tvo : "+ tvo);
+		
+		String tran_num = sqlSession.selectOne(NAMESPACE + "getTranNum", tvo);
+		
+		logger.debug("tran_num : "+ tran_num);
+		
+		return tran_num;
+	}
 
 
 

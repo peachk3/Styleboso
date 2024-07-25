@@ -11,7 +11,7 @@
     <meta name="author" content="Łukasz Holeczek">
     <meta name="keyword" content="Bootstrap,Admin,Template,SCSS,HTML,RWD,Dashboard">
     <meta name="_csrf" content="${_csrf.token}"/>
-	<meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <title>Styleboso</title>
     <link rel="apple-touch-icon" sizes="57x57" href="/resources/assets/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/resources/assets/favicon/apple-icon-60x60.png">
@@ -70,13 +70,13 @@
             <li class="nav-item"><a class="nav-link" href="/basicInfo/itemList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 품목 관리</a></li>
             <li class="nav-item"><a class="nav-link" href="/basicInfo/clientList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 거래처 관리</a></li>
             <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
-	              <span class="nav-icon"><span class="nav-icon-bullet"></span></span><span data-coreui-i18n="창고 관리" onclick="location.href='/basicInfo/warehouseList'">창고 관리</span></a>
-	          <ul class="nav-group-items compact">
-	            <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 김포 창고</a></li>
-	            <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 대구 창고</a></li>
-	            <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 양산 창고</a></li>
-	          </ul>
-	        </li>
+                 <span class="nav-icon"><span class="nav-icon-bullet"></span></span><span data-coreui-i18n="창고 관리" onclick="location.href='/basicInfo/warehouseList'">창고 관리</span></a>
+             <ul class="nav-group-items compact">
+               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 김포 창고</a></li>
+               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 대구 창고</a></li>
+               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 양산 창고</a></li>
+             </ul>
+           </li>
           </ul>
         </li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#"> 
@@ -95,13 +95,13 @@
             </svg><span data-coreui-i18n="재고 관리">재고 관리</span></a>
           <ul class="nav-group-items compact">
             <li class="nav-item"><a class="nav-link" href="/stock/status"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 재고 현황</a></li>
-	        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
-	              <span class="nav-icon"><span class="nav-icon-bullet"></span></span><span data-coreui-i18n="재고 조정">재고 조정</span></a>
-	          <ul class="nav-group-items compact">
-	            <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/stock/adjustment/exchange"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 교환</a></li>
-	            <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/stock/adjustment/return"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 반품</a></li>
-	          </ul>
-	        </li>
+           <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+                 <span class="nav-icon"><span class="nav-icon-bullet"></span></span><span data-coreui-i18n="재고 조정">재고 조정</span></a>
+             <ul class="nav-group-items compact">
+               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/stock/adjustment/exchange"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 교환</a></li>
+               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/stock/adjustment/return"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 반품</a></li>
+             </ul>
+           </li>
             <li class="nav-item"><a class="nav-link" href="/stock/receivingList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 입고 관리</a></li>
             <li class="nav-item"><a class="nav-link" href="/stock/releaseList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 출고 관리</a></li>
             

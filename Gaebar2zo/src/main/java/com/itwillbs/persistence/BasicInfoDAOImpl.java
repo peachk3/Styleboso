@@ -47,6 +47,22 @@ public class BasicInfoDAOImpl implements BasicInfoDAO{
 		return sqlSession.selectList(NAMESPACE + "itemListALL");
 	}
 
+	// 거래처 사업자 번호 중복 확인
+	@Override
+	public int cliCrnDup(String cli_crn) throws Exception {
+		logger.debug(" cliCrnDup() 실행 ");
+		
+		Integer result = sqlSession.selectOne(NAMESPACE + "cliCrnDup", cli_crn);
+		
+		return result;
+	}
+
+	@Override
+	public void cliInsert(ClientVO vo) throws Exception {
+		logger.debug(" cliInsert() 실행 ");
+		
+		sqlSession.insert(NAMESPACE + "cliUpdate",vo);
+	} 
 	
 
 

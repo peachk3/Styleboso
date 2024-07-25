@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.itwillbs.domain.CodeVO;
+import com.itwillbs.domain.ItemCodeVO;
 import com.itwillbs.domain.UsersVO;
 import com.itwillbs.persistence.SystemDAO;
 
@@ -19,19 +21,71 @@ public class SystemServiceImpl implements SystemService{
 	@Inject
 	private SystemDAO sdao;
 
+	
+	//이메일 중복 체크
+	@Override
+	public int emailCheck(String user_email) throws Exception {
+
+		 int result = sdao.emailCheck(user_email);
+		logger.info("result " + result);
+		
+		return result;
+	}
+
+
+
 	//운영자,관리자,사원 전체 리스트 출력
 	@Override
 	public List<UsersVO> employeeListAll() throws Exception {
-		logger.debug("운영자/관리자/사원 전체 리스트 출력");
+		logger.info("운영자/관리자/사원 전체 리스트 출력");
 	
 		return sdao.employeeListAll();
 	}
+
+	//공통코드 전체 리스트 출력
+	@Override
+	public List<CodeVO> codeListAll() throws Exception {
+		logger.info("공통 코드Code ");
 	
+		return sdao.codeListAll();
+	}
+
+
+	// 그룹 코드에 따라 품목 정보를 출력
+	@Override
+	public List<ItemCodeVO> itemCodeListAll(String group_code) throws Exception {
+		logger.debug("itemCodeListAll(String group_code) 실행 ");
+		
+		return sdao.itemCodeListAll(group_code);
+	}
+
 	
-	
+//	//품목코드(대,소) 전체 리스트 출력
+//	  @Override 
+//	  public List<ItemCodeVO> itemCodeListAll() throws Exception {
+//	  logger.info("품목 공통코드(대/소)");
+//	 
+//	 return sdao.itemCodeListAll(); 
+//	 }
+//
+//	  // 그룹 코드에 따라 품목 정보를 출력
+//	@Override
+//	public List<ItemCodeVO> itemCGroupListAll(String group_code) throws Exception {
+//		logger.info("그룹코드 --> 품목정보 출력");
+//		
+//		return sdao.itemCGroupListAll(group_code);
+//		
+//		
+//	}
+	  
 
-
-
-
-
+	  
 }
+	
+
+	
+
+
+
+
+

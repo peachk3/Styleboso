@@ -5,14 +5,14 @@
 <body>
 	<h1>/Styleboso/basicInfo/itemList.jsp</h1>
 	
-	<input type="button" value="등록" onclick="openRegModal()">
+	<input type="button" value="등록" onclick="location.href='/basicInfo/itemAdd'">
 	<input type="button" value="삭제">
 	<table class="table table-hover">
 		<thead>
 			<tr>
 				<th scope="col"> 
 					<div class="form-check">
-               			<input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled> <label class="form-check-label" for="flexCheckDisabled"> Disabled checkbox </label>
+               			<input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled> 
             		</div>
 				</th>
 				<th scope="col">품목 코드</th>
@@ -29,8 +29,7 @@
 				<tr>
 					<td>
 				  		<div class="form-check">
-                  			<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked> 
-                  			<label class="form-check-label" for="flexCheckChecked"> Checked checkbox </label>
+                  			<input class="form-check-input" type="checkbox" value="" id="flexCheckdefault${itl.item_num }" checked> 
                			</div>
                		</td>
                		<td>${itl.item_num }</td>

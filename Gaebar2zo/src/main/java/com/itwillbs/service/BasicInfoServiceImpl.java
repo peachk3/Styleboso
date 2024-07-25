@@ -45,6 +45,22 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		return bidao.itemListAll();
 	}
 
+	// 사업자 번호 중복 조회
+	@Override
+	public boolean isCliCrnDuplicate(String cli_crn) throws Exception {
+		logger.debug(" 사업자 번호 중복 조회 ");
+		int count = bidao.cliCrnDup(cli_crn);
+		
+		return count > 0;
+	}
+
+	@Override
+	public void cliInsert(ClientVO vo) throws Exception {
+		logger.debug(" 거래처 등록 ");
+		
+		bidao.cliInsert(vo);
+	}
+
  
 	
 	

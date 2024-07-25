@@ -56,9 +56,21 @@
     </c:forEach>
 </table>
 
+
+
+
+
+
+
 <div>
     <button id="addRowBtn" class="btn btn-outline-info" type="button" onclick="location.href='/stock/releaseAdd'">출고 등록</button>
 </div>
+
+
+
+
+
+
 
 <!-- Modal1 -->
 <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

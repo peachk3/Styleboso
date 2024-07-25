@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.TransactionVO;
 
@@ -45,11 +46,26 @@ public class StockDAOImpl implements StockDAO{
 
 	// 재고 리스트 호출
 	@Override
-	public List<InventoryVO> getStockList() throws Exception {
-		logger.debug("DAOImpl : 입고 리스트 호출");
+	public List<InventoryVO> getStockList(Criteria cri) throws Exception {
+		logger.debug("DAOImpl : 재고 리스트 호출");
 		
-		return sqlSession.selectList(NAMESPACE+"getStockList");
+		return sqlSession.selectList(NAMESPACE+"getStockList",cri);
 	}
+
+	@Override
+	public int getTotalCount() throws Exception {
+		logger.debug(" getTotalCount() 실행 ");
+		return sqlSession.selectOne(NAMESPACE+"totalCount");
+	}
+
+    // 거래 상세 정보 호출
+    @Override
+    public Map<String, Object> getTransactionDetails(String tran_num) {
+        logger.debug("DAOImpl : 거래 상세 정보 호출");
+        // 쿼리 파라미터로 tran_num을 전달하여 결과를 반환합니다.
+        return sqlSession.selectOne(NAMESPACE + "getTransactionDetails", tran_num);
+    }
+
 
 	// 상태 변경
 //	@Override

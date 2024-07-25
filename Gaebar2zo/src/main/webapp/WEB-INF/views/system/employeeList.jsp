@@ -11,12 +11,27 @@
 </style>
 
 <body>
+<div>
+	<div class="search_box">
+        <form name="searchForm" method="post" action="/employeeList.do">
+            <div class="sch_group fl">
+                <select id="searchType" name="searchType" title="검색 유형 선택">
+                    <option value="">전체 검색</option>
+                    <option value="username">사용자 ID</option>
+                    <option value="user_per_name">사용자명</option>
+                </select>
+                <input type="text" id="keyword" name="keyword" placeholder="키워드를 입력해 주세요." title="키워드 입력" />
+                <button type="submit" class="bt_search" onclick="UserSerch"><i class="fas fa-search"></i><span class="skip_info">검색</span></button>
+            </div>
+        </form>
+    </div>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
-		<button class="btn btn-primary" type="button" onclick="openFormModal()">추가</button>
+		<button class="btn btn-primary" type="button" onclick="openFormModal()">등록</button>
 		<button class="btn btn-primary" type="button" onclick="">수정</button>
 		<button class="btn btn-primary" type="button" onclick="">조회</button>
 		<button class="btn btn-primary" type="button">삭제</button>
 	</div>
+</div>
 	<table class="table table-hover">
       <thead>
       	<tr>
@@ -68,6 +83,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="row g-3 needs-validation" novalidate>
+                    <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"> <!-- 시큐리티 토큰!! -->
 						<div class="form-floating">
 						  <input type="text" class="form-control" id="user_per_name" name="user_per_name" placeholder="이름" required>
 						  <label for="floatingInput">이름</label>

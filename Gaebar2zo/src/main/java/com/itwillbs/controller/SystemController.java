@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.CodeVO;
+import com.itwillbs.domain.ItemCodeVO;
 import com.itwillbs.domain.UsersVO;
 import com.itwillbs.service.SystemService;
+
 
 @RequestMapping(value = "/system/*")
 @Controller
@@ -81,7 +84,7 @@ public class SystemController {
 	
 	
 	// -------------------------------------------------------------------------------------------
-	// http://localhost:8088/Styleboso/system/main
+	// http://localhost:8088/system/main
 	// 대시보드 ( 메인 페이지 )
 	@RequestMapping(value="/main",method=RequestMethod.GET)
 
@@ -92,7 +95,7 @@ public class SystemController {
 	}
 
 	// -------------------------------------------------------------------------------------------
-	// http://localhost:8088/Styleboso/system/employeeList
+	// http://localhost:8088/system/employeeList
 	// 사용자 관리(추가,삭제,조회)
 	@RequestMapping(value = "/employeeList", method = RequestMethod.GET)
 	public void employeeList_GET(Model model) throws Exception {
@@ -119,12 +122,41 @@ public class SystemController {
 	}
 
 
-
 	// 품목 분류 코드 관리
-	@RequestMapping(value = "/code/item", method = RequestMethod.GET)
-	public void code_item_GET() throws Exception {
-		logger.debug(" code_item_GET() 실행 ");
+	
+	 @RequestMapping(value = "/code/item", method = RequestMethod.GET) 
+	 public void code_item_GET(@RequestParam("group_code") String group_code, Model model) throws Exception {
+	 
+	  logger.debug(" code_item_GET() 실행 ");
+	  logger.debug("그룹코드 : " + group_code);
+	  
+	  List<ItemCodeVO> itemCodeList = sService.itemCodeListAll(group_code);
+	  model.addAttribute("itemCodeList", itemCodeList);
+	  model.addAttribute("groupCode", group_code);
+	  
+	  logger.debug(" @@@@@@@itemCodeList : " + itemCodeList);
+	  
+	  
+//		  //대,소 품목코드 전체리스트 
+//	  		List<ItemCodeVO> itemCodeList = sService.itemCodeListAll();
+//		  model.addAttribute("itemCodeList", itemCodeList);
+//		  logger.debug(" itemCodelist : " + itemCodeList);
+//		
+//		  // 그룹 코드에 따라 품목 정보를 출력 
+//		  List<ItemCodeVO> itemCGroupList = sService.itemCGroupListAll(group_code); model.addAttribute("itemCGroupList",
+//		  itemCGroupList); logger.debug(" groupCode : " + group_code);
+//		  logger.debug(" itemCGroupList : " + itemCGroupList);
+		 
+	  
+	 
+			
+     }
+	 
 
-	}
+	 
+	 
+	
+	
+	
 
 }

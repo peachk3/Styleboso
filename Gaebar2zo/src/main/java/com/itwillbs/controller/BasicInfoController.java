@@ -22,6 +22,7 @@ import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
 import com.itwillbs.service.BasicInfoService;
+import com.mysql.cj.xdevapi.Client;
 
 
 @RequestMapping(value="/basicInfo/*")
@@ -53,7 +54,7 @@ public class BasicInfoController {
 	}
 
 	//http://localhost:8088/Styleboso/basicInfo/clientList
-	// 거래처 관리
+	// 거래처 관리------------------------------------------------
 	@RequestMapping(value="/clientList",method=RequestMethod.GET)
 	public void clientList_GET(Model model) throws Exception{
 		logger.debug(" clientList_GET() 실행 ");
@@ -92,6 +93,23 @@ public class BasicInfoController {
 		
 		return isDuplicate ? 1 : 0;
 	}
+	
+	// 상세보기 페이지
+	@ResponseBody
+	@RequestMapping(value = "/clientDetails", method = RequestMethod.GET)
+	public ResponseEntity<List<ClientVO>> clientDetailsList(@RequestParam("cli_num") String cli_num, Model model) throws Exception {
+		logger.debug(" clientDetailsList() 실행");
+		
+		List<ClientVO> clientDetailsList = bService.clientDetailsList(cli_num);
+		
+		model.addAttribute("clientDetailsList", clientDetailsList);
+		
+		logger.debug("@@ 리스트 : " + clientDetailsList);
+		logger.debug(" cli_num : " + cli_num);
+		
+		return new ResponseEntity<>(clientDetailsList, HttpStatus.OK);
+	}	
+	// ------------------------------------------------거래처 관리
 
 	// 창고 관리
 	//http://localhost:8088/Styleboso/system/login

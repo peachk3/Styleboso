@@ -22,4 +22,6 @@ public interface BasicInfoDAO {
 
 	public void cliInsert(ClientVO vo) throws Exception;
 
+	List<ClientVO> clientDetailsList(String cli_num) throws Exception;
+
 }

@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ClientVO {
 	
-//	private	String	cli_num;
+	private	String	cli_num;
 	private	String	cli_name;
 	private	String	cli_crn;
 	private	String	cli_cate;

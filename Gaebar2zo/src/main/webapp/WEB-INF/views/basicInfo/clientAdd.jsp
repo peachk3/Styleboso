@@ -79,22 +79,23 @@
 							</div>
 							<div class="col-md-2">
 									<label for="cli_post_code" class="form-label">우편번호</label> 
-									<input type="text" class="form-control" id="sample6_postcode" name="cli_postCode" readonly>
+									<input type="text" class="form-control" id="sample6_postcode" name="cli_postCode" readonly required>
 							</div>
 							<div class="col-md-2">
 								<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 							</div>
 							<div class="col-md-3">
 								<label for="cli_add1" class="form-label">주소</label>
-								<input type="text" class="form-control" id="sample6_address" placeholder="주소" name="cli_add1" readonly>
+								<input type="text" class="form-control" id="sample6_address" placeholder="주소" name="cli_add1" required readonly>
 							</div>
 							<div class="col-md-3">
 								<label for="cli_add2" class="form-label">상세 주소</label>
-								<input type="text" class="form-control" id="sample6_detailAddress" placeholder="상세주소" name="cli_add2" >
+								<input type="text" class="form-control" id="sample6_detailAddress" placeholder="상세주소" name="cli_add2" required >
+								<div class="invalid-feedback"  style="display: none;">주소를 입력하세요</div>
 							</div>
 							<div class="col-md-2">
 									<label for="cli_extraAdd" class="form-label"> 참고 항목</label>
-									<input type="text" class="form-control" id="sample6_extraAddress" placeholder="참고항목" name="cli_add3">
+									<input type="text" class="form-control" id="sample6_extraAddress" placeholder="참고항목" name="cli_add3"required readonly>
 							</div>
 					</form>
 				</div>
@@ -202,24 +203,6 @@
         }).open();
     }
 
-		/*    $(function() {
-			      $("#submitFormBtn").click(function() {
-			         $.ajax({
-			            url : "/basicInfo/clientInsert",
-			            type : "POST",
-			            data : $("#fm1").serialize(),
-			            success : function(data) {
-			               alert("회원이 등록 되었습니다.");
-
-			               history.go(0);
-
-			            },
-			            error : function() {
-			               alert("오류발생");
-			            }
-			         });
-			      });
-			   }); */
  document.addEventListener('DOMContentLoaded', function() {
 		event.preventDefault(); // 기본 제출 동작 방지   
 	       const submitFormBtn = document.getElementById('submitFormBtn');
@@ -248,15 +231,6 @@
 	                const formData = new FormData(form);
 	                const data = Object.fromEntries(formData.entries());
 
-	                // console.log('Sending data:', JSON.stringify(data)); // 전송 데이터 로그
-	            	
-	                //alert('유효성 검사 통과');
-	            	
-	                /* const data = {};
-	                formData.forEach((value, key) => {
-	                    data[key] = value;
-	                }); */
-
                 $.ajax({
 	                    url: '/basicInfo/clientInsert',
 	                    beforeSend: function(xhr) {
@@ -264,18 +238,12 @@
 	                     },
 	                    type: 'POST',
 	                    data:$("#fm1").serialize(),
-	                   /*  contentType: 'application/json; charset=utf-8', */
-// 	        	        dataType: "json",
-	        	        /* data: JSON.stringify, */
+
 	                    success: function(result) {
-// 	                        if (result.success) {
-// 	                        	console.log('Server response:', result); // 서버 응답 로그
-	                            alert('Form submitted successfully');
+	                            alert('등록되었습니다');
 	                            
 	                            form.reset();
-// 	                        } else {
-// 	                            alert('Error: ' + result.message);
-// 	                        }
+	                            window.location.href = '/basicInfo/clientList';
 	                    },
 	                    error: function(jqXHR, textStatus, errorThrown) {
 	                        console.error('AJAX Error:', textStatus, errorThrown);

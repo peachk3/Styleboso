@@ -29,6 +29,30 @@
 		<result property="group_code" column="group_code"/>
 		<result property="group_name" column="group_name"/>
 	</resultMap>
+	
+	<resultMap type="com.itwillbs.domain.ClientVO" id="clientMap">
+		<id property="cli_num" column="cli_num" />
+		<result property="cli_num" column="cli_num" />
+		<result property="cli_name" column="cli_name" />
+		<result property="cli_crn" column="cli_crn" />
+		<result property="cli_cate" column="cli_cate" />
+		<result property="cli_ind" column="cli_ind" />
+		<result property="cli_postCode" column="cli_postCode" />
+		<result property="cli_add1" column="cli_add1" />
+		<result property="cli_add2" column="cli_add2" />
+		<result property="cli_add3" column="cli_add3" />
+		<result property="cli_tel" column="cli_tel" />
+		<result property="cli_rep" column="cli_rep" />
+		<result property="cli_email" column="cli_email" />
+		<result property="pic_username" column="pic_username" />
+		<result property="cli_id" column="cli_id" />
+		<collection property="usersList" resultMap="usersMap"></collection>
+	</resultMap>
+	
+	<resultMap type="com.itwillbs.domain.UsersVO" id="usersMap">
+		<result property="username" column="username" />
+		<result property="user_per_name" column="user_per_name" />
+	</resultMap>
 
 	<select id="listALL" resultType="WarehouseCodeVO">
 		select * from warehouse_code
@@ -53,16 +77,19 @@
 	</select>
 	
 	<insert id="cliUpdate" parameterType="map">
-    INSERT INTO client (
-        cli_num, cli_name, cli_crn, cli_cate, cli_ind, cli_postCode, cli_add1, cli_add2, cli_add3, cli_tel, cli_rep, cli_email, pic_username
-    )
-    SELECT
-        CONCAT(
-            #{cli_cate},
-            LPAD(IFNULL(MAX(CAST(SUBSTRING(cli_num, LENGTH(#{cli_cate}) + 1) AS UNSIGNED)), 0) + 1, 4, '0')
-        ),
-        #{cli_name}, #{cli_crn}, #{cli_cate}, #{cli_ind}, #{cli_postCode}, #{cli_add1}, #{cli_add2}, #{cli_add3}, #{cli_tel}, #{cli_rep}, #{cli_email}, #{pic_username}
-    FROM client
-    WHERE cli_cate = #{cli_cate}
-</insert>
+	    INSERT INTO client (cli_num, cli_name, cli_crn, cli_cate, cli_ind, cli_postCode, cli_add1, cli_add2, cli_add3, cli_tel, cli_rep, cli_email, pic_username)
+	    SELECT
+	        CONCAT(#{cli_cate}, LPAD(IFNULL(MAX(CAST(SUBSTRING(cli_num, LENGTH(#{cli_cate}) + 1) AS UNSIGNED)), 0) + 1, 4, '0')),
+	        #{cli_name}, #{cli_crn}, #{cli_cate}, #{cli_ind}, #{cli_postCode}, #{cli_add1}, #{cli_add2}, #{cli_add3}, #{cli_tel}, #{cli_rep}, #{cli_email}, #{pic_username}
+	    FROM client
+	    WHERE cli_cate = #{cli_cate}
+    </insert>
+    
+   	<!-- 거래처 상세보기 -->
+   	<select id="cliDetials" parameterType="String" resultMap="clientMap">
+	   	select c.cli_num, c.cli_name, c.cli_crn, c.cli_cate, c.cli_ind, c.cli_postCode, c.cli_add1, c.cli_add2, c.cli_add3, c.cli_tel, c.cli_email, c.cli_rep, c.pic_username, u.username, u.user_per_name
+		from client c
+		join users u on u.username = c.pic_username
+		where c.cli_num = #{cli_num}
+   	</select>
 </mapper>

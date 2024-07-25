@@ -61,6 +61,13 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		bidao.cliInsert(vo);
 	}
 
+	@Override
+	public List<ClientVO> clientDetailsList(String cli_num) throws Exception {
+		logger.debug(" 거래처 상세보기 ");
+		
+		return bidao.clientDetailsList(cli_num);
+	}
+
  
 	
 	

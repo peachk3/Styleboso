@@ -1,5 +1,7 @@
 package com.itwillbs.domain;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -20,4 +22,5 @@ public class ClientVO {
 	private	String	pic_username;
 	private String  cli_id;
 
+	private List<UsersVO> usersList;
 }

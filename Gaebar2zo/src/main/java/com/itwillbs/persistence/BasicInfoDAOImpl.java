@@ -62,7 +62,15 @@ public class BasicInfoDAOImpl implements BasicInfoDAO{
 		logger.debug(" cliInsert() 실행 ");
 		
 		sqlSession.insert(NAMESPACE + "cliUpdate",vo);
+	}
+
+	@Override
+	public List<ClientVO> clientDetailsList(String cli_num) throws Exception {
+		logger.debug(" clientDetailsList() 실행 ");
+		
+		return sqlSession.selectList(NAMESPACE + "cliDetials", cli_num);
 	} 
+	
 	
 
 

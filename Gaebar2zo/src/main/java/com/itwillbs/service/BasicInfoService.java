@@ -25,4 +25,7 @@ public interface BasicInfoService {
 
 	public void cliInsert(ClientVO vo) throws Exception;
 
+	// 거래처 리스트 상세 보기
+	List<ClientVO> clientDetailsList(String cli_num) throws Exception;
+
 }

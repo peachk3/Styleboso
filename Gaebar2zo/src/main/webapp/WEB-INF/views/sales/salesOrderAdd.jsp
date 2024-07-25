@@ -262,6 +262,7 @@
                     }),
                     success: function(response) {
                         console.log('서버 응답:', response);
+                        window.location.href = 'http://localhost:8088/sales/salesOrderList';
                     },
                     error: function(error) {
                         console.error('에러 발생:', error);

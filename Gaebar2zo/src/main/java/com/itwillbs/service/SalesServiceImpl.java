@@ -22,6 +22,7 @@ public class SalesServiceImpl implements SalesService{
 	private SalesDAO sdao;
 
 	@Override
+	@Transactional
 	public void SalesOrderAdd(TransactionVO tvo) throws Exception {
 		
 		logger.debug("SalesOrderAdd() 실행");

@@ -1,5 +1,6 @@
 package com.itwillbs.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,9 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,7 +51,7 @@ public class SalesController {
 	// 수주 추가
 	@RequestMapping(value="/salesOrderAdd",method=RequestMethod.POST)
 	@ResponseBody
-	public String salesOrderAdd_POST(@RequestBody Map<String, String> requestData) throws Exception {
+	public void salesOrderAdd_POST(@RequestBody Map<String, String> requestData) throws Exception {
 	    ObjectMapper mapper = new ObjectMapper();
 	    
 	    TransactionVO tvo = mapper.readValue(requestData.get("tvo"), TransactionVO.class);
@@ -60,8 +64,6 @@ public class SalesController {
 	    logger.debug("tgvo : " + tgvo);
 	    
 	    sService.SalesOrderAdd(tvo);
-		
-		return "redirect:/sales/salesOrderList";
 	}
 
 	// 발주 관리

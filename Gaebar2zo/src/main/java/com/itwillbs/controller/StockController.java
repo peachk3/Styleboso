@@ -77,14 +77,24 @@ public class StockController {
 
 	// 재고 교환
 	@RequestMapping(value="/adjustment/exchange",method=RequestMethod.GET)
-	public void adjustment_exchange_GET() throws Exception{
+	public void adjustment_exchange_GET(Model model) throws Exception{
 		logger.debug(" adjustment_exchange_GET() 실행");
+		
+		// 교환 리스트 호출
+		List<TransactionVO> ex = sService.exList();
+		logger.debug("size : "+ ex.size());
+		model.addAttribute("ex", ex);
 	}
 
 	// 재고 반품
 	@RequestMapping(value="/adjustment/return",method=RequestMethod.GET)
-	public void adjustment_return_GET() throws Exception{
+	public void adjustment_return_GET(Model model) throws Exception{
 		logger.debug(" adjustment_return_GET() 실행");
+		
+		// 반품 리스트 호출
+		List<TransactionVO> re = sService.reList();
+		logger.debug("size : "+ re.size());
+		model.addAttribute("re", re);
 	}
 
 
@@ -110,20 +120,6 @@ public class StockController {
 	    
 	}
 
-//	@ResponseBody
-//	 @RequestMapping(value="/updateStatus",method=RequestMethod.POST,
-//			 		produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//	    public ResponseEntity<?> updateStatus(@RequestBody StatusUpdateRequest request) {
-//	        try {
-//	            sService.updateStatus(request.getTran_nums(), request.getStatus());
-//	            return ResponseEntity.ok().build();
-//	        } catch (Exception e) {
-//	            e.printStackTrace(); // 예외 로그 출력
-//	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Status update failed");
-//	        }
-//	    }
-//	   
-//	
 	
 	
 	

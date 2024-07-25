@@ -4,8 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itwillbs.mapper.stockMapper">
 
-	<resultMap type="com.itwillbs.domain.TransactionVO"
-		id="transMap">
+	<resultMap type="com.itwillbs.domain.TransactionVO" id="transMap">
 		<id property="tran_num" column="tran_num" />
 		<result property="tran_num" column="tran_num" />
 		<result property="top_tran_num" column="top_tran_num" />
@@ -30,10 +29,10 @@
 		<result property="item_cate_code" column="item_cate_code" />
 		<result property="item_cli_code" column="item_cli_code" />
 		<result property="item_name" column="item_name" />
+		<result property="item_purchase_price" column="item_purchase_price" />
 		<result property="item_mat" column="item_mat" />
 		<result property="comm" column="comm" />
-		<collection property="tranGoodsList"
-			resultMap="tranGoodsMap"></collection>
+		<collection property="tranGoodsList" resultMap="tranGoodsMap"></collection>
 	</resultMap>
 
 	<resultMap type="com.itwillbs.domain.TransactionGoodsVO"
@@ -129,8 +128,7 @@
 <!-- 	</update> -->
 
 	<!-- InventoryVO resultMap -->
-	<resultMap type="com.itwillbs.domain.InventoryVO"
-		id="invenMap">
+	<resultMap type="com.itwillbs.domain.InventoryVO" id="invenMap">
 		<id property="inven_num" column="inven_num" />
 		<result property="inven_num" column="inven_num" />
 		<result property="wh_num" column="wh_num" />
@@ -142,8 +140,7 @@
 	</resultMap>
 
 	<!-- WarehouseVO resultMap -->
-	<resultMap type="com.itwillbs.domain.WarehouseVO"
-		id="wareMap">
+	<resultMap type="com.itwillbs.domain.WarehouseVO" id="wareMap">
 		<id property="wh_num" column="wh_num" />
 		<result property="wh_num" column="wh_num" />
 		<result property="wh_name" column="wh_name" />
@@ -166,7 +163,7 @@
 	<!-- 재고 리스트 호출 -->
 	<select id="getStockList" resultMap="invenMap">
 	    <![CDATA[
-	    SELECT i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack, SUM(inven_qty) as inven_qty
+	    SELECT y.inven_num, i.item_name, w.wh_name, w.wh_zone, w.wh_rack, SUM(inven_qty) as inven_qty
 	    FROM inventory y
 	    JOIN warehouse w ON y.wh_num = w.wh_num
 	    JOIN goods g ON y.goods_num = g.goods_num
@@ -176,7 +173,7 @@
 	        <if test="searchType != null and keyword != null and keyword != ''">
 	            <choose>
 	                <when test="searchType == 'code'">
-	                    AND i.item_cate_code LIKE CONCAT('%', #{keyword}, '%')
+	                    AND y.inven_num LIKE CONCAT('%', #{keyword}, '%')
 	                </when>
 	                <when test="searchType == 'name'">
 	                    AND i.item_name LIKE CONCAT('%', #{keyword}, '%')
@@ -185,7 +182,7 @@
 	                    AND w.wh_name LIKE CONCAT('%', #{keyword}, '%')
 	                </when>
 	                <otherwise>
-	                    AND (i.item_cate_code LIKE CONCAT('%', #{keyword}, '%')
+	                    AND (y.inven_num LIKE CONCAT('%', #{keyword}, '%')
 	                    OR i.item_name LIKE CONCAT('%', #{keyword}, '%')
 	                    OR w.wh_name LIKE CONCAT('%', #{keyword}, '%'))
 	                </otherwise>
@@ -193,9 +190,9 @@
 	        </if>
 	    </where>
 	    <![CDATA[
-	    GROUP BY i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
+	    GROUP BY y.inven_num, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
 	    HAVING COUNT(y.inven_num) > 0
-	    ORDER BY i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
+	    ORDER BY y.inven_num, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
 	    LIMIT #{pageStart}, #{pageSize}
 	    ]]>
 	</select>
@@ -203,7 +200,7 @@
 	<select id="totalCount" resultType="int">
 	    <![CDATA[
 	    SELECT COUNT(*) FROM (
-	        SELECT i.item_cate_code
+	        SELECT y.inven_num
 	        FROM inventory y
 	        JOIN warehouse w ON y.wh_num = w.wh_num
 	        JOIN goods g ON y.goods_num = g.goods_num
@@ -213,7 +210,7 @@
 	        <if test="searchType != null and keyword != null and keyword != ''">
 	            <choose>
 	                <when test="searchType == 'code'">
-	                    AND i.item_cate_code LIKE CONCAT('%', #{keyword}, '%')
+	                    AND y.inven_num LIKE CONCAT('%', #{keyword}, '%')
 	                </when>
 	                <when test="searchType == 'name'">
 	                    AND i.item_name LIKE CONCAT('%', #{keyword}, '%')
@@ -222,7 +219,7 @@
 	                    AND w.wh_name LIKE CONCAT('%', #{keyword}, '%')
 	                </when>
 	                <otherwise>
-	                    AND (i.item_cate_code LIKE CONCAT('%', #{keyword}, '%')
+	                    AND (y.inven_num LIKE CONCAT('%', #{keyword}, '%')
 	                    OR i.item_name LIKE CONCAT('%', #{keyword}, '%')
 	                    OR w.wh_name LIKE CONCAT('%', #{keyword}, '%'))
 	                </otherwise>
@@ -230,10 +227,68 @@
 	        </if>
 	    </where>
 	    <![CDATA[
-	        GROUP BY i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
+	        GROUP BY y.inven_num, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
 	        HAVING COUNT(y.inven_num) > 0
 	    ) AS subquery
 	    ]]>
+	</select>
+	
+	<!-- 교환 리스트 호출 -->
+	<select id="exchangeList" resultMap="transMap">
+		select
+		tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
+		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
+		go.item_num,go.item_name,inven_num
+		from (select
+		tr.tran_num,top_tran_num,cli_num,pic_username,
+		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm, goods_num,
+		goods_qty,rec_date
+		from transaction tr
+		join transaction_goods trg
+		on tr.top_tran_num = trg.tran_num) tr
+		join (select item.item_num,
+		goods_num, item_name
+		from item join goods
+		on item.item_num = goods.item_num
+		where goods.item_num in (select item_num
+		from goods go
+		where goods_num in (select trg.goods_num
+		from transaction tr
+		join transaction_goods trg
+		on tr.top_tran_num = trg.tran_num))) go
+		on tr.goods_num = go.goods_num
+		join inventory_change ic
+		on tr.tran_num = ic.tran_num
+		WHERE tr.tran_num like 'EX%'
+	</select>
+	
+	<!-- 반품 리스트 호출 -->
+	<select id="returnList" resultMap="transMap">
+		select
+		tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
+		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
+		go.item_num,go.item_name,inven_num
+		from (select
+		tr.tran_num,top_tran_num,cli_num,pic_username,
+		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm, goods_num,
+		goods_qty,rec_date
+		from transaction tr
+		join transaction_goods trg
+		on tr.top_tran_num = trg.tran_num) tr
+		join (select item.item_num,
+		goods_num, item_name
+		from item join goods
+		on item.item_num = goods.item_num
+		where goods.item_num in (select item_num
+		from goods go
+		where goods_num in (select trg.goods_num
+		from transaction tr
+		join transaction_goods trg
+		on tr.top_tran_num = trg.tran_num))) go
+		on tr.goods_num = go.goods_num
+		join inventory_change ic
+		on tr.tran_num = ic.tran_num
+		WHERE tr.tran_num like 'RE%'
 	</select>
 
 

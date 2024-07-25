@@ -25,7 +25,7 @@ public class StockServiceImpl implements StockService{
 	// 입고 리스트 호출
 	@Override
 	public List<TransactionVO> rcList() throws Exception {
-		logger.debug("ServiceImpl + 입고 리스트 호출");
+		logger.debug(" ServiceImpl + 입고 리스트 호출 ");
 		
 		
 		return sdao.rcList();
@@ -35,7 +35,7 @@ public class StockServiceImpl implements StockService{
 	// 출고 리스트 호출
 	@Override
 	public List<TransactionVO> rsList() throws Exception {
-		logger.debug("ServiceImpl + 출고 리스트 호출");
+		logger.debug(" ServiceImpl + 출고 리스트 호출 ");
 		
 		
 		return sdao.rsList();
@@ -44,7 +44,7 @@ public class StockServiceImpl implements StockService{
 	// 재고 리스트 호출
 	@Override
 	public List<InventoryVO> getStockList(Criteria cri) throws Exception {
-		logger.debug("ServiceImpl + 재고 리스트 호출");
+		logger.debug(" ServiceImpl + 재고 리스트 호출 ");
 		int page = (cri.getPage() - 1)*10;
 		
 		cri.setPage(page);
@@ -54,22 +54,28 @@ public class StockServiceImpl implements StockService{
 		return sdao.getStockList(cri);
 	}
 
-
 	@Override
 	public int getTotalCount() throws Exception {
 		logger.debug(" getTotalCount() 실행 ");
 		return sdao.getTotalCount();
 	}
 
+	// 교환 리스트 호출
+	@Override
+	public List<TransactionVO> exList() throws Exception {
+		logger.debug(" ServiceImpl + 재고 리스트 호출 ");
+		return sdao.exList();
+	}
 
-//	@Override
-//	  public void updateStatus(List<String> tranNums, String status) throws Exception{
-//        for (String tranNum : tranNums) {
-//            sdao.updateStatus(tranNum, status);
-//        }
-//    }
+	// 반품 리스트 호출
+	@Override
+	public List<TransactionVO> reList() throws Exception {
+		logger.debug(" ServiceImpl + 반품 리스트 호출 ");
+		return sdao.reList();
+	}
 
 
+	
 
 	
 	

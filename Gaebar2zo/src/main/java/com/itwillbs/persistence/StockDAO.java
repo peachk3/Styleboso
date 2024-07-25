@@ -19,10 +19,13 @@ public interface StockDAO {
 
 	int getTotalCount() throws Exception;
 
+	// 교환 리스트 호출
+	List<TransactionVO> exList() throws Exception;
+
+	// 반품 리스트 호출
+	List<TransactionVO> reList() throws Exception;
 
 	
-	// 상태변경
-//	void updateStatus(String tranNum, String status) throws Exception;
 	
 	
 	

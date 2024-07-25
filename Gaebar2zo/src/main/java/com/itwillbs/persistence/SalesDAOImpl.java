@@ -44,6 +44,32 @@ public class SalesDAOImpl implements SalesDAO{
 		
 		logger.debug("DAO : 수주 거래 품목 테이블 등록 완료");	
 	}
+	
+	
+
+	@Override
+	public void purchaseOrderAdd_TransactionVO(TransactionVO tvo) throws Exception {
+		logger.debug("DAO : purchaseOrderAdd_TransactionVO() 호출");
+		
+		logger.debug("tvo : "+ tvo);
+		
+		sqlSession.insert(NAMESPACE + "purchaseOrderAdd_TransactionVO", tvo);
+		
+		logger.debug("DAO : 발주 거래 테이블 등록 완료");
+		
+	}
+
+	@Override
+	public void purchaseOrderAdd_TransactionGoodsVO(TransactionGoodsVO tgvo) throws Exception {
+		logger.debug("DAO : purchaseOrderAdd_TransactionGoodsVO() 호출");
+		
+		logger.debug("tgvo : "+ tgvo);
+		
+		sqlSession.insert(NAMESPACE + "purchaseOrderAdd_TransactionGoodsVO", tgvo);
+		
+		logger.debug("DAO : 발주 거래 품목 테이블 등록 완료");	
+		
+	}
 
 	@Override
 	public String GetTranNum(TransactionVO tvo) {

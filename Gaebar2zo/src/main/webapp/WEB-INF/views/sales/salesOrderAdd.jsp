@@ -4,7 +4,7 @@
 
 <body>
   
-  <h1>/sales/salesOrderAdd.jsp</h1>
+	<h1>/sales/salesOrderAdd.jsp</h1>
 
 	<div class="container-lg px-4">
 		<div class="row">
@@ -67,8 +67,8 @@
 										<tr>
 											<th scope="col" style="width:25%">제품번호</th>
 											<th scope="col" style="width:25%">제품명</th>
-											<th scope="col" style="width:12%"></th>
-											<th scope="col" style="width:12%"></th>
+											<th scope="col" style="width:12%">사이즈</th>
+											<th scope="col" style="width:12%">색상</th>
 											<th scope="col" style="width:25%">수량</th>
 										</tr>
 									</thead>
@@ -163,8 +163,7 @@
 													</tr>
 												</thead>
 												<tbody>
-												
-</tbody>
+												</tbody>
 											</table>
 										</div>
 										<div class="modal-footer">
@@ -492,7 +491,6 @@
 			'<td><div>'+
 			'<input type="text" id="goods-qty'+ cnt +'" class="form-control form-control-sm" name="goods_qty" required>'+
 			'</div></td>'+
-			'<td><div>'+
 			'</tr>';
 			
 			$('.item-table tbody').append(row);

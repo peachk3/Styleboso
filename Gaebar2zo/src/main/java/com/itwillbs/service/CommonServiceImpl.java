@@ -22,15 +22,15 @@ public class CommonServiceImpl implements CommonService{
 	private CommonDAO cdao;
 
 	@Override
-	public List<ClientVO> ClientList() throws Exception {
+	public List<ClientVO> ClientList(ClientVO cvo) throws Exception {
 		logger.debug("거래처 리스트 조회");
 		
-		return cdao.ClientList();
+		return cdao.ClientList(cvo);
 	}
 
 	@Override
 	public List<UsersVO> ManagerList() throws Exception {
-		logger.debug("거래처 리스트 조회");
+		logger.debug("담당자 리스트 조회");
 		
 		return cdao.ManagerList();
 	}

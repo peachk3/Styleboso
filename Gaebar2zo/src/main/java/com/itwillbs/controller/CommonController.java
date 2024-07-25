@@ -33,10 +33,10 @@ public class CommonController {
 	@ResponseBody
 	@RequestMapping(value="/clientList",method=RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public List<ClientVO> clientList_GET(Model model) throws Exception{
+	public List<ClientVO> clientList_GET(ClientVO cvo) throws Exception{
 		logger.debug(" clientList_GET() 실행 ");
 		
-		List<ClientVO> cList = cService.ClientList();
+		List<ClientVO> cList = cService.ClientList(cvo);
 		logger.debug("size : "+ cList.size());
 		logger.debug("cList : "+ cList);
 		
@@ -48,7 +48,7 @@ public class CommonController {
 	@ResponseBody
 	@RequestMapping(value="/managerList",method=RequestMethod.GET,
 	produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public List<UsersVO> managerList_GET(Model model) throws Exception{
+	public List<UsersVO> managerList_GET() throws Exception{
 		logger.debug(" managerList_GET() 실행 ");
 		
 		List<UsersVO> mList = cService.ManagerList();
@@ -63,7 +63,7 @@ public class CommonController {
 	@ResponseBody
 	@RequestMapping(value="/goodsList",method=RequestMethod.GET,
 	produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public List<GoodsVO> goodsList_GET(Model model) throws Exception{
+	public List<GoodsVO> goodsList_GET() throws Exception{
 		logger.debug(" goodsList_GET() 실행 ");
 		
 		List<GoodsVO> gList = cService.GoodsList();

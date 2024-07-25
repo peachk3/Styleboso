@@ -50,7 +50,7 @@ public class SystemDAOImpl implements SystemDAO{
 		return sqlSession.selectList(NAMESPACE + "codeListAll");
 	}
 
-
+	 // 그룹 코드에 따라 품목 정보를 출력
 	@Override
 	public List<ItemCodeVO> itemCodeListAll(String group_code) throws Exception {
 		logger.debug(" service --> DAO itemCodeListAll() 실행 ");
@@ -58,24 +58,6 @@ public class SystemDAOImpl implements SystemDAO{
 		return sqlSession.selectList(NAMESPACE + "itemCodeListAll", group_code);
 	}
 
-
-//	//품목코드(대,소) 전체 리스트 출력
-//
-//	  @Override public List<ItemCodeVO> itemCodeListAll() throws Exception {
-//	  logger.info("Service --> DAOitemCodeListAll() 실행");
-//	  
-//	  return sqlSession.selectList(NAMESPACE + "itemCodeListAll");
-//	  }
-//
-//	  
-//	  // 그룹 코드에 따라 품목 정보를 출력
-//	@Override
-//	public List<ItemCodeVO> itemCGroupListAll(String group_code) throws Exception {
-//		logger.info("Service-->DAO itemCGroupListAll() 실행");
-//		
-//		return sqlSession.selectList(NAMESPACE+ "itemCGroupListAll" );
-//	}
-	 
 
 	
 	  

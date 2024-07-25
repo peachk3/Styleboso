@@ -20,4 +20,6 @@ public interface BasicInfoDAO {
 	// 거래처 번호 중복 확인
 	public int cliCrnDup(String cli_crn) throws Exception;
 
+	public void cliInsert(ClientVO vo) throws Exception;
+
 }

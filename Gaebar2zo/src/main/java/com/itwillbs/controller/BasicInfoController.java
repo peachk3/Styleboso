@@ -1,13 +1,18 @@
 package com.itwillbs.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -59,12 +64,21 @@ public class BasicInfoController {
 
 	}
 
-	// 거래처 추가
+	// 거래처 추가 - 등록 페이지로 이동
 	@RequestMapping(value="/clientAdd",method=RequestMethod.GET)
 	public void clientAdd_GET() throws Exception{
 		logger.debug(" clientAdd_GET() 실행 ");
-
 	}
+	
+	// 거래처 추가 - 거래처 등록
+	@ResponseBody
+	@RequestMapping(value="/clientInsert", method = RequestMethod.POST)
+	public void clientInsert_POST(ClientVO vo) throws Exception {
+		logger.debug(" clientInsert_POST() 실행 ");
+
+		bService.cliInsert(vo);
+	}
+	
 	
 	// 사업자 번호 중복 확인
 	@RequestMapping(value="/check-crn", method = RequestMethod.GET)

@@ -10,22 +10,33 @@
 			<div class="col-12">
 				<div class="card mb-4">
 					<div class="card-body">
-						<form class="row g-3 needs-validation" novalidate>
+						<form class="row g-3 needs-validation" id="fm1" novalidate>
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 							<div>
 								<h5>거래처 등록</h5>
 							</div>
 							<div class="col-md-6">
-								<label for="cli_code" class="form-label"> 거래처 코드 </label> 
-								<input type="text" class="form-control" id="cli_code" readonly>
+								<label for="cli_num" class="form-label"> 거래처 코드 </label> 
+								<input type="text" class="form-control" id="cli_num" readonly>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-3">
 								<label for="cli_name" class="form-label"> 거래처명 </label> 
-								<input type="text" class="form-control" id="cli_name" required>
+								<input type="text" class="form-control" id="cli_name" name="cli_name" required>
 								<div class="invalid-feedback" >거래처명을 입력하세요 </div>
+							</div>
+							<div class="col-md-3">
+								<label for="cli_cate" class="form-label"> 거래처 구분 </label>
+								<div>
+								<input type="radio" id="cli_cateCu" name="cli_cate" value="CLCU" required>
+								<label for="cli_cateCu"> 고객사</label>
+								<input type="radio" id="cli_catePt" name="cli_cate" value="CLPT" required> 
+								<label for="cli_catePt">협력사</label>
+								</div>
+								<div class="invalid-feedback">거래처 구분을 선택하세요</div>
 							</div>
 							<div class="col-md-4">
 								<label for="cli_crn" class="form-label"> 사업자 번호 </label> 
-								<input type="text" class="form-control" id="cli_crn" required>
+								<input type="text" class="form-control" id="cli_crn" name="cli_crn" required>
 								<div class="invalid-feedback" > 사업자 번호를 입력하세요</div>
 								<div id="cliCrnError" class="text-danger" style="display: none;">숫자만 입력하세요</div>
 								<div id="cliCrnDuplicate" class="text-danger" style="display: none;">중복된 사업자입니다</div>
@@ -34,17 +45,12 @@
 								<label class="form-label">&nbsp;</label>
 								<button type="button" id="cliCrnBtn" class="btn btn-primary">중복 확인</button>
 							</div>
-							<div class="col-md-6">
-								<label for="cli_name" class="form-label"> 거래처 구분 </label>
-								<div>
-								<input type="radio" id="cli_cateCu" name="cli_cate" value="customer" required>
-								<label for="cli_cateCu"> 고객사</label>
-								<input type="radio" id="cli_catePt" name="cli_cate" value="partner" required> 
-								<label for="cli_catePt">협력사</label>
-								</div>
-								<div class="invalid-feedback">거래처 구분을 선택하세요</div>
+							<div class="col-md-3">
+								<label for="cli_ind" class="form-label"> 업종</label> 
+								<input type="text" class="form-control" id="cli_ind" name="cli_ind" placeholder="ex) 제조업, 도.소매업" required>
+								<div class="invalid-feedback" > 업종을 선택하세요 </div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-3">
 								<label for="cli_name" class="form-label"> 대표자 </label> 
 								<input type="text" class="form-control" id="cli_rep" name="cli_rep" required>
 								<div class="invalid-feedback" > 대표자를 입력하세요 </div>
@@ -52,7 +58,7 @@
 							<div class="col-md-3">
 								<label for="validationCustom05" class="form-label">담당자 아이디</label> 
 									<input type="text" class="form-control" id="validationCustom05" data-coreui-toggle="modal"
-									data-coreui-target="#exampleModal2" required>
+									data-coreui-target="#exampleModal2" name="pic_username" required>
 								<div class="invalid-feedback" > 담당자를 입력해주세요 </div>
 							</div>
 							<div class="col-md-3">
@@ -63,7 +69,7 @@
 							</div>
 							<div class="col-md-6">
 								<label for="cli_tel" class="form-label"> 대표 연락처 </label> 
-								<input type="tel" class="form-control" id="cli_tel" required>
+								<input type="tel" class="form-control" id="cli_tel" name="cli_tel" required>
 								<div class="invalid-feedback" > 연락처를 입력하세요</div>
 								<div id="cliTelError" class="text-danger" style="display: none;">숫자만 입력하세요</div>
 							</div>
@@ -73,22 +79,23 @@
 							</div>
 							<div class="col-md-2">
 									<label for="cli_post_code" class="form-label">우편번호</label> 
-									<input type="text" class="form-control" id="sample6_postcode" name="wh_add1" readonly>
+									<input type="text" class="form-control" id="sample6_postcode" name="cli_postCode" readonly required>
 							</div>
 							<div class="col-md-2">
 								<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 							</div>
 							<div class="col-md-3">
 								<label for="cli_add1" class="form-label">주소</label>
-								<input type="text" class="form-control" id="sample6_address" placeholder="주소" name="wh_add1" readonly>
+								<input type="text" class="form-control" id="sample6_address" placeholder="주소" name="cli_add1" required readonly>
 							</div>
 							<div class="col-md-3">
 								<label for="cli_add2" class="form-label">상세 주소</label>
-								<input type="text" class="form-control" id="sample6_detailAddress" placeholder="상세주소" name="wh_add2" >
+								<input type="text" class="form-control" id="sample6_detailAddress" placeholder="상세주소" name="cli_add2" required >
+								<div class="invalid-feedback"  style="display: none;">주소를 입력하세요</div>
 							</div>
 							<div class="col-md-2">
 									<label for="cli_extraAdd" class="form-label"> 참고 항목</label>
-									<input type="text" class="form-control" id="sample6_extraAddress" placeholder="참고항목">
+									<input type="text" class="form-control" id="sample6_extraAddress" placeholder="참고항목" name="cli_add3"required readonly>
 							</div>
 					</form>
 				</div>
@@ -144,6 +151,10 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 	<script>
+	const token = $("meta[name='_csrf']").attr("content")
+	   const header = $("meta[name='_csrf_header']").attr("content");
+	   const name = $("#userName").val();
+	   
     function sample6_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -191,9 +202,9 @@
             }
         }).open();
     }
-	
-	   document.addEventListener('DOMContentLoaded', function() {
-		      
+
+ document.addEventListener('DOMContentLoaded', function() {
+		event.preventDefault(); // 기본 제출 동작 방지   
 	       const submitFormBtn = document.getElementById('submitFormBtn');
 	       const cliCateRadios = document.getElementsByName('cli_cate');
 	   
@@ -212,6 +223,36 @@
 	            
 	            // Bootstrap의 'was-validated' 클래스 추가
 	            form.classList.add('was-validated');
+	            
+	            // 모든 유효성 검사가 통과되었을 경우에만 폼 데이터 전송
+	            if (document.querySelector('.was-validated:invalid') === null) {
+	            	
+	                // 폼 데이터 수집
+	                const formData = new FormData(form);
+	                const data = Object.fromEntries(formData.entries());
+
+                $.ajax({
+	                    url: '/basicInfo/clientInsert',
+	                    beforeSend: function(xhr) {
+	                        xhr.setRequestHeader(header, token);
+	                     },
+	                    type: 'POST',
+	                    data:$("#fm1").serialize(),
+
+	                    success: function(result) {
+	                            alert('등록되었습니다');
+	                            
+	                            form.reset();
+	                            window.location.href = '/basicInfo/clientList';
+	                    },
+	                    error: function(jqXHR, textStatus, errorThrown) {
+	                        console.error('AJAX Error:', textStatus, errorThrown);
+	                        console.log('Response Text:', jqXHR.responseText);
+	                        console.log('Status Code:', jqXHR.status);
+	                        alert('An error occurred while submitting the form. Check console for details.');
+	                    }
+	                }); 
+	            }
 	         });
 	         
 	      // 거래처 구분 선택 확인
@@ -239,7 +280,8 @@
 	           cliCateRadios[0].setCustomValidity("");
 	         });
 	       } 
- 	       
+	       
+	   
 	       // 담당자 정보 가져오기
 	       $('#modal2-table tbody').on('click', 'tr', function() {
 	           var targetInput1 = document.getElementById('validationCustom05');
@@ -340,7 +382,7 @@
 	        }
 	    });
 	}
-
+	
 });	
 	   
 	   

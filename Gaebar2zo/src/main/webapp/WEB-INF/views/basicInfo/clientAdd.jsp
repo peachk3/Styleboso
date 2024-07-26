@@ -15,10 +15,10 @@
 							<div>
 								<h5>거래처 등록</h5>
 							</div>
-							<div class="col-md-6">
-								<label for="cli_num" class="form-label"> 거래처 코드 </label> 
-								<input type="text" class="form-control" id="cli_num" readonly>
-							</div>
+<!-- 							<div class="col-md-6"> -->
+<!-- 								<label for="cli_num" class="form-label"> 거래처 코드 </label>  -->
+<!-- 								<input type="text" class="form-control" id="cli_num" readonly> -->
+<!-- 							</div> -->
 							<div class="col-md-3">
 								<label for="cli_name" class="form-label"> 거래처명 </label> 
 								<input type="text" class="form-control" id="cli_name" name="cli_name" required>

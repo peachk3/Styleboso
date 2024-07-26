@@ -52,6 +52,15 @@ public class BasicInfoController {
 		logger.debug(" itemAdd_GET() 실행 ");
 
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/itemInsert", method = RequestMethod.POST)
+	public void itemInsert_POST(ItemVO itemvo) throws Exception {
+		logger.debug(" itemInsert_POST() 실행 ");
+		
+		bService.insertItem(itemvo);
+		logger.debug("itemvo : " + itemvo);
+	}
 
 	//http://localhost:8088/Styleboso/basicInfo/clientList
 	// 거래처 관리------------------------------------------------

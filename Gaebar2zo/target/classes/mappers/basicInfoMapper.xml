@@ -64,11 +64,21 @@
 	</select>
 
 	<select id="itemListALL" resultMap="itemMap">
-		select i.item_num, i.item_cli_code, i.item_name, c.group_name, i.item_mat, i.comm
+		select i.item_num, i.item_cli_code, i.item_name, i.item_purchase_price, i.item_sale_price, c.group_name, i.item_mat, i.comm
 		from item i
 		join item_code ic on i.item_cate_code = ic.s_cate_item_code
 		join code c on c.group_code = ic.m_cate_item_code
 	</select>
+
+	<!-- item 등록 -->
+	<insert id="insertItem">
+		insert into item (item_num, item_cate_code, item_cli_code, item_name, item_purchase_price, item_sale_price)
+			SELECT CONCAT(#{item_cate_code}, LPAD(IFNULL(MAX(SUBSTRING(item_num, LENGTH(#{item_cate_code}) + 1)), 0) + 1, 3, '0')), #{item_cate_code},
+				#{item_cli_code}, #{item_name}, #{item_purchase_price}, #{item_sale_price}
+		FROM item
+		where item_cate_code =#{item_cate_code};
+	</insert>
+
 
 	<select id="cliCrnDup" resultType="int">
 		select count(*)

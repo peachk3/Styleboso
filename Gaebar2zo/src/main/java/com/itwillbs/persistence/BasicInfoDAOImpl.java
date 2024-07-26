@@ -85,6 +85,13 @@ public class BasicInfoDAOImpl implements BasicInfoDAO{
 		sqlSession.delete(NAMESPACE + "deleteClient", cliNums);
 	}
 
+	@Override
+	public void itemInsert(ItemVO itemvo) throws Exception {
+		logger.debug(" itemInsert() 실행 ");
+		
+		sqlSession.insert(NAMESPACE + "insertItem", itemvo);
+	}
+
 
 
 }

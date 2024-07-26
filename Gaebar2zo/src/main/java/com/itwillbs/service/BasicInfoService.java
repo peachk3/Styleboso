@@ -33,5 +33,7 @@ public interface BasicInfoService {
 
 	void deleteClients(List<String> cliNums) throws Exception;
 
+	void insertItem(ItemVO itemvo) throws Exception;
+
 
 }

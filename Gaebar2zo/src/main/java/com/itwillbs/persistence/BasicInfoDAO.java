@@ -28,4 +28,6 @@ public interface BasicInfoDAO {
 
 	void deleteClients(List<String> cliNums) throws Exception;
 
+	void itemInsert(ItemVO itemvo) throws Exception;
+
 }

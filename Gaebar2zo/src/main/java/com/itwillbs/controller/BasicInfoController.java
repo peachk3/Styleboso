@@ -127,6 +127,12 @@ public class BasicInfoController {
 		    }
 		
 	}
+	
+	public void deleteClient() throws Exception{
+
+	
+	}
+	
 	// ------------------------------------------------거래처 관리
 
 	// 창고 관리

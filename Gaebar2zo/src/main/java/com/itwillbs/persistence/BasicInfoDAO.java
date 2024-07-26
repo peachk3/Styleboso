@@ -26,4 +26,6 @@ public interface BasicInfoDAO {
 
 	void updateClient(ClientVO cvo) throws Exception;
 
+	void deleteClients(List<String> cliNums) throws Exception;
+
 }

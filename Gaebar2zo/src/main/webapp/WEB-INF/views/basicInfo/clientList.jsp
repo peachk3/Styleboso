@@ -24,7 +24,7 @@
     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
       <button class="btn btn-primary" type="button" onclick="">검색</button>
       <button class="btn btn-primary" type="button" onclick="location.href='/basicInfo/clientAdd'">등록</button>
-      <button class="btn btn-primary" type="button">삭제</button>
+      <button class="btn btn-primary" id="deleteClientBtn" name="deleteClientBtn" type="button">삭제</button>
    </div>
 
    <table class="table table-hover">
@@ -63,8 +63,16 @@
                      <td class="clickable-cell">${cli.cli_num }</td>
                      <td class="clickable-cell">${cli.cli_name }</td>
                      <td class="clickable-cell">${cli.cli_crn }</td>
-                     <td class="clickable-cell">${cli.cli_cate }</td>
-                     <td class="clickable-cell">${cli.cli_ind }</td>
+				<%-- <td class="clickable-cell">${cli.cli_cate } --%>
+					 <td class="clickable-cell">
+					 <c:choose>
+						<c:when test="${cli.cli_cate == 'CLCU'}"> 고객사</c:when>
+						<c:when test="${cli.cli_cate == 'CLPT'}"> 협력사</c:when>
+						<c:otherwise>
+                   		 ${cli.cli_cate}
+                		</c:otherwise>
+					</c:choose></td>
+					<td class="clickable-cell">${cli.cli_ind }</td>
                      <td class="clickable-cell">${cli.cli_postCode }</td>
                      <td class="clickable-cell">${cli.cli_add1 }</td>
                      <td class="clickable-cell">${cli.cli_add2 }</td>
@@ -240,12 +248,12 @@ const token = $("meta[name='_csrf']").attr("content")
 const header = $("meta[name='_csrf_header']").attr("content");
 const name = $("#userName").val();
 
-// 전체 선택/해제 기능
+// 전체 선택
 function toggleCheckboxes(source) {
-    const checkboxes = document.querySelectorAll('.form-check-input');
-    checkboxes.forEach(checkbox => {
+    const checkboxes = document.getElementsByClassName('form-check-input');
+    for (let checkbox of checkboxes) {
         checkbox.checked = source.checked;
-    });
+    }
 }
 
 function sample6_execDaumPostcode() {
@@ -296,7 +304,60 @@ function sample6_execDaumPostcode() {
     }).open();
 }
 
+function toggleCheckboxes(source) {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"].form-check-input');
+    checkboxes.forEach(checkbox => checkbox.checked = source.checked);
+}
+
 $(document).ready(function() {
+	// 삭제
+	$("#deleteClientBtn").click(function(){
+		
+		const checkedCheckboxes = $('input[type="checkbox"].form-check-input:checked');
+       	console.log("선택된 체크박스 수:", checkedCheckboxes.length);
+        const cli_nums = [];
+		
+        checkedCheckboxes.each(function() {
+        	const cli_num = $(this).closest('tr').find('td:eq(1)').text(); // cli_num이 있는 열의 인덱스에 따라 조정
+        	if (cli_num) {  // 빈 문자열이 아닌 경우에만 추가
+                console.log("추출된 cli_num:", cli_num);
+                cli_nums.push(cli_num);
+            }
+        });
+     	// 중복 제거
+        const uniqueCliNums = [...new Set(cli_nums)];
+        
+     	console.log("최종 cli_nums 배열:", cli_nums);
+        
+        
+        if (cli_nums.length === 0) {
+            alert('삭제할 항목을 선택해주세요.');
+            return;
+        }
+        
+        if (confirm('선택한 ' + cli_nums.length + '개의 항목을 삭제하시겠습니까?')) {
+		$.ajax({
+			url: '/basicInfo/deleteClient',
+			beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+             },
+			type: 'POST',
+			contentType: 'application/json',
+            data: JSON.stringify({ cli_nums: cli_nums }),
+            success: function(response) {
+                // Handle success, e.g., reload the page or show a message
+                location.reload();
+                alert("삭제 완료 되었습니다");
+            },
+            error: function(xhr, status, error) {
+                // Handle error
+                alert("An error occurred: " + error);
+            }
+        });
+      }
+    });
+	
+	
     // Add click event listener to the cells
     $(".clickable-cell").click(function() {
         var cli_num = $(this).closest("tr").find("td:nth-child(2)").text();

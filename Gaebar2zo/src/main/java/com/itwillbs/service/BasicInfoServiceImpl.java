@@ -75,7 +75,12 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		bidao.updateClient(cvo);
 	}
 
- 
+	@Override
+	public void deleteClients(List<String> cliNums) throws Exception {
+		logger.debug(" 거래처 삭제 ");
+		
+		bidao.deleteClients(cliNums);
+	}
 	
 	
 }

@@ -101,4 +101,12 @@
 		where cli_num = #{cli_num}
    	</update>
    	
+   	<delete id="deleteClient">
+   		DELETE FROM client
+        WHERE cli_num IN
+        <foreach collection="list" item="cli_num" open="(" separator="," close=")">
+            #{cli_num}
+        </foreach>
+   	</delete>
+   	
 </mapper>

@@ -76,9 +76,15 @@ public class BasicInfoDAOImpl implements BasicInfoDAO{
 		logger.debug(" updateClient() 실행 ");
 		
 		sqlSession.update(NAMESPACE + "updateClient", cvo);
-	} 
-	
-	
+	}
+
+	@Override
+	public void deleteClients(List<String> cliNums) throws Exception {
+		logger.debug("deleteClients() 실행 ");
+		
+		sqlSession.delete(NAMESPACE + "deleteClient", cliNums);
+	}
+
 
 
 }

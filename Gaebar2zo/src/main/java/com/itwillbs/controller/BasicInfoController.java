@@ -128,9 +128,27 @@ public class BasicInfoController {
 		
 	}
 	
-	public void deleteClient() throws Exception{
-
+	// 거래처 삭제
+	@RequestMapping(value = "/deleteClient", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> deleteClient(@RequestBody Map<String, Object> payload) throws Exception{
+		logger.debug(" deleteClient() 실행 ");
 	
+		@SuppressWarnings("unchecked")
+        List<String> cliNums = (List<String>) payload.get("cli_nums");
+
+        if (cliNums == null || cliNums.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                 .body(Map.of("status", "error", "message", "No clients selected"));
+        }
+        logger.debug("@@@@cli_num " + cliNums);
+
+        try {
+            bService.deleteClients(cliNums);
+            return ResponseEntity.ok(Map.of("status", "success"));
+        } catch (Exception e) {
+            logger.error(" @@@@@@@@Error deleting clients", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("status", "error", "message", e.getMessage()));
+        }
 	}
 	
 	// ------------------------------------------------거래처 관리

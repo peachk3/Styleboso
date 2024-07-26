@@ -108,7 +108,25 @@ public class BasicInfoController {
 		logger.debug(" cli_num : " + cli_num);
 		
 		return new ResponseEntity<>(clientDetailsList, HttpStatus.OK);
-	}	
+	}
+	
+	// 거래처 수정
+	@ResponseBody
+	@RequestMapping(value = "/updateClient", method = RequestMethod.POST)
+	public ResponseEntity<String> updateClient(@RequestBody ClientVO cvo) throws Exception {
+		logger.debug(" updateClient() 실행 ");
+		
+		bService.updateClient(cvo);
+		
+		 try {
+		        bService.updateClient(cvo);
+		        return new ResponseEntity<>("Client updated successfully", HttpStatus.OK);
+		    } catch (Exception e) {
+		        logger.error("Error updating client", e);
+		        return new ResponseEntity<>("Error updating client", HttpStatus.INTERNAL_SERVER_ERROR);
+		    }
+		
+	}
 	// ------------------------------------------------거래처 관리
 
 	// 창고 관리

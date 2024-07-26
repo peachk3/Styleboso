@@ -24,4 +24,6 @@ public interface BasicInfoDAO {
 
 	List<ClientVO> clientDetailsList(String cli_num) throws Exception;
 
+	void updateClient(ClientVO cvo) throws Exception;
+
 }

@@ -2,12 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../include/header.jsp" %>
     <style>
-        /* 두 번째 모달의 z-index를 첫 번째 모달보다 높게 설정 */
-        .modal.modal-second {
-            z-index: 1051;
-        }
-        .modal-backdrop.modal-backdrop-second {
-            z-index: 1050;
+		/* 두 번째 모달이 첫 번째 모달 오른쪽에 위치하도록 설정 */
+        .modal.right-modal .modal-dialog {
+            position: absolute;
+            right: -500px; /* 첫 번째 모달의 오른쪽에 위치하도록 설정 */
+            top: 50%;
+            transform: translateY(-50%);
         }
     </style>
     <style>
@@ -79,11 +79,14 @@
    </table>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<!-- <div class="modal fade" id="exampleModalToggle" data-coreui-backdrop="static" data-coreui-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"> -->
+<!--     <div class="modal-dialog modal-lg"> -->
+<div class="modal fade" id="exampleModalToggle" data-coreui-backdrop="static" data-coreui-keyboard="false" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> 거래처 상세 보기 </h5>
+<!--                 <h5 class="modal-title" id="staticBackdropLabel"> 거래처 상세 보기 </h5> -->
+                <h5 class="modal-title" id="exampleModalToggleLabel">거래처 상세 보기</h5>
                 <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -103,9 +106,9 @@
                                 <td><label for="cli_cate" class="form-label">거래처 구분</label></td>
                                 <td>
                                     <div>
-                                        <input type="radio" id="cli_cateCu" name="cli_cate" value="CLCU" required>
+                                        <input type="radio" id="cli_cateCu" name="cli_cate" value="CLCU" required disabled>
                                         <label for="cli_cateCu">고객사</label>
-                                        <input type="radio" id="cli_catePt" name="cli_cate" value="CLPT" required>
+                                        <input type="radio" id="cli_catePt" name="cli_cate" value="CLPT" required disabled>
                                         <label for="cli_catePt">협력사</label>
                                     </div>
                                     <div class="invalid-feedback">거래처 구분을 선택하세요</div>
@@ -114,10 +117,6 @@
                            <tr>
                                 <td><label for="validationCustom03" class="form-label">사업자 등록 번호</label></td>
                                 <td><input type="text" class="form-control" id="cli_crn" readonly></td>
-                            </tr>
-                            <tr>
-                                <!-- <td><label for="validationCustom03" class="form-label">거래처 구분</label></td>
-                                <td><input type="text" class="form-control" id="modal-cli_cate" readonly></td> -->
                             </tr>
                             <tr>
                                 <td><label for="validationCustom03" class="form-label">거래처 업종</label></td>
@@ -159,12 +158,13 @@
                             <tr>
                                 <td><label for="validationCustom05" class="form-label">담당자 아이디</label></td>
                                 <td><input type="text" class="form-control" id="validationCustom05" data-coreui-toggle="modal"
-									data-coreui-target="#exampleModal2" name="pic_username" required></td>
+									data-coreui-target="#exampleModalToggle2" name="pic_username" required disabled></td>
+
                             </tr>
                             <tr>
                                 <td><label for="validationCustom06" class="form-label">담당자 이름</label></td>
-                                <td><input type="text" class="form-control" id="validationCustom06" data-coreui-toggle="modal" data-coreui-target="#exampleModal2"
-									required></td>
+                                <td><input type="text" class="form-control" id="validationCustom06" data-coreui-toggle="modal" data-coreui-target="#exampleModalToggle2"
+									required disabled></td>
                             </tr>
                         </tbody>
                     </table>
@@ -172,7 +172,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" id="editButton">수정</button>
-                <button type="button" class="btn btn-success" id="saveButton" style="display: none;">저장</button>
+                <button type="submit" class="btn btn-success" id="saveButton" style="display: none;">저장</button>
                 <button type="button" class="btn btn-success" id="saveCancelButton" style="display: none;">취소</button>
                 <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
             </div>
@@ -181,18 +181,21 @@
 </div>
 
 	<!-- 담당자 선택 모달창 -->
-	<div class="modal fade" id="exampleModal2" tabindex="-1"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+<!-- 	<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
+<!-- 		<div class="modal-dialog"> -->
+	<div class="modal fade" id="exampleModalToggle2" data-coreui-backdrop="static" data-coreui-keyboard="false" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">담당자</h5>
-					<button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
+					<!-- <h5 class="modal-title" id="exampleModalLabel">담당자</h5> -->
+					<h5 class="modal-title" id="exampleModalToggleLabel2">담당자</h5>
+<!-- 					<button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button> -->
 				</div>
 				<div class="modal-body">
 					<table class="table table-hover" id="modal2-table">
 						<thead class="table-light">
 							<tr>
+								<th scope="col"></th>
 								<th scope="col"></th>
 								<th scope="col">담당자 아이디</th>
 								<th scope="col">담당자 명</th>
@@ -204,7 +207,8 @@
 					</table>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+<!-- 					<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button> -->
+				<button class="btn btn-primary" data-coreui-target="#exampleModalToggle" data-coreui-toggle="modal">확인</button>
 				</div>
 			</div>
 		</div>
@@ -296,6 +300,7 @@ $(document).ready(function() {
     // Add click event listener to the cells
     $(".clickable-cell").click(function() {
         var cli_num = $(this).closest("tr").find("td:nth-child(2)").text();
+        currentClientNum = cli_num;
         
         $.ajax({
             url: '/basicInfo/clientDetails',
@@ -310,7 +315,6 @@ $(document).ready(function() {
                     console.log(client);  // 클라이언트 데이터 확인
                 
                 // 각 요소에 값을 설정
-                //$("#modal-tran_num").val(response.top_tran_num);
                 $("#cli_num").val(client.cli_num);
                 $("#cli_name").val(client.cli_name);
                 $("#cli_crn").val(client.cli_crn);
@@ -331,6 +335,16 @@ $(document).ready(function() {
 	                } else if (client.cli_cate === 'CLPT') {
 	                    document.getElementById('cli_catePt').checked = true;
 	                }
+	                
+	             // 모든 입력 필드를 읽기 전용으로 설정
+                    $("#exampleModalToggle input").attr('readonly', true);
+                    $("#exampleModalToggle input[type=radio]").prop('disabled', true);
+                    $("#validationCustom05, #validationCustom06").attr('disabled', true);
+
+                    // 수정 버튼 보이기, 저장 및 취소 버튼 숨기기
+                    $("#editButton").show();
+                    $("#saveButton, #saveCancelButton, #postCodeButton").hide();
+                
 	             	// 원래 값을 저장
                     originalValues = {
                         cli_num: client.cli_num,
@@ -349,7 +363,7 @@ $(document).ready(function() {
                         user_per_name: client.usersList[0].user_per_name
                     };
 	             	
-                	$("#exampleModal1").modal("show");
+                	$("#exampleModalToggle").modal("show");
                 }
             },
             error: function() {
@@ -358,56 +372,147 @@ $(document).ready(function() {
             }
         });
  	 });
-    
- // 담당자 정보 가져오기
-    $('#modal2-table tbody').on('click', 'tr', function() {
-        var targetInput1 = document.getElementById('validationCustom05');
-        var targetInput2 = document.getElementById('validationCustom06');
-        var cliNum1 = $(this).find('td:nth-child(2)').text(); // 두 번째 열(거래처 코드)
-        var cliNum2 = $(this).find('td:nth-child(3)').text(); // 두 번째 열(거래처 코드)
-
-        // Modal에서 입력된 값을 가져와서 다른 input 요소에 설정
-        targetInput1.value = cliNum1;
-        targetInput2.value = cliNum2;
-    
-        // Modal 닫기 (Optional)
-        var modal = document.getElementById('exampleModal2');
-        var modalInstance = coreui.Modal.getInstance(modal);
-        modalInstance.hide();
-    });
  
-    $("#editButton").click(function() {
+ 	// 수정 버튼 
+    $("#editButton").click(function(event) {
     	event.preventDefault();
     	
-    	$("#exampleModal1 input:not(#cli_num,#cli_crn,#sample6_postcode,#sample6_address,#sample6_extraAddress)").removeAttr('readonly');
-       //$("#exampleModal1 input").removeAttr('readonly'); -> 전체 readonly 해제
-        $("#exampleModal1 input[type=radio]").prop('disabled', false);
+    	// 선택된 클라이언트의 입력 필드만 수정 가능하게 변경
+       	//$("#exampleModalToggle input").removeAttr('readonly'); // 전체 readonly 해제
+    	$("#exampleModalToggle input:not(#cli_num,#cli_crn,#sample6_postcode,#sample6_address,#sample6_extraAddress)").removeAttr('readonly');
+        $("#exampleModalToggle input[type=radio]").prop('disabled', false);
+        $("#validationCustom05, #validationCustom06").removeAttr('disabled');
+    	
         $(this).hide();
         $("#postCodeButton").show();
+        $("#saveButton").show();
         $("#postCodeButton").prop("disabled", false);
         $("#saveCancelButton").show();
+        
+        saveOriginalValues(); // 수정 모드로 전환할 때 원래 값 저장
     });
+
+ 	// 담당자 정보 가져오기 (체크로)
+    $('#modal2-table tbody').on('change', 'input[type="checkbox"]', function() {
+        if ($(this).prop('checked')) {
+        
+            // 체크박스가 선택되면, 해당 행의 값을 가져와서 입력 요소에 설정
+            var $row = $(this).closest('tr');
+            var cliNum1 = $row.find('td:nth-child(3)').text();
+            var cliNum2 = $row.find('td:nth-child(4)').text();
+            $('#validationCustom05').val(cliNum1);
+            $('#validationCustom06').val(cliNum2);
+            
+            // 다른 체크박스는 해제
+            $('#modal2-table tbody input[type="checkbox"]').not(this).prop('checked', false);
+        }
+    });
+ 
+    var originalValues = {}; // 입력 필드의 원래 값을 저장할 객체
+
+    // 페이지 로드 시 입력 필드의 원래 값을 저장
+    function saveOriginalValues() {
+        $("#exampleModalToggle input").each(function() {
+            originalValues[this.id] = $(this).val();
+        });
+        $("#exampleModalToggle input[type=radio]").each(function() {
+            if ($(this).is(':checked')) {
+                originalValues[this.name] = $(this).val();
+            }
+        });
+    }
+
+    // 원래 값과 현재 값을 비교
+    function hasChanges() {
+        var changed = false;
+
+        $("#exampleModalToggle input").each(function() {
+            if (originalValues[this.id] !== $(this).val()) {
+                changed = true;
+                return false; // 변경이 발견되면 반복문 종료
+            }
+        });
+
+        $("#exampleModalToggle input[type=radio]").each(function() {
+            if ($(this).is(':checked') && originalValues[this.name] !== $(this).val()) {
+                changed = true;
+                return false; // 변경이 발견되면 반복문 종료
+            }
+        });
+
+        return changed;
+    }
+
+    // 페이지 로드 시 원래 값 저장
+    saveOriginalValues();
 
     $("#saveButton").click(function(event) {
         // 모달 창 닫히는 기본 동작 방지
         event.preventDefault();
+
+        if (!hasChanges()) {
+            alert("수정사항이 없습니다.");
+            return;
+        }
+        
+        const updatedClient = {
+                cli_num: $("#cli_num").val(),
+                cli_name: $("#cli_name").val(),
+                cli_crn: $("#cli_crn").val(),
+                cli_cate: $("input[name='cli_cate']:checked").val(),
+                cli_ind: $("#cli_ind").val(),
+                cli_postCode: $("#sample6_postcode").val(),
+                cli_add1: $("#sample6_address").val(),
+                cli_add2: $("#sample6_detailAddress").val(),
+                cli_add3: $("#sample6_extraAddress").val(),
+                cli_tel: $("#cli_tel").val(),
+                cli_rep: $("#cli_rep").val(),
+                cli_email: $("#cli_email").val(),
+                pic_username: $("#validationCustom05").val(),
+                // user_per_name: $("#validationCustom06").val()
+            };
+        
+        $.ajax({
+        	url: '/basicInfo/updateClient',
+        	beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+             },
+        	type: 'POST',
+        	contentType: 'application/json',
+        	data: JSON.stringify(updatedClient),
+        	success: function(response){
+        		alert(" 수정되었습니다. ");
+        		$("#exampleModalToggle").modal("hide");
+        	},
+        	error: function(textStatus){
+        		console.log(textStatus);
+        	}
+        });
         
         // 모든 입력 필드를 readonly로 설정
-        $("#exampleModal1 input").attr('readonly', 'readonly');
-        $("#exampleModal1 input[type=radio]").prop('disabled', true);
-        
+        $("#exampleModalToggle input").attr('readonly', 'readonly');
+        $("#exampleModalToggle input[type=radio]").prop('disabled', true);
+        $("#validationCustom05, #validationCustom06").attr('disabled', true);
+
         // 저장 버튼 숨기기, 수정 버튼 보이기
         $(this).hide();
         $("#editButton").show();
         $("#postCodeButton").prop("disabled", true);
-        $("#postCodeButton").hide();
+        //$("#postCodeButton").hide();
+        $("#saveCancelButton").hide();
         
+        currentClientNum = null;
     });
     
+    // 저장 취소 버튼
     $("#saveCancelButton").click(function(event) {
         event.preventDefault();
         
-        // 원래 값으로 복원
+        var userConfirmed = confirm("취소하시겠습니까?");
+        
+        if (userConfirmed) {
+       
+       	// 취소 작업 수행 => 원래 값으로 복원
         $("#cli_num").val(originalValues.cli_num);
         $("#cli_name").val(originalValues.cli_name);
         $("#cli_crn").val(originalValues.cli_crn);
@@ -424,12 +529,23 @@ $(document).ready(function() {
         $("#user_per_name").val(originalValues.user_per_name);
         
         // 입력 필드 및 라디오 버튼 readonly 및 disabled 상태로 복원
-        $("#exampleModal1 input:not(#cli_num,#cli_crn,#sample6_postcode,#sample6_address,#sample6_extraAddress)").attr('readonly', 'readonly');
-        $("#exampleModal1 input[type=radio]").prop('disabled', true);
+        $("#exampleModalToggle input:not(#cli_num,#cli_crn,#sample6_postcode,#sample6_address,#sample6_extraAddress)").attr('readonly', 'readonly');
+        $("#exampleModalToggle input[type=radio]").prop('disabled', true);
+        $("#validationCustom05, #validationCustom06").attr('disabled', true);
         
         $(this).hide();
         $("#saveButton").hide();
+        $("#postCodeButton").prop("disabled", true);
         $("#editButton").show();
+        
+            alert("변경 사항이 취소되었습니다.");
+            // 필요한 경우 폼 초기화 또는 다른 취소 작업 수행
+        } else {
+            // 아무 작업도 하지 않음 (원래의 수정상태로 유지)
+            alert("취소 작업이 중단되었습니다.");
+        }
+        alert(" 취소하시겠습니까? ");
+        
     });
     
     getManagerList();
@@ -448,7 +564,7 @@ $(document).ready(function() {
 	            console.log(data);
 	            data.forEach(function(item, idx){
 	               console.log(idx);
-	               var row = "<tr><th scope='row'>" + (parseInt(idx)+1) + "</th><td>" + item.username + "</td><td>" + item.user_per_name + "</td></tr>"
+	               var row = "<tr><th scope='row'><input type='checkbox' onclick='checkOneOnly(this)'></th><td>" + (parseInt(idx)+1) + "</td><td>" + item.username + "</td><td>" + item.user_per_name + "</td></tr>"
 	                $('#modal2-table tbody').append(row);
 	            });
 	            

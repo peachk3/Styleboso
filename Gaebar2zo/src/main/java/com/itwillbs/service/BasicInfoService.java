@@ -28,4 +28,7 @@ public interface BasicInfoService {
 	// 거래처 리스트 상세 보기
 	List<ClientVO> clientDetailsList(String cli_num) throws Exception;
 
+	// 거래처 수정
+	void updateClient(ClientVO cvo) throws Exception;
+
 }

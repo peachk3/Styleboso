@@ -92,4 +92,13 @@
 		join users u on u.username = c.pic_username
 		where c.cli_num = #{cli_num}
    	</select>
+   	
+   	<update id="updateClient">
+		update client
+		set cli_name =#{cli_name}, cli_cate =#{cli_cate}, cli_ind =#{cli_ind}, cli_postCode =#{cli_postCode},
+			cli_add1 =#{cli_add1}, cli_add2 =#{cli_add2}, cli_add3=#{cli_add3}, cli_tel=#{cli_tel}, cli_rep=#{cli_rep},
+			cli_email=#{cli_email}, pic_username=#{pic_username}
+		where cli_num = #{cli_num}
+   	</update>
+   	
 </mapper>

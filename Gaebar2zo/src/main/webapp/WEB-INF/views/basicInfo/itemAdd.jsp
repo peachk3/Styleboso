@@ -128,14 +128,18 @@
 			</div>
 		</div>
 
-	<div class="col-12">
-			<button class="btn btn-primary" type="submit" id="submitFormBtn">Submit form</button>
-		</div>
+	<div class="col-12 text-right">
+			<button class="btn btn-primary" type="submit" id="submitFormBtn">등록</button>
+	</div>
 
 <style>
 #money {
-	
 	padding-top: 45px;
+}
+.text-right {
+    text-align: right;
+    padding-right: 150px;
+    padding-bottom: 30px;
 }
 </style>
 							
@@ -154,7 +158,6 @@ document.addEventListener('DOMContentLoaded', function() {
        const subProductTypeSelect = document.getElementById('item_cate_code');
        const itemPriceInput = document.getElementById('item_purchase_price');
        const itemPriceInput2 = document.getElementById('item_sale_price');
-
 
        const subCategories = {
            'IT': [
@@ -234,7 +237,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const formData = new FormData(form);
                 const data = Object.fromEntries(formData.entries());
                 
-                
                 $.ajax({
                     url: '/basicInfo/itemInsert',
                     beforeSend: function(xhr) {
@@ -242,7 +244,6 @@ document.addEventListener('DOMContentLoaded', function() {
                      },
                     type: 'POST',
                     data:$("#fm1").serialize(),
-
                     success: function(result) {
                             alert('등록되었습니다');
                             
@@ -262,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
        });
 
       // 제품 유형 선택 확인
-         if (productTypeSelect.value === "0") {
+         if (productTypeSelect.value === "0" && subProductTypeSelect.value !== "0") {
              productTypeSelect.setCustomValidity("제품 유형을 선택하세요");
          } else {
              productTypeSelect.setCustomValidity("");

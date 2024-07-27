@@ -31,9 +31,14 @@ public interface BasicInfoService {
 	// 거래처 수정
 	void updateClient(ClientVO cvo) throws Exception;
 
+	// 거래처 삭제
 	void deleteClients(List<String> cliNums) throws Exception;
 
+	// 품목 추가
 	void insertItem(ItemVO itemvo) throws Exception;
+
+	// 품목 삭제
+	void deleteItems(List<String> itemNums) throws Exception;
 
 
 }

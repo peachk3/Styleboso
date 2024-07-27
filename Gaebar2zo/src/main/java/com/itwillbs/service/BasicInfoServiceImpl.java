@@ -88,6 +88,13 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		
 		bidao.itemInsert(itemvo);
 	}
+
+	@Override
+	public void deleteItems(List<String> itemNums) throws Exception {
+		logger.debug(" 품목 삭제 ");
+		
+		bidao.itemDelete(itemNums);
+	}
 	
 	
 	

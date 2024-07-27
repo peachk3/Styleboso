@@ -40,5 +40,8 @@ public interface BasicInfoService {
 	// 품목 삭제
 	void deleteItems(List<String> itemNums) throws Exception;
 
+	// 품목 상세보기 
+	List<ItemVO> itemDetailsList(String item_num) throws Exception;
+
 
 }

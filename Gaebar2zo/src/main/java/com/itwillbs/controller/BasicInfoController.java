@@ -89,6 +89,22 @@ public class BasicInfoController {
         }
 		
 	}
+	
+	// 품목 상세보기
+	@ResponseBody
+	@RequestMapping(value = "/itemDetails", method = RequestMethod.GET)
+	public ResponseEntity<List<ItemVO>> itemDetailsList(@RequestParam("item_num") String item_num, Model model) throws Exception {
+		logger.debug(" itemDetailsList() 실행 ");
+		
+		List<ItemVO> itemDetailsList = bService.itemDetailsList(item_num);
+		
+		model.addAttribute("itemDetailsList",itemDetailsList);
+		
+		logger.debug(" @@@ 리스트 : " + itemDetailsList);
+		logger.debug("@@ item_num : " + item_num);
+		
+		return new ResponseEntity<>(itemDetailsList, HttpStatus.OK);
+	}
 
 	//http://localhost:8088/Styleboso/basicInfo/clientList
 	// 거래처 관리------------------------------------------------
@@ -116,7 +132,6 @@ public class BasicInfoController {
 
 		bService.cliInsert(vo);
 	}
-	
 	
 	// 사업자 번호 중복 확인
 	@RequestMapping(value="/check-crn", method = RequestMethod.GET)

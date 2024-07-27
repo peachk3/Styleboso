@@ -127,8 +127,14 @@
    		<foreach collection="list" item="item_num" open="(" separator="," close=")">
    			#{item_num}
    		</foreach>
-   	
    	</delete>
    	
+   	<select id="itemDetailsList" parameterType="String" resultMap="itemMap">
+   		select i.item_num, i.item_cli_code, i.item_name, i.item_purchase_price, i.item_sale_price, c.group_name, i.item_mat, i.comm
+		from item i
+		join item_code ic on i.item_cate_code = ic.s_cate_item_code
+		join code c on c.group_code = ic.m_cate_item_code 
+		where item_num =#{item_num}
+   	</select>
    	
 </mapper>

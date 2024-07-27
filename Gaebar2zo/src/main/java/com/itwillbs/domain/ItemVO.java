@@ -11,6 +11,8 @@ public class ItemVO {
 	private	String	item_cate_code;
 	private	String	item_cli_code;
 	private	String	item_name;
+	private String  item_purchase_price;
+	private String  item_sale_price;
 	private	String	item_mat;
 	private	String	comm;
 	

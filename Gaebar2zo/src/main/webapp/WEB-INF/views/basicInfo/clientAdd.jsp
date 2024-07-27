@@ -15,10 +15,10 @@
 							<div>
 								<h5>거래처 등록</h5>
 							</div>
-							<div class="col-md-6">
-								<label for="cli_num" class="form-label"> 거래처 코드 </label> 
-								<input type="text" class="form-control" id="cli_num" readonly>
-							</div>
+<!-- 							<div class="col-md-6"> -->
+<!-- 								<label for="cli_num" class="form-label"> 거래처 코드 </label>  -->
+<!-- 								<input type="text" class="form-control" id="cli_num" readonly> -->
+<!-- 							</div> -->
 							<div class="col-md-3">
 								<label for="cli_name" class="form-label"> 거래처명 </label> 
 								<input type="text" class="form-control" id="cli_name" name="cli_name" required>
@@ -108,8 +108,8 @@
 		<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 	</div>
 
-	<div class="col-12">
-		<button class="btn btn-primary" type="submit" id="submitFormBtn">Submit form</button>
+	<div class="col-12 text-right">
+		<button class="btn btn-primary" type="submit" id="submitFormBtn">등록</button>
 	</div>
 	
 	<!-- 담당자 선택 모달창 -->
@@ -142,7 +142,13 @@
 			</div>
 		</div>
 	</div>
-
+<style>
+.text-right {
+    text-align: right;
+    padding-right: 150px;
+    padding-bottom: 30px;
+}
+</style>
 
 	<!-- <script src="path/to/bootstrap.bundle.min.js"></script> -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

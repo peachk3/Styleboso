@@ -44,13 +44,50 @@ public class BasicInfoController {
 		List<ItemVO> itemList = bService.itemListAll();
 		
 		model.addAttribute("itemList", itemList);
+		
+		logger.debug("@@@@@@@ itemList : " + itemList);
 	}
 
-	// 품목 추가
+	// 품목 추가 페이지
 	@RequestMapping(value="/itemAdd",method=RequestMethod.GET)
 	public void itemAdd_GET() throws Exception{
 		logger.debug(" itemAdd_GET() 실행 ");
 
+	}
+	
+	// 품목 추가 - 등록
+	@ResponseBody
+	@RequestMapping(value = "/itemInsert", method = RequestMethod.POST)
+	public void itemInsert_POST(ItemVO itemvo) throws Exception {
+		logger.debug(" itemInsert_POST() 실행 ");
+		
+		bService.insertItem(itemvo);
+		logger.debug("itemvo : " + itemvo);
+	}
+	
+	// 품목 삭제
+	@ResponseBody
+	@RequestMapping(value = "/deleteItem", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> deleteItem_POST(@RequestBody Map<String, Object> payload) throws Exception {
+		logger.debug(" deleteItem_POST() 실행 ");
+		
+		@SuppressWarnings("unchecked")
+        List<String> itemNums = (List<String>) payload.get("item_nums");
+
+        if (itemNums == null || itemNums.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                 .body(Map.of("status", "error", "message", "No clients selected"));
+        }
+        logger.debug("@@@@cli_num " + itemNums);
+
+        try {
+            bService.deleteItems(itemNums);
+            return ResponseEntity.ok(Map.of("status", "success"));
+        } catch (Exception e) {
+            logger.error(" @@@@@@@@Error deleting clients", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("status", "error", "message", e.getMessage()));
+        }
+		
 	}
 
 	//http://localhost:8088/Styleboso/basicInfo/clientList

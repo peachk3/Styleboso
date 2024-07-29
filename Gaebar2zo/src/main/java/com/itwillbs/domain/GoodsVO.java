@@ -13,5 +13,6 @@ public class GoodsVO {
 	private	String	goods_size;
 	
 	private List<ItemVO> itemList;
+	private List<InventoryVO> invenList;
 	
 }

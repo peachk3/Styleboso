@@ -163,7 +163,7 @@
 	<!-- 재고 리스트 호출 -->
 	<select id="getStockList" resultMap="invenMap">
 	    <![CDATA[
-	    SELECT y.inven_num, i.item_name, w.wh_name, w.wh_zone, w.wh_rack, SUM(inven_qty) as inven_qty
+	    SELECT y.inven_num, i.item_name, g.goods_size, g.goods_color, w.wh_name, w.wh_zone, w.wh_rack, SUM(inven_qty) as inven_qty
 	    FROM inventory y
 	    JOIN warehouse w ON y.wh_num = w.wh_num
 	    JOIN goods g ON y.goods_num = g.goods_num
@@ -181,18 +181,22 @@
 	                <when test="searchType == 'warehouse'">
 	                    AND w.wh_name LIKE CONCAT('%', #{keyword}, '%')
 	                </when>
+	                <when test="searchType == 'color'">
+	                    AND g.goods_color LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
 	                <otherwise>
 	                    AND (y.inven_num LIKE CONCAT('%', #{keyword}, '%')
 	                    OR i.item_name LIKE CONCAT('%', #{keyword}, '%')
-	                    OR w.wh_name LIKE CONCAT('%', #{keyword}, '%'))
+	                    OR w.wh_name LIKE CONCAT('%', #{keyword}, '%')
+	                    OR g.goods_color LIKE CONCAT('%', #{keyword}, '%'))
 	                </otherwise>
 	            </choose>
 	        </if>
 	    </where>
 	    <![CDATA[
-	    GROUP BY y.inven_num, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
+	    GROUP BY y.inven_num, i.item_name, g.goods_size, g.goods_color, w.wh_name, w.wh_zone, w.wh_rack
 	    HAVING COUNT(y.inven_num) > 0
-	    ORDER BY y.inven_num, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
+	    ORDER BY y.inven_num, i.item_name, g.goods_size, g.goods_color, w.wh_name, w.wh_zone, w.wh_rack
 	    LIMIT #{pageStart}, #{pageSize}
 	    ]]>
 	</select>

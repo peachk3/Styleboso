@@ -38,4 +38,10 @@ public interface BasicInfoDAO {
 	// 품목 삭제
 	void itemDelete(List<String> itemNums) throws Exception;
 
+	// 품목 상세보기 
+	List<ItemVO> itemDetailsList(String item_num) throws Exception;
+
+	// 품목 수정
+	int updateItem(ItemVO ivo) throws Exception;
+
 }

@@ -324,6 +324,7 @@ $(document).ready(function() {
                 cli_nums.push(cli_num);
             }
         });
+        
      	// 중복 제거
         const uniqueCliNums = [...new Set(cli_nums)];
         
@@ -358,7 +359,7 @@ $(document).ready(function() {
     });
 	
 	
-    // Add click event listener to the cells
+    // 상세보기
     $(".clickable-cell").click(function() {
         var cli_num = $(this).closest("tr").find("td:nth-child(2)").text();
         currentClientNum = cli_num;

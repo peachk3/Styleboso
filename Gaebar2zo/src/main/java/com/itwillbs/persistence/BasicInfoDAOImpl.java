@@ -105,6 +105,20 @@ public class BasicInfoDAOImpl implements BasicInfoDAO{
 		sqlSession.delete(NAMESPACE + "deleteItem", itemNums);
 	}
 
+	@Override
+	public List<ItemVO> itemDetailsList(String item_num) throws Exception {
+		logger.debug(" itemDetailsList() 실행 ");
+		
+		return sqlSession.selectList(NAMESPACE + "itemDetailsList", item_num);
+	}
+
+	@Override
+	public int updateItem(ItemVO ivo) throws Exception {
+		logger.debug(" updateItem() 실행 ");
+		
+		return sqlSession.update(NAMESPACE + "updateItem", ivo);
+	}
+
 
 
 }

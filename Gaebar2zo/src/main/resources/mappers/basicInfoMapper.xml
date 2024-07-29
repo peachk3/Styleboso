@@ -74,9 +74,9 @@
 
 	<!-- item 등록 -->
 	<insert id="insertItem">
-		insert into item (item_num, item_cate_code, item_cli_code, item_name, item_purchase_price, item_sale_price)
+		insert into item (item_num, item_cate_code, item_cli_code, item_name, item_purchase_price, item_sale_price, item_mat, comm)
 			SELECT CONCAT(#{item_cate_code}, LPAD(IFNULL(MAX(SUBSTRING(item_num, LENGTH(#{item_cate_code}) + 1)), 0) + 1, 3, '0')), #{item_cate_code},
-				#{item_cli_code}, #{item_name}, #{item_purchase_price}, #{item_sale_price}
+				#{item_cli_code}, #{item_name}, #{item_purchase_price}, #{item_sale_price}, #{item_mat}, #{comm}
 		FROM item
 		where item_cate_code =#{item_cate_code};
 	</insert>
@@ -127,8 +127,21 @@
    		<foreach collection="list" item="item_num" open="(" separator="," close=")">
    			#{item_num}
    		</foreach>
-   	
    	</delete>
+   	
+   	<select id="itemDetailsList" parameterType="String" resultMap="itemMap">
+   		select i.item_num, ic.s_cate_item_name, ic.m_cate_item_code, i.item_cate_code, i.item_cli_code, i.item_name, i.item_purchase_price, i.item_sale_price, c.group_name, i.item_mat, i.comm
+		from item i
+		join item_code ic on i.item_cate_code = ic.s_cate_item_code
+		join code c on c.group_code = ic.m_cate_item_code 
+		where item_num =#{item_num}
+   	</select>
+   	
+   	<update id="updateItem">
+   		update item
+   		set item_num=#{item_num}, item_cli_code=#{item_cli_code}, item_name=#{item_name}, item_purchase_price=#{item_purchase_price}, item_sale_price=#{item_sale_price}, item_mat=#{item_mat}, comm=#{comm}
+   		where item_num =#{item_num}
+   	</update>
    	
    	
 </mapper>

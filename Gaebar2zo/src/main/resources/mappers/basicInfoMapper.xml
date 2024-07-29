@@ -139,7 +139,7 @@
    	
    	<update id="updateItem">
    		update item
-   		set item_num=#{item_num},item_cate_code=#{item_cate_code}, item_cli_code=#{item_cli_code}, item_name=#{item_name}, item_purchase_price=#{item_purchase_price}, item_sale_price=#{item_sale_price}, item_mat=#{item_mat}, comm=#{comm}
+   		set item_num=#{item_num}, item_cli_code=#{item_cli_code}, item_name=#{item_name}, item_purchase_price=#{item_purchase_price}, item_sale_price=#{item_sale_price}, item_mat=#{item_mat}, comm=#{comm}
    		where item_num =#{item_num}
    	</update>
    	

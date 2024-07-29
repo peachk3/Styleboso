@@ -86,10 +86,10 @@
                             </tr>
                            	<tr>
                                 <td><label for="validationCustom03" class="form-label">제품 유형 </label></td>
-								<td><input type="text" class="form-control" id="item_cate_code" name="item_cate_code" readonly></td>
+								<td><input type="text" class="form-control" id="group_name" name="group_name" readonly></td>
                             </tr>
                            	<tr>
-                                <td><label for="validationCustom03" class="form-label">제품명 </label></td>
+                                <td><label for="validationCustom03" class="form-label">제품 그룹명 </label></td>
 								<td><input type="text" class="form-control" id="s_cate_item_name" name="s_cate_item_name" readonly></td>
                             </tr>
 <!--                            	<tr> -->
@@ -256,13 +256,16 @@ $(document).ready(function(){
 	            success: function(response) {
 	                console.log(response);  // 응답 데이터 확인
 	                
-	                if (response.length > 0) {
+	                if (response) {
 	                    var item = response[0];
-	                    console.log(item);  // 클라이언트 데이터 확인
+	                    var itemName = response[0].itemCodeList[0];
+	                    console.log(name);
+	                    console.log(item);  
 	                
 	                // 각 요소에 값을 설정
 	                $("#item_num").val(item.item_num);
 	                $("#item_name").val(item.item_name);
+	                $("#s_cate_item_name").val(itemName.s_cate_item_name);
 	                $("#item_cli_code").val(item.item_cli_code);
 	                $("#group_name").val(item.group_name);
 	                $("#item_cate_code").val(item.item_cate_code);
@@ -283,6 +286,7 @@ $(document).ready(function(){
 	                    originalValues = {
 	                        item_num: item.item_num,
 	                        item_name: item.item_name,
+	                        s_cate_item_name : item.s_cate_item_name,
 	                        item_cli_code: item.item_cli_code,
 	                        group_name : item.group_name,
 	                        item_cate_code: item.item_cate_code,
@@ -291,7 +295,6 @@ $(document).ready(function(){
 	                        item_mate : item.item_mate,
 	                        comm : item.comm
 	                    };
-		                //alert("s_cate_item_code : " + $("#s_cate_item_code").val());
 	                 
 	                	$("#exampleModalToggle").modal("show");
 	                }
@@ -310,7 +313,7 @@ $(document).ready(function(){
     	
     	// 선택된 클라이언트의 입력 필드만 수정 가능하게 변경
        	//$("#exampleModalToggle input").removeAttr('readonly'); // 전체 readonly 해제
-    	$("#exampleModalToggle input:not(#item_num, #group_name)").removeAttr('readonly');
+    	$("#exampleModalToggle input:not(#item_num, #group_name, #s_cate_item_name)").removeAttr('readonly');
     	$("#item_cli_code").removeAttr('disabled');
        	
         $(this).hide();
@@ -319,7 +322,6 @@ $(document).ready(function(){
         
         saveOriginalValues(); // 수정 모드로 전환할 때 원래 값 저장
     });
-	
 	
 	    let originalValues = {}; // 입력 필드의 원래 값을 저장할 객체
 
@@ -368,7 +370,7 @@ $(document).ready(function(){
 	        
 	        const updatedItem = {
 	        		item_num: $("#item_num").val(),
-                    item_cate_code: $("#item_cate_code").val(),
+                    //item_cate_code: $("#item_cate_code").val(),
                     item_cli_code: $("#item_cli_code").val(),
                     item_name: $("#item_name").val(),
                     item_purchase_price: $("#item_purchase_price").val(),
@@ -417,7 +419,7 @@ $(document).ready(function(){
 	       	// 취소 작업 수행 => 원래 값으로 복원
 	        $("#item_num").val(originalValues.item_num);
 	        $("#item_cli_code").val(originalValues.item_cli_code);
-	        $("#item_cate_code").val(originalValues.item_cate_code);
+	        //$("#item_cate_code").val(originalValues.item_cate_code);
 	        $("#item_name").val(originalValues.item_name);
 	        $("#item_purchase_price").val(originalValues.item_purchase_price);
 	        $("#item_sale_price").val(originalValues.item_sale_price);
@@ -425,7 +427,7 @@ $(document).ready(function(){
 	        $("#comm").val(originalValues.comm);
 	        
 	        // 입력 필드 및 라디오 버튼 readonly 및 disabled 상태로 복원
-	        $("#exampleModalToggle input:not(#item_num,#item_cli_code)").attr('readonly', 'readonly');
+	        $("#exampleModalToggle input:not(#item_num,#item_cli_code,#s_cate_item_name)").attr('readonly', 'readonly');
 	        $("#exampleModalToggle select").prop('disabled', true);
 	        
 	        $(this).hide();
@@ -483,7 +485,6 @@ $(document).ready(function(){
 	        
 	    	}
 	    });
-		
 
 });
 

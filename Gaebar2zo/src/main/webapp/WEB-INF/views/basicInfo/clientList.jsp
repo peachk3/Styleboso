@@ -359,7 +359,7 @@ $(document).ready(function() {
     });
 	
 	
-    // Add click event listener to the cells
+    // 상세보기
     $(".clickable-cell").click(function() {
         var cli_num = $(this).closest("tr").find("td:nth-child(2)").text();
         currentClientNum = cli_num;

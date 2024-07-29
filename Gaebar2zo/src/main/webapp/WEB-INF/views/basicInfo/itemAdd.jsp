@@ -88,7 +88,7 @@
 <!-- 							</div> -->
 							<div class="col-md-6">
 								<label for="item_comm" class="form-label"> 비고 </label> 
-								<input type="text" class="form-control" id="item_comm">
+								<input type="text" class="form-control" id="comm" name="comm">
 							</div>
 					</form>
 				</div>

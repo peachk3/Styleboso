@@ -102,6 +102,13 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		
 		return bidao.itemDetailsList(item_num);
 	}
+
+	@Override
+	public int updateItem(ItemVO ivo) throws Exception {
+		logger.debug(" 품목 수정 ");
+		
+		return bidao.updateItem(ivo);
+	}
 	
 	
 	

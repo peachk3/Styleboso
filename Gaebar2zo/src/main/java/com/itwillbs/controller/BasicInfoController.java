@@ -105,6 +105,17 @@ public class BasicInfoController {
 		
 		return new ResponseEntity<>(itemDetailsList, HttpStatus.OK);
 	}
+	
+	// 품목 수정
+	@ResponseBody
+	@RequestMapping(value = "/updateItem", method = RequestMethod.POST)
+	public ResponseEntity<Integer> updateItem(@RequestBody ItemVO ivo) throws Exception {
+		logger.debug(" updateItem() 실행 ");
+		
+		int result = bService.updateItem(ivo);
+		
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
 
 	//http://localhost:8088/Styleboso/basicInfo/clientList
 	// 거래처 관리------------------------------------------------

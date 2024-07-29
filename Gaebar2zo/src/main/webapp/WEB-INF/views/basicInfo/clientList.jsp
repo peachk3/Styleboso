@@ -324,6 +324,7 @@ $(document).ready(function() {
                 cli_nums.push(cli_num);
             }
         });
+        
      	// 중복 제거
         const uniqueCliNums = [...new Set(cli_nums)];
         

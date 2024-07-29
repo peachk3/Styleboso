@@ -112,6 +112,13 @@ public class BasicInfoDAOImpl implements BasicInfoDAO{
 		return sqlSession.selectList(NAMESPACE + "itemDetailsList", item_num);
 	}
 
+	@Override
+	public int updateItem(ItemVO ivo) throws Exception {
+		logger.debug(" updateItem() 실행 ");
+		
+		return sqlSession.update(NAMESPACE + "updateItem", ivo);
+	}
+
 
 
 }

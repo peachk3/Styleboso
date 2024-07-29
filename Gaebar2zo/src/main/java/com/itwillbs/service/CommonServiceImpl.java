@@ -20,7 +20,7 @@ public class CommonServiceImpl implements CommonService{
 
 	@Inject
 	private CommonDAO cdao;
-
+	
 	@Override
 	public List<ClientVO> ClientList() throws Exception {
 		logger.debug("거래처 리스트 조회");
@@ -29,8 +29,16 @@ public class CommonServiceImpl implements CommonService{
 	}
 
 	@Override
-	public List<UsersVO> ManagerList() throws Exception {
+	public List<ClientVO> ClientList(ClientVO cvo) throws Exception {
 		logger.debug("거래처 리스트 조회");
+		logger.info("cvo : "+ cvo);
+		
+		return cdao.ClientList(cvo);
+	}
+
+	@Override
+	public List<UsersVO> ManagerList() throws Exception {
+		logger.debug("담당자 리스트 조회");
 		
 		return cdao.ManagerList();
 	}

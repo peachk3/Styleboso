@@ -31,6 +31,13 @@ public class CommonDAOImpl implements CommonDAO{
 	}
 	
 	@Override
+	public List<ClientVO> ClientList(ClientVO cvo) throws Exception {
+		logger.debug("DAO : ClientList(ClientVO cvo) 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "clientList_cate", cvo);
+	}
+	
+	@Override
 	public List<UsersVO> ManagerList() throws Exception {
 		logger.debug("DAO : ManagerList() 호출");
 		

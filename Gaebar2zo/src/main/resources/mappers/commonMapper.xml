@@ -29,13 +29,17 @@
 		SELECT cli_num, cli_name FROM client
 	</select>
 	
+	<select id="clientList_cate" resultType="ClientVO">
+		SELECT cli_num, cli_name FROM client where cli_cate in (#{cli_cate})
+	</select>
+	
 	<!-- 담당자 리스트 조회 -->
 	<select id="managerList" resultType="UsersVO">
 		select username, user_per_name
 		from users
 		where username in (select username from authorities where authority = "ROLE_MANAGER")
 	</select>
-
+	
 	<!-- 제품 리스트 조회 -->
 	<select id="goodsList" resultMap="goodsMap">
 		select goods_num, item_name, goods_size, goods_color

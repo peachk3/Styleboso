@@ -52,6 +52,8 @@ public class SalesController {
 	@RequestMapping(value="/salesOrderAdd",method=RequestMethod.POST)
 	@ResponseBody
 	public void salesOrderAdd_POST(@RequestBody Map<String, String> requestData) throws Exception {
+		logger.debug(" salesOrderAdd_POST() 실행 ");
+		
 	    ObjectMapper mapper = new ObjectMapper();
 	    
 	    TransactionVO tvo = mapper.readValue(requestData.get("tvo"), TransactionVO.class);
@@ -75,9 +77,29 @@ public class SalesController {
 
 	// 발주 추가
 	@RequestMapping(value="/purchaseOrderAdd",method=RequestMethod.GET)
-	public void puchaseOrder_GET() throws Exception{
+	public void purchaseOrderAdd_GET() throws Exception{
 		logger.debug(" puchaseOrderAdd_GET() 실행 ");
 
+	}
+	
+	// 발주 추가
+	@RequestMapping(value="/purchaseOrderAdd",method=RequestMethod.POST)
+	@ResponseBody
+	public void purchaseOrderAdd_POST(@RequestBody Map<String, String> requestData) throws Exception {
+		logger.debug(" purchaseOrderAdd_POST() 실행 ");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		TransactionVO tvo = mapper.readValue(requestData.get("tvo"), TransactionVO.class);
+		List<TransactionGoodsVO> tgvo = mapper.readValue(requestData.get("tgvo"), 
+				new TypeReference<List<TransactionGoodsVO>>(){});
+		
+		tvo.setTgvo(tgvo);
+		
+		logger.debug("tvo : " + tvo);
+		logger.debug("tgvo : " + tgvo);
+		
+		sService.PurchaseOrderAdd(tvo);
 	}
 
 	// 출하 관리

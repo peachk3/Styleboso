@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,7 +34,7 @@ public class CommonController {
 	@ResponseBody
 	@RequestMapping(value="/clientList",method=RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public List<ClientVO> clientList_GET(Model model) throws Exception{
+	public List<ClientVO> clientList_GET() throws Exception{
 		logger.debug(" clientList_GET() 실행 ");
 		
 		List<ClientVO> cList = cService.ClientList();
@@ -41,14 +42,25 @@ public class CommonController {
 		logger.debug("cList : "+ cList);
 		
 		return cList;
-
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/clientList2",method=RequestMethod.GET)      
+	public List<ClientVO> clientList_GET(ClientVO vo) throws Exception{
+		logger.debug(" clientList_GET(ClientVO cvo) 실행 ");
+		
+		List<ClientVO> cList = cService.ClientList(vo);
+		logger.debug("size : "+ cList.size());
+		logger.debug("cList : "+ cList);
+		
+		return cList;
 	}
 
 	// 담당자 리스트 조회
 	@ResponseBody
 	@RequestMapping(value="/managerList",method=RequestMethod.GET,
 	produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public List<UsersVO> managerList_GET(Model model) throws Exception{
+	public List<UsersVO> managerList_GET() throws Exception{
 		logger.debug(" managerList_GET() 실행 ");
 		
 		List<UsersVO> mList = cService.ManagerList();
@@ -63,7 +75,7 @@ public class CommonController {
 	@ResponseBody
 	@RequestMapping(value="/goodsList",method=RequestMethod.GET,
 	produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public List<GoodsVO> goodsList_GET(Model model) throws Exception{
+	public List<GoodsVO> goodsList_GET() throws Exception{
 		logger.debug(" goodsList_GET() 실행 ");
 		
 		List<GoodsVO> gList = cService.GoodsList();

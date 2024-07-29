@@ -7,6 +7,7 @@ import com.itwillbs.domain.ItemCodeVO;
 import com.itwillbs.domain.UsersVO;
 
 public interface SystemDAO {
+	
 	//이메일 중복체크
 	int emailCheck(String user_email)  throws Exception;
 	
@@ -19,8 +20,10 @@ public interface SystemDAO {
 
 	// 그룹 코드에 따라 품목 코드 정보를 출력
 	List<ItemCodeVO> itemCodeListAll(String group_code) throws Exception;
-	
 	 //=====================================================
+	
+	//공통 품목코드 수정(update) 
+	void updateItemCode(ItemCodeVO icVo) throws Exception;
 
 	 
 

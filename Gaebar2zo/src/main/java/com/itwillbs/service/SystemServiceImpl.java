@@ -59,6 +59,18 @@ public class SystemServiceImpl implements SystemService{
 		return sdao.itemCodeListAll(group_code);
 	}
 
+	//공통 품목 코드 수정(update)
+
+	@Override
+	public void updateItemCode(ItemCodeVO icVo) throws Exception {
+		logger.debug("공통 품목코드 수정 ");
+		
+		sdao.updateItemCode(icVo);
+		
+	}
+
+	
+	
 	  
 }
 	

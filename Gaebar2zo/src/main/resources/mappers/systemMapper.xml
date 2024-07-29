@@ -31,30 +31,18 @@
 	select * from code
 </select>
 
+<!--  공통코드 전체 리스트에서 품목공통 코드 리스트 -->
 <select id="itemCodeListAll" resultType="ItemCodeVO">
 	select * from item_code 
 	where m_cate_item_code = #{group_code}
 </select>
 
-<!-- 그룹(공통코드 대/소) 전체리스트 출력  -->
-<!-- <select id="itemCodeListAll" resultMap="itemCGMap">
-	SELECT ic.s_cate_item_code, ic.s_cate_item_name 
-    FROM item_code ic 
-    JOIN code c ON ic.m_cate_item_code = c.group_code
-    WHERE c.group_code = #{group_code}
-</select> -->
-
-
-<!-- (그룹->품목코드) 전체리스트 출력  -->
-<!-- <select id="itemCGroupListAll"  resultMap="itemCGMap">
-	SELECT ic.s_cate_item_code, ic.s_cate_item_name 
-    FROM item_code ic 
-    JOIN code c ON ic.m_cate_item_code = c.group_code
-    WHERE c.group_code = #{group_code}
-</select> -->
-
-
-
+<!-- 품목공통코드 리스트 (수정/업데이트)  -->
+<update id="updateItemCode">
+	update item_code
+	set  s_cate_item_name=#{s_cate_item_name}
+	where s_cate_item_code=#{s_cate_item_code};
+</update>
 
 
 

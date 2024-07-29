@@ -22,7 +22,13 @@ public interface SystemService {
 	
 	// 그룹 코드에 따라 품목 정보를 조회하는 로직
 	List<ItemCodeVO> itemCodeListAll(String group_code) throws Exception;
+	//================================================
+	
+	//공통 품목 코드 수정 
+	void updateItemCode(ItemCodeVO icVo) throws Exception;
 
+
+	
 
 
 

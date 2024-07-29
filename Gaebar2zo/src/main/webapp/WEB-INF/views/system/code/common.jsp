@@ -17,7 +17,7 @@
             <tr>
                 <th scope="col">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
+                        <input class="form-check-input" type="checkbox" value="" id="checkAll" onclick="checkAll(this)">
                     </div>
                 </th>
                 <th scope="col">그룹코드</th>
@@ -29,7 +29,7 @@
                 <tr>
                     <td>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                            <input class="form-check-input" type="checkbox" value="" id="checkAll">
                         </div>
                     </td>
                     <td>
@@ -54,6 +54,15 @@
         function openFormModal() {
             // 등록 버튼 클릭 시 모달 창을 여는 로직을 여기에 작성하세요.
         }
+        function checkAll(selectAll)  {
+        	  const checkboxes 
+        	     = document.querySelectorAll('input[type="checkbox"]');
+        	  
+        	  checkboxes.forEach((checkbox) => {
+        	    checkbox.checked = selectAll.checked
+        	  })
+        	}
+        
     </script>
 
     <jsp:include page="../../include/footer.jsp" />

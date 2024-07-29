@@ -44,4 +44,7 @@ public interface BasicInfoDAO {
 	// 품목 수정
 	int updateItem(ItemVO ivo) throws Exception;
 
+	// 창고 등록
+	public void warehouseInsert(WarehouseCodeVO wcvo) throws Exception;
+
 }

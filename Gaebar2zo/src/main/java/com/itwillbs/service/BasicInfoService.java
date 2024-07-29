@@ -46,5 +46,8 @@ public interface BasicInfoService {
 	// 품목 수정
 	int updateItem(ItemVO ivo) throws Exception;
 
+	// 창고 등록
+	public void insertWarehouse(WarehouseCodeVO wcvo) throws Exception;
+
 
 }

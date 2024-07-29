@@ -119,6 +119,13 @@ public class BasicInfoDAOImpl implements BasicInfoDAO{
 		return sqlSession.update(NAMESPACE + "updateItem", ivo);
 	}
 
+	@Override
+	public void warehouseInsert(WarehouseCodeVO wcvo) throws Exception {
+		logger.debug(" warehouseInsert() 실행");
+		
+		sqlSession.insert(NAMESPACE + "insertWarehouse", wcvo);
+	}
+
 
 
 }

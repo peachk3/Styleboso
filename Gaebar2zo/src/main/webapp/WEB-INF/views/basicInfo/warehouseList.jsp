@@ -18,8 +18,11 @@
 		</nav>
 	</div>
 
-	<input type="button" value="등록" onclick="location.href='/basicInfo/warehouseAdd'" class="btn btn-primary">
-	<input type="button" value="삭제">
+<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
+	<input class="button btn-primary" type="button" value="등록" onclick="location.href='/basicInfo/warehouseAdd'" class="btn btn-primary">
+	<input class="button btn-primary" type="button" value="삭제">
+</div>
+	
 	<table class="table table-hover">
 		<thead>
 			<tr>

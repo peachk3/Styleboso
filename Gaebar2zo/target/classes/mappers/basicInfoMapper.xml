@@ -143,5 +143,9 @@
    		where item_num =#{item_num}
    	</update>
    	
+   	<insert id="insertWarehouse">
+   		insert into warehouse_code (s_cate_wh_code, s_cate_wh_name, wh_tel, wh_postCode, wh_add1, wh_add2, wh_add3, wh_man, m_cate_wh_code)
+		values(#{s_cate_wh_code}, #{s_cate_wh_name}, #{wh_tel}, #{wh_postCode}, #{wh_add1}, #{wh_add2}, #{wh_add3}, #{wh_man}, 'WH')
+   	</insert>
    	
 </mapper>

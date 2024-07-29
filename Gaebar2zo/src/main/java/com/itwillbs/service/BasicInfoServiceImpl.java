@@ -109,6 +109,13 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		
 		return bidao.updateItem(ivo);
 	}
+
+	@Override
+	public void insertWarehouse(WarehouseCodeVO wcvo) throws Exception {
+		logger.debug(" 창고 등록 ");
+		
+		bidao.warehouseInsert(wcvo);
+	}
 	
 	
 	

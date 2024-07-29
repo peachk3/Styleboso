@@ -324,28 +324,23 @@
       getClientList();
       
       function getClientList() {
-         
+		  
           $('#modal1-table tbody tr').remove();
           
-          const formData = {
-        		  cli_cate : "CLPT"
-		  };
-          
           $.ajax({
-              url: "/common/clientList",
+              url: "/common/clientList2",
               type: "get",
-              contentType: 'application/json; charset=utf-8',
-              data: JSON.stringify(formData),
+              contentType: 'application/json;',
+              data: {cli_cate : "CLPT"},
               dataType: "json",
               success: function(data) {
                   // body 태그에 내용 추가
                   console.log(data);
                   data.forEach(function(item, idx){
-                     console.log(idx);
-                     var row = "<tr><th scope='row'>" + (parseInt(idx)+1) + "</th><td>" + item.cli_num + "</td><td>" + item.cli_name + "</td></tr>"
-                      $('#modal1-table tbody').append(row);
+					  console.log(idx);
+					  var row = "<tr><th scope='row'>" + (parseInt(idx)+1) + "</th><td>" + item.cli_num + "</td><td>" + item.cli_name + "</td></tr>"
+				 	  $('#modal1-table tbody').append(row);
                   });
-                  
               },
               error: function(jqXHR, textStatus, errorThrown) {
                   console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
@@ -357,7 +352,7 @@
       getManagerList();
       
       function getManagerList() {
-         
+          
           $('#modal2-table tbody tr').remove();
           
           $.ajax({
@@ -401,7 +396,6 @@
                      var row = "<tr id='row"+ (parseInt(idx)+1) +"'><th scope='row'><input class='form-check-input'type='checkbox' id='check" + (parseInt(idx)+1) + "'></th><td>" + item.goods_num + "</td><td>" + item.itemList.map(itemVO => itemVO.item_name).join(', ') + "</td><td>" + item.goods_size + "</td><td>" + item.goods_color + "</td></tr>"
                       $('#modal3-table tbody').append(row);
                   });
-                  
               },
               error: function(jqXHR, textStatus, errorThrown) {
                   console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);

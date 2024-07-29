@@ -329,9 +329,10 @@
           $('#modal1-table tbody tr').remove();
           
           $.ajax({
-              url: "/common/clientList",
+              url: "/common/clientList2",
               type: "get",
-              contentType: 'application/json; charset=utf-8',
+              contentType: 'application/json;',
+              data: {cli_cate : "CLCU"},
               dataType: "json",
               success: function(data) {
                   // body 태그에 내용 추가
@@ -341,7 +342,6 @@
                      var row = "<tr><th scope='row'>" + (parseInt(idx)+1) + "</th><td>" + item.cli_num + "</td><td>" + item.cli_name + "</td></tr>"
                       $('#modal1-table tbody').append(row);
                   });
-                  
               },
               error: function(jqXHR, textStatus, errorThrown) {
                   console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);

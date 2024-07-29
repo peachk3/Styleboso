@@ -24,10 +24,17 @@ public class CommonDAOImpl implements CommonDAO{
 	public SqlSession sqlSession;
 	
 	@Override
-	public List<ClientVO> ClientList(ClientVO cvo) throws Exception {
+	public List<ClientVO> ClientList() throws Exception {
 		logger.debug("DAO : ClientList() 호출");
 		
-		return sqlSession.selectList(NAMESPACE + "clientList", cvo);
+		return sqlSession.selectList(NAMESPACE + "clientList");
+	}
+	
+	@Override
+	public List<ClientVO> ClientList(ClientVO cvo) throws Exception {
+		logger.debug("DAO : ClientList(ClientVO cvo) 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "clientList_cate", cvo);
 	}
 	
 	@Override

@@ -114,37 +114,42 @@ public class StockController {
 
 	@RequestMapping(value = "/getTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public Map<String, Object> getTransactionDetails(@RequestParam("tran_num") String tran_num) {
+	public Map<String, Object> getTransactionDetails(@RequestParam("tran_num") String tran_num) throws Exception {
 	    Map<String, Object> details = sService.getTransactionDetails(tran_num);
-
 	    // LocalDateTime을 String으로 변환
 	    LocalDateTime recDate = (LocalDateTime) details.get("rec_date");
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 	    String recDateString = recDate.format(formatter);
-
 	    // 변환된 String을 다시 맵에 추가
 	    details.put("rec_date", recDateString);
-
 	    return details;
 	}
 
 	
-	
-	
+	// 입고 삭제
+	@ResponseBody
+	@RequestMapping(value = "/deleteRC", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> deleteReceivingList_POST(@RequestBody Map<String, Object> payload) throws Exception {
+		logger.debug(" deleteItem_POST() 실행 ");
+		
+		@SuppressWarnings("unchecked")
+        List<String> trannums = (List<String>) payload.get("tran_num");
 
-//	@ResponseBody
-//	 @RequestMapping(value="/updateStatus",method=RequestMethod.POST,
-//			 		produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//	    public ResponseEntity<?> updateStatus(@RequestBody StatusUpdateRequest request) {
-//	        try {
-//	            sService.updateStatus(request.getTran_nums(), request.getStatus());
-//	            return ResponseEntity.ok().build();
-//	        } catch (Exception e) {
-//	            e.printStackTrace(); // 예외 로그 출력
-//	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Status update failed");
-//	        }
-//	    }
-//	   
+        if (trannums == null || trannums.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                 .body(Map.of("status", "error", "message", "No clients selected"));
+        }
+        logger.debug("@@@@cli_num " + trannums);
+
+        try {
+            sService.deleteRecevingList (trannums);
+            return ResponseEntity.ok(Map.of("status", "success"));
+        } catch (Exception e) {
+            logger.error(" @@@@@@@@Error deleting clients", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("status", "error", "message", e.getMessage()));
+        }
+		
+	}
 //	
 	
 	
@@ -177,6 +182,23 @@ public class StockController {
 
 	}
 
+	// 출고 모달 정보
+	@RequestMapping(value = "/getTransactionDetails2", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public Map<String, Object> getTransactionDetails2(@RequestParam("tran_num") String tran_num) throws Exception {
+	    Map<String, Object> details = sService.getTransactionDetails2(tran_num);
+	    // LocalDateTime을 String으로 변환
+	    LocalDateTime relDate = (LocalDateTime) details.get("rel_date");
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+	    String relDateString = relDate.format(formatter);
+	    // 변환된 String을 다시 맵에 추가
+	    details.put("rel_date", relDateString);  // "rec_date"를 "rel_date"로 수정
+	    return details;
+	}
+	
+	
+	
+	
 	// 출고 등록
 	@RequestMapping(value="/releaseAdd",method=RequestMethod.GET)
 	public void releaseAdd_GET() throws Exception{

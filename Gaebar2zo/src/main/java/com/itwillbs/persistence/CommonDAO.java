@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.GoodsVO;
+import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.domain.UsersVO;
 
 public interface CommonDAO {
@@ -16,5 +17,8 @@ public interface CommonDAO {
 
 	// 제품 리스트 조회
 	public List<GoodsVO> GoodsList() throws Exception;
+
+	// 거래 리스트 조회
+	public List<TransactionVO> TranList() throws Exception;
 
 }

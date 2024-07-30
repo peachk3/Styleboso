@@ -64,12 +64,31 @@ public class StockServiceImpl implements StockService{
 
 
 	@Override
-	public Map<String, Object> getTransactionDetails(String tran_num) {
-		// TODO Auto-generated method stub
-        return sdao.getTransactionDetails(tran_num);
+	public Map<String, Object> getTransactionDetails(String tran_num) throws Exception{
+
+		logger.debug("입고 모달창 정보 확인");
+		
+		return sdao.getTransactionDetails(tran_num);
 	}
 
 
+	@Override
+	public void deleteRecevingList(List<String> trannums) throws Exception {
+		logger.debug(" 입고 삭제 ");
+		
+		sdao.deleteRecevingList(trannums);
+	}
+
+
+	@Override
+	public Map<String, Object> getTransactionDetails2(String tran_num) throws Exception {
+		logger.debug("출고 모달창 정보 확인");
+		
+		
+		return sdao.getTransactionDetails2(tran_num);
+	}
+
+	
 
 //	@Override
 //	  public void updateStatus(List<String> tranNums, String status) throws Exception{

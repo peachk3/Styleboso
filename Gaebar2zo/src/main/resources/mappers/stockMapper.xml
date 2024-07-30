@@ -91,7 +91,7 @@
 
 	<!-- 입고 리스트 호출 -->
 	<select id="receivingList" resultMap="transMap">
-		select
+select
 		tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
 		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
 		go.item_num,go.item_name,inven_num
@@ -115,12 +115,12 @@
 		on tr.goods_num = go.goods_num
 		join inventory_change ic
 		on tr.tran_num = ic.tran_num
-		WHERE tr.tran_num like 'RC%'
+		WHERE tr.tran_num like 'RC%'  and pro_status in ("입고 예정","입고 완료")
 	</select>
 
 	<!-- 출고 리스트 호출 -->
 	<select id="releaseList" resultMap="transMap">
-		select
+select
 		tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
 		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
 		go.item_num,go.item_name,inven_num
@@ -144,8 +144,28 @@
 		on tr.goods_num = go.goods_num
 		join inventory_change ic
 		on tr.tran_num = ic.tran_num
-		WHERE tr.tran_num like 'RL%'
+		WHERE tr.tran_num like 'RL%' and pro_status in ("출고 준비","출고 완료");
 	</select>
+ 
+
+
+   	<delete id="deleteItem">
+   		delete from transaction
+   		where tran_num in
+   		<foreach collection="list" item="tran_num" open="(" separator="," close=")">
+   			#{tran_num}
+   		</foreach>
+   	
+   	</delete>
+
+
+
+
+
+
+
+
+
 
 
 	<!-- 상태 변경 -->
@@ -263,7 +283,7 @@
 	    ]]>
 	</select>
 
-	<!-- 모달창 - 발주리스트,거래처,담당자,입고예정일 출력 -->
+	<!-- 입고 모달창 - 발주리스트,거래처,담당자,입고예정일 출력 -->
 	<select id="getTransactionDetails" resultType="map">
 		select top_tran_num,tra.cli_num,cl.cli_name,tra.pic_username,user.user_per_name,tra.rec_date
 		from transaction tra
@@ -273,6 +293,21 @@
 		on tra.pic_username = user.username
 		WHERE tra.tran_num like 'RC%'  and tra.tran_num = #{tran_num}
 	</select>
+
+
+	<!-- 출고 모달창 - 발주리스트,거래처,담당자,입고예정일 출력 -->
+	<select id="getTransactionDetails2" resultType="map">
+		select top_tran_num,tra.cli_num,cl.cli_name,tra.pic_username,user.user_per_name,tra.rel_date
+		from transaction tra
+		join client cl
+		on tra.cli_num = cl.cli_num
+		join users user
+		on tra.pic_username = user.username
+		WHERE tra.tran_num like 'RL%'  and tra.tran_num = #{tran_num}
+	</select>
+
+
+
 
 
 

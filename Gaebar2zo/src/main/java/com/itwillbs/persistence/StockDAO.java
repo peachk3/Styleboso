@@ -20,8 +20,14 @@ public interface StockDAO {
 
 	int getTotalCount() throws Exception;
 
+	// 입고 모달창 정보 화출
+	Map<String, Object> getTransactionDetails(String tran_num) throws Exception;
 
-	Map<String, Object> getTransactionDetails(String tran_num);
+	// 입고 목록 삭제
+	void deleteRecevingList(List<String> trannums) throws Exception;
+	
+	// 출고 모달창 정보 호출
+	Map<String, Object> getTransactionDetails2(String tran_num) throws Exception;
 
 
 	

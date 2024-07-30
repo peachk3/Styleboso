@@ -15,55 +15,58 @@
 <body>
     <h1>/Styleboso/stock/receivingList.jsp</h1>
 
+	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
+		<input type="button" class="btn btn-primary" value="등록" onclick="location.href='/stock/receivingAdd'">
+		<input type="button" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
+	</div>
+	
     <table class="table table-hover">
+    	<thead>
         <tr>
-            <td>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
-                    <label class="form-check-label" for="flexCheckDisabled"> Disabled checkbox </label>
-                </div>
-            </td>
-            <td>입고번호</td>
-            <td>품목코드</td>
-            <td>품목명</td>
-            <td>입고 수량</td>
-            <td>입고일</td>
-            <td>거래 번호</td>
-            <td>재고 번호</td>
-            <td>비고</td>
-            <td>상태</td>
+        	<th scope="col">
+				<div class="form-check">
+           			<input class="form-check-input" type="checkbox" value="" id="selectAll" onclick = "toggleCheckboxes(this)"> 
+          		</div>
+          	</th>
+            <th scope="col">입고번호</th>
+            <th scope="col">품목코드</th>
+            <th scope="col">품목명</th>
+            <th scope="col">입고 수량</th>
+            <th scope="col">입고일</th>
+            <th scope="col">거래 번호</th>
+            <th scope="col">재고 번호</th>
+            <th scope="col">비고</th>
+            <th scope="col">상태</th>
         </tr>
-
+	</thead>
+	<tbody>
         <c:forEach var="rc" items="${rc}">
             <c:forEach var="item" items="${rc.itemList}"  varStatus="rcStatus">
+                        <c:forEach var="inchange" items="${rc.inchangeList}">
+                        <c:forEach var="goods" items="${item.tranGoodsList}">
                 <tr>
-                    <c:forEach var="inchange" items="${rc.inchangeList}">
                         <td>
-                            <label class="form-check-label" for="flexCheckDefault${rcStatus.index}">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault${rcStatus.index}">
-                                Default checkbox
-                            </label>
+					  		<div class="form-check">
+	                  			<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault${item.item_num }"> 
+	               			</div>
                         </td>
                         <td class="clickable-cell">${rc.tran_num}</td>
                         <td class="clickable-cell">${item.item_num}</td>
                         <td class="clickable-cell">${item.item_name}</td>
-                        <c:forEach var="goods" items="${item.tranGoodsList}">
                             <td class="clickable-cell">${goods.goods_qty}</td>
                             <td class="clickable-cell">${rc.rec_date}</td>
                             <td class="clickable-cell">${rc.top_tran_num}</td>
                             <td class="clickable-cell">${inchange.inven_num}</td>
                             <td class="clickable-cell">${rc.comm}</td>
                             <td class="clickable-cell">${rc.pro_status}</td>
+                </tr>
                         </c:forEach>
                     </c:forEach>
-                </tr>
             </c:forEach>
         </c:forEach>
+        </tbody>
     </table>
 
-    <div>
-        <button id="addRowBtn" class="btn btn-outline-info" type="button" onclick="location.href='/stock/releaseAdd'">입고 등록</button>
-    </div>
 
     <div class="container mt-3">
         <button id="statusChangeBtn" class="btn btn-outline-info">상태 변경</button>
@@ -121,17 +124,20 @@
     <%@ include file="../include/footer.jsp" %>
 </body>
 </html>
-
 <script>
-function formatDate(dateStr) {
-    // Date 객체로 변환
-    var date = new Date(dateStr);
-    // YYYY-MM-DD 형식으로 변환
-    var year = date.getFullYear();
-    var month = ('0' + (date.getMonth() + 1)).slice(-2); // 월은 0부터 시작하므로 +1
-    var day = ('0' + date.getDate()).slice(-2);
-    return year + '-' + month + '-' + day;
+
+
+function toggleCheckboxes(source) {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"].form-check-input');
+    checkboxes.forEach(checkbox => checkbox.checked = source.checked);
 }
+
+function formatDateForInput(dateStr) {
+    if (!dateStr) return '';
+    var date = new Date(dateStr);
+    return date.toISOString().split('T')[0];
+}
+
 $(document).ready(function() {
     // Add click event listener to the cells
     $(".clickable-cell").click(function() {
@@ -149,7 +155,7 @@ $(document).ready(function() {
                 $("#modal-tran_num").val(response.top_tran_num);
                 $("#modal-cli_num").val(response.cli_num);
                 $("#modal-cli_name").val(response.cli_name);
-                $("#modal-rec_date").val(response.rec_date); 
+                $("#modal-rec_date").val(formatDateForInput(response.rec_date)); 
                 $("#modal-pic_username").val(response.pic_username);
                 $("#modal-user_per_name").val(response.user_per_name);
                 
@@ -165,5 +171,57 @@ $(document).ready(function() {
     $("#statusChangeBtn").click(function() {
         $(".status-buttons").toggle();
     });
-});
+    
+	$("#deleteItemBtn").click(function(){
+		
+		const checkedCheckboxes = $('input[type="checkbox"].form-check-input:checked');
+       	console.log("선택된 체크박스 수:", checkedCheckboxes.length);
+        const item_nums = [];
+	
+        checkedCheckboxes.each(function() {
+        	const item_num = $(this).closest('tr').find('td:eq(1)').text();
+        	if (item_num) {  // 빈 문자열이 아닌 경우에만 추가
+                console.log("추출된 item_num:", item_num);
+                item_nums.push(item_num);
+            }
+        });
+        
+     // 중복 제거
+        const uniqueItemNums = [...new Set(item_nums)];
+     
+        console.log("최종 item_nums 배열:", item_nums);
+        
+        if (item_nums.length === 0) {
+            alert('삭제할 항목을 선택해주세요.');
+            return;
+        }
+	
+        if (confirm('선택한 ' + item_nums.length + '개의 항목을 삭제하시겠습니까?')) {
+    		$.ajax({
+    			url: '/stock/deleteRC',
+    			beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                 },
+    			type: 'POST',
+    			contentType: 'application/json',
+                data: JSON.stringify({ item_nums: item_nums }),
+                success: function(response) {
+                    // Handle success, e.g., reload the page or show a message
+                    location.reload();
+                    alert("삭제 완료 되었습니다");
+                },
+                error: function(xhr, status, error) {
+                    // Handle error
+                    alert("An error occurred: " + error);
+                }
+            });
+    		
+          } //if
+          
+	}); // 버튼
+    
+    
+});	
+    
+    
 </script>

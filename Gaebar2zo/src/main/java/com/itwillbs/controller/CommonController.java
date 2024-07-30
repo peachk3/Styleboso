@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.GoodsVO;
+import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.domain.UsersVO;
 import com.itwillbs.service.CommonService;
 
@@ -28,6 +29,23 @@ public class CommonController {
 	@Inject
 	private CommonService cService;
 
+	// 거래번호 조회
+	@ResponseBody
+	@RequestMapping(value="/transactionList",method=RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public List<TransactionVO> transactionList_GET(Model model) throws Exception{
+		logger.debug(" transactionList_GET() 실행 ");
+		
+		List<TransactionVO> tranList = cService.TransactionList();
+		logger.debug("size : "+ tranList.size());
+		logger.debug("traList : "+ tranList);
+		
+		return tranList;
+
+	}
+	
+	
+	
 	
 	// 거래처 리스트 조회
 	@ResponseBody

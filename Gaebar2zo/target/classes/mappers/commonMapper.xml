@@ -44,8 +44,10 @@
         order by goods_num desc;
 	</select>
 
-
-
+	<!-- 거래 리스트 조회 -->
+	<select id="tranList" resultType="TransactionVO">
+        select * from transaction
+	</select>
 
 
 

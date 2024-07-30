@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.GoodsVO;
+import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.domain.UsersVO;
 import com.itwillbs.persistence.CommonDAO;
 
@@ -42,4 +43,18 @@ public class CommonServiceImpl implements CommonService{
 		return cdao.GoodsList();
 	}
 
+	@Override
+	public List<TransactionVO> TransactionList() throws Exception {
+		logger.debug("거래 리스트 조회");
+		
+		return cdao.TranList();
+	}
+
+	
+	
+	
+	
+	
+	
+	
 }

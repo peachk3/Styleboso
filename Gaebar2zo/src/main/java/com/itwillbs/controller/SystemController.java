@@ -146,10 +146,12 @@ public class SystemController {
 	 @ResponseBody
 	@RequestMapping(value = "/updateItemCode", method = RequestMethod.POST)
 	public ResponseEntity<String> updateItem(@RequestBody ItemCodeVO icVo) throws Exception {
-
+		 
 		 sService.updateItemCode(icVo);
 		 
-		return ResponseEntity.ok("수정 성공");
+		logger.debug("공통 품목 코드 출력 성공: {}" + icVo);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	// ==========================================================================
 	

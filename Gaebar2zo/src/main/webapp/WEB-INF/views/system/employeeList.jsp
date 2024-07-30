@@ -28,7 +28,6 @@
 	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
 		<button class="btn btn-primary" type="button" onclick="openFormModal()">등록</button>
 		<button class="btn btn-primary" type="button" onclick="">수정</button>
-		<button class="btn btn-primary" type="button" onclick="">조회</button>
 		<button class="btn btn-primary" type="button">삭제</button>
 	</div>
 </div>
@@ -37,7 +36,7 @@
       	<tr>
          <th scope="col"> 
             <div class="form-check">
-               <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled> 
+           	   <input class="form-check-input" type="checkbox" value="" id="checkAll" onclick="checkAll(this)">
             </div>
          </th>
 	         <th scope="col">사용자ID</th>
@@ -53,7 +52,7 @@
 				<tr>
 					<td>
 				  		<div class="form-check">
-                  			<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"> 
+                  			<input class="form-check-input" type="checkbox" value="" id="checkAll"> 
                			</div>
                		</td>
                		<td>${emptbl.username }</td>
@@ -135,8 +134,19 @@
         }
         
         function closeFormModal() {
+        	
             $('#formModal').modal('hide');
         }
+        
+        //전체선택
+        function checkAll(selectAll)  {
+      	  const checkboxes 
+      	     = document.querySelectorAll('input[type="checkbox"]');
+      	  
+      	  checkboxes.forEach((checkbox) => {
+      	    checkbox.checked = selectAll.checked
+      	  })
+      	}
     </script>
   
     

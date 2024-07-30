@@ -58,7 +58,15 @@ public class SystemDAOImpl implements SystemDAO{
 		return sqlSession.selectList(NAMESPACE + "itemCodeListAll", group_code);
 	}
 
+	//공통 품목코드 수정(update) 
+	@Override
+	public void updateItemCode(ItemCodeVO icVo) {
+		logger.debug("service --> DAO 공통 품목 코드 (수정) 실행 ");
+		
+		sqlSession.update(NAMESPACE + "updateItemCode", icVo);
+	}
 
+	
 	
 	  
 

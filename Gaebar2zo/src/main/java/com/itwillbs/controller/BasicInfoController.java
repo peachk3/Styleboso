@@ -31,12 +31,11 @@ public class BasicInfoController {
 
 	private static final Logger logger = LoggerFactory.getLogger(BasicInfoController.class);
 	
-	
 	@Inject
 	private BasicInfoService bService;
 	
-	//http://localhost:8088/basicInfo/itemList
 	// 품목 관리
+	//http://localhost:8088/basicInfo/itemList
 	@RequestMapping(value="/itemList",method=RequestMethod.GET)
 	public void itemList_GET(Model model) throws Exception{
 		logger.debug(" itemList_GET() 실행 ");
@@ -78,7 +77,7 @@ public class BasicInfoController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                  .body(Map.of("status", "error", "message", "No clients selected"));
         }
-        logger.debug("@@@@cli_num " + itemNums);
+        logger.debug("@@@@item_num " + itemNums);
 
         try {
             bService.deleteItems(itemNums);
@@ -117,8 +116,8 @@ public class BasicInfoController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 
+	// ----------------------------------거래처 관리------------------------------------------------
 	//http://localhost:8088/Styleboso/basicInfo/clientList
-	// 거래처 관리------------------------------------------------
 	@RequestMapping(value="/clientList",method=RequestMethod.GET)
 	public void clientList_GET(Model model) throws Exception{
 		logger.debug(" clientList_GET() 실행 ");
@@ -126,7 +125,6 @@ public class BasicInfoController {
 		List<ClientVO> clientList = bService.cliListAll();
 		
 		model.addAttribute("clientList", clientList);	
-
 	}
 
 	// 거래처 추가 - 등록 페이지로 이동
@@ -214,12 +212,10 @@ public class BasicInfoController {
         }
 	}
 	
-	// ------------------------------------------------거래처 관리
+	// ------------------------------------------------거래처 관리------------------------------
 
-	// 창고 관리
-	//http://localhost:8088/Styleboso/system/login
-	// user1 pw1
-	//http://localhost:8088/Styleboso/basicInfo/warehouseList
+	// -------------------------------------------------창고 관리-------------------------------
+	//http://localhost:8088/system/login
 	@RequestMapping(value="/warehouseList",method=RequestMethod.GET)
 	public void warehouseList_GET(Model model) throws Exception{
 		logger.debug(" warehouseList_GET() 실행 ");
@@ -227,24 +223,49 @@ public class BasicInfoController {
 		List<WarehouseCodeVO> whCodeList = bService.listAll();
 		
 		model.addAttribute("whCodeList",whCodeList);
-		
 	}
 
 	// 창고 추가
 	@RequestMapping(value="/warehouseAdd",method=RequestMethod.GET)
 	public void warehouseAdd_GET() throws Exception{
 		logger.debug(" warehouseAdd_GET() 실행 ");
-
 	}
 
+	// 창고 등록
+	@ResponseBody
+	@RequestMapping(value="/warehouseInsert", method = RequestMethod.POST)
+	public void warehouseInsert_POST(WarehouseCodeVO wcvo) throws Exception {
+		logger.debug(" warehouseInsert_POST() 실행 ");
+		
+		//List<WarehouseCodeVO> whCodeList =
+		bService.insertWarehouse(wcvo);
+		logger.debug("");
+	}
 
+	// 창고 삭제
+	@RequestMapping(value = "/deleteWarehouse", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> deleteWarehouse(@RequestBody Map<String, Object> payload) throws Exception{
+		logger.debug(" deleteClient() 실행 ");
+	
+		@SuppressWarnings("unchecked")
+        List<String> whNums = (List<String>) payload.get("s_cate_wh_codes");
+		logger.debug(" whNums : " + whNums);
 
+        if (whNums == null || whNums.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                 .body(Map.of("status", "error", "message", "No clients selected"));
+        }
+        logger.debug("@@@@whNums " + whNums);
 
-
-
-
-
-
+        try {
+        	bService.deleteWareCode(whNums); // 창고 내부 구역 삭제
+            bService.deleteWarehouse(whNums); // 창고 삭제
+            return ResponseEntity.ok(Map.of("status", "success"));
+        } catch (Exception e) {
+            logger.error(" @@@@@@@@Error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("status", "error", "message", e.getMessage()));
+        }
+	}
 
 
 }

@@ -12,39 +12,48 @@ import com.itwillbs.domain.WarehouseCodeVO;
 public interface BasicInfoService {
 	
 	// 창고코드 리스트 출력
-	List<WarehouseCodeVO> listAll();
+	public List<WarehouseCodeVO> listAll();
 
 	// 거래처 리스트 출력
-	List<ClientVO> cliListAll();
+	public List<ClientVO> cliListAll();
 
 	// 품목 리스트 출력
-	List<ItemVO> itemListAll();
+	public List<ItemVO> itemListAll();
 
 	// 거래처 사업자 번호 중복 확인
-	boolean isCliCrnDuplicate(String cli_crn) throws Exception;
+	public boolean isCliCrnDuplicate(String cli_crn) throws Exception;
 
 	public void cliInsert(ClientVO vo) throws Exception;
 
 	// 거래처 리스트 상세 보기
-	List<ClientVO> clientDetailsList(String cli_num) throws Exception;
+	public List<ClientVO> clientDetailsList(String cli_num) throws Exception;
 
 	// 거래처 수정
-	void updateClient(ClientVO cvo) throws Exception;
+	public void updateClient(ClientVO cvo) throws Exception;
 
 	// 거래처 삭제
-	void deleteClients(List<String> cliNums) throws Exception;
+	public void deleteClients(List<String> cliNums) throws Exception;
 
 	// 품목 추가
-	void insertItem(ItemVO itemvo) throws Exception;
+	public void insertItem(ItemVO itemvo) throws Exception;
 
 	// 품목 삭제
-	void deleteItems(List<String> itemNums) throws Exception;
+	public void deleteItems(List<String> itemNums) throws Exception;
 
 	// 품목 상세보기 
-	List<ItemVO> itemDetailsList(String item_num) throws Exception;
+	public List<ItemVO> itemDetailsList(String item_num) throws Exception;
 
 	// 품목 수정
-	int updateItem(ItemVO ivo) throws Exception;
+	public int updateItem(ItemVO ivo) throws Exception;
+
+	// 창고 등록
+	public void insertWarehouse(WarehouseCodeVO wcvo) throws Exception;
+
+	// 창고 삭제
+	public void deleteWarehouse(List<String> whNums) throws Exception;
+
+	// 창고 내부 삭제
+	public void deleteWareCode(List<String> whNums) throws Exception;
 
 
 }

@@ -10,7 +10,8 @@
 			<div class="col-12">
 				<div class="card mb-4">
 					<div class="card-body">
-						<form class="row g-3 needs-validation" novalidate>
+						<form class="row g-3 needs-validation" id="fm1" novalidate>
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 							<div>
 								<h5>창고 등록</h5>
 							</div>
@@ -36,7 +37,7 @@
 							</div>
 							<div class="col-md-3">
 								<label for="validationCustom05" class="form-label">창고 담당자 아이디</label> 
-									<input type="text" class="form-control" id="validationCustom05" data-coreui-toggle="modal"
+									<input type="text" class="form-control" id="validationCustom05" data-coreui-toggle="modal" name="wh_man"
 									data-coreui-target="#exampleModal2" required>
 								<div class="invalid-feedback" > 담당자를 입력해주세요 </div>
 							</div>
@@ -48,7 +49,7 @@
 							</div>
 							<div class="col-md-2">
 								<label for="cli_post_code" class="form-label">우편번호</label> 
-								<input type="text" class="form-control" id="sample6_postcode" name="wh_add1" readonly>
+								<input type="text" class="form-control" id="sample6_postcode" name="wh_postCode" readonly>
 							</div>
 							<div class="col-md-2">
 								<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
@@ -63,7 +64,7 @@
 							</div>
 							<div class="col-md-2">
 									<label for="wh_extraAdd" class="form-label"> 참고 항목</label>
-									<input type="text" class="form-control" id="sample6_extraAddress" placeholder="참고항목">
+									<input type="text" class="form-control" id="sample6_extraAddress" name="wh_add3" placeholder="참고항목" readonly>
 							</div>
 					</form>
 				</div>
@@ -120,6 +121,9 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 	<script>
+	const token = $("meta[name='_csrf']").attr("content")
+	   const header = $("meta[name='_csrf_header']").attr("content");
+	   const name = $("#userName").val();
 	   function sample6_execDaumPostcode() {
 	        new daum.Postcode({
 	            oncomplete: function(data) {
@@ -169,7 +173,6 @@
 	    }
 	   
 	   document.addEventListener('DOMContentLoaded', function() {
-		      
 	       const submitFormBtn = document.getElementById('submitFormBtn');
 	   
 	       submitFormBtn.addEventListener('click', function(event) {
@@ -187,6 +190,37 @@
 	            
 	            // Bootstrap의 'was-validated' 클래스 추가
 	            form.classList.add('was-validated');
+	            
+	            if(document.querySelector('was-validated:invalid') === null){
+	            	
+	            	// 폼 데이터 수집
+	                const formData = new FormData(form);
+	                const data = Object.fromEntries(formData.entries());
+	                
+	             $.ajax({
+	            		url: '/basicInfo/warehouseInsert',
+	            		beforeSend: function(xhr) {
+	                        xhr.setRequestHeader(header, token);
+	                     },
+	                    type: 'POST',
+	                    data:$("#fm1").serialize(),
+	                    success: function(result) {
+                            alert('등록되었습니다');
+                            
+                            form.reset();
+                            window.location.href = '/basicInfo/warehouseList';
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('AJAX Error:', textStatus, errorThrown);
+                        console.log('Response Text:', jqXHR.responseText);
+                        console.log('Status Code:', jqXHR.status);
+                        alert('An error occurred while submitting the form. Check console for details.');
+                    }
+	            	 
+	             });
+	            	
+	            }
+	            
 	         });
 	       });
 	       
@@ -281,8 +315,7 @@
 	    });
 	}
 	
-});
-	   
+}); 
 
 </script>		
 	

@@ -54,6 +54,7 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		return count > 0;
 	}
 
+	// 거래처 등록
 	@Override
 	public void cliInsert(ClientVO vo) throws Exception {
 		logger.debug(" 거래처 등록 ");
@@ -108,6 +109,27 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		logger.debug(" 품목 수정 ");
 		
 		return bidao.updateItem(ivo);
+	}
+
+	@Override
+	public void insertWarehouse(WarehouseCodeVO wcvo) throws Exception {
+		logger.debug(" 창고 등록 ");
+		
+		bidao.warehouseInsert(wcvo);
+	}
+
+	@Override
+	public void deleteWarehouse(List<String> whNums) throws Exception {
+		logger.debug(" 창고 삭제");
+		
+		bidao.warehouseDelete(whNums);
+	}
+
+	@Override
+	public void deleteWareCode(List<String> whNums) throws Exception {
+		logger.debug(" 창고 내부 렉 구역 삭제");
+		
+		bidao.warehouseCodeDelete(whNums);
 	}
 	
 	

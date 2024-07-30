@@ -56,15 +56,17 @@
 		<result property="user_per_name" column="user_per_name" />
 	</resultMap>
 
+	<!-- 창고 리스트 출력 -->
 	<select id="listALL" resultType="WarehouseCodeVO">
 		select * from warehouse_code
 	</select>
 
-
+	<!-- 거래처 리스트 출력 -->
 	<select id="cliListALL" resultType="ClientVO">
 		select * from client
 	</select>
 
+	<!-- 품목 리스트 출력 -->
 	<select id="itemListALL" resultMap="itemMap">
 		select i.item_num, i.item_cli_code, i.item_name, i.item_purchase_price, i.item_sale_price, c.group_name, i.item_mat, i.comm
 		from item i
@@ -81,13 +83,14 @@
 		where item_cate_code =#{item_cate_code};
 	</insert>
 
-
+	<!-- 거래처 등록 - 사업자 등록번호 중복 확인 -->
 	<select id="cliCrnDup" resultType="int">
 		select count(*)
 		from client
 		where cli_crn =#{cli_crn}
 	</select>
 	
+	<!-- 거래처 등록 -->
 	<insert id="cliUpdate" parameterType="map">
 	    INSERT INTO client (cli_num, cli_name, cli_crn, cli_cate, cli_ind, cli_postCode, cli_add1, cli_add2, cli_add3, cli_tel, cli_rep, cli_email, pic_username)
 	    SELECT
@@ -105,6 +108,7 @@
 		where c.cli_num = #{cli_num}
    	</select>
    	
+	<!-- 거래처 수정 -->
    	<update id="updateClient">
 		update client
 		set cli_name =#{cli_name}, cli_cate =#{cli_cate}, cli_ind =#{cli_ind}, cli_postCode =#{cli_postCode},
@@ -113,6 +117,7 @@
 		where cli_num = #{cli_num}
    	</update>
    	
+	<!-- 거래처 삭제 -->
    	<delete id="deleteClient">
    		DELETE FROM client
         WHERE cli_num IN
@@ -121,6 +126,7 @@
         </foreach>
    	</delete>
    	
+   	<!-- 품목 삭제 -->
    	<delete id="deleteItem">
    		delete from item
    		where item_num in
@@ -129,6 +135,7 @@
    		</foreach>
    	</delete>
    	
+	<!-- 품목 상세보기 -->
    	<select id="itemDetailsList" parameterType="String" resultMap="itemMap">
    		select i.item_num, ic.s_cate_item_name, ic.m_cate_item_code, i.item_cate_code, i.item_cli_code, i.item_name, i.item_purchase_price, i.item_sale_price, c.group_name, i.item_mat, i.comm
 		from item i
@@ -137,15 +144,35 @@
 		where item_num =#{item_num}
    	</select>
    	
+	<!-- 품목 수정 -->
    	<update id="updateItem">
    		update item
    		set item_num=#{item_num}, item_cli_code=#{item_cli_code}, item_name=#{item_name}, item_purchase_price=#{item_purchase_price}, item_sale_price=#{item_sale_price}, item_mat=#{item_mat}, comm=#{comm}
    		where item_num =#{item_num}
    	</update>
    	
+	<!-- 창고 등록 -->
    	<insert id="insertWarehouse">
    		insert into warehouse_code (s_cate_wh_code, s_cate_wh_name, wh_tel, wh_postCode, wh_add1, wh_add2, wh_add3, wh_man, m_cate_wh_code)
 		values(#{s_cate_wh_code}, #{s_cate_wh_name}, #{wh_tel}, #{wh_postCode}, #{wh_add1}, #{wh_add2}, #{wh_add3}, #{wh_man}, 'WH')
    	</insert>
+   	
+   	<!-- 창고 내부 삭제 -->
+   	<delete id="deleteWarehouse">
+   		delete from warehouse_code
+   		where s_cate_wh_code in
+   		<foreach collection="list" item="s_cate_wh_code" open="(" separator="," close=")">
+   		 	#{s_cate_wh_code}
+   		</foreach>
+   	</delete>
+   	
+   	<!-- 창고 삭제 -->
+   	<delete id="deleteWarehouseCode">
+   		delete from warehouse
+   		where wh_code in
+   		<foreach collection="list" item="s_cate_wh_code" open="(" separator="," close=")">
+   		 	#{s_cate_wh_code}
+   		</foreach>
+   	</delete>
    	
 </mapper>

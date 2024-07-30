@@ -69,6 +69,14 @@ public class SystemServiceImpl implements SystemService{
 		
 	}
 
+	//공통 품목코드 삭제
+	@Override
+	public void deleteItemCode(List<String> item_code) throws Exception {
+		logger.debug("공통 품목코드 삭제");
+		
+		sdao.deleteItemCode(item_code);
+	}
+
 	
 	
 	  

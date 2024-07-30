@@ -121,9 +121,7 @@ public class SystemController {
 		
 		model.addAttribute("codeList", codeList);
 		
-
 	}
-
 	//==========================================================================
 	// 품목 분류 코드 관리
 	
@@ -153,6 +151,19 @@ public class SystemController {
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	 
+	 //그룹 -> 품목코드(체크) 삭제
+	 @ResponseBody
+	 @RequestMapping(value = "/deleteItemCode", method = RequestMethod.POST)
+	 public String deleteItemCode(@RequestParam("item_code")List<String>item_code) {
+		 try {
+	            sService.deleteItemCode(item_code);
+	            return "success";
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return "error";
+	        }
+	 }
 	// ==========================================================================
 	
 	 

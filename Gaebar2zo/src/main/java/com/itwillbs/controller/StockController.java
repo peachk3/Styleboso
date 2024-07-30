@@ -85,7 +85,14 @@ public class StockController {
 		logger.debug("size : "+ ex.size());
 		model.addAttribute("ex", ex);
 	}
+	
+	// 반품 등록
+	@RequestMapping(value="/adjustment/exchangeAdd",method=RequestMethod.GET)
+	public void exchangeAdd_GET() throws Exception{
+		logger.debug(" exchangeAdd_GET() 실행 ");
+	}
 
+	
 	// 재고 반품
 	@RequestMapping(value="/adjustment/return",method=RequestMethod.GET)
 	public void adjustment_return_GET(Model model) throws Exception{

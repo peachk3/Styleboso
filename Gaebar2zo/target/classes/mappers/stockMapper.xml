@@ -289,6 +289,8 @@
 		WHERE tr.tran_num LIKE 'EX%'
 	</select>
 	
+	<!-- 교환 등록 -->
+	
 	<!-- 반품 리스트 호출 -->
 	<select id="returnList" resultMap="transMap">
 		SELECT
@@ -322,7 +324,11 @@
 		WHERE tr.tran_num LIKE 'RE%'
 	</select>
 
-
+	<!-- 반품 등록 -->
+	<insert id="returnAdd" useGeneratedKeys="true" keyProperty="tran_num">
+		insert into transaction(tran_num, cli_num, pic_username, tran_date, ex_due_date, pro_status, tran_cate_code, comm)
+		values(#{tran_num}, #{cli_num}, #{pic_username}, #{tran_date}, #{ex_due_date}, "반품 접수" , #{tran_cate_code}, #{comm})
+	</insert>
 
 
 </mapper>

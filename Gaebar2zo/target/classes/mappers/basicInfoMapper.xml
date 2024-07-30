@@ -55,7 +55,27 @@
 		<result property="username" column="username" />
 		<result property="user_per_name" column="user_per_name" />
 	</resultMap>
+	
+	<resultMap type="com.itwillbs.domain.InventoryVO" id="invenMap">
+		<id property="inven_num" column="inven_num" />
+		<result property="inven_num" column="inven_num" />
+		<result property="wh_num" column="wh_num" />
+		<result property="goods_num" column="goods_num" />
+		<result property="inven_qty" column="inven_qty" />
+		<collection property="warehouseList" resultMap="wareMap"/>
+	</resultMap>
 
+	<resultMap type="com.itwillbs.domain.WarehouseVO" id="wareMap">
+		<id property="wh_num" column="wh_num" />
+		<result property="wh_num" column="wh_num" />
+		<result property="wh_name" column="wh_name" />
+		<result property="wh_zone" column="wh_zone" />
+		<result property="wh_rack" column="wh_rack" />
+		<result property="wh_row" column="wh_row" />
+		<result property="wh_column" column="wh_column" />
+		<result property="wh_code" column="wh_code" />
+	</resultMap>
+	
 	<!-- 창고 리스트 출력 -->
 	<select id="listALL" resultType="WarehouseCodeVO">
 		select * from warehouse_code
@@ -174,5 +194,12 @@
    		 	#{s_cate_wh_code}
    		</foreach>
    	</delete>
+   	
+   	<select id="whInvenList" parameterType="String" resultMap="invenMap">
+   		select inv.inven_num, inv.wh_num, inv.goods_num, inv.inven_qty, wa.wh_name, wa.wh_zone, wa.wh_rack, wa.wh_row, wa.wh_column
+		from inventory inv
+		join warehouse wa on inv.wh_num = wa.wh_num
+		where inv.wh_num=#{wh_num};
+   	</select>
    	
 </mapper>

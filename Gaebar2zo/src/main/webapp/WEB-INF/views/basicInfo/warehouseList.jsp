@@ -1,7 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../include/header.jsp" %>
-
+    <style>
+        .section {
+            width: 200px;
+            height: 100px;
+            margin: 10px;
+            padding: 20px;
+            text-align: center;
+            line-height: 100px;
+            border: 1px solid #000;
+            cursor: pointer;
+        }
+        .sectionA {
+            background-color: lightblue;
+        }
+        .sectionB {
+            background-color: lightgreen;
+        }
+        .sectionC {
+            background-color: lightcoral;
+        }
+        .sectionD {
+            background-color: lightcoral;
+        }
+    </style>
+    
 <body>
 	<h1>/Styleboso/basicInfo/warehouseList.jsp</h1>
 
@@ -61,9 +85,58 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	
+ 	<div class="section sectionA" data-wh_num="GPA11A" class="sectionA" >
+        Section A
+    </div>
+    <div class="section sectionB" onclick="handleClick('Section B')">
+        Section B
+    </div>
+    <div class="section sectionC" onclick="handleClick('Section C')">
+        Section C
+    </div>
+    <div class="section sectionD" onclick="handleClick('Section D')">
+        Section D
+    </div>
+
+<div class="modal fade" id="exampleModalToggle"
+    data-coreui-backdrop="static" data-coreui-keyboard="false"
+    aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalToggleLabel"> 재고 보기</h5>
+               <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>품목코드</th>
+                            <th>재고수량</th>
+                            <th>창고 이름</th>
+                            <th>창고 구역</th>
+                            <th>창고 렉</th>
+                            <th>창고 열</th>
+                            <th>창고 번</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- JavaScript에서 행 삽입 -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-<!-- <script src="path/to/bootstrap.bundle.min.js"></script> -->
+	<!-- <script src="path/to/bootstrap.bundle.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@3.2.2/dist/js/coreui.min.js"></script>
 
@@ -95,7 +168,7 @@ $(document).ready(function(){
                 console.log("추출된 wh_codes:", s_cate_wh_code);
                 s_cate_wh_codes.push(s_cate_wh_code);
             }
-		});
+		}); // function()
         
      // 중복 제거
         const uniqueWhNums = [...new Set(s_cate_wh_codes)];
@@ -129,12 +202,57 @@ $(document).ready(function(){
 		
       } // if
       
-	}); 
+	}); // $
 	
-}); // document
+	$(".sectionA").click(function() {
+	    var wh_num = $(this).data("wh_num");
+	    alert('WH num ' + wh_num);
+
+	    $.ajax({
+	        url: '/basicInfo/whInven',
+	        type: 'GET',
+	        data: { wh_num: wh_num },
+	        dataType: "json",
+	        success: function(response) {
+	            // 기존 테이블 내용 비우기
+	            var tableBody = $('#exampleModalToggle .modal-body table tbody');
+	            tableBody.empty();
+	            console.log(response);
+
+	            // 서버에서 받은 데이터로 테이블 내용 채우기
+	            $.each(response, function(index, item) {
+	                var row = $('<tr></tr>');
+	                row.append('<td><input type="checkbox"></td>');
+	                row.append('<td>' + item.goods_num + '</td>');
+	                row.append('<td>' + item.inven_qty + '</td>');
+
+	                if (item.warehouseList && item.warehouseList.length > 0) {
+	                    $.each(item.warehouseList, function(index, wh) {
+	                        row.append('<td>' + wh.wh_name + '</td>');
+	                        row.append('<td>' + wh.wh_zone + '</td>');
+	                        row.append('<td>' + wh.wh_rack + '</td>');
+	                        row.append('<td>' + wh.wh_row + '</td>');
+	                        row.append('<td>' + wh.wh_column + '</td>');
+	                    });
+	                } else {
+	                    // warehouseList가 없거나 빈 경우
+	                    row.append('<td colspan="5">정보 없음</td>');
+	                }
+	                tableBody.append(row);
+	            });
+
+	            // 모달 표시
+	            $('#exampleModalToggle').modal('show');
+	        },
+	        error: function(xhr, status, error) {
+	            console.error("AJAX 오류: ", status, error);
+	        }
+	    });
+	});
+	
+});
 
 </script>
-
 
 <%@ include file="../include/footer.jsp"%>
 </body>

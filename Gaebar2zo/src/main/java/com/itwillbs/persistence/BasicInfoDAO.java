@@ -5,6 +5,7 @@ import java.util.List;
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
+import com.itwillbs.domain.WarehouseVO;
 
 public interface BasicInfoDAO {
 
@@ -52,5 +53,8 @@ public interface BasicInfoDAO {
 
 	// 창고 내부 삭제
 	public void warehouseCodeDelete(List<String> whNums) throws Exception;
+
+	// 창고 내부 재고 리스트 
+	public List<WarehouseVO> whInvenList(String wh_num) throws Exception;
 
 }

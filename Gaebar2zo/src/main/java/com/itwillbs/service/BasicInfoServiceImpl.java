@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
+import com.itwillbs.domain.WarehouseVO;
 import com.itwillbs.persistence.BasicInfoDAO;
 
 @Service
@@ -130,6 +131,13 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		logger.debug(" 창고 내부 렉 구역 삭제");
 		
 		bidao.warehouseCodeDelete(whNums);
+	}
+
+	@Override
+	public List<WarehouseVO> whInvenList(String wh_num) throws Exception {
+		logger.debug(" 창고 내부 재고 리스트 출력 ");
+		
+		return bidao.whInvenList(wh_num);
 	}
 	
 	

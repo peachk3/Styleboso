@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
+import com.itwillbs.domain.WarehouseVO;
 import com.itwillbs.service.BasicInfoService;
 import com.mysql.cj.xdevapi.Client;
 
@@ -117,7 +118,7 @@ public class BasicInfoController {
 	}
 
 	// ----------------------------------거래처 관리------------------------------------------------
-	//http://localhost:8088/Styleboso/basicInfo/clientList
+	//http://localhost:8088/basicInfo/clientList
 	@RequestMapping(value="/clientList",method=RequestMethod.GET)
 	public void clientList_GET(Model model) throws Exception{
 		logger.debug(" clientList_GET() 실행 ");
@@ -266,6 +267,20 @@ public class BasicInfoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("status", "error", "message", e.getMessage()));
         }
 	}
-
-
+	
+	// 창고 재고 리스트
+	@ResponseBody
+	@RequestMapping(value = "/whInven", method = RequestMethod.GET)
+	public ResponseEntity<List<WarehouseVO>> whInvenList(@RequestParam("wh_num") String wh_num, Model model) throws Exception{
+		
+		logger.debug(" whInvenList() 실행 ");
+		
+		List<WarehouseVO> whInvenList = bService.whInvenList(wh_num);
+		
+		model.addAttribute(whInvenList);
+		logger.debug(" whInv : " + whInvenList);
+		
+		return new ResponseEntity<>(whInvenList, HttpStatus.OK);
+	}
+	
 }

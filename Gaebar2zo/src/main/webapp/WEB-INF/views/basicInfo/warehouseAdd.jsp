@@ -15,10 +15,10 @@
 							<div>
 								<h5>창고 등록</h5>
 							</div>
-							<div class="col-md-3">
-								<label for="warehouseCode" class="form-label"> 창고 코드 </label> 
-								<input type="text" class="form-control" id="cli_code" readonly>
-							</div>
+<!-- 							<div class="col-md-3"> -->
+<!-- 								<label for="warehouseCode" class="form-label"> 창고 코드 </label>  -->
+<!-- 								<input type="text" class="form-control" id="cli_code" readonly> -->
+<!-- 							</div> -->
 							<div class="col-md-3">
 								<label for="s_cate_wh_code" class="form-label"> 창고 지역명 </label> 
 								<input type="text" class="form-control" id="s_cate_wh_code" name="s_cate_wh_code" maxlength="2" placeholder="ex) 김포 -> GP" required>

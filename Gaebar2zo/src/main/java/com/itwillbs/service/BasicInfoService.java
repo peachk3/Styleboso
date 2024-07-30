@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
+import com.itwillbs.domain.WarehouseVO;
 
 @Service
 public interface BasicInfoService {
@@ -54,6 +55,9 @@ public interface BasicInfoService {
 
 	// 창고 내부 삭제
 	public void deleteWareCode(List<String> whNums) throws Exception;
+
+	// 창고 -> 재고 리스트
+	public List<WarehouseVO> whInvenList(String wh_num) throws Exception;
 
 
 }

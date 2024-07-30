@@ -30,5 +30,8 @@ public class TransactionVO {
 	// InventoryChangeVO 조인
 	private List<InventoryChangeVO> inchangeList;
 	
+	// ClientVO 조인
+	private List<ClientVO> clientList;
+	
 	
 }

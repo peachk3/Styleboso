@@ -20,6 +20,7 @@
 		<!-- <collection property="goodsList" resultMap="goodsMap"></collection> -->
 		<collection property="itemList" resultMap="itemMap"></collection>
 		<collection property="inchangeList" resultMap="inchangeMap"></collection>
+		<collection property="clientList" resultMap="clientMap"></collection>
 	</resultMap>
 
 
@@ -51,6 +52,24 @@
 		<result property="tran_num" column="tran_num" />
 		<result property="inven_num" column="inven_num" />
 		<result property="inven_qty" column="inven_qty" />
+	</resultMap>
+	
+	<resultMap type="com.itwillbs.domain.ClientVO" id="clientMap">
+		<id property="cli_num" column="cli_num" />
+		<result property="cli_num" column="cli_num" />
+		<result property="cli_name" column="cli_name" />
+		<result property="cli_crn" column="cli_crn" />
+		<result property="cli_cate" column="cli_cate" />
+		<result property="cli_ind" column="cli_ind" />
+		<result property="cli_postCode" column="cli_postCode" />
+		<result property="cli_add1" column="cli_add1" />
+		<result property="cli_add2" column="cli_add2" />
+		<result property="cli_add3" column="cli_add3" />
+		<result property="cli_tel" column="cli_tel" />
+		<result property="cli_rep" column="cli_rep" />
+		<result property="cli_email" column="cli_email" />
+		<result property="pic_username" column="pic_username" />
+		<result property="cli_id" column="cli_id" />
 	</resultMap>
 
 
@@ -239,60 +258,68 @@
 	
 	<!-- 교환 리스트 호출 -->
 	<select id="exchangeList" resultMap="transMap">
-		select
-		tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
-		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
-		go.item_num,go.item_name,inven_num
-		from (select
-		tr.tran_num,top_tran_num,cli_num,pic_username,
-		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm, goods_num,
-		goods_qty,rec_date
-		from transaction tr
-		join transaction_goods trg
-		on tr.top_tran_num = trg.tran_num) tr
-		join (select item.item_num,
-		goods_num, item_name
-		from item join goods
-		on item.item_num = goods.item_num
-		where goods.item_num in (select item_num
-		from goods go
-		where goods_num in (select trg.goods_num
-		from transaction tr
-		join transaction_goods trg
-		on tr.top_tran_num = trg.tran_num))) go
-		on tr.goods_num = go.goods_num
-		join inventory_change ic
-		on tr.tran_num = ic.tran_num
-		WHERE tr.tran_num like 'EX%'
+		SELECT
+		    tr.tran_num, tr.top_tran_num, tr.cli_num, c.cli_name, tr.pic_username, tr.rec_date,
+		    tr.tran_date, tr.rel_date, tr.due_date, tr.pro_status, tr.tran_cate_code, tr.comm, 
+		    go.goods_num, tr.goods_qty, go.item_num, go.item_name, ic.inven_num
+		FROM (
+		    SELECT
+		        tr.tran_num, tr.top_tran_num, tr.cli_num, tr.pic_username,
+		        tr.tran_date, tr.rel_date, tr.due_date, tr.pro_status, tr.tran_cate_code, tr.comm, 
+		        trg.goods_num, trg.goods_qty, tr.rec_date
+		    FROM transaction tr
+		    JOIN transaction_goods trg ON tr.top_tran_num = trg.tran_num
+		) tr
+		JOIN client c ON tr.cli_num = c.cli_num
+		JOIN (
+		    SELECT item.item_num, goods.goods_num, item.item_name
+		    FROM item 
+		    JOIN goods ON item.item_num = goods.item_num
+		    WHERE goods.item_num IN (
+		        SELECT item_num
+		        FROM goods
+		        WHERE goods_num IN (
+		            SELECT trg.goods_num
+		            FROM transaction tr
+		            JOIN transaction_goods trg ON tr.top_tran_num = trg.tran_num
+		        )
+		    )
+		) go ON tr.goods_num = go.goods_num
+		JOIN inventory_change ic ON tr.tran_num = ic.tran_num 
+		WHERE tr.tran_num LIKE 'EX%'
 	</select>
 	
 	<!-- 반품 리스트 호출 -->
 	<select id="returnList" resultMap="transMap">
-		select
-		tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
-		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
-		go.item_num,go.item_name,inven_num
-		from (select
-		tr.tran_num,top_tran_num,cli_num,pic_username,
-		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm, goods_num,
-		goods_qty,rec_date
-		from transaction tr
-		join transaction_goods trg
-		on tr.top_tran_num = trg.tran_num) tr
-		join (select item.item_num,
-		goods_num, item_name
-		from item join goods
-		on item.item_num = goods.item_num
-		where goods.item_num in (select item_num
-		from goods go
-		where goods_num in (select trg.goods_num
-		from transaction tr
-		join transaction_goods trg
-		on tr.top_tran_num = trg.tran_num))) go
-		on tr.goods_num = go.goods_num
-		join inventory_change ic
-		on tr.tran_num = ic.tran_num
-		WHERE tr.tran_num like 'RE%'
+		SELECT
+		    tr.tran_num, tr.top_tran_num, tr.cli_num, c.cli_name, tr.pic_username, tr.rec_date,
+		    tr.tran_date, tr.rel_date, tr.due_date, tr.pro_status, tr.tran_cate_code, tr.comm, 
+		    go.goods_num, tr.goods_qty, go.item_num, go.item_name, ic.inven_num
+		FROM (
+		    SELECT
+		        tr.tran_num, tr.top_tran_num, tr.cli_num, tr.pic_username,
+		        tr.tran_date, tr.rel_date, tr.due_date, tr.pro_status, tr.tran_cate_code, tr.comm, 
+		        trg.goods_num, trg.goods_qty, tr.rec_date
+		    FROM transaction tr
+		    JOIN transaction_goods trg ON tr.top_tran_num = trg.tran_num
+		) tr
+		JOIN client c ON tr.cli_num = c.cli_num
+		JOIN (
+		    SELECT item.item_num, goods.goods_num, item.item_name
+		    FROM item 
+		    JOIN goods ON item.item_num = goods.item_num
+		    WHERE goods.item_num IN (
+		        SELECT item_num
+		        FROM goods
+		        WHERE goods_num IN (
+		            SELECT trg.goods_num
+		            FROM transaction tr
+		            JOIN transaction_goods trg ON tr.top_tran_num = trg.tran_num
+		        )
+		    )
+		) go ON tr.goods_num = go.goods_num
+		JOIN inventory_change ic ON tr.tran_num = ic.tran_num 
+		WHERE tr.tran_num LIKE 'RE%'
 	</select>
 
 

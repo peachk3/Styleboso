@@ -30,10 +30,10 @@
                             <div class="input-group-prepend">
                                 <select class="form-select custom-select-radius custom-select-width" id="searchType" name="searchType">
                                     <option value="" <c:if test="${empty searchType}">selected</c:if>>전체</option>
-                                    <option value="code" <c:if test="${searchType eq 'code'}">selected</c:if>>재고 번호</option>
+                                    <option value="code" <c:if test="${searchType eq 'code'}">selected</c:if>>입고 번호</option>
                                     <option value="name" <c:if test="${searchType eq 'name'}">selected</c:if>>품목명</option>
+                                    <option value="client" <c:if test="${searchType eq 'client'}">selected</c:if>>거래처명</option>
                                     <option value="warehouse" <c:if test="${searchType eq 'warehouse'}">selected</c:if>>창고명</option>
-                                    <option value="color" <c:if test="${searchType eq 'color'}">selected</c:if>>색상</option>
                                 </select>
                             </div>
                             <input type="text" class="form-control" placeholder="검색어를 입력하세요" name="keyword" value="${keyword}">
@@ -49,37 +49,38 @@
                 <tr>
                     <td>반품 번호</td>
                     <td>입고 번호</td>
-                    <td>품목 이름</td>
+                    <td>반품 거래처</td>
+                    <td>품목명</td>
                     <td>반품 수량</td>
                     <td>반품 일자</td>
-                    <td>보관 위치</td>
+                    <td>입고 일자</td>
                     <td>비고</td>
                     <td>상태</td>
                 </tr>
             </thead>
             <tbody>
-<%--                 <c:forEach var="sl" items="${sl}"> --%>
-<%--                     <c:forEach var="item" items="${sl.itemList}"> --%>
-<%--                         <c:forEach var="warehouse" items="${sl.warehouseList}"> --%>
-<%--                             <c:forEach var="goods" items="${sl.goodsList}"> --%>
-<%--                                 <tr class="table-row" data-item-code="${sl.inven_num}" data-item-name="${item.item_name}" data-goods-size="${goods.goods_size}" data-goods-color="${goods.goods_color}" data-wh-name="${warehouse.wh_name}" data-wh-zone="${warehouse.wh_zone}" data-wh-rack="${warehouse.wh_rack}" data-inven-qty="${sl.inven_qty}" > --%>
-<%--                                     <td>${sl.inven_num }</td> --%>
-<%--                                     <td>${item.item_name }</td> --%>
-<%--                                     <td>${goods.goods_size }</td> --%>
-<%--                                     <td>${goods.goods_color }</td> --%>
-<%--                                     <td>${warehouse.wh_name }</td> --%>
-<%--                                     <td>${warehouse.wh_zone }</td> --%>
-<%--                                     <td>${warehouse.wh_rack }</td> --%>
-<%--                                     <td>${sl.inven_qty }</td> --%>
-<!--                                 </tr> -->
-<%--                             </c:forEach> --%>
-<%--                         </c:forEach> --%>
-<%--                     </c:forEach> --%>
-<%--                 </c:forEach> --%>
+                <c:forEach var="re" items="${re}">
+                    <c:forEach var="item" items="${re.itemList}">
+                        <c:forEach var="inchange" items="${re.inchangeList}">
+                            <c:forEach var="goods" items="${item.tranGoodsList}">
+                                <tr class="table-row">
+                                    <td></td> <!-- 반품 번호 -->
+                                    <td>${re.tran_num }</td> <!-- 입고 번호 -->
+                                    <td>${item.item_name }</td> <!-- 품목 이름 -->
+                                    <td>${goods.goods_qty }</td> <!-- 반품 수량 -->
+                                    <td>${re.tran_date }</td> <!-- 반품 일자 -->
+                                    <td>${re.rec_date }</td> <!-- 입고 일자 -->
+                                    <td>${re.comm }</td> <!-- 비고 -->
+                                    <td>${re.pro_status }</td> <!-- 상태 -->
+                                </tr>
+                            </c:forEach>
+                        </c:forEach>
+                    </c:forEach>
+                </c:forEach>
             </tbody>
         </table>
 
-        <c:url var="pageUrl" value="/stock/status">
+        <c:url var="pageUrl" value="/stock/adjustment/return">
             <c:param name="searchType" value="${searchType}"/>
             <c:param name="keyword" value="${keyword}"/>
         </c:url>
@@ -109,31 +110,31 @@
         </nav>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="itemModalLabel">상세 정보</h5>
-                    <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p><strong>품목코드:</strong> <span id="modalItemCode"></span></p>
-                    <p><strong>품목명:</strong> <span id="modalItemName"></span></p>
-                    <p><strong>창고명:</strong> <span id="modalWhName"></span></p>
-                    <p><strong>구역명:</strong> <span id="modalWhZone"></span></p>
-                    <p><strong>재고위치:</strong> <span id="modalWhRack"></span></p>
-                    <p><strong>현재재고:</strong> <span id="modalInvenQty"></span></p>
-                    <p><strong>입고단가:</strong> <span id="modalPurchasePrice"></span></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--     Modal -->
+<!--     <div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModalLabel" aria-hidden="true"> -->
+<!--         <div class="modal-dialog"> -->
+<!--             <div class="modal-content"> -->
+<!--                 <div class="modal-header"> -->
+<!--                     <h5 class="modal-title" id="itemModalLabel">상세 정보</h5> -->
+<!--                     <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button> -->
+<!--                 </div> -->
+<!--                 <div class="modal-body"> -->
+<!--                     <p><strong>품목코드:</strong> <span id="modalItemCode"></span></p> -->
+<!--                     <p><strong>품목명:</strong> <span id="modalItemName"></span></p> -->
+<!--                     <p><strong>창고명:</strong> <span id="modalWhName"></span></p> -->
+<!--                     <p><strong>구역명:</strong> <span id="modalWhZone"></span></p> -->
+<!--                     <p><strong>재고위치:</strong> <span id="modalWhRack"></span></p> -->
+<!--                     <p><strong>현재재고:</strong> <span id="modalInvenQty"></span></p> -->
+<!--                     <p><strong>입고단가:</strong> <span id="modalPurchasePrice"></span></p> -->
+<!--                 </div> -->
+<!--                 <div class="modal-footer"> -->
+<!--                     <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--     </div> -->
 
-    <script>
+<!--     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const rows = document.querySelectorAll('#returnTable .table-row');
             rows.forEach(row => {
@@ -160,7 +161,7 @@
                 });
             });
         });
-    </script>
+    </script> -->
 
     <%@ include file="../../include/footer.jsp" %>
 </body>

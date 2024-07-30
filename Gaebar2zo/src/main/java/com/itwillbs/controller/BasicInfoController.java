@@ -268,6 +268,40 @@ public class BasicInfoController {
         }
 	}
 	
+	// 창고 상세보기
+	@ResponseBody
+	@RequestMapping(value = "/warehouseDetails", method = RequestMethod.GET)
+	public ResponseEntity<List<WarehouseCodeVO>> warehouseDetailsList(@RequestParam("s_cate_wh_code") String s_cate_wh_code, Model model) throws Exception {
+		logger.debug(" warehouseDetailsList() 실행");
+		
+		List<WarehouseCodeVO> warehouseDetailsList = bService.warehouseDetailsList(s_cate_wh_code);
+		
+		model.addAttribute("warehouseDetailsList", warehouseDetailsList);
+		
+		logger.debug("@@ 리스트 : " + warehouseDetailsList);
+		logger.debug(" s_cate_wh_code : " + s_cate_wh_code);
+		
+		return new ResponseEntity<>(warehouseDetailsList, HttpStatus.OK);
+	}
+	
+	// 창고 정보 수정
+	@ResponseBody
+	@RequestMapping(value = "/updateWhCode", method = RequestMethod.POST)
+	public ResponseEntity<String> updateWhCode(@RequestBody WarehouseCodeVO whcvo) throws Exception {
+		logger.debug(" updateWhCode() 실행 ");
+		
+		bService.updateWhCode(whcvo);
+		
+		 try {
+		        bService.updateWhCode(whcvo);
+		        return new ResponseEntity<>(" updated successfully", HttpStatus.OK);
+		    } catch (Exception e) {
+		        logger.error("Error updating", e);
+		        return new ResponseEntity<>("Error updating", HttpStatus.INTERNAL_SERVER_ERROR);
+		    }
+		
+	}
+	
 	// 창고 재고 리스트
 	@ResponseBody
 	@RequestMapping(value = "/whInven", method = RequestMethod.GET)

@@ -195,6 +195,20 @@
    		</foreach>
    	</delete>
    	
+	<!-- 창고 상세 보기 -->
+	<select id="warehouseDetailsList" parameterType="String" resultType="WarehouseCodeVo">
+		select * 
+		from warehouse_code
+		where s_cate_wh_code = #{s_cate_wh_code}
+	</select>
+	
+	<update id="updateWhCode">
+		update warehouse_code
+		set s_cate_wh_name=#{s_cate_wh_name}, wh_tel=#{wh_tel}, wh_postCode=#{wh_postCode}, wh_add1=#{wh_add1}, wh_add2=#{wh_add2}, wh_add3=#{wh_add3},
+			wh_man=#{wh_man}, wh_status=#{wh_status}
+		where s_cate_wh_code=#{s_cate_wh_code}
+	</update>
+   	
    	<select id="whInvenList" parameterType="String" resultMap="invenMap">
    		select inv.inven_num, inv.wh_num, inv.goods_num, inv.inven_qty, wa.wh_name, wa.wh_zone, wa.wh_rack, wa.wh_row, wa.wh_column
 		from inventory inv

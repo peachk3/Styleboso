@@ -146,6 +146,15 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 		 sqlSession.delete(NAMESPACE + "deleteWarehouseCode", whNums); 
 	}
 
+	// 창고 상세 보기
+	 @Override
+	 public List<WarehouseCodeVO> warehouseDetailsList(String s_cate_wh_code) {
+		 logger.debug(" warehouseDetailsList() 실행 ");
+		 
+		 return sqlSession.selectList(NAMESPACE + "warehouseDetailsList", s_cate_wh_code);
+	 }
+	  
+	 
 	// 창고 내부 재고 리스트
 	@Override
 	public List<WarehouseVO> whInvenList(String wh_num) throws Exception {
@@ -153,6 +162,14 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 		
 		return sqlSession.selectList(NAMESPACE + "whInvenList", wh_num);
 	}
+
+	@Override
+	public void updateWhCode(WarehouseCodeVO whcvo) {
+		logger.debug(" updateWhCode() 실행 ");
+		
+		sqlSession.update(NAMESPACE+"updateWhCode", whcvo);
+	}
+
 
 	 
 }

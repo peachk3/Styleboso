@@ -54,7 +54,13 @@ public interface BasicInfoDAO {
 	// 창고 내부 삭제
 	public void warehouseCodeDelete(List<String> whNums) throws Exception;
 
+	// 창고 상세보기
+	List<WarehouseCodeVO> warehouseDetailsList(String s_cate_wh_code);
+	
 	// 창고 내부 재고 리스트 
 	public List<WarehouseVO> whInvenList(String wh_num) throws Exception;
+
+	void updateWhCode(WarehouseCodeVO whcvo);
+
 
 }

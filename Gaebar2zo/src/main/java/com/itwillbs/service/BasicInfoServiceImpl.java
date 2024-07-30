@@ -133,11 +133,26 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		bidao.warehouseCodeDelete(whNums);
 	}
 
+	
+	@Override
+	public List<WarehouseCodeVO> warehouseDetailsList(String s_cate_wh_code) {
+		logger.debug(" 창고 상세보기 ");
+		
+		return bidao.warehouseDetailsList(s_cate_wh_code);
+	}
+
 	@Override
 	public List<WarehouseVO> whInvenList(String wh_num) throws Exception {
 		logger.debug(" 창고 내부 재고 리스트 출력 ");
 		
 		return bidao.whInvenList(wh_num);
+	}
+
+	@Override
+	public void updateWhCode(WarehouseCodeVO whcvo) {
+		logger.debug(" 창고 정보 수정 ");
+		
+		bidao.updateWhCode(whcvo);
 	}
 	
 	

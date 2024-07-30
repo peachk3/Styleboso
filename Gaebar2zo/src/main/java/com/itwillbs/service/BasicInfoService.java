@@ -56,8 +56,14 @@ public interface BasicInfoService {
 	// 창고 내부 삭제
 	public void deleteWareCode(List<String> whNums) throws Exception;
 
+	// 창고 상세보기
+	public List<WarehouseCodeVO> warehouseDetailsList(String s_cate_wh_code);
+	
 	// 창고 -> 재고 리스트
 	public List<WarehouseVO> whInvenList(String wh_num) throws Exception;
+
+	public void updateWhCode(WarehouseCodeVO whcvo);
+
 
 
 }

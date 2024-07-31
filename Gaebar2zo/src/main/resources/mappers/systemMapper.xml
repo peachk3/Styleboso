@@ -44,7 +44,14 @@
 	where s_cate_item_code=#{s_cate_item_code};
 </update>
 
-
+<!-- 공통 품목코드 리스트 (삭제) -->
+<delete id="deleteItemCode">
+	delete from item_code
+    where s_cate_item_code in
+    <foreach item="item_code" collection="list" open="(" separator="," close=")">
+        #{item_code}
+    </foreach> 
+</delete>
 
 <!-- 이메일 중복체크 -->
 <select id="emailCheck" parameterType="String" resultType="int" > 

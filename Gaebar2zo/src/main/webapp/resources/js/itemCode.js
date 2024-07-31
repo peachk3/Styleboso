@@ -59,6 +59,10 @@
     
     // saveItem 함수는 서버에 수정된 값을 저장합니다.
 	function saveItem() {
+		const token = $("meta[name='_csrf']").attr("content");
+	    const header = $("meta[name='_csrf_header']").attr("content");
+	    const name = $("#userName").val();
+	    
 	    if (!hasChanges()) {
 	        Swal.fire({
 	            icon: 'info',
@@ -109,11 +113,17 @@
     //================================
     //삭제기능
     function deleteSelectedItems(){
+	 const token = $("meta[name='_csrf']").attr("content");
+    const header = $("meta[name='_csrf_header']").attr("content");
+    const name = $("#userName").val();
     	 // '.item-checkbox:checked' 선택자를 사용해서 선택된 체크박스를 모두 가져오기
         const selectedCheckboxes = document.querySelectorAll('.item-checkbox:checked');
 
         // 선택된 체크박스의 값을 배열로 변환임
-        const selectedItems = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
+        const selectedItems = [];
+        selectedCheckboxes.forEach(function(checkbox) {
+            selectedItems.push(checkbox.value);
+        });
 
         console.log(selectedItems); // 선택된 항목의 값을 출력
         
@@ -123,7 +133,7 @@
         }
         Swal.fire({
             title: "삭제 확인",
-            text: "선택한 항목(${selectedItems.length}개)을 삭제하시겠습니까?",
+            text: "선택한 항목"+selectedItems.length+"개 삭제하시겠습니까?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: "예, 삭제합니다.",
@@ -133,6 +143,9 @@
             	
                 $.ajax({
                     url: "/system/deleteItemCode",
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
                     type: "POST",
                     data: { itemCodes: selectedItems },
                     traditional: true, // 배열을 쿼리 파라미터로 전송할 때 필요합니다.

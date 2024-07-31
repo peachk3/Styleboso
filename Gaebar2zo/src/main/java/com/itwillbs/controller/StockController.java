@@ -3,9 +3,7 @@ package com.itwillbs.controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
-
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -112,19 +110,47 @@ public class StockController {
 	    
 	}
 
-	@RequestMapping(value = "/getTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public Map<String, Object> getTransactionDetails(@RequestParam("tran_num") String tran_num) throws Exception {
+	@RequestMapping(value = "/getTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public Map<String, Object> getTransactionDetails(@RequestParam("tran_num") String tran_num, 
+	                                                 @RequestParam("top_tran_num") String top_tran_num) throws Exception {
+	    Map<String, Object> result = new HashMap<>();
+	    
+	    // 기본 거래 정보 가져오기
 	    Map<String, Object> details = sService.getTransactionDetails(tran_num);
+	    
+	    // 품목 정보 가져오기
+	    List<Map<String, Object>> items = sService.getTransactionItems(top_tran_num);
+	    
 	    // LocalDateTime을 String으로 변환
 	    LocalDateTime recDate = (LocalDateTime) details.get("rec_date");
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 	    String recDateString = recDate.format(formatter);
-	    // 변환된 String을 다시 맵에 추가
-	    details.put("rec_date", recDateString);
-	    return details;
+	    
+	    // 결과 맵에 모든 정보 추가
+	    result.putAll(details);
+	    result.put("rec_date", recDateString);
+	    result.put("items", items);
+	    
+	    logger.debug("details : " + details);
+	    logger.debug("items : " + items);
+	    logger.debug("result : " + result);
+	    
+	    logger.debug("tran_num: " + tran_num);
+	    logger.debug("top_tran_num: " + top_tran_num);
+	    
+	    return result;
 	}
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	// 입고 삭제
 	@ResponseBody

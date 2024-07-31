@@ -88,6 +88,15 @@ public class StockServiceImpl implements StockService{
 		return sdao.getTransactionDetails2(tran_num);
 	}
 
+
+	@Override
+	public List<Map<String, Object>> getTransactionItems(String top_tran_num) throws Exception {
+		logger.debug("입고 모달창 품목 정보 확인");
+		
+		
+		return sdao.getTransactionItems(top_tran_num);
+	}
+
 	
 
 //	@Override

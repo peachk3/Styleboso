@@ -87,7 +87,7 @@
                 <div class="modal-body">
                     <div class="search-container">
                         <div class="col-md-6">
-                            <label for="validationCustom01" class="form-label">발주리스트</label>
+                            <label for="validationCustom01" class="form-label">주문 리스트</label>
                             <input type="text" class="form-control" id="modal-tran_num" readonly>
                         </div>
                             <div class="col-md-3">
@@ -112,15 +112,41 @@
                             <label for="validationCustom06" class="form-label">담당자 명</label>
                             <input type="text" class="form-control" id="modal-user_per_name" readonly>
                         </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
+                        </div>
+
+					<div class="modal-body">
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>품목코드</th>
+										<th>품목명</th>
+										<th>수량</th>
+										<th>상위거래번호</th>
+										<th>비고</th>
+										<th>재고 번호</th>
+										<th>거래 번호</th>
+									</tr>
+								</thead>
+								<tbody id="modal-table-body">
+
+
+
+
+
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>
-    </div>
-
+	</div>
+	</div>
+	
     <%@ include file="../include/footer.jsp" %>
 </body>
 </html>
@@ -139,19 +165,22 @@ function formatDateForInput(dateStr) {
 }
 
 $(document).ready(function() {
-    // Add click event listener to the cells
     $(".clickable-cell").click(function() {
         var tran_num = $(this).closest("tr").find("td:nth-child(2)").text();
-        
+        var top_tran_num = $(this).closest("tr").find("td:nth-child(7)").text();
+
         $.ajax({
             url: '/stock/getTransactionDetails',
             type: 'GET',
-            data: { tran_num: tran_num },
+            data: { 
+                tran_num: tran_num,
+                top_tran_num: top_tran_num
+            },
             dataType: "json",
             success: function(response) {
-                console.log(response);  // 응답 데이터 확인
+                console.log("AJAX 응답:", response);
                 
-                // 각 요소에 값을 설정
+                // 기본 거래 정보 설정
                 $("#modal-tran_num").val(response.top_tran_num);
                 $("#modal-cli_num").val(response.cli_num);
                 $("#modal-cli_name").val(response.cli_name);
@@ -159,18 +188,71 @@ $(document).ready(function() {
                 $("#modal-pic_username").val(response.pic_username);
                 $("#modal-user_per_name").val(response.user_per_name);
                 
+                // 테이블 바디를 비웁니다.
+                $("#modal-table-body").empty();
+                
+                // 품목 정보 행 생성 및 추가
+//                 $(response.items).each(function(idx,item){
+//                 	 var row = `<tr>`;
+//                 	     row += `<td>${item.item_num}</td>`;
+//                 	     row += `<td>${item.item_name}</td>`;
+//                 	     row += `<td>${item.item_name}</td>`;
+//                 	     row += `<td>${item.item_name}</td>`;
+//                 	     row += `<td>${item.goods_qty}</td>`;
+//                 	     row += `<td>${item.top_tran_num}</td>`;
+//                 	     row += `<td>${item.comm || ''}</td>`;
+//                 	     row += `<td>${item.inven_num || ''}</td>`;
+//                 	     row += `<td>${item.tran_num || ''}</td>`;
+//                 	     row = `</tr>`;
+             
+//             		 $("#modal-table-body").append(row);	
+                	
+//                 });
+	             $(response.items).each(function(idx, item) {
+                    var row = `<tr>
+                                 <td>${item.item_num}</td>
+                                 <td>${item.item_name}</td>
+                                 <td>${item.item_name}</td>
+                                 <td>${item.item_name}</td>
+                                 <td>${item.goods_qty}</td>
+                                 <td>${item.top_tran_num}</td>
+                                 <td>${item.comm || ''}</td>
+                                 <td>${item.inven_num || ''}</td>
+                                 <td>${item.tran_num || ''}</td>
+                               </tr>`;
+                             
+                    tableBody.append(row);	
+                });
+
+//                 response.items.forEach(function(item) {
+// 		                    var row = `<tr>
+// 		                        <td>${item.item_num}</td>
+// 		                        <td>${item.item_name}</td>
+// 		                        <td>${item.goods_qty}</td>
+// 		                        <td>${item.top_tran_num}</td>
+// 		                        <td>${item.comm || ''}</td>
+// 		                        <td>${item.inven_num || ''}</td>
+// 		                        <td>${item.tran_num || ''}</td>
+// 		                    </tr>`; 
+                    
+//                     $("#modal-table-body").append(row);
+//                 });
+
+                // 모달을 엽니다.
                 $("#exampleModal1").modal("show");
             },
-            error: function() {
-                alert('Failed to fetch transaction details.');
+            error: function(error) {
+                console.log("에러 발생: ", error);
             }
         });
-    });
 
-    // Show/hide status buttons
+        
+        
+        
     $("#statusChangeBtn").click(function() {
         $(".status-buttons").toggle();
     });
+});
     
 	$("#deleteItemBtn").click(function(){
 		
@@ -189,7 +271,7 @@ $(document).ready(function() {
      // 중복 제거
         const uniqueItemNums = [...new Set(item_nums)];
      
-        console.log("최종 item_nums 배열:", item_nums);
+        console.log("최종 item_nums 배열:", item_nums);ㅓ
         
         if (item_nums.length === 0) {
             alert('삭제할 항목을 선택해주세요.');

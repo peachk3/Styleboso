@@ -72,48 +72,50 @@
 
 
 
- <!-- Modal -->
-    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">주문 리스트</h5>
-                    <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="search-container">
-                        <div class="col-md-6">
-                            <label for="validationCustom01" class="form-label">발주리스트</label>
-                            <input type="text" class="form-control" id="modal-tran_num" readonly>
-                        </div>
-                            <div class="col-md-3">
-                                <label for="validationCustom02" class="form-label">거래처 코드</label>
-                                <input type="text" class="form-control" id="modal-cli_num" readonly>
-                            </div>
-                            <div class="col-md-3">
-                                <label for="validationCustom03" class="form-label">거래처 명</label>
-                                <input type="text" class="form-control" id="modal-cli_name" readonly>
-                            </div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">주문 리스트</h5>
+                <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="search-container">
+                    <div class="col-md-6">
+                        <label for="validationCustom01" class="form-label">발주리스트</label>
+                        <input type="text" class="form-control" id="modal-tran_num" readonly>
                     </div>
-					<div class="col-md-6">
-						<label for="validationCustom04" class="form-label">출고 예정일</label> <input type="date" class="form-control" id="modal-rel_date" required>
-					</div>
-					<div class="col-md-3">
-                            <label for="validationCustom05" class="form-label">담당자 아이디</label>
-                            <input type="text" class="form-control" id="modal-pic_username" readonly>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="validationCustom06" class="form-label">담당자 명</label>
-                            <input type="text" class="form-control" id="modal-user_per_name" readonly>
-                        </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom02" class="form-label">거래처 코드</label>
+                        <input type="text" class="form-control" id="modal-cli_num" readonly>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom03" class="form-label">거래처 명</label>
+                        <input type="text" class="form-control" id="modal-cli_name" readonly>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
+                <div class="search-container">
+                    <div class="col-md-6">
+                        <label for="validationCustom04" class="form-label">출고 예정일</label>
+                        <input type="date" class="form-control" id="modal-rel_date" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom05" class="form-label">담당자 아이디</label>
+                        <input type="text" class="form-control" id="modal-pic_username" readonly>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom06" class="form-label">담당자 명</label>
+                        <input type="text" class="form-control" id="modal-user_per_name" readonly>
+                    </div>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
             </div>
         </div>
     </div>
+</div>
     
 <%@ include file="../include/footer.jsp" %>	
 </body>

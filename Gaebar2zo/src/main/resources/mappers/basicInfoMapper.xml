@@ -87,13 +87,6 @@
 	</select>
 
 	<!-- 품목 리스트 출력 -->
-	<!-- <select id="itemListALL" resultMap="itemMap">
-		select i.item_num, i.item_cli_code, i.item_name, i.item_purchase_price, i.item_sale_price, c.group_name, i.item_mat, i.comm
-		from item i
-		join item_code ic on i.item_cate_code = ic.s_cate_item_code
-		join code c on c.group_code = ic.m_cate_item_code
-	</select> -->
-	
     <select id="itemListALL" resultType="itemVO">
 	<![CDATA[
 	SELECT i.item_num, i.item_cli_code, i.item_name, i.item_purchase_price, i.item_sale_price, c.group_name, i.item_mat, i.comm

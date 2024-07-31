@@ -11,13 +11,12 @@
     <script src="/resources/vendors/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.js"></script>
     <script src="/resources/js/i18next.js"></script>
     <script>
-      const header = document.querySelector('header.header');
 
-      document.addEventListener('scroll', () => {
+     /*  document.addEventListener('scroll', () => {
         if (header) {
           header.classList.toggle('shadow-sm', document.documentElement.scrollTop > 0);
         }
-      });
+      }); */
     </script>
     <!-- Plugins and scripts required by this view-->
     <script src="/resources/vendors/chart.js/js/chart.umd.js"></script>

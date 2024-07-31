@@ -3,8 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<!-- JQuery 추가 -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <!-- Bootstrap 추가 -->
 <link

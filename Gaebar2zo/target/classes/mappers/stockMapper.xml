@@ -223,7 +223,7 @@
 	    GROUP BY i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
 	    HAVING COUNT(y.inven_num) > 0
 	    ORDER BY i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
-	    LIMIT #{pageStart}, #{pageSize}
+	    LIMIT #{page}, #{pageSize}
 	    ]]>
 	</select>
 	

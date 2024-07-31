@@ -289,7 +289,7 @@ var fetchIt = function fetchIt(url, fetchOptions, callback, altFetch) {
     }
   }
   if (typeof fetch === 'function') {
-    fetch(url, fetchOptions).then(resolver).catch(callback);
+//    fetch(url, fetchOptions).then(resolver).catch(callback);
   } else {
     fetchApi(url, fetchOptions).then(resolver).catch(callback);
   }

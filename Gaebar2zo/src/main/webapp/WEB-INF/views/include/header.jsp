@@ -13,22 +13,22 @@
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <title>Styleboso</title>
-    <link rel="apple-touch-icon" sizes="57x57" href="/resources/assets/favicon/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/resources/assets/favicon/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/resources/assets/favicon/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/resources/assets/favicon/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/resources/assets/favicon/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/resources/assets/favicon/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/resources/assets/favicon/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/resources/assets/favicon/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/resources/assets/favicon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/resources/assets/favicon/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/resources/assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/resources/assets/favicon/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/resources/assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="assets/favicon/manifest.json">
+    <link rel="apple-touch-icon" sizes="57x57" href="#">
+    <link rel="apple-touch-icon" sizes="60x60" href="#">
+    <link rel="apple-touch-icon" sizes="72x72" href="#">
+    <link rel="apple-touch-icon" sizes="76x76" href="#">
+    <link rel="apple-touch-icon" sizes="114x114" href="#">
+    <link rel="apple-touch-icon" sizes="120x120" href="#">
+    <link rel="apple-touch-icon" sizes="144x144" href="#">
+    <link rel="apple-touch-icon" sizes="152x152" href="#">
+    <link rel="apple-touch-icon" sizes="180x180" href="#">
+    <link rel="icon" type="image/png" sizes="192x192" href="#">
+    <link rel="icon" type="image/png" sizes="32x32" href="#">
+    <link rel="icon" type="image/png" sizes="96x96" href="#">
+    <link rel="icon" type="image/png" sizes="16x16" href="#">
+<!--     <link rel="manifest" href="assets/favicon/manifest.json"> -->
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
+    <meta name="msapplication-TileImage" content="#">
     <meta name="theme-color" content="#ffffff">
     <!-- Vendors styles-->
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/vendors/simplebar/css/simplebar.css">
@@ -134,7 +134,7 @@
           <div class="list-group list-group-flush">
             <div class="list-group-item border-start-4 border-start-secondary bg-body-tertiary text-center fw-bold text-body-secondary text-uppercase small" data-coreui-i18n="today">Today</div>
             <div class="list-group-item border-start-4 border-start-warning list-group-item-divider">
-              <div class="avatar avatar-lg float-end"><img class="avatar-img" src="/resources/assets/img/avatars/7.jpg" alt="user@email.com"></div>
+              <div class="avatar avatar-lg float-end"><img class="avatar-img" src="#" alt="user@email.com"></div>
               <div>Meeting with <strong>Lucas</strong></div><small class="text-body-secondary me-3">
                 <svg class="icon">
                   <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-calendar"></use>
@@ -144,7 +144,7 @@
                 </svg> Palo Alto, CA</small>
             </div>
             <div class="list-group-item border-start-4 border-start-info">
-              <div class="avatar avatar-lg float-end"><img class="avatar-img" src="/resources/assets/img/avatars/4.jpg" alt="user@email.com"></div>
+              <div class="avatar avatar-lg float-end"><img class="avatar-img" src="#" alt="user@email.com"></div>
               <div>Skype with <strong>Megan</strong></div><small class="text-body-secondary me-3">
                 <svg class="icon">
                   <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-calendar"></use>
@@ -163,11 +163,11 @@
                   <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-home"></use>
                 </svg> creativeLabs HQ</small>
               <div class="avatars-stack mt-2">
-                <div class="avatar avatar-xs"><img class="avatar-img" src="/resources/assets/img/avatars/2.jpg" alt="user@email.com"></div>
-                <div class="avatar avatar-xs"><img class="avatar-img" src="/resources/assets/img/avatars/3.jpg" alt="user@email.com"></div>
-                <div class="avatar avatar-xs"><img class="avatar-img" src="/resources/assets/img/avatars/4.jpg" alt="user@email.com"></div>
-                <div class="avatar avatar-xs"><img class="avatar-img" src="/resources/assets/img/avatars/5.jpg" alt="user@email.com"></div>
-                <div class="avatar avatar-xs"><img class="avatar-img" src="/resources/assets/img/avatars/6.jpg" alt="user@email.com"></div>
+                <div class="avatar avatar-xs"><img class="avatar-img" src="#" alt="user@email.com"></div>
+                <div class="avatar avatar-xs"><img class="avatar-img" src="#" alt="user@email.com"></div>
+                <div class="avatar avatar-xs"><img class="avatar-img" src="#" alt="user@email.com"></div>
+                <div class="avatar avatar-xs"><img class="avatar-img" src="#" alt="user@email.com"></div>
+                <div class="avatar avatar-xs"><img class="avatar-img" src="#" alt="user@email.com"></div>
               </div>
             </div>
             <div class="list-group-item border-start-4 border-start-success list-group-item-divider">
@@ -188,13 +188,13 @@
                   <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-home"></use>
                 </svg> creativeLabs HQ</small>
               <div class="avatars-stack mt-2">
-                <div class="avatar avatar-xs"><img class="avatar-img" src="/resources/assets/img/avatars/2.jpg" alt="user@email.com"></div>
-                <div class="avatar avatar-xs"><img class="avatar-img" src="/resources/assets/img/avatars/3.jpg" alt="user@email.com"></div>
-                <div class="avatar avatar-xs"><img class="avatar-img" src="/resources/assets/img/avatars/4.jpg" alt="user@email.com"></div>
-                <div class="avatar avatar-xs"><img class="avatar-img" src="/resources/assets/img/avatars/5.jpg" alt="user@email.com"></div>
-                <div class="avatar avatar-xs"><img class="avatar-img" src="/resources/assets/img/avatars/6.jpg" alt="user@email.com"></div>
-                <div class="avatar avatar-xs"><img class="avatar-img" src="/resources/assets/img/avatars/7.jpg" alt="user@email.com"></div>
-                <div class="avatar avatar-xs"><img class="avatar-img" src="/resources/assets/img/avatars/8.jpg" alt="user@email.com"></div>
+                <div class="avatar avatar-xs"><img class="avatar-img" src="#" alt="user@email.com"></div>
+                <div class="avatar avatar-xs"><img class="avatar-img" src="#" alt="user@email.com"></div>
+                <div class="avatar avatar-xs"><img class="avatar-img" src="#" alt="user@email.com"></div>
+                <div class="avatar avatar-xs"><img class="avatar-img" src="#" alt="user@email.com"></div>
+                <div class="avatar avatar-xs"><img class="avatar-img" src="#" alt="user@email.com"></div>
+                <div class="avatar avatar-xs"><img class="avatar-img" src="#" alt="user@email.com"></div>
+                <div class="avatar avatar-xs"><img class="avatar-img" src="#" alt="user@email.com"></div>
               </div>
             </div>
           </div>
@@ -202,7 +202,7 @@
         <div class="tab-pane p-3" id="messages" role="tabpanel">
           <div class="message">
             <div class="py-3 pb-5 me-3 float-start">
-              <div class="avatar"><img class="avatar-img" src="/resources/assets/img/avatars/7.jpg" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
+              <div class="avatar"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
             </div>
             <div><small class="text-body-secondary">Lukasz Holeczek</small><small class="text-body-secondary float-end mt-1">1:52 PM</small></div>
             <div class="text-truncate fw-bold">Lorem ipsum dolor sit amet</div><small class="text-body-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
@@ -210,7 +210,7 @@
           <hr>
           <div class="message">
             <div class="py-3 pb-5 me-3 float-start">
-              <div class="avatar"><img class="avatar-img" src="/resources/assets/img/avatars/7.jpg" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
+              <div class="avatar"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
             </div>
             <div><small class="text-body-secondary">Lukasz Holeczek</small><small class="text-body-secondary float-end mt-1">1:52 PM</small></div>
             <div class="text-truncate fw-bold">Lorem ipsum dolor sit amet</div><small class="text-body-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
@@ -218,7 +218,7 @@
           <hr>
           <div class="message">
             <div class="py-3 pb-5 me-3 float-start">
-              <div class="avatar"><img class="avatar-img" src="/resources/assets/img/avatars/7.jpg" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
+              <div class="avatar"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
             </div>
             <div><small class="text-body-secondary">Lukasz Holeczek</small><small class="text-body-secondary float-end mt-1">1:52 PM</small></div>
             <div class="text-truncate fw-bold">Lorem ipsum dolor sit amet</div><small class="text-body-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
@@ -226,7 +226,7 @@
           <hr>
           <div class="message">
             <div class="py-3 pb-5 me-3 float-start">
-              <div class="avatar"><img class="avatar-img" src="/resources/assets/img/avatars/7.jpg" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
+              <div class="avatar"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
             </div>
             <div><small class="text-body-secondary">Lukasz Holeczek</small><small class="text-body-secondary float-end mt-1">1:52 PM</small></div>
             <div class="text-truncate fw-bold">Lorem ipsum dolor sit amet</div><small class="text-body-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
@@ -234,7 +234,7 @@
           <hr>
           <div class="message">
             <div class="py-3 pb-5 me-3 float-start">
-              <div class="avatar"><img class="avatar-img" src="/resources/assets/img/avatars/7.jpg" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
+              <div class="avatar"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
             </div>
             <div><small class="text-body-secondary">Lukasz Holeczek</small><small class="text-body-secondary float-end mt-1">1:52 PM</small></div>
             <div class="text-truncate fw-bold">Lorem ipsum dolor sit amet</div><small class="text-body-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
@@ -409,7 +409,7 @@
               <div class="dropdown-menu dropdown-menu-end dropdown-menu-md pt-0" style="min-width: 24rem">
                 <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2" data-coreui-i18n="messagesCounter, { 'counter': 7 }">You have 4 messages</div><a class="dropdown-item" href="#">
                   <div class="d-flex">
-                    <div class="avatar flex-shrink-0 my-3 me-3"><img class="avatar-img" src="/resources/assets/img/avatars/1.jpg" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
+                    <div class="avatar flex-shrink-0 my-3 me-3"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
                     <div class="message text-wrap">
                       <div class="d-flex justify-content-between mt-1">
                         <div class="small text-body-secondary">Jessica Williams</div>
@@ -421,7 +421,7 @@
                   </div>
                 </a><a class="dropdown-item" href="#">
                   <div class="d-flex">
-                    <div class="avatar flex-shrink-0 my-3 me-3"><img class="avatar-img" src="/resources/assets/img/avatars/2.jpg" alt="user@email.com"><span class="avatar-status bg-warning"></span></div>
+                    <div class="avatar flex-shrink-0 my-3 me-3"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-warning"></span></div>
                     <div class="message text-wrap">
                       <div class="d-flex justify-content-between mt-1">
                         <div class="small text-body-secondary">Richard Johnson</div>
@@ -433,7 +433,7 @@
                   </div>
                 </a><a class="dropdown-item" href="#">
                   <div class="d-flex">
-                    <div class="avatar flex-shrink-0 my-3 me-3"><img class="avatar-img" src="/resources/assets/img/avatars/4.jpg" alt="user@email.com"><span class="avatar-status bg-secondary"></span></div>
+                    <div class="avatar flex-shrink-0 my-3 me-3"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-secondary"></span></div>
                     <div class="message text-wrap">
                       <div class="d-flex justify-content-between mt-1">
                         <div class="small text-body-secondary">Angela Rodriguez</div>
@@ -445,7 +445,7 @@
                   </div>
                 </a><a class="dropdown-item" href="#">
                   <div class="d-flex">
-                    <div class="avatar flex-shrink-0 my-3 me-3"><img class="avatar-img" src="/resources/assets/img/avatars/5.jpg" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
+                    <div class="avatar flex-shrink-0 my-3 me-3"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
                     <div class="message text-wrap">
                       <div class="d-flex justify-content-between mt-1">
                         <div class="small text-body-secondary">Jane Lewis</div>
@@ -457,7 +457,7 @@
                   </div>
                 </a><a class="dropdown-item" href="#">
                   <div class="d-flex">
-                    <div class="avatar flex-shrink-0 my-3 me-3"><img class="avatar-img" src="/resources/assets/img/avatars/3.jpg" alt="user@email.com"><span class="avatar-status bg-secondary"></span></div>
+                    <div class="avatar flex-shrink-0 my-3 me-3"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-secondary"></span></div>
                     <div class="message text-wrap">
                       <div class="d-flex justify-content-between mt-1">
                         <div class="small text-body-secondary">Ryan Miller</div>
@@ -540,7 +540,7 @@
               <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
             </li>
             <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                <div class="avatar avatar-md"><img class="avatar-img" src="/resources/assets/img/avatars/8.jpg" alt="user@email.com"></div>
+                <div class="avatar avatar-md"><img class="avatar-img" src="#" alt="user@email.com"></div>
               </a>
               <div class="dropdown-menu dropdown-menu-end pt-0">
                 <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2" data-coreui-i18n="account">Account</div><a class="dropdown-item" href="#">

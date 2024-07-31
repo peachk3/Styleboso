@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.ClientVO;
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
 import com.itwillbs.domain.WarehouseVO;
@@ -19,8 +20,10 @@ public interface BasicInfoService {
 	public List<ClientVO> cliListAll();
 
 	// 품목 리스트 출력
-	public List<ItemVO> itemListAll();
-
+	public List<ItemVO> itemListAll(Criteria cri) throws Exception;
+	
+	public int getTotalItemCount() throws Exception;
+	
 	// 거래처 사업자 번호 중복 확인
 	public boolean isCliCrnDuplicate(String cli_crn) throws Exception;
 
@@ -61,6 +64,9 @@ public interface BasicInfoService {
 
 	// 창고 수정
 	public void updateWhCode(WarehouseCodeVO whcvo) throws Exception;
+
+
+
 
 
 

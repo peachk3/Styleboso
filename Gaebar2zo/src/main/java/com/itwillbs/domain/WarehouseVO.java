@@ -15,6 +15,5 @@ public class WarehouseVO {
 	private String  wh_column;
 	private	String	wh_code;
 
-	
 	private List<InventoryVO> inventoryList;
 }

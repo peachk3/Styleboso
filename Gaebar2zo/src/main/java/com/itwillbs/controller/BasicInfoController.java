@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
+import com.itwillbs.domain.WarehouseVO;
 import com.itwillbs.service.BasicInfoService;
 import com.mysql.cj.xdevapi.Client;
 
@@ -117,7 +118,7 @@ public class BasicInfoController {
 	}
 
 	// ----------------------------------거래처 관리------------------------------------------------
-	//http://localhost:8088/Styleboso/basicInfo/clientList
+	//http://localhost:8088/basicInfo/clientList
 	@RequestMapping(value="/clientList",method=RequestMethod.GET)
 	public void clientList_GET(Model model) throws Exception{
 		logger.debug(" clientList_GET() 실행 ");
@@ -266,6 +267,39 @@ public class BasicInfoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("status", "error", "message", e.getMessage()));
         }
 	}
-
-
+	
+	// 창고 상세보기
+	@ResponseBody
+	@RequestMapping(value = "/warehouseDetails", method = RequestMethod.GET)
+	public ResponseEntity<List<WarehouseCodeVO>> warehouseDetailsList(@RequestParam("s_cate_wh_code") String s_cate_wh_code, Model model) throws Exception {
+		logger.debug(" warehouseDetailsList() 실행");
+		
+		List<WarehouseCodeVO> warehouseDetailsList = bService.warehouseDetailsList(s_cate_wh_code);
+		
+		model.addAttribute("warehouseDetailsList", warehouseDetailsList);
+		
+		logger.debug("@@ 리스트 : " + warehouseDetailsList);
+		logger.debug(" s_cate_wh_code : " + s_cate_wh_code);
+		
+		return new ResponseEntity<>(warehouseDetailsList, HttpStatus.OK);
+	}
+	
+	// 창고 정보 수정
+	@ResponseBody
+	@RequestMapping(value = "/updateWhCode", method = RequestMethod.POST)
+	public ResponseEntity<String> updateWhCode(@RequestBody WarehouseCodeVO whcvo) throws Exception {
+		logger.debug(" updateWhCode() 실행 ");
+		
+		bService.updateWhCode(whcvo);
+		
+		 try {
+		        bService.updateWhCode(whcvo);
+		        return new ResponseEntity<>(" updated successfully", HttpStatus.OK);
+		    } catch (Exception e) {
+		        logger.error("Error updating", e);
+		        return new ResponseEntity<>("Error updating", HttpStatus.INTERNAL_SERVER_ERROR);
+		    }
+		
+	}
+	
 }

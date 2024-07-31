@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
+import com.itwillbs.domain.WarehouseVO;
 
 @Repository
 public class BasicInfoDAOImpl implements BasicInfoDAO {
@@ -145,5 +146,23 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 		 sqlSession.delete(NAMESPACE + "deleteWarehouseCode", whNums); 
 	}
 
+	// 창고 상세 보기
+	 @Override
+	 public List<WarehouseCodeVO> warehouseDetailsList(String s_cate_wh_code) throws Exception {
+		 logger.debug(" warehouseDetailsList() 실행 ");
+		 
+		 return sqlSession.selectList(NAMESPACE + "warehouseDetailsList", s_cate_wh_code);
+	 }
+	  
+	// 창고 수정
+	@Override
+	public void updateWhCode(WarehouseCodeVO whcvo) throws Exception {
+		logger.debug(" updateWhCode() 실행 ");
+		
+		sqlSession.update(NAMESPACE+"updateWhCode", whcvo);
+	}
+
+
+	 
 }
 

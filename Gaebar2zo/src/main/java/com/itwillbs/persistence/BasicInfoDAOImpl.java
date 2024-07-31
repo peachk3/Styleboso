@@ -148,23 +148,15 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 
 	// 창고 상세 보기
 	 @Override
-	 public List<WarehouseCodeVO> warehouseDetailsList(String s_cate_wh_code) {
+	 public List<WarehouseCodeVO> warehouseDetailsList(String s_cate_wh_code) throws Exception {
 		 logger.debug(" warehouseDetailsList() 실행 ");
 		 
 		 return sqlSession.selectList(NAMESPACE + "warehouseDetailsList", s_cate_wh_code);
 	 }
 	  
-	 
-	// 창고 내부 재고 리스트
+	// 창고 수정
 	@Override
-	public List<WarehouseVO> whInvenList(String wh_num) throws Exception {
-		logger.debug(" whInvenList() 실행 ");
-		
-		return sqlSession.selectList(NAMESPACE + "whInvenList", wh_num);
-	}
-
-	@Override
-	public void updateWhCode(WarehouseCodeVO whcvo) {
+	public void updateWhCode(WarehouseCodeVO whcvo) throws Exception {
 		logger.debug(" updateWhCode() 실행 ");
 		
 		sqlSession.update(NAMESPACE+"updateWhCode", whcvo);

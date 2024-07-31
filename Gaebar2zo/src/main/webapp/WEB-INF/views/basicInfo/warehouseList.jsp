@@ -85,7 +85,7 @@
 					<td class="clickable-cell">${whc.m_cate_wh_code }${whc.s_cate_wh_code }</td>
 					<td class="clickable-cell">${whc.s_cate_wh_name }</td>
 					<td class="clickable-cell">${whc.wh_tel }</td>
-					<td class="clickable-cell">${whc.wh_add1 }${whc.wh_add2 }</td>
+					<td class="clickable-cell">${whc.wh_add1 } ${whc.wh_add2 } ${whc.wh_add3 }</td>
 					<td class="clickable-cell">${whc.wh_man }</td>
 					<td class="clickable-cell">
 						<c:choose>
@@ -123,37 +123,37 @@
 									<td><label for="validationCustom01" class="form-label"> 연락처 </label></td>
 									<td><input type="text" class="form-control" id="wh_tel" name="wh_tel" maxlength="11" placeholder="ex) 01012341234" readonly></td>
 								</tr>
-								<tr>
-									<td><label for="validationCustom05" class="form-label"> 창고 담당자 아이디 </label></td>
-									<td><input type="text" class="form-control" id="validationCustom05" data-coreui-toggle="modal" data-coreui-target="#exampleModalToggle2" required disabled></td>
-								</tr>
+<!-- 								<tr> -->
+<!-- 									<td><label for="validationCustom05" class="form-label"> 창고 담당자 아이디 </label></td> -->
+<!-- 									<td><input type="text" class="form-control" id="validationCustom05" data-coreui-toggle="modal" data-coreui-target="#exampleModalToggle2" required disabled></td> -->
+<!-- 								</tr> -->
 								<tr>
 									<td><label for="validationCustom06" class="form-label">창고 담당자 이름 </label></td>
 									<td><input type="text" class="form-control" id="validationCustom06" data-coreui-toggle="modal" name="wh_man" data-coreui-target="#exampleModalToggle2" required disabled></td>
 								</tr>
 								<tr>
-									<td><label for="cli_post_code" class="form-label">우편번호</label></td>
+									<td><label for="validationCustom03" class="form-label">우편번호</label></td>
 									<td>
 										<div class="d-flex">
 											<input type="text" class="form-control" id="sample6_postcode" name="wh_postCode" readonly> 
-											<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" disabled>
+											<button type="button" id="postCodeButton" onclick="sample6_execDaumPostcode()" disabled>찾기</button>
 										</div>
 									</td>
 								</tr>
 								<tr>
 									<td><label for="validationCustom03" class="form-label">주소</label></td>
-									<td><input type="text" class="form-control" id="sample6_address" readonly></td>
+									<td><input type="text" class="form-control" id="sample6_address" name="wh_add1" readonly></td>
 								</tr>
 								<tr>
 									<td><label for="validationCustom03" class="form-label">상세 주소</label></td>
-									<td><input type="text" class="form-control" id="sample6_detailAddress" readonly></td>
+									<td><input type="text" class="form-control" id="sample6_detailAddress" name="wh_add2" readonly></td>
 								</tr>
 								<tr>
 									<td><label for="validationCustom03" class="form-label">참고 항목</label></td>
-									<td><input type="text" class="form-control" id="sample6_extraAddress" readonly></td>
+									<td><input type="text" class="form-control" id="sample6_extraAddress" name="wh_add3" readonly></td>
 								</tr>
 								<tr>
-									<td><label for="validationCustom01" class="form-label"> 현재 상태 </label></td>
+									<td><label for="validationCustom03" class="form-label"> 현재 상태 </label></td>
 									<td>
 										<input type="radio" id="wh_statusOk" name="wh_status" value="1" required disabled>
                                         <label for="wh_statusOk">사용중</label>
@@ -175,51 +175,6 @@
 		</div>
 	</div>
 
-	<div class="section sectionA" data-wh_num="GPA11A" class="sectionA" >
-        Section A
-    </div>
-    <div class="section sectionB" onclick="handleClick('Section B')">
-        Section B
-    </div>
-    <div class="section sectionC" onclick="handleClick('Section C')">
-        Section C
-    </div>
-    <div class="section sectionD" onclick="handleClick('Section D')">
-        Section D
-    </div>
-
-<div class="modal fade" id="exampleModalToggle3" data-coreui-backdrop="static" data-coreui-keyboard="false" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalToggleLabel"> 재고 보기</h5>
-               <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>품목코드</th>
-                            <th>재고수량</th>
-                            <th>창고 이름</th>
-                            <th>창고 구역</th>
-                            <th>창고 렉</th>
-                            <th>창고 열</th>
-                            <th>창고 번</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- JavaScript에서 행 삽입 -->
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
-            </div>
-        </div>
-    </div>
-</div>
 	
 <!-- 담당자 선택 모달창 -->
 <div class="modal fade" id="exampleModalToggle2" data-coreui-backdrop="static" data-coreui-keyboard="false" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
@@ -233,6 +188,7 @@
 					<table class="table table-hover" id="modal2-table">
 						<thead class="table-light">
 							<tr>
+								<th scope="col"></th>
 								<th scope="col"></th>
 								<th scope="col">담당자 아이디</th>
 								<th scope="col">담당자 명</th>
@@ -399,7 +355,7 @@ $(document).ready(function(){
                 $("#wh_tel").val(whCode.wh_tel);
                 $("#sample6_postcode").val(whCode.wh_postCode);
                 $("#sample6_address").val(whCode.wh_add1);
-                $("#sample6_detailAddres").val(whCode.wh_add2);
+                $("#sample6_detailAddress").val(whCode.wh_add2);
                 $("#sample6_extraAddress").val(whCode.wh_add3);
                 $("#validationCustom06").val(whCode.wh_man);
                 $("#wh_status").val(whCode.wh_status);
@@ -532,10 +488,10 @@ $(document).ready(function(){
                 wh_tel: $("#wh_tel").val(),
                 wh_postCode: $("#sample6_postcode").val(),
                 wh_add1: $("#sample6_address").val(),
-                wh_add2: $("#sample6_detailAddres").val(),
+                wh_add2: $("#sample6_detailAddress").val(),
                 wh_add3: $("#sample6_extraAddress").val(),
                 wh_man: $("#validationCustom06").val(),
-                wh_status: $("#wh_status").val()
+                wh_status: $("input[name='wh_status']:checked").val()
             };
         
         $.ajax({
@@ -636,52 +592,6 @@ $(document).ready(function(){
 	        }
 	    });
 	}
-	
-	$(".sectionA").click(function() {
-	    var wh_num = $(this).data("wh_num");
-	    alert('WH num ' + wh_num);
-
-	    $.ajax({
-	        url: '/basicInfo/whInven',
-	        type: 'GET',
-	        data: { wh_num: wh_num },
-	        dataType: "json",
-	        success: function(response) {
-	            // 기존 테이블 내용 비우기
-	            var tableBody = $('#exampleModalToggle3 .modal-body table tbody');
-	            tableBody.empty();
-	            console.log(response);
-
-	            // 서버에서 받은 데이터로 테이블 내용 채우기
-	            $.each(response, function(index, item) {
-	                var row = $('<tr></tr>');
-	                row.append('<td><input type="checkbox"></td>');
-	                row.append('<td>' + item.goods_num + '</td>');
-	                row.append('<td>' + item.inven_qty + '</td>');
-
-	                if (item.warehouseList && item.warehouseList.length > 0) {
-	                    $.each(item.warehouseList, function(index, wh) {
-	                        row.append('<td>' + wh.wh_name + '</td>');
-	                        row.append('<td>' + wh.wh_zone + '</td>');
-	                        row.append('<td>' + wh.wh_rack + '</td>');
-	                        row.append('<td>' + wh.wh_row + '</td>');
-	                        row.append('<td>' + wh.wh_column + '</td>');
-	                    });
-	                } else {
-	                    // warehouseList가 없거나 빈 경우
-	                    row.append('<td colspan="5">정보 없음</td>');
-	                }
-	                tableBody.append(row);
-	            });
-
-	            // 모달 표시
-	            $('#exampleModalToggle3').modal('show');
-	        },
-	        error: function(xhr, status, error) {
-	            console.error("AJAX 오류: ", status, error);
-	        }
-	    });
-	});
 	
 });
 

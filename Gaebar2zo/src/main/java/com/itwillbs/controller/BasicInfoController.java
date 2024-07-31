@@ -302,19 +302,4 @@ public class BasicInfoController {
 		
 	}
 	
-	// 창고 재고 리스트
-	@ResponseBody
-	@RequestMapping(value = "/whInven", method = RequestMethod.GET)
-	public ResponseEntity<List<WarehouseVO>> whInvenList(@RequestParam("wh_num") String wh_num, Model model) throws Exception{
-		
-		logger.debug(" whInvenList() 실행 ");
-		
-		List<WarehouseVO> whInvenList = bService.whInvenList(wh_num);
-		
-		model.addAttribute(whInvenList);
-		logger.debug(" whInv : " + whInvenList);
-		
-		return new ResponseEntity<>(whInvenList, HttpStatus.OK);
-	}
-	
 }

@@ -149,6 +149,19 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		bidao.updateWhCode(whcvo);
 	}
 	
+	@Override
+	public List<WarehouseVO> whInvenList(String wh_num) throws Exception {
+		logger.debug(" 창고 내부 재고 리스트 출력 ");
+		
+		return bidao.whInvenList(wh_num);
+	}
+
+	@Override
+	public List<WarehouseVO> whZoneListAll(String wh_code, String wh_zone) throws Exception {
+		logger.debug(" 창고 구역 리스트 출력 ");
+		
+		return bidao.whZoneListAll(wh_code, wh_zone);
+	}
 	
 	
 }

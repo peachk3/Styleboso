@@ -1,6 +1,8 @@
 package com.itwillbs.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -162,6 +164,24 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 		sqlSession.update(NAMESPACE+"updateWhCode", whcvo);
 	}
 
+	// 창고 내부 재고 리스트
+	@Override
+	public List<WarehouseVO> whInvenList(String wh_num) throws Exception {
+		logger.debug(" whInvenList() 실행 ");
+		
+		return sqlSession.selectList(NAMESPACE + "whInvenList", wh_num);
+	}
+
+	@Override
+	public List<WarehouseVO> whZoneListAll(String wh_code, String wh_zone) throws Exception {
+		logger.debug(" whZoneListAll() 실행 ");
+		
+		Map<String, Object> params = new HashMap<>();
+		params.put("wh_code", wh_code);
+		params.put("wh_zone", wh_zone);
+		
+		return sqlSession.selectList(NAMESPACE + "whZoneListAll", params);
+	}
 
 	 
 }

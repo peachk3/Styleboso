@@ -60,5 +60,10 @@ public interface BasicInfoDAO {
 	// 창고 수정
 	public void updateWhCode(WarehouseCodeVO whcvo) throws Exception;
 
+	// 창고 내부 재고 리스트 
+	public List<WarehouseVO> whInvenList(String wh_num) throws Exception;
+
+	public List<WarehouseVO> whZoneListAll(String wh_code, String wh_zone) throws Exception;
+
 
 }

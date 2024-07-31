@@ -196,7 +196,7 @@
    	</delete>
    	
 	<!-- 창고 상세 보기 -->
-	<select id="warehouseDetailsList" parameterType="String" resultType="WarehouseCodeVo">
+	<select id="warehouseDetailsList" parameterType="String" resultType="WarehouseCodeVO">
 		select * 
 		from warehouse_code
 		where s_cate_wh_code = #{s_cate_wh_code}
@@ -214,6 +214,12 @@
 		from inventory inv
 		join warehouse wa on inv.wh_num = wa.wh_num
 		where inv.wh_num=#{wh_num};
+   	</select>
+   	
+   	<select id="whZoneListAll" parameterType="map" resultType="WarehouseVO">
+   		select wh_name, wh_zone, wh_rack, wh_row, wh_column, wh_code
+		from warehouse
+		where wh_code=#{wh_code} and wh_zone=#{wh_zone}
    	</select>
    	
 </mapper>

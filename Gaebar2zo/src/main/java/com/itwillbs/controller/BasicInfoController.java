@@ -302,4 +302,45 @@ public class BasicInfoController {
 		
 	}
 	
+	// ===================================================================================
+	
+	// 창고 페이지
+	@RequestMapping(value = "/warehouse", method = RequestMethod.GET)
+	public void warehouse_GET() throws Exception{
+		logger.debug(" warehouse 페이지 ");
+		
+	}
+	
+	// 창고 구역 리스트
+	@ResponseBody
+	@RequestMapping(value = "/whZoneList", method = RequestMethod.GET)
+	public List<WarehouseVO> whZoneList_GET(@RequestParam("wh_code") String wh_code, @RequestParam("wh_zone") String wh_zone, Model model) throws Exception{
+		List<WarehouseVO> whZoneList = bService.whZoneListAll(wh_code, wh_zone);
+		
+		model.addAttribute("whZoneList", whZoneList);
+		logger.debug("wh_code : " + wh_code);
+		logger.debug("wh_zone : " + wh_zone);
+		
+		logger.debug(" whZoneList : "  + whZoneList);
+		return whZoneList;
+	}
+	
+	// 창고 재고 리스트
+	@ResponseBody
+	@RequestMapping(value = "/whInven", method = RequestMethod.GET)
+	public ResponseEntity<List<WarehouseVO>> whInvenList(@RequestParam("wh_num") String wh_num, Model model) throws Exception{
+		
+		logger.debug(" whInvenList() 실행 ");
+		
+		List<WarehouseVO> whInvenList = bService.whInvenList(wh_num);
+		
+		model.addAttribute(whInvenList);
+		logger.debug(" whInv : " + whInvenList);
+		
+		return new ResponseEntity<>(whInvenList, HttpStatus.OK);
+	}
+
+	
+	
+	
 }

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.ClientVO;
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
 import com.itwillbs.domain.WarehouseVO;
@@ -42,10 +43,16 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 
 	// 품목 리스트 출력
 	@Override
-	public List<ItemVO> itemListAll() {
+	public List<ItemVO> itemListAll(Criteria cri) throws Exception {
 		logger.debug(" itemListAll() 실행 ");
 
-		return sqlSession.selectList(NAMESPACE + "itemListALL");
+		return sqlSession.selectList(NAMESPACE + "itemListALL", cri);
+	}
+
+	@Override
+	public int getTotalItemCount() throws Exception {
+		logger.debug(" getTotalItemCount() 실행 ");
+		return sqlSession.selectOne(NAMESPACE+"totalItemCount");
 	}
 
 	// 거래처 사업자 번호 중복 확인

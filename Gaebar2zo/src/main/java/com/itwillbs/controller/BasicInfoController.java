@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.ClientVO;
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.ItemVO;
+import com.itwillbs.domain.PageVO;
 import com.itwillbs.domain.WarehouseCodeVO;
 import com.itwillbs.domain.WarehouseVO;
 import com.itwillbs.service.BasicInfoService;
@@ -37,16 +39,39 @@ public class BasicInfoController {
 	
 	// 품목 관리
 	//http://localhost:8088/basicInfo/itemList
-	@RequestMapping(value="/itemList",method=RequestMethod.GET)
-	public void itemList_GET(Model model) throws Exception{
-		logger.debug(" itemList_GET() 실행 ");
+	@RequestMapping(value="/itemList", method=RequestMethod.GET)
+	public String itemList_GET(Criteria cri, Model model,
+	                           @RequestParam(value="searchType", required = false) String searchType,
+	                           @RequestParam(value="keyword", required = false) String keyword) throws Exception {
+	    logger.debug(" itemList_GET() 실행 ");
+	    logger.debug(" cri " + cri);
 
-		List<ItemVO> itemList = bService.itemListAll();
-		
-		model.addAttribute("itemList", itemList);
-		
-		logger.debug("@@@@@@@ itemList : " + itemList);
+	    // 검색 기능
+	    if(searchType != null && keyword != null && !keyword.trim().isEmpty()) {
+	        cri.setSearchType(searchType);
+	        cri.setKeyword(keyword);
+	    }
+
+	    List<ItemVO> itemList = bService.itemListAll(cri);
+	    logger.debug(" size : " + itemList.size());
+
+	    // 하단 페이징처리 정보객체 생성
+	    PageVO pageVO = new PageVO();
+	    pageVO.setCri(cri);
+	    pageVO.setTotalCount(bService.getTotalItemCount());
+	    logger.debug(" cri " + pageVO.getCri());
+
+	    // 연결된 뷰페이지로 정보 전달
+	    model.addAttribute("itemList", itemList);
+	    model.addAttribute("pageVO", pageVO);
+//	    model.addAttribute("searchType", searchType);
+//	    model.addAttribute("keyword", keyword);
+
+	    logger.debug("@@@@@@@ itemList : " + itemList);
+
+	    return "basicInfo/itemList";
 	}
+	
 
 	// 품목 추가 페이지
 	@RequestMapping(value="/itemAdd",method=RequestMethod.GET)

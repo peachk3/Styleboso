@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.ClientVO;
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
 import com.itwillbs.domain.WarehouseVO;
@@ -40,10 +41,15 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 
 	// 품목 리스트 출력
 	@Override
-	public List<ItemVO> itemListAll() {
+	public List<ItemVO> itemListAll(Criteria cri) throws Exception {
 		logger.debug(" 품목 리스트 조회 ");
-		
-		return bidao.itemListAll();
+		return bidao.itemListAll(cri);
+	}
+	
+	@Override
+	public int getTotalItemCount() throws Exception {
+		logger.debug(" getTotalItemCount() 실행 ");
+		return bidao.getTotalItemCount();
 	}
 
 	// 사업자 번호 중복 조회

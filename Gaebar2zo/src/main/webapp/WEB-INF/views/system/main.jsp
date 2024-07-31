@@ -487,7 +487,7 @@
                       <tbody>
                         <tr class="align-middle">
                           <td class="text-center">
-                            <div class="avatar avatar-md"><img class="avatar-img" src="/resources/assets/img/avatars/1.jpg" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
+                            <div class="avatar avatar-md"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
                           </td>
                           <td>
                             <div class="text-nowrap">Yiorgos Avraamu</div>
@@ -529,7 +529,7 @@
                         </tr>
                         <tr class="align-middle">
                           <td class="text-center">
-                            <div class="avatar avatar-md"><img class="avatar-img" src="/resources/assets/img/avatars/2.jpg" alt="user@email.com"><span class="avatar-status bg-danger-gradient"></span></div>
+                            <div class="avatar avatar-md"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-danger-gradient"></span></div>
                           </td>
                           <td>
                             <div class="text-nowrap">Avram Tarasios</div>
@@ -571,7 +571,7 @@
                         </tr>
                         <tr class="align-middle">
                           <td class="text-center">
-                            <div class="avatar avatar-md"><img class="avatar-img" src="/resources/assets/img/avatars/3.jpg" alt="user@email.com"><span class="avatar-status bg-warning-gradient"></span></div>
+                            <div class="avatar avatar-md"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-warning-gradient"></span></div>
                           </td>
                           <td>
                             <div class="text-nowrap">Quintin Ed</div>
@@ -613,7 +613,7 @@
                         </tr>
                         <tr class="align-middle">
                           <td class="text-center">
-                            <div class="avatar avatar-md"><img class="avatar-img" src="/resources/assets/img/avatars/4.jpg" alt="user@email.com"><span class="avatar-status bg-secondary-gradient"></span></div>
+                            <div class="avatar avatar-md"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-secondary-gradient"></span></div>
                           </td>
                           <td>
                             <div class="text-nowrap">Enéas Kwadwo</div>
@@ -655,7 +655,7 @@
                         </tr>
                         <tr class="align-middle">
                           <td class="text-center">
-                            <div class="avatar avatar-md"><img class="avatar-img" src="/resources/assets/img/avatars/5.jpg" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
+                            <div class="avatar avatar-md"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
                           </td>
                           <td>
                             <div class="text-nowrap">Agapetus Tadeáš</div>
@@ -697,7 +697,7 @@
                         </tr>
                         <tr class="align-middle">
                           <td class="text-center">
-                            <div class="avatar avatar-md"><img class="avatar-img" src="/resources/assets/img/avatars/6.jpg" alt="user@email.com"><span class="avatar-status bg-danger-gradient"></span></div>
+                            <div class="avatar avatar-md"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-danger-gradient"></span></div>
                           </td>
                           <td>
                             <div class="text-nowrap">Friderik Dávid</div>

@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
-<!-- JQuery 추가 -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <!-- sweet alert 추가 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

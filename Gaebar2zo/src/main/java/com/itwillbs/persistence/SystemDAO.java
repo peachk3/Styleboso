@@ -24,6 +24,9 @@ public interface SystemDAO {
 	
 	//공통 품목코드 수정(update) 
 	void updateItemCode(ItemCodeVO icVo) throws Exception;
+	
+	//공통 품목코드 삭제
+	void deleteItemCode(List<String> itemCodes) throws Exception;
 
 	 
 

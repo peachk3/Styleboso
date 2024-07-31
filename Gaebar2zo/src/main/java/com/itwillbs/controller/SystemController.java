@@ -121,9 +121,7 @@ public class SystemController {
 		
 		model.addAttribute("codeList", codeList);
 		
-
 	}
-
 	//==========================================================================
 	// 품목 분류 코드 관리
 	
@@ -146,13 +144,26 @@ public class SystemController {
 	 @ResponseBody
 	@RequestMapping(value = "/updateItemCode", method = RequestMethod.POST)
 	public ResponseEntity<String> updateItem(@RequestBody ItemCodeVO icVo) throws Exception {
-		 
+		 logger.debug(" @@@ updateItem() 실행");
 		 sService.updateItemCode(icVo);
 		 
 		logger.debug("공통 품목 코드 출력 성공: {}" + icVo);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	 
+	 //그룹 -> 품목코드(체크) 삭제
+	 @ResponseBody
+	 @RequestMapping(value = "/deleteItemCode", method = RequestMethod.POST)
+	 public String deleteItemCode(@RequestParam("itemCodes")List<String>itemCodes) {
+		 try {
+	            sService.deleteItemCode(itemCodes);
+	            return "success";
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return "error";
+	        }
+	 }
 	// ==========================================================================
 	
 	 

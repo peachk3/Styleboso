@@ -74,6 +74,14 @@ public class SystemDAOImpl implements SystemDAO{
 		sqlSession.delete(NAMESPACE + "deleteItemCode", itemCodes);
 	}
 
+	//공통 품목코드 등록
+	@Override
+	public void saveItemCode(ItemCodeVO icVo) throws Exception {
+		logger.debug("service ->DAO 공통 품목 코드(등록) 실행");
+		
+		sqlSession.insert(NAMESPACE + "saveItemCode",icVo);
+	}
+
 	
 	
 	  

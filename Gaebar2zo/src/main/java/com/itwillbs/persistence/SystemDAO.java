@@ -28,6 +28,9 @@ public interface SystemDAO {
 	//공통 품목코드 삭제
 	void deleteItemCode(List<String> itemCodes) throws Exception;
 
+	//공통 품목코드 등록
+	void saveItemCode(ItemCodeVO icVo) throws Exception;
+
 	 
 
 

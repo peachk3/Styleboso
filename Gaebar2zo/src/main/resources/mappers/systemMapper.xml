@@ -53,6 +53,20 @@
     </foreach> 
 </delete>
 
+<!-- 공통 품목코드 리스트 (등록) -->
+
+<insert id="saveItemCode" parameterType="ItemCodeVO">
+	INSERT INTO item_code (s_cate_item_code, s_cate_item_name)
+	SELECT #{s_cate_item_code}, #{s_cate_item_name}
+	FROM dual
+	WHERE #{m_cate_item_code} = SUBSTRING(#{s_cate_item_code}, 1, 2)
+<!-- <insert id="saveItemCode" parameterType="ItemCodeVO"> -->
+<!-- 	insert into item_code (s_cate_item_code, s_cate_item_name) -->
+<!-- 	values (#{s_cate_item_code}, #{s_cate_item_name}) -->
+<!-- 	where m_cate_item_code = #{m_cate_item_code}; -->
+<!-- </insert> -->
+</insert>
+
 <!-- 이메일 중복체크 -->
 <select id="emailCheck" parameterType="String" resultType="int" > 
 	select count (*) from users

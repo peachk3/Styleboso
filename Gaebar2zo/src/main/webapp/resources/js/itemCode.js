@@ -2,18 +2,116 @@
  * item.jsp 랑 연결 - 공통 품목코드 모달창
  * 
  */
-	const token = $("meta[name='_csrf']").attr("content");
-    const header = $("meta[name='_csrf_header']").attr("content");
-    const name = $("#userName").val();
+	
     
     var originalItemCode = '';
     var originalItemName = '';
     var originalValues = {};
 
-    function insertItemCodeBtn() {
-        // 등록 버튼 클릭 시 모달 창을 여는 로직을 여기에 작성하세요.
+    //================================
+    // 등록 기능
+    // 등록모달
+    function insertItemCode() { //버튼 onclick=insertItemCode()
+	    $('#insertItemModal').modal('show');
     }
     
+    //유효성 검사
+    function validateItemCode() {
+        var itemCodeInput = document.getElementById('s_cate_item_code');
+        var itemCode = itemCodeInput.value.toUpperCase(); // 대문자로 변환
+        itemCodeInput.value = itemCode;
+        
+        //기입x
+        if (itemCode.length === 0) {
+            document.getElementById('validationMessage').innerHTML = '';
+            return;
+        }
+
+        checkDuplication(itemCode);
+    } 
+    
+    function checkDuplication(itemCode) {
+        var validationMessage = document.getElementById('validationMessage');
+
+        $.ajax({
+            url: '/system/checkItemCode',  // 서버의 실제 URL로 변경
+            type: 'POST',
+            data: JSON.stringify({ itemCode: itemCode }),
+            contentType: 'application/json',
+            success: function(response) {
+                if (response.isDuplicate) {
+                    validationMessage.innerHTML = '유효하지 않는 코드입니다';
+                    validationMessage.style.color = 'red';
+                } else {
+                    validationMessage.innerHTML = '유효한 코드입니다';
+                    validationMessage.style.color = 'green';
+                }
+            },
+            error: function() {
+                validationMessage.innerHTML = '서버와의 통신 중 오류가 발생했습니다';
+                validationMessage.style.color = 'red';
+            }
+        });
+    }
+    
+    //등록기능 - 저장 onclick=saveNewItemCode()
+    function saveNewItemCode(){ 
+    	const token = $("meta[name='_csrf']").attr("content");
+	    const header = $("meta[name='_csrf_header']").attr("content");
+	    const name = $("#userName").val();
+	    
+	    var s_cate_item_code = $('#new_s_cate_item_code').val().trim();
+	    var s_cate_item_name = $('#new_s_cate_item_name').val().trim();
+    	
+    	
+    	if(s_cate_item_code === '' || s_cate_item_name ===''){
+    		 Swal.fire({
+ 	            icon: 'info',
+ 	            title: '변경 사항 없음',
+ 	            text: '변경된 내용이 없습니다.'
+ 	        }).then(() => {
+ 	            $('#insertItemModal').modal('hide');
+ 	        });
+ 	        return;
+ 	    }
+    	
+    	 $.ajax({
+    	        url: '/system/saveItemCode',  // 실제 서버 URL로 변경
+    	        beforeSend: function(xhr) {
+    	        	xhr.setRequestHeader(header, token);
+    	        },
+    	        type: 'POST',
+    	        data: JSON.stringify({ s_cate_item_code: s_cate_item_code, s_cate_item_name: s_cate_item_name}),
+    	        contentType: 'application/json',
+    	        success: function(response) {
+    	            if (response === 'success') {
+    	                Swal.fire('저장 완료', '공통 품목코드가 저장되었습니다.', 'success')
+    	                    .then(() => {
+    	                        $('#insertItemModal').modal('hide');
+    	                        location.reload();
+    	                    });
+    	            } else {
+    	            	 Swal.fire({
+    	                     icon: "error",
+    	                     title: "Oops...",
+    	                     text: "시스템 에러! 수정 실패"
+    	                 }).then(() => {
+    	                     $('#insertItemModal').modal('hide');
+    	                 });
+    	             }
+    	         },
+    	        error: function() {
+    	        	 Swal.fire({
+    	                 icon: "error",
+    	                 title: "Oops...",
+    	                 text: "시스템 에러! 수정 실패"
+    	             }).then(() => {
+    	                 $('#insertItemModal').modal('hide');
+    	             });
+    	         }
+    	     });
+    	 }
+    	
     //================================
     // 수정기능
     // openModal 함수에서 초기값 저장
@@ -114,8 +212,8 @@
     //삭제기능
     function deleteSelectedItems(){
 	 const token = $("meta[name='_csrf']").attr("content");
-    const header = $("meta[name='_csrf_header']").attr("content");
-    const name = $("#userName").val();
+	 const header = $("meta[name='_csrf_header']").attr("content");
+	 const name = $("#userName").val();
     	 // '.item-checkbox:checked' 선택자를 사용해서 선택된 체크박스를 모두 가져오기
         const selectedCheckboxes = document.querySelectorAll('.item-checkbox:checked');
 

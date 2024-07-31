@@ -77,6 +77,26 @@ public class SystemServiceImpl implements SystemService{
 		sdao.deleteItemCode(itemCodes);
 	}
 
+	//공통 품목코드 등록
+	@Override
+	public boolean saveItemCode(ItemCodeVO icVo) throws Exception {
+		try {
+			sdao.saveItemCode(icVo);
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+	}
+
+
+
+	//공통품목 중복체크
+	@Override
+	public boolean isDuplicateItemCode(String itemCode) throws Exception {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	
 	
 	  

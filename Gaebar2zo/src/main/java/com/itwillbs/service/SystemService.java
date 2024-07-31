@@ -26,9 +26,15 @@ public interface SystemService {
 	
 	//공통 품목 코드 수정 
 	void updateItemCode(ItemCodeVO icVo) throws Exception;
+	
 	//공통 품목 코드 삭제
 	void deleteItemCode(List<String> itemCodes) throws Exception;
+	
 	//공통 품목 코드 등록 
+	boolean saveItemCode(ItemCodeVO icVo) throws Exception;
+	
+	//공통 품목 중복체크&유효성
+	boolean isDuplicateItemCode(String itemCode) throws Exception;
 
 	
 

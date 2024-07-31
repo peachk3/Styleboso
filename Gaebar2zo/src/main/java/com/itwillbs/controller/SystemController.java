@@ -1,6 +1,8 @@
 package com.itwillbs.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -164,6 +166,36 @@ public class SystemController {
 	            return "error";
 	        }
 	 }
+	 
+	 //그룹 -> 품목코드 (등록)
+	 @ResponseBody
+	 @RequestMapping(value = "/saveItemCode", method = RequestMethod.POST)
+	 public ResponseEntity<String> saveItemCode(@RequestBody ItemCodeVO icVo){
+		 
+		 try {
+			 boolean isSaved = sService.saveItemCode(icVo);
+			if(isSaved) {
+				return ResponseEntity.ok("success");
+			}else {
+				return ResponseEntity.status(500).body("failure");
+			}
+		 }catch(Exception e) {
+			 return ResponseEntity.status(500).body("error");
+		 }
+	 }
+	 
+	 
+	 // 공통 품목 코드 중복 검사
+	    @ResponseBody
+	    @RequestMapping(value = "/checkItemCode", method = RequestMethod.GET)
+	    public Map<String, Boolean> checkItemCode(@RequestBody Map<String, String> data) {
+	        String itemCode = data.get("itemCode");
+	        boolean isDuplicate = sService.isDuplicateItemCode(itemCode);
+
+	        Map<String, Boolean> response = new HashMap<>();
+	        response.put("isDuplicate", isDuplicate);
+	        return response;
+	    }
 	// ==========================================================================
 	
 	 

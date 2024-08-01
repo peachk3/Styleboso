@@ -82,7 +82,14 @@ public class SystemDAOImpl implements SystemDAO{
 		sqlSession.insert(NAMESPACE + "saveItemCode",icVo);
 	}
 
-	
+	//공통 품목코드 유효성&중복검사
+	@Override
+	public ItemCodeVO getItemCodeAndCheck(String s_cate_item_code) throws Exception {
+		logger.debug("service -> DAO 공통 품목코드 유효성&중복검사 실행");
+		
+		return sqlSession.selectOne(NAMESPACE + "getItemCodeAndCheck", s_cate_item_code);
+	}
+
 	
 	  
 

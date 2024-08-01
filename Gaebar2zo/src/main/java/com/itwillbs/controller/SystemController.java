@@ -1,8 +1,8 @@
 package com.itwillbs.controller;
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -173,29 +173,26 @@ public class SystemController {
 	 public ResponseEntity<String> saveItemCode(@RequestBody ItemCodeVO icVo){
 		 
 		 try {
-			 boolean isSaved = sService.saveItemCode(icVo);
-			if(isSaved) {
-				return ResponseEntity.ok("success");
-			}else {
-				return ResponseEntity.status(500).body("failure");
-			}
+			 sService.saveItemCode(icVo);
+			 return ResponseEntity.ok("success");
 		 }catch(Exception e) {
-			 return ResponseEntity.status(500).body("error");
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("failure");
 		 }
 	 }
-	 
+		 
 	 
 	 // 공통 품목 코드 중복 검사
-	    @ResponseBody
-	    @RequestMapping(value = "/checkItemCode", method = RequestMethod.GET)
-	    public Map<String, Boolean> checkItemCode(@RequestBody Map<String, String> data) {
-	        String itemCode = data.get("itemCode");
-	        boolean isDuplicate = sService.isDuplicateItemCode(itemCode);
-
-	        Map<String, Boolean> response = new HashMap<>();
-	        response.put("isDuplicate", isDuplicate);
-	        return response;
-	    }
+//	 @ResponseBody
+//	 @RequestMapping(value = "/checkItemCode", method = RequestMethod.GET)
+//	 public ResponseEntity<String>checkItemCode(@RequestBody ItemCodeVO icVo) throws Exception{
+//		 boolean checkDuplicate = sService.checkItemCode(icVo.getS_cate_item_code());
+//		 
+//		 if(checkDuplicate){
+//			 return ResponseEntity.ok("duplicate");
+//		 }else {
+//			 return ResponseEntity.ok("not_duplicate");
+//		 }
+//	 }
 	// ==========================================================================
 	
 	 

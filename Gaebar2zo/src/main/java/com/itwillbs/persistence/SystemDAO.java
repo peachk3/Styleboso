@@ -31,6 +31,11 @@ public interface SystemDAO {
 	//공통 품목코드 등록
 	void saveItemCode(ItemCodeVO icVo) throws Exception;
 
+	//공통 품목코드 유효성&중복검사
+	ItemCodeVO getItemCodeAndCheck(String s_cate_item_code) throws Exception;
+
+	
+
 	 
 
 

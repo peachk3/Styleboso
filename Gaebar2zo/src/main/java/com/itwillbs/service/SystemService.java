@@ -31,10 +31,10 @@ public interface SystemService {
 	void deleteItemCode(List<String> itemCodes) throws Exception;
 	
 	//공통 품목 코드 등록 
-	boolean saveItemCode(ItemCodeVO icVo) throws Exception;
+	void saveItemCode(ItemCodeVO icVo) throws Exception;
 	
 	//공통 품목 중복체크&유효성
-	boolean isDuplicateItemCode(String itemCode) throws Exception;
+	boolean checkItemCode(String s_cate_item_code) throws Exception;
 
 	
 

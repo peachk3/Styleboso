@@ -15,45 +15,62 @@
 	    $('#insertItemModal').modal('show');
     }
     
-    //유효성 검사
-    function validateItemCode() {
-        var itemCodeInput = document.getElementById('s_cate_item_code');
-        var itemCode = itemCodeInput.value.toUpperCase(); // 대문자로 변환
-        itemCodeInput.value = itemCode;
-        
-        //기입x
-        if (itemCode.length === 0) {
-            document.getElementById('validationMessage').innerHTML = '';
-            return;
+    //유효성 검사 & 중복체크
+    function validateAndCheckItemCode(){
+    	const sCateItemCode = $('#new_s_cate_item_code').val().trim();
+    	const sCateItemName =$('#new_s_cate_item_name').val().trim();
+    	
+    	//입력 값 유효성 검사
+    	if(sCateItemCode ===''){
+    		$('#validationMessage').text('공통 품목 코드를 입력해주세요');
+    		 return false;
+    	}
+    	
+    	// 소분류 코드가 대문자만으로 이루어져 있는지, 공백이 없는지 유효성 검사
+        const uppercasePattern = /^[A-Z]+$/;
+        if (!uppercasePattern.test(sCateItemCode)) {
+            $('#validationMessage').text('공통 품목 코드는 공백 없이 대문자만 입력 가능합니다.');
+            return false;
         }
-
-        checkDuplication(itemCode);
-    } 
+        
+        
+    	if(sCateItemName ===''){
+    		$('#validationMessage').text('공통 품목 코드명을 입력해주세요');
+    		return false;
+    	}
+    	return performCheckItemCode(sCateItemCode); //비동기 적으로 중복 검사 후 결과에 따라 처리
+    }
     
-    function checkDuplication(itemCode) {
-        var validationMessage = document.getElementById('validationMessage');
-
+  //비동기 작업 처리하는데 사용 -> Promise
+	// 작업 처리 완료 -> resolve 함수에 전달된 값이 then 메서드를 통해 접근 가능
+	//작업 처리 실패 -> reject 함수에 전달된 값이 catch메서드를 통해 접근 가능
+    function performCheckItemCode(sCateItemCode) {
+    	return new Promise(function(resolve, reject) { 
+    		
+ 
         $.ajax({
-            url: '/system/checkItemCode',  // 서버의 실제 URL로 변경
-            type: 'POST',
-            data: JSON.stringify({ itemCode: itemCode }),
+            url: '/system/checkItemCode',
+            type: 'GET',
+            data: JSON.stringify({ s_cate_item_code: sCateItemCode }),
             contentType: 'application/json',
+            async: false,  // 비동기식이 아닌 동기식으로 설정!! --> 중복 검사 완료 후 저장 진행
             success: function(response) {
-                if (response.isDuplicate) {
-                    validationMessage.innerHTML = '유효하지 않는 코드입니다';
-                    validationMessage.style.color = 'red';
+                if (response === 'duplicate')  {
+                    $('#validationMessage').text('이미 존재하는 공통 품목 코드입니다.');
+                    resolve(false);  // 중복된 코드일 경우 false를 전달
                 } else {
-                    validationMessage.innerHTML = '유효한 코드입니다';
-                    validationMessage.style.color = 'green';
+                    $('#validationMessage').text('사용 가능한 코드입니다.');
+                    resolve(true);  // 중복되지 않은 코드일 경우 true를 전달
                 }
             },
             error: function() {
-                validationMessage.innerHTML = '서버와의 통신 중 오류가 발생했습니다';
-                validationMessage.style.color = 'red';
+                $('#validationMessage').text('시스템 에러! - 중복검사 실패.');
+                reject(new Error('중복 검사 실패'));  // 오류 발생 시 reject로 에러 전달
             }
         });
-    }
-    
+    });
+}
+
     //등록기능 - 저장 onclick=saveNewItemCode()
     function saveNewItemCode(){ 
     	const token = $("meta[name='_csrf']").attr("content");
@@ -81,7 +98,7 @@
     	        	xhr.setRequestHeader(header, token);
     	        },
     	        type: 'POST',
-    	        data: JSON.stringify({ s_cate_item_code: s_cate_item_code, s_cate_item_name: s_cate_item_name}),
+    	        data: JSON.stringify({ s_cate_item_code,s_cate_item_name}),
     	        contentType: 'application/json',
     	        success: function(response) {
     	            if (response === 'success') {
@@ -111,6 +128,13 @@
     	         }
     	     });
     	 }
+    
+    // 모달 창의 x 버튼을 눌렀을 때 모달 창을 닫는 이벤트 핸들러 추가
+    $(document).ready(function() {
+        $('#insertItemModal').on('hidden.bs.modal', function () {
+            $('#insertItemModal').modal('hide');
+        });
+    });
     	
     //================================
     // 수정기능

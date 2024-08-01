@@ -189,6 +189,7 @@
                                 </td>
                                 <td>
                                     <input type="text" id="new_s_cate_item_name" class="form-control" required>
+                                    <span id="validationMessage"></span>
                                 </td>
                             </tr>
                         </tbody>

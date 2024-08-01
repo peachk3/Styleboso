@@ -79,23 +79,23 @@ public class SystemServiceImpl implements SystemService{
 
 	//공통 품목코드 등록
 	@Override
-	public boolean saveItemCode(ItemCodeVO icVo) throws Exception {
-		try {
-			sdao.saveItemCode(icVo);
-			return true;
-		}catch(Exception e) {
-			return false;
-		}
+	public void saveItemCode(ItemCodeVO icVo) throws Exception {
+		logger.debug("공통 품목코드 등록");
+		
+		sdao.saveItemCode(icVo);
 	}
-
-
-
-	//공통품목 중복체크
+	
+	//공통 품목 중복체크&유효성
 	@Override
-	public boolean isDuplicateItemCode(String itemCode) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean checkItemCode(String s_cate_item_code) throws Exception {
+		
+		ItemCodeVO icVo = sdao.getItemCodeAndCheck(s_cate_item_code);
+		logger.debug("service : 공통 품목 중복체크 & 유효성");
+		return icVo != null;
 	}
+
+
+
 
 	
 	

@@ -112,7 +112,7 @@ public class SystemController {
 		model.addAttribute("employeeList", employeeList);
 
 	}
-
+	// ==========================================================================
 	// 공통 코드 관리
 	@RequestMapping(value = "/code/common", method = RequestMethod.GET)
 	public void code_common_GET(Model model) throws Exception {
@@ -124,6 +124,23 @@ public class SystemController {
 		model.addAttribute("codeList", codeList);
 		
 	}
+	
+	//공통 코드 (등록)
+	@ResponseBody
+	 @RequestMapping(value = "/saveGroupCode", method = RequestMethod.POST)
+	 public ResponseEntity<String> saveGroupCode(@RequestBody CodeVO codeVo){
+		 
+		 try {
+			 sService.saveGroupCode(codeVo);
+			 return ResponseEntity.ok("success");
+		 }catch(Exception e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("failure");
+		 }
+	 }
+	//공통 코드 (수정)
+	
+	//공통 코드 (삭제
+	
 	//==========================================================================
 	// 품목 분류 코드 관리
 	
@@ -194,11 +211,5 @@ public class SystemController {
 //		 }
 //	 }
 	// ==========================================================================
-	
-	 
-	 
-	
-	
-	
 
 }

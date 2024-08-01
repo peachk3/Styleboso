@@ -25,11 +25,31 @@
 	select * from users
 </select>
 
+<!-- 이메일 중복체크 -->
+<select id="emailCheck" parameterType="String" resultType="int" > 
+	select count (*) from users
+	where user_email =#{user_email}
+</select>
+
+
+
+
 
 <!-- 공통코드 전체 리스트 출력 -->
 <select id="codeListAll" resultType="CodeVO">
 	select * from code
 </select>
+
+<!-- 공통코드 등록 -->
+<insert id="saveGroupCode" parameterType="CodeVO">
+	insert into code(group_code, group_name) 
+	values(#{group_code}, #{group_name})
+</insert>
+
+
+
+
+
 
 <!--  공통코드 전체 리스트에서 품목공통 코드 리스트 -->
 <select id="itemCodeListAll" resultType="ItemCodeVO">
@@ -81,11 +101,6 @@
 </select> -->
  
 
-<!-- 이메일 중복체크 -->
-<select id="emailCheck" parameterType="String" resultType="int" > 
-	select count (*) from users
-	where user_email =#{user_email}
-</select>
 
 
 

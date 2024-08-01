@@ -41,7 +41,7 @@ public class SystemDAOImpl implements SystemDAO{
 		
 		return sqlSession.selectList(NAMESPACE+"employeeListAll");
 	}
-	
+	//==============================================================
 	//공통코드 전체 리스트 출력
 	@Override
 	public List<CodeVO> codeListAll() throws Exception {
@@ -50,6 +50,19 @@ public class SystemDAOImpl implements SystemDAO{
 		return sqlSession.selectList(NAMESPACE + "codeListAll");
 	}
 
+	//공통코드 등록
+	@Override
+	public void saveGroupCode(CodeVO codeVo) throws Exception {
+		logger.debug("service-> dao saveGroupCode() 실행");
+		
+		sqlSession.insert(NAMESPACE +"saveGroupCode",codeVo);
+	}
+
+
+	
+	
+	
+	//==============================================================
 	 // 그룹 코드에 따라 품목 정보를 출력
 	@Override
 	public List<ItemCodeVO> itemCodeListAll(String group_code) throws Exception {
@@ -58,6 +71,7 @@ public class SystemDAOImpl implements SystemDAO{
 		return sqlSession.selectList(NAMESPACE + "itemCodeListAll", group_code);
 	}
 
+	
 	//공통 품목코드 수정(update) 
 	@Override
 	public void updateItemCode(ItemCodeVO icVo) {

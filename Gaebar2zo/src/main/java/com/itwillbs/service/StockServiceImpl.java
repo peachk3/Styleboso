@@ -45,22 +45,33 @@ public class StockServiceImpl implements StockService{
 	// 재고 리스트 호출
 	@Override
 	public List<InventoryVO> getStockList(Criteria cri) throws Exception {
-		logger.debug("ServiceImpl + 재고 리스트 호출");
-		int page = (cri.getPage() - 1)*10;
-		
-		cri.setPage(page);
+		logger.debug(" ServiceImpl + 재고 리스트 호출 ");
 		
 		logger.debug("cri : " + cri);
 		
 		return sdao.getStockList(cri);
 	}
 
-
 	@Override
 	public int getTotalCount() throws Exception {
 		logger.debug(" getTotalCount() 실행 ");
 		return sdao.getTotalCount();
 	}
+
+	// 교환 리스트 호출
+	@Override
+	public List<TransactionVO> exList() throws Exception {
+		logger.debug(" ServiceImpl + 재고 리스트 호출 ");
+		return sdao.exList();
+	}
+
+	// 반품 리스트 호출
+	@Override
+	public List<TransactionVO> reList() throws Exception {
+		logger.debug(" ServiceImpl + 반품 리스트 호출 ");
+		return sdao.reList();
+	}
+
 
 
 	@Override

@@ -20,8 +20,13 @@ public interface StockService {
 
 	// 재고 리스트 호출
 	List<InventoryVO> getStockList(Criteria cri) throws Exception;
-
 	int getTotalCount() throws Exception;
+	
+	// 교환 리스트 호출
+	List<TransactionVO> exList() throws Exception;;
+		
+	// 반품 리스트 호출
+	List<TransactionVO> reList() throws Exception;;
 
 	Map<String, Object> getTransactionDetails(String tran_num);
 

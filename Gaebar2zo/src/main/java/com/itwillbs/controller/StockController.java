@@ -41,6 +41,7 @@ public class StockController {
 	private static final Logger logger = LoggerFactory.getLogger(StockController.class);
 
 	// 재고 현황
+	//http://localhost:8088/stock/status
 	@RequestMapping(value="/status",method=RequestMethod.GET)
 	public String status_GET(Criteria cri,Model model,
 							 @RequestParam(value="searchType", required = false) String searchType,
@@ -57,6 +58,7 @@ public class StockController {
 		
 		List<InventoryVO> sl = sService.getStockList(cri);
 		logger.debug(" size : " + sl.size());
+		logger.debug(" sl : " + sl);
 		
 		// 하단 페이징처리 정보객체 생성
 		PageVO pageVO = new PageVO();
@@ -80,20 +82,39 @@ public class StockController {
 
 	// 재고 교환
 	@RequestMapping(value="/adjustment/exchange",method=RequestMethod.GET)
-	public void adjustment_exchange_GET() throws Exception{
+	public void adjustment_exchange_GET(Model model) throws Exception{
 		logger.debug(" adjustment_exchange_GET() 실행");
+		
+		// 교환 리스트 호출
+		List<TransactionVO> ex = sService.exList();
+		logger.debug("size : "+ ex.size());
+		model.addAttribute("ex", ex);
+	}
+	
+	// 반품 등록
+	@RequestMapping(value="/adjustment/exchangeAdd",method=RequestMethod.GET)
+	public void exchangeAdd_GET() throws Exception{
+		logger.debug(" exchangeAdd_GET() 실행 ");
 	}
 
+	
 	// 재고 반품
 	@RequestMapping(value="/adjustment/return",method=RequestMethod.GET)
-	public void adjustment_return_GET() throws Exception{
+	public void adjustment_return_GET(Model model) throws Exception{
 		logger.debug(" adjustment_return_GET() 실행");
+		
+		// 반품 리스트 호출
+		List<TransactionVO> re = sService.reList();
+		logger.debug("size : "+ re.size());
+		model.addAttribute("re", re);
+	}
+	
+	// 반품 등록
+	@RequestMapping(value="/adjustment/returnAdd",method=RequestMethod.GET)
+	public void returnAdd_GET() throws Exception{
+		logger.debug(" returnAdd_GET() 실행 ");
 	}
 
-
-	
-	
-	
 	
 	
 	

@@ -58,6 +58,20 @@ public class StockDAOImpl implements StockDAO{
 		return sqlSession.selectOne(NAMESPACE+"totalCount");
 	}
 
+	// 교환 리스트 호출
+	@Override
+	public List<TransactionVO> exList() throws Exception {
+		logger.debug("DAOImpl : 교환 리스트 호출");
+		return sqlSession.selectList(NAMESPACE+"exchangeList");
+	}
+
+	// 반품 리스트 호출
+	@Override
+	public List<TransactionVO> reList() throws Exception {
+		logger.debug("DAOImpl : 반품 리스트 호출");
+		return sqlSession.selectList(NAMESPACE+"returnList");
+	}
+
     // 거래 상세 정보 호출
     @Override
     public Map<String, Object> getTransactionDetails(String tran_num) {

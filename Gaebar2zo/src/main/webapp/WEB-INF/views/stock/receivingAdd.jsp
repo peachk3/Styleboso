@@ -19,14 +19,12 @@
 
 							<div class="col-md-3">
 								<label for="validationCustom03" class="form-label">거래처 번호</label>
-									<input type="text" class="form-control" id="validationCustom03" name="cli_num"
-										   data-coreui-toggle="modal" data-coreui-target="#exampleModal1" required>
+									<input type="text" class="form-control" id="validationCustom03" name="cli_num" required>
 								<div class="invalid-feedback">거래처를 입력해주세요</div>
 							</div>
 							<div class="col-md-3">
 								<label for="validationCustom04" class="form-label">거래처명</label>
-									<input type="text" class="form-control" id="validationCustom04" 
-										   data-coreui-toggle="modal" data-coreui-target="#exampleModal1" required>
+									<input type="text" class="form-control" id="validationCustom04" required>
 							</div>
 							<div class="col-md-6">
 								<label for="validationCustom02" class="form-label">입고 예정일</label> 
@@ -37,14 +35,12 @@
 							
 							<div class="col-md-3">
 								<label for="validationCustom05" class="form-label">담당자 아이디</label>
-									<input type="text" class="form-control" id="validationCustom05" name="pic_username"
-										   data-coreui-toggle="modal" data-coreui-target="#exampleModal2" required>
+									<input type="text" class="form-control" id="validationCustom05" name="pic_username" required>
 								<div class="invalid-feedback">담당자를 입력해주세요</div>
 							</div>
 							<div class="col-md-3">
 								<label for="validationCustom06" class="form-label">담당자명</label>
-									<input type="text" class="form-control" id="validationCustom06"
-										   data-coreui-toggle="modal" data-coreui-target="#exampleModal2" required>
+									<input type="text" class="form-control" id="validationCustom06" required>
 							</div>
 							<div class="col-12">
 								<label for="validationCustom07" class="form-label">비고</label>
@@ -54,10 +50,6 @@
 						<div class="example">
 							<div class="tab-content rounded-bottom">
 
-								<button id="addRowBtn" class="btn btn-outline-info btn-sm"
-									type="button" style="margin-bottom: 10px;"
-									data-coreui-toggle="modal" data-coreui-target="#exampleModal3" >품목 선택</button>
-									
 							<ul class="nav nav-underline-border" role="tablist">
 							</ul>
 								<table class="table item-table text-left">
@@ -108,104 +100,11 @@
 								</div>
 							</div>
 						</div>
-
-						<!-- Modal1 -->
-							<div class="modal fade" id="exampleModal1" tabindex="-1"
-								aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog modal-dialog-scrollable">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">거래처</h5>
-											<button type="button" class="btn-close"
-												data-coreui-dismiss="modal" aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											<table class="table table-hover text-center" id="modal1-table">
-												<thead class="table-light">
-													<tr>
-														<th scope="col"></th>
-														<th scope="col">거래처 코드</th>
-														<th scope="col">거래처 명</th>
-													</tr>
-												</thead>
-												<tbody>
-													
-												</tbody>
-											</table>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
-										</div>
 									</div>
 								</div>
 							</div>
-							<!-- Modal2 -->
-							<div class="modal fade" id="exampleModal2" tabindex="-1"
-								aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog modal-dialog-scrollable">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">담당자</h5>
-											<button type="button" class="btn-close"
-												data-coreui-dismiss="modal" aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											<table class="table table-hover text-center" id="modal2-table">
-												<thead class="table-light">
-													<tr>
-														<th scope="col"></th>
-														<th scope="col">담당자 아이디</th>
-														<th scope="col">담당자 명</th>
-													</tr>
-												</thead>
-												<tbody>
-													
-												</tbody>
-											</table>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- Modal3 -->
-							<div class="modal fade" id="exampleModal3" tabindex="-1"
-								aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog modal-dialog-scrollable modal-lg">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">제품</h5>
-											<button type="button" class="btn-close"
-												data-coreui-dismiss="modal" aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											<table class="table table-hover text-center" id="modal3-table">
-												<thead class="table-light">
-													<tr>
-														<th scope="col"></th>
-														<th scope="col">제품 번호</th>
-														<th scope="col">제품 명</th>
-														<th scope="col">제품 사이즈</th>
-														<th scope="col">제품 색상</th>
-													</tr>
-												</thead>
-												<tbody>
-												
-</tbody>
-											</table>
-										</div>
-										<div class="modal-footer">
-											<button class="btn btn-primary" type="submit" id="submitModal3Btn" onclick="checkedData();">등록</button>
-											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							
 					</div>
 				</div>
-			</div>
    
 
     <h1>/Styleboso/stock/receivingAdd.jsp</h1>
@@ -227,6 +126,12 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script type="text/javascript">
+function formatDateForInput(dateStr) {
+    if (!dateStr) return '';
+    var date = new Date(dateStr);
+    return date.toISOString().split('T')[0];
+}
+
 
 	const token = $("meta[name='_csrf']").attr("content")
 	const header = $("meta[name='_csrf_header']").attr("content");
@@ -279,7 +184,7 @@
 				
 				$.ajax({
                     type: 'POST',
-                    url: '/sales/salesOrderAdd', // 요청을 보낼 URL
+                    url: '/stock/receivingAdd', // 요청을 보낼 URL
                     beforeSend: function(xhr) {
                     	xhr.setRequestHeader(header, token);
                     },
@@ -290,7 +195,7 @@
                     }),
                     success: function(response) {
                         console.log('서버 응답:', response);
-                        window.location.href = 'http://localhost:8088/sales/salesOrderList';
+                        window.location.href = 'http://localhost:8088/stock/receivingList';
                     },
                     error: function(error) {
                         console.error('에러 발생:', error);
@@ -317,176 +222,94 @@
 	          modalInstance.hide();
 	      });
 		
-		
-		
-      $('#modal1-table tbody').on('click', 'tr', function() {
-          var targetInput1 = document.getElementById('validationCustom03');
-          var targetInput2 = document.getElementById('validationCustom04');
-          var cli1 = $(this).find('td:nth-child(2)').text(); // 두 번째 열(거래처 코드)
-          var cli2 = $(this).find('td:nth-child(3)').text(); // 두 번째 열(거래처 코드)
-
-          // Modal에서 입력된 값을 가져와서 다른 input 요소에 설정
-          targetInput1.value = cli1;
-          targetInput2.value = cli2;
-      
-          // Modal 닫기 (Optional)
-          var modal = document.getElementById('exampleModal1');
-          var modalInstance = coreui.Modal.getInstance(modal);
-          modalInstance.hide();
-      });
-
-      $('#modal2-table tbody').on('click', 'tr', function() {
-          var targetInput1 = document.getElementById('validationCustom05');
-          var targetInput2 = document.getElementById('validationCustom06');
-          var user1 = $(this).find('td:nth-child(2)').text(); // 두 번째 열(담당자 아이디)
-          var user2 = $(this).find('td:nth-child(3)').text(); // 두 번째 열(담당자 명)
-
-          // Modal에서 입력된 값을 가져와서 다른 input 요소에 설정
-          targetInput1.value = user1;
-          targetInput2.value = user2;
-      
-          // Modal 닫기 (Optional)
-          var modal = document.getElementById('exampleModal2');
-          var modalInstance = coreui.Modal.getInstance(modal);
-          modalInstance.hide();
-      });
-      
-      $('#modal3-table tbody').on('click', 'tr', function() {
-          var rowNum = $('#click-row').val();
-          var targetInput1 = document.getElementById('goods-num'+ rowNum);
-          var targetInput2 = document.getElementById('goods-name'+ rowNum);
-          var goods1 = $(this).find('td:nth-child(2)').text();
-          var goods2 = $(this).find('td:nth-child(3)').value;
-          
-          
-          // Modal에서 입력된 값을 가져와서 다른 input 요소에 설정
-          targetInput1.value = goods1;
-          targetInput2.value = goods2;
-      
-          // Modal 닫기 (Optional)
-          var modal = document.getElementById('exampleModal3');
-          var modalInstance = coreui.Modal.getInstance(modal);
-          modalInstance.hide();
-      });
-      
-      
-      
       
       
 	 getTransactionList();
       
-      function getTransactionList() {
-         
-          $('#modal0-table tbody tr').remove();
-          
-          $.ajax({
-              url: "/common/transactionList",
-              type: "get",
-              contentType: 'application/json; charset=utf-8',
-              dataType: "json",
-              success: function(data) {
-                  // body 태그에 내용 추가
-                  console.log(data);
-                  data.forEach(function(item, idx){
-                     console.log(idx);
-                     var row = "<tr><th scope='row'>" + (parseInt(idx)+1) + "</th><td>" + item.tran_num + "</td></tr>"
-                      $('#modal0-table tbody').append(row);
-                  });
-                  
-              },
-              error: function(jqXHR, textStatus, errorThrown) {
-                  console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
-                  alert("AJAX 요청 실패!");
-              }
-          });
-      }
+	    function getTransactionList() {
+	        // 기존 테이블 내용을 비웁니다
+	        $('#modal0-table tbody tr').remove();
+	        
+	        // AJAX 요청으로 거래 리스트를 가져옵니다
+	        $.ajax({
+	            url: "/common/transactionList",
+	            type: "get",
+	            contentType: 'application/json; charset=utf-8',
+	            dataType: "json",
+	            success: function(data) {
+	                // 성공적으로 데이터를 받아오면 테이블에 추가합니다
+	                console.log(data);
+	                data.forEach(function(item, idx) {
+	                    console.log(idx);
+	                    var row = "<tr><th scope='row'>" + (parseInt(idx) + 1) + "</th><td>" + item.tran_num + "</td></tr>";
+	                    $('#modal0-table tbody').append(row);
+	                });
+	                
+	                // 테이블 행 클릭 이벤트를 설정합니다
+	                $('#modal0-table tbody tr').on('click', function() {
+	                    var targetInput1 = document.getElementById('validationCustom01');
+	                    var tranList = $(this).find('td:nth-child(2)').text(); // 두 번째 열(거래리스트)
+	                    
+	                    // 거래 번호 설정
+	                    targetInput1.value = tranList;
+
+	                    // 거래 상세 정보를 가져와서 폼에 채우기
+	                    $.ajax({
+	                        url: '/common/transactionDetails',
+	                        type: 'GET',
+	                        data: { tran_num: tranList },
+	                        contentType: 'application/json; charset=utf-8',
+	                        dataType: 'json',
+	                        success: function(data) {
+	                            // 거래 상세 정보 채우기
+	                            document.getElementById('validationCustom03').value = data.tranDetails.cli_num;
+	                            document.getElementById('validationCustom04').value = data.tranDetails.clientList[0].cli_name;
+// 	                            document.getElementById('validationCustom02').value = data.tranDetails.rec_date;
+	                            document.getElementById('validationCustom02').value = formatDateForInput(data.tranDetails.rec_date);
+	                            document.getElementById('validationCustom05').value = data.tranDetails.pic_username;
+	                            document.getElementById('validationCustom06').value = data.tranDetails.userList[0].user_per_name;
+
+	                            // 거래 제품 정보 채우기
+	                            var tableBody = $('#tableBody');
+	                            tableBody.empty(); // 기존 테이블 내용 비우기
+	                            data.tranGoods.forEach(function(item) {
+	                                var row = '<tr>' +
+	                                    '<td>' + item.goods_num + '</td>' +
+	                                    '<td>' + item.itemList[0].item_name + '</td>' +
+	                                    '<td></td>' +
+	                                    '<td></td>' +
+	                                    '<td>' + item.goods_qty + '</td>' +
+	                                    '</tr>';
+	                                tableBody.append(row);
+	                            });
+	                            
+// 	                            $(객체).each(function(idx,item){
+	                            	
+	                            	
+// 	                            });
+	                        },
+	                        error: function(jqXHR, textStatus, errorThrown) {
+	                            console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
+	                            alert("AJAX 요청 실패!");
+	                        }
+	                    });
+
+	                    // Modal 닫기
+	                    var modal = document.getElementById('exampleModal0');
+	                    var modalInstance = coreui.Modal.getInstance(modal);
+	                    modalInstance.hide();
+	                });
+	            },
+	            error: function(jqXHR, textStatus, errorThrown) {
+	                // 요청이 실패한 경우 로그를 남기고 알림을 표시합니다
+	                console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
+	                alert("AJAX 요청 실패!");
+	            }
+	        });
+	    } 
       
       
-      
-      
-      getClientList();
-      
-      function getClientList() {
-         
-          $('#modal1-table tbody tr').remove();
-          
-          $.ajax({
-              url: "/common/clientList",
-              type: "get",
-              contentType: 'application/json; charset=utf-8',
-              dataType: "json",
-              success: function(data) {
-                  // body 태그에 내용 추가
-                  console.log(data);
-                  data.forEach(function(item, idx){
-                     console.log(idx);
-                     var row = "<tr><th scope='row'>" + (parseInt(idx)+1) + "</th><td>" + item.cli_num + "</td><td>" + item.cli_name + "</td></tr>"
-                      $('#modal1-table tbody').append(row);
-                  });
-                  
-              },
-              error: function(jqXHR, textStatus, errorThrown) {
-                  console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
-                  alert("AJAX 요청 실패!");
-              }
-          });
-      }
-      
-      getManagerList();
-      
-      function getManagerList() {
-         
-          $('#modal2-table tbody tr').remove();
-          
-          $.ajax({
-              url: "/common/managerList",
-              type: "get",
-              contentType: 'application/json; charset=utf-8',
-              dataType: "json",
-              success: function(data) {
-                  // body 태그에 내용 추가
-                  console.log(data);
-                  data.forEach(function(item, idx){
-                     console.log(idx);
-                     var row = "<tr><th scope='row'>" + (parseInt(idx)+1) + "</th><td>" + item.username + "</td><td>" + item.user_per_name + "</td></tr>"
-                      $('#modal2-table tbody').append(row);
-                  });
-                  
-              },
-              error: function(jqXHR, textStatus, errorThrown) {
-                  console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
-                  alert("AJAX 요청 실패!");
-              }
-          });
-      }
-      
-      getGoodsList();
-      
-      function getGoodsList() {
-         
-          $('#modal3-table tbody tr').remove();
-          
-          $.ajax({
-              url: "/common/goodsList",
-              type: "get",
-              contentType: 'application/json; charset=utf-8',
-              dataType: "json",
-              success: function(data) {
-                  // body 태그에 내용 추가
-                  console.log(data);
-                  data.forEach(function(item, idx){
-                     console.log(idx);
-                     var row = "<tr id='row"+ (parseInt(idx)+1) +"'><th scope='row'><input class='form-check-input'type='checkbox' id='check" + (parseInt(idx)+1) + "'></th><td>" + item.goods_num + "</td><td>" + item.itemList.map(itemVO => itemVO.item_name).join(', ') + "</td><td>" + item.goods_size + "</td><td>" + item.goods_color + "</td></tr>"
-                      $('#modal3-table tbody').append(row);
-                  });
-                  
-              },
-              error: function(jqXHR, textStatus, errorThrown) {
-                  console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
-                  alert("AJAX 요청 실패!");
-              }
-          });
-      }
+
       
       
    });

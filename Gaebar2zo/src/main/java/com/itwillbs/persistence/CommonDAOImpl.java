@@ -1,7 +1,8 @@
 package com.itwillbs.persistence;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.GoodsVO;
+import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.domain.UsersVO;
 
@@ -53,6 +55,35 @@ public class CommonDAOImpl implements CommonDAO{
 		
 		return sqlSession.selectList(NAMESPACE+"tranList");
 	}
+
+	@Override
+	public TransactionVO getTransactionDetails(String tran_num) throws Exception {
+		logger.debug("DAO : getTransactionDetails(String tran_num) 호출");
+		
+        return sqlSession.selectOne(NAMESPACE + "getTransactionDetails", tran_num);
+	}
+
+	@Override
+	public List<TransactionGoodsVO> getTransactionGoods(String tran_num) throws Exception {
+		logger.debug("DAO : getTransactionGoods(String tran_num) 호출");	
+		
+		
+        return sqlSession.selectList(NAMESPACE + "getTransactionGoods", tran_num);
+	}
+
+	@Override
+	public void updateStatus(List<String> tran_nums, String pro_status) throws Exception {
+		logger.debug("DAO : updateStatus(List<String> tran_nums, String pro_status) 호출 ");
+		
+		Map<String, Object> params = new HashMap<>();
+        params.put("tran_nums", tran_nums);
+        params.put("pro_status", pro_status);
+        sqlSession.update(NAMESPACE+"updateStatus", params);
+		
+		
+	}
+
+
 
 	
 	

@@ -309,15 +309,14 @@ select
 
 	<!-- 입고 모달창 - 품목 정보 가져오기 -->
 	<select id="getTransactionItems" resultType="map">
-	    select item.item_num, item.item_name, trg.goods_qty, tra.top_tran_num, tra.comm, ich.inven_num, tra.tran_num
+	    select item.item_num, item.item_name, trg.goods_qty, tra.top_tran_num, tra.comm, ich.inven_num, tra.tran_num,g.goods_num
 	    from transaction tra
 	    join transaction_goods trg on tra.tran_num = trg.tran_num
 	    join inventory_change ich on ich.tran_num = tra.tran_num
 	    join goods g on trg.goods_num = g.goods_num
 	    join item item on item.item_num = g.item_num
-	    where tra.tran_num = #{top_tran_num}
+	    where tra.tran_num = #{tran_num}
 	</select>
-
 
 
 

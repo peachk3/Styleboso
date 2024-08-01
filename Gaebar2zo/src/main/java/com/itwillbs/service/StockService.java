@@ -35,6 +35,9 @@ public interface StockService {
 	// 입고 - 품목 정보 호출
 	List<Map<String, Object>> getTransactionItems(String top_tran_num) throws Exception;
 
+	// 출고 - 품목 정보 호출
+	List<Map<String, Object>> getTransactionItems2(String tran_num) throws Exception;
+
 	
 	// 상태 업데이트
 //    void updateStatus(List<String> tranNums, String status) throws Exception;

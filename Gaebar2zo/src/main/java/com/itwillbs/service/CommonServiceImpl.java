@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.GoodsVO;
+import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.domain.UsersVO;
 import com.itwillbs.persistence.CommonDAO;
@@ -49,6 +50,28 @@ public class CommonServiceImpl implements CommonService{
 		
 		return cdao.TranList();
 	}
+
+	@Override
+	public TransactionVO getTransactionDetails(String tran_num) throws Exception {
+		logger.debug("거래번호 -> 거래 정보 호출");
+		
+		return cdao.getTransactionDetails(tran_num);
+	}
+
+	@Override
+	public List<TransactionGoodsVO> getTransactionGoods(String tran_num) throws Exception{
+		logger.debug("거래번호 -> 품목 정보 호출");
+		
+		return cdao.getTransactionGoods(tran_num);
+	}
+
+	@Override
+	public void updateStatus(List<String> tran_nums, String pro_status) throws Exception {
+		logger.debug(" 상태 업데이트");
+		
+		cdao.updateStatus(tran_nums, pro_status);
+	}
+
 
 	
 	

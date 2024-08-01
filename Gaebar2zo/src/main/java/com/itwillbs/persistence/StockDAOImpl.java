@@ -61,10 +61,45 @@ public class StockDAOImpl implements StockDAO{
     // 거래 상세 정보 호출
     @Override
     public Map<String, Object> getTransactionDetails(String tran_num) {
-        logger.debug("DAOImpl : 거래 상세 정보 호출");
+        logger.debug("DAOImpl : 입고 상세 정보 호출");
         // 쿼리 파라미터로 tran_num을 전달하여 결과를 반환합니다.
         return sqlSession.selectOne(NAMESPACE + "getTransactionDetails", tran_num);
     }
+
+	@Override
+	public void deleteRecevingList(List<String> trannums) throws Exception {
+
+		logger.debug(" deleteRecevingList(List<String> trannums) 실행");
+
+		
+		
+		sqlSession.delete(NAMESPACE + "deleteRecevingList", trannums);
+	}
+
+	@Override
+	public Map<String, Object> getTransactionDetails2(String tran_num) throws Exception {
+        logger.debug("DAOImpl : 출고 상세 정보 호출");
+        
+        
+        return sqlSession.selectOne(NAMESPACE + "getTransactionDetails2", tran_num);
+	}
+
+	@Override
+	public List<Map<String, Object>> getTransactionItems(String top_tran_num) throws Exception {
+
+		logger.debug("DAOImpl : 입고 모달창 - 품목정보 호출");
+		
+		return sqlSession.selectList(NAMESPACE+"getTransactionItems", top_tran_num);
+	}
+
+	@Override
+	public List<Map<String, Object>> getTransactionItems2(String tran_num) throws Exception {
+		logger.debug("DAOImpl : 출고 모달창 - 품목정보 호출");
+		
+		
+		return sqlSession.selectList(NAMESPACE+"getTransactionItems", tran_num);
+		
+	}
 
 
 	// 상태 변경

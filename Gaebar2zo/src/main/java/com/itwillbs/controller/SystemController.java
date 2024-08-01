@@ -1,6 +1,8 @@
 package com.itwillbs.controller;
 
+
 import java.util.List;
+
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -164,6 +166,33 @@ public class SystemController {
 	            return "error";
 	        }
 	 }
+	 
+	 //그룹 -> 품목코드 (등록)
+	 @ResponseBody
+	 @RequestMapping(value = "/saveItemCode", method = RequestMethod.POST)
+	 public ResponseEntity<String> saveItemCode(@RequestBody ItemCodeVO icVo){
+		 
+		 try {
+			 sService.saveItemCode(icVo);
+			 return ResponseEntity.ok("success");
+		 }catch(Exception e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("failure");
+		 }
+	 }
+		 
+	 
+	 // 공통 품목 코드 중복 검사
+//	 @ResponseBody
+//	 @RequestMapping(value = "/checkItemCode", method = RequestMethod.GET)
+//	 public ResponseEntity<String>checkItemCode(@RequestBody ItemCodeVO icVo) throws Exception{
+//		 boolean checkDuplicate = sService.checkItemCode(icVo.getS_cate_item_code());
+//		 
+//		 if(checkDuplicate){
+//			 return ResponseEntity.ok("duplicate");
+//		 }else {
+//			 return ResponseEntity.ok("not_duplicate");
+//		 }
+//	 }
 	// ==========================================================================
 	
 	 

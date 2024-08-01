@@ -53,6 +53,34 @@
     </foreach> 
 </delete>
 
+<!-- 공통 품목코드 리스트 (등록) -->
+
+<insert id="saveItemCode" parameterType="ItemCodeVO">
+	insert into item_code (s_cate_item_code, s_cate_item_name, m_cate_item_code)
+    values (
+        #{s_cate_item_code}, 
+        #{s_cate_item_name}, 
+        substring(#{s_cate_item_code}, 1, 2)
+    )
+</insert>
+
+<!-- 공통품목코드 유효성&중복체크 검사 -->
+ <!-- <select id="getItemCodeAndCheck" parameterType="String" resultType="ItemCodeVO">
+	 select 
+        ic.s_cate_item_code, 
+        ic.s_cate_item_name, 
+        ic.m_cate_item_code
+    from 
+        item_code ic
+    join 
+        code c 
+    on 
+        ic.m_cate_item_code = c.group_code
+    where 
+        ic.s_cate_item_code = #{group_code}
+</select> -->
+ 
+
 <!-- 이메일 중복체크 -->
 <select id="emailCheck" parameterType="String" resultType="int" > 
 	select count (*) from users

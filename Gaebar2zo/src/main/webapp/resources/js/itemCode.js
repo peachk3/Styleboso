@@ -2,18 +2,140 @@
  * item.jsp 랑 연결 - 공통 품목코드 모달창
  * 
  */
-	const token = $("meta[name='_csrf']").attr("content");
-    const header = $("meta[name='_csrf_header']").attr("content");
-    const name = $("#userName").val();
+	
     
     var originalItemCode = '';
     var originalItemName = '';
     var originalValues = {};
 
-    function insertItemCodeBtn() {
-        // 등록 버튼 클릭 시 모달 창을 여는 로직을 여기에 작성하세요.
+    //================================
+    // 등록 기능
+    // 등록모달
+    function insertItemCode() { //버튼 onclick=insertItemCode()
+	    $('#insertItemModal').modal('show');
     }
     
+    //유효성 검사 & 중복체크
+    function validateAndCheckItemCode(){
+    	const sCateItemCode = $('#new_s_cate_item_code').val().trim();
+    	const sCateItemName =$('#new_s_cate_item_name').val().trim();
+    	
+    	//입력 값 유효성 검사
+    	if(sCateItemCode ===''){
+    		$('#validationMessage').text('공통 품목 코드를 입력해주세요');
+    		 return false;
+    	}
+    	
+    	// 소분류 코드가 대문자만으로 이루어져 있는지, 공백이 없는지 유효성 검사
+        const uppercasePattern = /^[A-Z]+$/;
+        if (!uppercasePattern.test(sCateItemCode)) {
+            $('#validationMessage').text('공통 품목 코드는 공백 없이 대문자만 입력 가능합니다.');
+            return false;
+        }
+        
+        
+    	if(sCateItemName ===''){
+    		$('#validationMessage').text('공통 품목 코드명을 입력해주세요');
+    		return false;
+    	}
+    	return performCheckItemCode(sCateItemCode); //비동기 적으로 중복 검사 후 결과에 따라 처리
+    }
+    
+  //비동기 작업 처리하는데 사용 -> Promise
+	// 작업 처리 완료 -> resolve 함수에 전달된 값이 then 메서드를 통해 접근 가능
+	//작업 처리 실패 -> reject 함수에 전달된 값이 catch메서드를 통해 접근 가능
+    function performCheckItemCode(sCateItemCode) {
+    	return new Promise(function(resolve, reject) { 
+    		
+ 
+        $.ajax({
+            url: '/system/checkItemCode',
+            type: 'GET',
+            data: JSON.stringify({ s_cate_item_code: sCateItemCode }),
+            contentType: 'application/json',
+            async: false,  // 비동기식이 아닌 동기식으로 설정!! --> 중복 검사 완료 후 저장 진행
+            success: function(response) {
+                if (response === 'duplicate')  {
+                    $('#validationMessage').text('이미 존재하는 공통 품목 코드입니다.');
+                    resolve(false);  // 중복된 코드일 경우 false를 전달
+                } else {
+                    $('#validationMessage').text('사용 가능한 코드입니다.');
+                    resolve(true);  // 중복되지 않은 코드일 경우 true를 전달
+                }
+            },
+            error: function() {
+                $('#validationMessage').text('시스템 에러! - 중복검사 실패.');
+                reject(new Error('중복 검사 실패'));  // 오류 발생 시 reject로 에러 전달
+            }
+        });
+    });
+}
+
+    //등록기능 - 저장 onclick=saveNewItemCode()
+    function saveNewItemCode(){ 
+    	const token = $("meta[name='_csrf']").attr("content");
+	    const header = $("meta[name='_csrf_header']").attr("content");
+	    const name = $("#userName").val();
+	    
+	    var s_cate_item_code = $('#new_s_cate_item_code').val().trim();
+	    var s_cate_item_name = $('#new_s_cate_item_name').val().trim();
+    	
+    	
+    	if(s_cate_item_code === '' || s_cate_item_name ===''){
+    		 Swal.fire({
+ 	            icon: 'info',
+ 	            title: '변경 사항 없음',
+ 	            text: '변경된 내용이 없습니다.'
+ 	        }).then(() => {
+ 	            $('#insertItemModal').modal('hide');
+ 	        });
+ 	        return;
+ 	    }
+    	
+    	 $.ajax({
+    	        url: '/system/saveItemCode',  // 실제 서버 URL로 변경
+    	        beforeSend: function(xhr) {
+    	        	xhr.setRequestHeader(header, token);
+    	        },
+    	        type: 'POST',
+    	        data: JSON.stringify({ s_cate_item_code,s_cate_item_name}),
+    	        contentType: 'application/json',
+    	        success: function(response) {
+    	            if (response === 'success') {
+    	                Swal.fire('저장 완료', '공통 품목코드가 저장되었습니다.', 'success')
+    	                    .then(() => {
+    	                        $('#insertItemModal').modal('hide');
+    	                        location.reload();
+    	                    });
+    	            } else {
+    	            	 Swal.fire({
+    	                     icon: "error",
+    	                     title: "Oops...",
+    	                     text: "시스템 에러! 수정 실패"
+    	                 }).then(() => {
+    	                     $('#insertItemModal').modal('hide');
+    	                 });
+    	             }
+    	         },
+    	        error: function() {
+    	        	 Swal.fire({
+    	                 icon: "error",
+    	                 title: "Oops...",
+    	                 text: "시스템 에러! 수정 실패"
+    	             }).then(() => {
+    	                 $('#insertItemModal').modal('hide');
+    	             });
+    	         }
+    	     });
+    	 }
+    
+    // 모달 창의 x 버튼을 눌렀을 때 모달 창을 닫는 이벤트 핸들러 추가
+    $(document).ready(function() {
+        $('#insertItemModal').on('hidden.bs.modal', function () {
+            $('#insertItemModal').modal('hide');
+        });
+    });
+    	
     //================================
     // 수정기능
     // openModal 함수에서 초기값 저장
@@ -114,8 +236,8 @@
     //삭제기능
     function deleteSelectedItems(){
 	 const token = $("meta[name='_csrf']").attr("content");
-    const header = $("meta[name='_csrf_header']").attr("content");
-    const name = $("#userName").val();
+	 const header = $("meta[name='_csrf_header']").attr("content");
+	 const name = $("#userName").val();
     	 // '.item-checkbox:checked' 선택자를 사용해서 선택된 체크박스를 모두 가져오기
         const selectedCheckboxes = document.querySelectorAll('.item-checkbox:checked');
 

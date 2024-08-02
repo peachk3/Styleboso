@@ -72,6 +72,7 @@
 //    });
 //}
 
+
     function insertItemCode() { //버튼 onclick=insertItemCode()
     	$('#insertItemModal').modal('show');
     }

@@ -2,7 +2,7 @@ package com.itwillbs.controller;
 
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -139,8 +139,40 @@ public class SystemController {
 	 }
 	//공통 코드 (수정)
 	
-	//공통 코드 (삭제
 	
+	
+	
+	
+	
+	//공통 코드 (삭제)
+	@ResponseBody
+	@RequestMapping(value = "/deleteGroupCode", method = RequestMethod.POST)
+	public String deleteGroupCode(@RequestBody List<CodeVO> codeVo) {
+	    try {
+	        // 삭제할 그룹 코드를 추출하여 서비스로 전달
+	        List<String> groupCodes = codeVo.stream()
+	                                       .map(CodeVO::getGroup_code) // 각 CodeVO 객체에서 group_code를 추출
+	                                       .collect(Collectors.toList()); // 추출한 group_code들을 리스트로 수집
+	        // 서비스 계층에 삭제 요청
+	        sService.deleteGroupCode(groupCodes);
+	        return "success";
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "error";
+	    }
+	}
+//	
+//	@ResponseBody
+//	@RequestMapping(value = "/deleteGroupCode", method = RequestMethod.POST)
+//	public String deleteGroupCode(@RequestBody List<String> groupCodes) {
+//	    try {
+//	        sService.deleteGroupCode(groupCodes);
+//	        return "success";
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	        return "error";
+//	    }
+//	}
 	//==========================================================================
 	// 품목 분류 코드 관리
 	

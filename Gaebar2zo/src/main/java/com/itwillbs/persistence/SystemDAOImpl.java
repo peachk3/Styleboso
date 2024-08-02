@@ -59,8 +59,15 @@ public class SystemDAOImpl implements SystemDAO{
 	}
 
 
-	
-	
+	//공통코드 삭제
+	@Override
+	public void deleteGroupCode(List<String> groupCodes) throws Exception {
+		
+		logger.debug("service -> dao / deleteGroupCode() 실행");
+		
+		sqlSession.delete(NAMESPACE + "deleteGroupCode", groupCodes);
+	}
+
 	
 	//==============================================================
 	 // 그룹 코드에 따라 품목 정보를 출력
@@ -71,7 +78,6 @@ public class SystemDAOImpl implements SystemDAO{
 		return sqlSession.selectList(NAMESPACE + "itemCodeListAll", group_code);
 	}
 
-	
 	//공통 품목코드 수정(update) 
 	@Override
 	public void updateItemCode(ItemCodeVO icVo) {

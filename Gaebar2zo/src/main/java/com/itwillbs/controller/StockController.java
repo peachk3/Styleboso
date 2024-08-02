@@ -22,9 +22,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.PageVO;
+import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.service.StockService;
 
@@ -183,7 +186,7 @@ public class StockController {
 	
 	
 	
-	// 입고 등록
+	// 입고 등록 - get
 	@RequestMapping(value="/receivingAdd",method=RequestMethod.GET)
 	public void receivingAdd_GET() throws Exception{
 		logger.debug(" receivingAdd_GET() 실행 ");
@@ -191,14 +194,42 @@ public class StockController {
 
 	}
 
+	
+	// 입고 등록 - post
 	@RequestMapping(value="/receivingAdd",method = RequestMethod.POST)
 	@ResponseBody
 	public void receivingAdd_POST(@RequestBody Map<String, String> requestData) throws Exception{
 		
+		ObjectMapper mapper = new ObjectMapper();
 		
+		TransactionVO tvo = mapper.readValue(requestData.get("tvo"), TransactionVO.class);
+		List<TransactionGoodsVO> tgvo = mapper.readValue(requestData.get("tgvo"), 
+                						new TypeReference<List<TransactionGoodsVO>>(){});
+		
+		
+	    tvo.setTgvo(tgvo);
+
+	    logger.debug("tvo : " + tvo);
+	    logger.debug("tgvo : " + tgvo);
+		
+		
+	    sService.stockReceivingAdd(tvo);
 	}
 	
+	// 재고 데이터 호출
+	@ResponseBody
+    @RequestMapping(value="/invenList", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<InventoryVO> getInventoryList(@RequestParam String goods_num) throws Exception{
+    
+		logger.debug("Received goods_num: " + goods_num);
 	
+		List<InventoryVO> result = sService.getInventoryList(goods_num);
+		
+		logger.debug("result : "+ result);
+		
+		return result;
+	}
+		
 	
 	
 	

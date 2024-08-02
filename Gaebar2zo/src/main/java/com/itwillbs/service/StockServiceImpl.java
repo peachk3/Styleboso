@@ -8,9 +8,12 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.InventoryChangeVO;
 import com.itwillbs.domain.InventoryVO;
+import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.persistence.StockDAO;
 
@@ -106,8 +109,64 @@ public class StockServiceImpl implements StockService{
 		return sdao.getTransactionItems2(tran_num);
 	}
 
+
+	@Override
+	@Transactional
+	public void stockReceivingAdd(TransactionVO tvo) throws Exception {
+		
+		logger.debug("stockReceivingAdd(TransactionVO tvo) 실행 ");
+		
+		
+		tvo.setTran_num(GetTranNum(tvo));
+		
+		// DAO 메서드 호출
+		sdao.stockReceivingAdd_TransactionVO(tvo);
+		
+		List<InventoryChangeVO> icvoList = tvo.getInchangeList();
+		
+		// tgvoList에서 각 TransactionGoodsVO 객체를 꺼내어 처리
+		for(InventoryChangeVO icvo : icvoList) {
+		    // 새로운 TransactionGoodsVO 객체 생성
+			InventoryChangeVO newIvcb = new InventoryChangeVO();
+		    
+		    // 리턴받은 TransactionVO의 tran_num 설정
+			newIvcb.setTran_num(tvo.getTran_num());
+			
+			newIvcb.setInven_num(icvo.getInven_num());
+			newIvcb.setInven_qty(icvo.getInven_qty());
+		    
+			
+		    sdao.stockReceivingAdd_InventoryChangeVO(newIvcb);
+		}
+		
+		logger.debug("입고 등록 성공");
+
+		
+	}
+
 	
 
+	private String GetTranNum(TransactionVO tvo) {
+		logger.debug("GetTranNum() 실행");
+		
+		String tran_num = sdao.GetTranNum(tvo);
+		logger.debug("tran_num : "+ tran_num);
+		
+		return tran_num;
+	}
+
+
+	@Override
+	public List<InventoryVO> getInventoryList(String goods_num) throws Exception {
+		logger.debug("getInventoryList(String goodsNum) 실행");
+		
+		return sdao.getInventoryList(goods_num);
+	}
+
+	
+	
+	
+	
 //	@Override
 //	  public void updateStatus(List<String> tranNums, String status) throws Exception{
 //        for (String tranNum : tranNums) {

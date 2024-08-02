@@ -59,12 +59,12 @@ public class CommonController {
         List<TransactionGoodsVO> tranGoods = cService.getTransactionGoods(tran_num);
         // rec_date 포맷팅
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = sdf.format(tranDetails.getRec_date());
+        String formattedDate = sdf.format(tranDetails.getTran_date());
         
         
         response.put("tranDetails", tranDetails);
         response.put("tranGoods", tranGoods);
-        response.put("formattedRecDate", formattedDate);  // 포맷팅된 날짜 추가
+        response.put("formattedTranDate", formattedDate);  // 포맷팅된 날짜 추가
 
         logger.debug("tranDetails : "+tranDetails);
         logger.debug("tranGoods : "+tranGoods);

@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.InventoryChangeVO;
 import com.itwillbs.domain.InventoryVO;
+import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 
 @Repository
@@ -101,15 +103,72 @@ public class StockDAOImpl implements StockDAO{
 		
 	}
 
+	@Override
+	public String GetTranNum(TransactionVO tvo) {
+		logger.debug("DAO : GetTranNum() 호출");
+		logger.debug("tvo : "+ tvo);
+		
+		String tran_num = sqlSession.selectOne(NAMESPACE + "getTranNum", tvo);
+		
+		logger.debug("tran_num : "+ tran_num);
+		
+		return tran_num;
+	}
 
-	// 상태 변경
+	@Override
+	public void stockReceivingAdd_TransactionVO(TransactionVO tvo) {
+	logger.debug("DAO : salesOrderAdd_TransactionVO() 호출");
+		
+		logger.debug("tvo : "+ tvo);
+		
+		sqlSession.insert(NAMESPACE + "stockReceivingAdd_TransactionVO", tvo);
+		
+		logger.debug("DAO : 수주 거래 테이블 등록 완료");
+				
+	}
+	
+	@Override
+	public void stockReceivingAdd_InventoryChangeVO(InventoryChangeVO newIvcb) {
+
+		logger.debug("DAO : stockReceivingAdd_InventoryChangeVO() 호출");
+		
+		logger.debug("newIvcb : "+ newIvcb);
+		
+		sqlSession.insert(NAMESPACE + "stockReceivingAdd_InventoryChangeVO", newIvcb);
+		
+		logger.debug("DAO : 수주 거래 품목 테이블 등록 완료");	
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public List<InventoryVO> getInventoryList(String goods_num) throws Exception {
+		logger.debug("DAO : getInventoryList(String goodsNum) 호출");
+		
+		
+		return sqlSession.selectList(NAMESPACE + "getInventoryList", goods_num);
+	}
+	
+
 //	@Override
-//	 public void updateStatus(String tranNum, String status) {
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("tranNum", tranNum);
-//        params.put("status", status);
-//        sqlSession.update(NAMESPACE+"updateStatus", params);
-//    }
+//	public void stockReceivingAdd_TransactionGoodsVO(TransactionGoodsVO newTgvo) {
+//		logger.debug("DAO : salesOrderAdd_TransactionGoodsVO() 호출");
+//		
+//		logger.debug("tgvo : "+ newTgvo);
+//		
+//		sqlSession.insert(NAMESPACE + "stockReceivingAdd_TransactionGoodsVO", newTgvo);
+//		
+//		logger.debug("DAO : 수주 거래 품목 테이블 등록 완료");	
+//	}
+
+
+
 
 	
 	

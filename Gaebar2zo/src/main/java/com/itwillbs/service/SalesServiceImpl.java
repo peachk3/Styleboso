@@ -20,6 +20,14 @@ public class SalesServiceImpl implements SalesService{
 
 	@Inject
 	private SalesDAO sdao;
+	
+	@Override
+	public List<TransactionVO> SalesOrderList() throws Exception {
+		
+		logger.debug("SalesOrderAdd() 실행");
+		
+		return sdao.salesOrderList();
+	}
 
 	@Override
 	@Transactional

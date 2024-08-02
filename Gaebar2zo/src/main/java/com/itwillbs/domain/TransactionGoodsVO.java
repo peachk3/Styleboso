@@ -9,6 +9,8 @@ public class TransactionGoodsVO {
 	
 	private	String	tran_num;
 	private	String	goods_num;
+	private	int	expenditure;
+	private	int	income;
 	private	Integer	goods_qty;
 	
 	private List<ItemVO> itemList;

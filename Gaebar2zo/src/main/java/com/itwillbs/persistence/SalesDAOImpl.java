@@ -23,6 +23,13 @@ public class SalesDAOImpl implements SalesDAO{
 	public SqlSession sqlSession;
 
 	@Override
+	public List<TransactionVO> salesOrderList() throws Exception {
+		logger.debug("DAO : salesOrderList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "salesOrderList");
+	}
+
+	@Override
 	public void salesOrderAdd_TransactionVO(TransactionVO tvo) throws Exception {
 		logger.debug("DAO : salesOrderAdd_TransactionVO() 호출");
 		

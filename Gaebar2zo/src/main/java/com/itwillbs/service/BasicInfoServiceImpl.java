@@ -162,6 +162,12 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		
 		return bidao.whZoneListAll(wh_code, wh_zone);
 	}
+
+	@Override
+	public WarehouseVO getWarehouseByName(String wh_code) throws Exception {
+		logger.debug(" 창고 구역 출력 ");
+		return bidao.whZone(wh_code);
+	}
 	
 	
 }

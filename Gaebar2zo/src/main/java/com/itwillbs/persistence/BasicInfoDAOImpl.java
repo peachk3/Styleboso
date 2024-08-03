@@ -183,6 +183,12 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 		return sqlSession.selectList(NAMESPACE + "whZoneListAll", params);
 	}
 
+	@Override
+	public WarehouseVO whZone(String wh_code) throws Exception {
+		logger.debug(" whZone 호출");
+		return sqlSession.selectOne(NAMESPACE + "whZone", wh_code);
+	}
+
 	 
 }
 

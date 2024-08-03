@@ -221,5 +221,10 @@
 		from warehouse
 		where wh_code=#{wh_code} and wh_zone=#{wh_zone}
    	</select>
-   	
+   
+   <select id="whZone" parameterType="map" resultType="WarehouseVO">
+   		select wh_code
+   		from warehouse
+   		where wh_code = #{wh_code}
+   </select>
 </mapper>

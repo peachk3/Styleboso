@@ -65,5 +65,7 @@ public interface BasicInfoDAO {
 
 	public List<WarehouseVO> whZoneListAll(String wh_code, String wh_zone) throws Exception;
 
+	public WarehouseVO whZone(String wh_code) throws Exception;
+
 
 }

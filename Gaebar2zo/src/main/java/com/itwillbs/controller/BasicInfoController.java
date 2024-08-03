@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -310,6 +311,12 @@ public class BasicInfoController {
 		logger.debug(" warehouse 페이지 ");
 		
 	}
+	
+	@PostMapping(value = "/warehouse")
+    public ResponseEntity<WarehouseVO> getWarehouseInfo(@RequestBody WarehouseVO request) throws Exception {
+        WarehouseVO warehouse = bService.getWarehouseByName(request.getWh_code());
+        return ResponseEntity.ok(warehouse);
+    }
 	
 	// 창고 구역 리스트
 	@ResponseBody

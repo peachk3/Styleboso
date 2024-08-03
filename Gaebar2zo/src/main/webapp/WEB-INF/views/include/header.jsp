@@ -72,9 +72,9 @@
             <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
                  <span class="nav-icon"><span class="nav-icon-bullet"></span></span><span data-coreui-i18n="창고 관리" onclick="location.href='/basicInfo/warehouseList'">창고 관리</span></a>
              <ul class="nav-group-items compact">
-               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/warehouseList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 김포 창고</a></li>
-               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 대구 창고</a></li>
-               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 양산 창고</a></li>
+               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/warehouse?name=GP"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 김포 창고</a></li>
+               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/warehouse?name=TS"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 대구 창고</a></li>
+               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/warehouse?name=YS"><span class="nav-icon"><span class="nav-icon-bullet"></span></span>양산 창고</a></li>
              </ul>
            </li>
           </ul>

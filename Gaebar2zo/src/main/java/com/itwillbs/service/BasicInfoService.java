@@ -68,5 +68,7 @@ public interface BasicInfoService {
 	// 창고 -> 재고 리스트
 	public List<WarehouseVO> whInvenList(String wh_num) throws Exception;
 
+	public WarehouseVO getWarehouseByName(String wh_code) throws Exception;
+
 
 }

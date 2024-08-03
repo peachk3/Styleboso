@@ -44,6 +44,9 @@
 	<h1>basicInfo/warehouse.jsp</h1>
 	<h1>양산 창고</h1>
 	
+	<h1>창고 관리</h1>
+    <p id="warehouse-name"></p>
+	
 <!-- <div class="section sectionA" data-wh_num="GPA11A" class="sectionA" > -->
 	<div class="section sectionA" data-wh_code="YS" data-wh_zone="A" class="sectionA" id="section">
         Section A
@@ -145,6 +148,36 @@
 <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@3.2.2/dist/js/coreui.min.js"></script>
 
 <script>
+const token = $("meta[name='_csrf']").attr("content")
+const header = $("meta[name='_csrf_header']").attr("content");
+const name = $("#userName").val();
+
+document.addEventListener('DOMContentLoaded', function() {
+    // URL의 쿼리 파라미터를 가져옵니다.
+    const urlParams = new URLSearchParams(window.location.search);
+    const warehouseName = urlParams.get('wh_code');
+
+    // 'name' 파라미터 값이 존재하면 AJAX 요청을 보냅니다.
+    if (warehouseName) {
+        $.ajax({
+            url: '/basicInfo/warehouse',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+             },
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ name: warehouseName }),
+            success: function(data) {
+                $('#warehouse-name').text(data.message);
+            },
+            error: function(xhr, status, error) {
+                $('#warehouse-name').text('서버 오류');
+            }
+        });
+    } else {
+        $('#warehouse-name').text('창고 이름이 제공되지 않았습니다.');
+    }
+
 $(".sectionA").click(function() {
     var wh_num = $(this).data("wh_num");
     alert('WH num ' + wh_num);
@@ -251,7 +284,7 @@ $(".section").click(function() {
 	});	// ajax
 
 }); // click.function
-
+});
 
 </script>
 

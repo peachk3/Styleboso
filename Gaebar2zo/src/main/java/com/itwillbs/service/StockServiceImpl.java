@@ -78,7 +78,10 @@ public class StockServiceImpl implements StockService{
 	@Override
 	public void deleteRecevingList(List<String> trannums) throws Exception {
 		logger.debug(" 입고 삭제 ");
-		
+		// 먼저 inventory_change 테이블에서 삭제
+	    sdao.deleteInventoryChange(trannums);
+	    
+	    
 		sdao.deleteRecevingList(trannums);
 	}
 
@@ -183,7 +186,58 @@ public class StockServiceImpl implements StockService{
 //    }
 
 
+	@Override
+	@Transactional
+	public void stockReleaseAdd(TransactionVO tvo) throws Exception {
+		
+		logger.debug("stockReleaseAdd(TransactionVO tvo) 실행 ");
+		
+		
+//		tvo.setTran_num(GetTranNum(tvo));
+		
+		String tran_num = GetTranNum(tvo);
+	    logger.debug("생성된 tran_num: " + tran_num);
+	    tvo.setTran_num(tran_num);
+	    
+	    
+	    logger.debug("transaction 테이블에 데이터 삽입 시도");
+	    sdao.stockReleaseAdd_TransactionVO(tvo);
+	    logger.debug("transaction 테이블에 데이터 삽입 완료");
+	    
+	    
+		List<InventoryChangeVO> icvoList = tvo.getInchangeList();
+		
+		// tgvoList에서 각 TransactionGoodsVO 객체를 꺼내어 처리
+		for(InventoryChangeVO icvo : icvoList) {
+		    // 새로운 TransactionGoodsVO 객체 생성
+			InventoryChangeVO newIvcb = new InventoryChangeVO();
+		    
+		    // 리턴받은 TransactionVO의 tran_num 설정
+			newIvcb.setTran_num(tran_num);  // 생성된 tran_num 사용
+			newIvcb.setInven_num(icvo.getInven_num());
+			newIvcb.setInven_qty(icvo.getInven_qty());
+		    
+		   logger.debug("inventory_change 테이블에 데이터 삽입 시도: " + newIvcb);
+		   logger.debug("newIvcb before insertion: " + newIvcb);
+	       sdao.stockReleaseAdd_InventoryChangeVO(newIvcb);
+	       logger.debug("inventory_change 테이블에 데이터 삽입 완료");
+		}
+	    logger.debug("stockReceivingAdd 완료. 최종 tran_num: " + tran_num);
+		logger.debug("입고 등록 성공");
 
+		
+	}
+
+
+	@Override
+	public void deleteReleaseList(List<String> trannums) throws Exception {
+		logger.debug(" 입고 삭제 ");
+		// 먼저 inventory_change 테이블에서 삭제
+	    sdao.deleteInventoryChange(trannums);
+	    
+	    
+		sdao.deleteRecevingList(trannums);
+	}
 	
 	
 	

@@ -148,15 +148,26 @@
 	</select>
  
 
-
-   	<delete id="deleteItem">
+<!-- 입고/출고 transaction 삭제 -->
+   	<delete id="deleteTransactionList">
    		delete from transaction
    		where tran_num in
    		<foreach collection="list" item="tran_num" open="(" separator="," close=")">
    			#{tran_num}
    		</foreach>
-   	
    	</delete>
+
+<!-- 입고/출고 inventory_change 삭제 -->
+   	<delete id="deleteInventoryChange">
+	  	delete from inventory_change
+	    where tran_num in
+   		 <foreach collection="list" item="tran_num" open="(" separator="," close=")">
+      				  #{tran_num}
+   		 </foreach>
+   	</delete>
+
+
+
 
 	<!-- 입고 등록_TransactionVO -->
 	<insert id="stockReceivingAdd_TransactionVO">
@@ -164,8 +175,8 @@
 	    values(#{tran_num}, #{top_tran_num},#{cli_num}, #{pic_username}, #{tran_date}, "입고 예정" , #{tran_cate_code}, #{comm})
 	</insert>	
 
-	<!-- 입고 등록_InventoryChangeVO-->
-	<insert id="stockReceivingAdd_InventoryChangeVO">
+	<!-- 입고/출고 등록_InventoryChangeVO-->
+	<insert id="stockAdd_InventoryChangeVO">
 	   insert into inventory_change
 	   values(#{tran_num},#{inven_num},#{inven_qty})
 	</insert>
@@ -178,7 +189,17 @@
 		]]>
 	</select>
 
+	<!-- 출고 등록_TransactionVO -->
+	<insert id="stockReleaseAdd_TransactionVO">
+	    insert into transaction(tran_num,top_tran_num, cli_num, pic_username, tran_date, pro_status, tran_cate_code, comm)
+	    values(#{tran_num}, #{top_tran_num},#{cli_num}, #{pic_username}, #{tran_date}, "출고 준비" , #{tran_cate_code}, #{comm})
+	</insert>	
 
+	<!-- 출고 등록_InventoryChangeVO-->
+	<insert id="stockReleaseAdd_InventoryChangeVO">
+	   insert into inventory_change
+	   values(#{tran_num},#{inven_num},#{inven_qty})
+	</insert>
 
 
 

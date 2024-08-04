@@ -75,8 +75,17 @@ public class StockDAOImpl implements StockDAO{
 
 		
 		
-		sqlSession.delete(NAMESPACE + "deleteRecevingList", trannums);
+		sqlSession.delete(NAMESPACE + "deleteTransactionList", trannums);
 	}
+	
+	@Override
+	public void deleteInventoryChange(List<String> trannums) throws Exception {
+	    logger.debug("deleteInventoryChange(List<String> trannums) 실행");
+	    sqlSession.delete(NAMESPACE + "deleteInventoryChange", trannums);
+	}
+	
+	
+	
 
 	@Override
 	public Map<String, Object> getTransactionDetails2(String tran_num) throws Exception {
@@ -134,15 +143,11 @@ public class StockDAOImpl implements StockDAO{
 		
 		logger.debug("newIvcb : "+ newIvcb);
 		
-		sqlSession.insert(NAMESPACE + "stockReceivingAdd_InventoryChangeVO", newIvcb);
+		sqlSession.insert(NAMESPACE + "stockAdd_InventoryChangeVO", newIvcb);
 		
 		logger.debug("DAO : 입고 거래 품목 테이블 등록 완료");	
 		
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -154,7 +159,30 @@ public class StockDAOImpl implements StockDAO{
 		
 		return sqlSession.selectList(NAMESPACE + "getInventoryList", goods_num);
 	}
-	
+
+	@Override
+	public void stockReleaseAdd_TransactionVO(TransactionVO tvo) throws Exception {
+		logger.debug("DAO : stockReleaseAdd_TransactionVO() 호출");
+		
+		logger.debug("tvo : "+ tvo);
+		
+		sqlSession.insert(NAMESPACE + "stockReleaseAdd_TransactionVO", tvo);
+		
+		logger.debug("DAO : 출고 거래 테이블 등록 완료");		
+	}
+
+	@Override
+	public void stockReleaseAdd_InventoryChangeVO(InventoryChangeVO newIvcb) throws Exception {
+		logger.debug("DAO : stockReleaseAdd_InventoryChangeVO() 호출");
+		
+		logger.debug("newIvcb : "+ newIvcb);
+		
+		sqlSession.insert(NAMESPACE + "stockAdd_InventoryChangeVO", newIvcb);
+		
+		logger.debug("DAO : 출고 거래 품목 테이블 등록 완료");	
+		
+	}
+
 
 //	@Override
 //	public void stockReceivingAdd_TransactionGoodsVO(TransactionGoodsVO newTgvo) {

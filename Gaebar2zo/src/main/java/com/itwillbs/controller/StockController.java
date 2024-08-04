@@ -115,7 +115,7 @@ public class StockController {
 	}
 
 	
-	// 입고 모달 저보
+	// 입고 모달 정보
 	@ResponseBody
 	@RequestMapping(value = "/getTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public Map<String, Object> getTransactionDetails(@RequestParam("tran_num") String tran_num, 
@@ -162,19 +162,19 @@ public class StockController {
 	@ResponseBody
 	@RequestMapping(value = "/deleteRC", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> deleteReceivingList_POST(@RequestBody Map<String, Object> payload) throws Exception {
-		logger.debug(" deleteItem_POST() 실행 ");
+		logger.debug(" deleteRC_POST() 실행 ");
 		
 		@SuppressWarnings("unchecked")
-        List<String> trannums = (List<String>) payload.get("tran_num");
+        List<String> trannums = (List<String>) payload.get("tran_nums");
 
         if (trannums == null || trannums.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                  .body(Map.of("status", "error", "message", "No clients selected"));
         }
-        logger.debug("@@@@cli_num " + trannums);
+        logger.debug("@@@@tran_nums  " + trannums);
 
         try {
-            sService.deleteRecevingList (trannums);
+            sService.deleteRecevingList(trannums);
             return ResponseEntity.ok(Map.of("status", "success"));
         } catch (Exception e) {
             logger.error(" @@@@@@@@Error deleting clients", e);
@@ -290,7 +290,49 @@ public class StockController {
 
 	}
 
+	// 출고 등록 - post
+		@RequestMapping(value="/releaseAdd",method = RequestMethod.POST)
+		@ResponseBody
+		public void releaseAdd_POST(@RequestBody Map<String, String> requestData) throws Exception{
+		    
+		    ObjectMapper mapper = new ObjectMapper();
+		    
+		    TransactionVO tvo = mapper.readValue(requestData.get("tvo"), TransactionVO.class);
+		    List<InventoryChangeVO> icvoList = mapper.readValue(requestData.get("icvo"), 
+		                                new TypeReference<List<InventoryChangeVO>>(){});
+		    
+		    tvo.setInchangeList(icvoList);
+		    logger.debug("tvo : " + tvo);
+		    logger.debug("icvoList : " + icvoList);
+		    
+		    sService.stockReleaseAdd(tvo);
+		}
+	
+	// 출고 삭제 
+		@ResponseBody
+		@RequestMapping(value = "/deleteRL", method = RequestMethod.POST)
+		public ResponseEntity<Map<String, Object>> deleteReleaseList_POST(@RequestBody Map<String, Object> payload) throws Exception {
+			logger.debug(" deleteRL_POST() 실행 ");
+			
+			@SuppressWarnings("unchecked")
+	        List<String> trannums = (List<String>) payload.get("tran_nums");
 
+	        if (trannums == null || trannums.isEmpty()) {
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+	                                 .body(Map.of("status", "error", "message", "No clients selected"));
+	        }
+	        logger.debug("@@@@tran_nums  " + trannums);
+
+	        try {
+	            sService.deleteReleaseList(trannums);
+	            return ResponseEntity.ok(Map.of("status", "success"));
+	        } catch (Exception e) {
+	            logger.error(" @@@@@@@@Error deleting clients", e);
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("status", "error", "message", e.getMessage()));
+	        }
+			
+		}
+	
 
 
 

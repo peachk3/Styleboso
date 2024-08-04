@@ -39,6 +39,16 @@
 	.sectionD {
 		background-color: lightyellow;
 	}
+	.whCode {
+		width: 400px;
+		height: 250px;
+		margin: 10px;
+		padding: 20px;
+		text-align: center;
+		line-height: 100px;
+		border: 1px solid #000;
+		cursor: pointer;
+	}
 </style>
 <body>
 	<h1>basicInfo/warehouse.jsp</h1>
@@ -59,6 +69,17 @@
     </div>
     <div class="section sectionD" data-wh_code="YS" data-wh_zone="D" class="sectionD" id="section">
         Section D
+    </div>
+	
+	
+	<div class="whCode whCodeYS" data-wh_code="YS" class="whCodeYS" id="whCode">
+        양산
+    </div>
+    <div class="whCode whCodeTS" data-wh_code="TS"  class="whCodeTS" id="whCode">
+        대구
+    </div>
+    <div class="whCode whCodeGP" data-wh_code="GP"  class="whCodeGP" id="whCode">
+        김포
     </div>
 
 <!-- 창고 모달 -->
@@ -160,15 +181,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // 'name' 파라미터 값이 존재하면 AJAX 요청을 보냅니다.
     if (warehouseName) {
         $.ajax({
-            url: '/basicInfo/warehouse',
+            url: '/basicInfo/warehouse?wh_code='+ warehouseName ,
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
              },
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({ name: warehouseName }),
+            data: JSON.stringify({ wh_code: warehouseName }),
             success: function(data) {
-                $('#warehouse-name').text(data.message);
+            	console.log('Response Data:', data);
+                $('#warehouse-name').text(data.wh_code);
             },
             error: function(xhr, status, error) {
                 $('#warehouse-name').text('서버 오류');
@@ -280,6 +302,29 @@ $(".section").click(function() {
         }, //success
         error: function(xhr, status, error) {
             console.error("AJAX 오류: ", status, error);
+        } //error
+	});	// ajax
+
+}); // click.function
+
+$(".whCode").click(function() {
+	var wh_code = $(this).data("wh_code");
+    alert('wh num ' + wh_code);
+    var encodedWhCode = encodeURIComponent(wh_code);
+    
+    $.ajax({
+        url: '/basicInfo/whZone?wh_code=' + encodedWhCode,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token);
+         },
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ wh_code: encodedWhCode }),
+        success: function(data) {
+        	console.log('Response Data:', data);
+        }, //success
+        error: function(xhr, status, error) {
+            console.error("AJAX 오류: ",xhr, status, error);
         } //error
 	});	// ajax
 

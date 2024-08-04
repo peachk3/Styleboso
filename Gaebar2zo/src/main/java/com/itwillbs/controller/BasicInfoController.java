@@ -311,10 +311,19 @@ public class BasicInfoController {
 		logger.debug(" warehouse 페이지 ");
 		
 	}
+	// 창고 페이지
+	@RequestMapping(value = "/whZone", method = RequestMethod.GET)
+	public void whZone_GET() throws Exception{
+		logger.debug(" warehouseZone 페이지 ");
+		
+	}
 	
-	@PostMapping(value = "/warehouse")
-    public ResponseEntity<WarehouseVO> getWarehouseInfo(@RequestBody WarehouseVO request) throws Exception {
-        WarehouseVO warehouse = bService.getWarehouseByName(request.getWh_code());
+	@ResponseBody
+	@PostMapping(value = "/whZone")
+    public ResponseEntity<WarehouseVO> getWarehouseInfo(@RequestParam String wh_code, @RequestBody WarehouseVO request) throws Exception {
+		logger.debug(" warehousePOST");
+        WarehouseVO warehouse = bService.getWarehouseByName(wh_code);
+        logger.debug("wh_code : " + wh_code);
         return ResponseEntity.ok(warehouse);
     }
 	

@@ -39,6 +39,14 @@ public interface StockService {
 	List<Map<String, Object>> getTransactionItems2(String tran_num) throws Exception;
 
 	
+	// 입고 등록
+	public void stockReceivingAdd(TransactionVO tvo) throws Exception;
+
+	
+	// 재고 데이터 로드 
+	List<InventoryVO> getInventoryList(String goods_num) throws Exception;
+
+	
 	// 상태 업데이트
 //    void updateStatus(List<String> tranNums, String status) throws Exception;
 

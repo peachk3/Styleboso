@@ -22,9 +22,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.InventoryChangeVO;
 import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.PageVO;
+import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.service.StockService;
 
@@ -110,6 +114,8 @@ public class StockController {
 	    
 	}
 
+	
+	// 입고 모달 저보
 	@ResponseBody
 	@RequestMapping(value = "/getTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public Map<String, Object> getTransactionDetails(@RequestParam("tran_num") String tran_num, 
@@ -123,13 +129,13 @@ public class StockController {
 	    List<Map<String, Object>> items = sService.getTransactionItems(top_tran_num);
 	    
 	    // LocalDateTime을 String으로 변환
-	    LocalDateTime recDate = (LocalDateTime) details.get("rec_date");
+	    LocalDateTime tranDate = (LocalDateTime) details.get("tran_date");
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-	    String recDateString = recDate.format(formatter);
+	    String tranDateString = tranDate.format(formatter);
 	    
 	    // 결과 맵에 모든 정보 추가
 	    result.putAll(details);
-	    result.put("rec_date", recDateString);
+	    result.put("tran_date", tranDateString);
 	    result.put("items", items);
 	    
 	    logger.debug("details : " + details);
@@ -183,7 +189,7 @@ public class StockController {
 	
 	
 	
-	// 입고 등록
+	// 입고 등록 - get
 	@RequestMapping(value="/receivingAdd",method=RequestMethod.GET)
 	public void receivingAdd_GET() throws Exception{
 		logger.debug(" receivingAdd_GET() 실행 ");
@@ -191,14 +197,39 @@ public class StockController {
 
 	}
 
+	
+	// 입고 등록 - post
 	@RequestMapping(value="/receivingAdd",method = RequestMethod.POST)
 	@ResponseBody
 	public void receivingAdd_POST(@RequestBody Map<String, String> requestData) throws Exception{
-		
-		
+	    
+	    ObjectMapper mapper = new ObjectMapper();
+	    
+	    TransactionVO tvo = mapper.readValue(requestData.get("tvo"), TransactionVO.class);
+	    List<InventoryChangeVO> icvoList = mapper.readValue(requestData.get("icvo"), 
+	                                new TypeReference<List<InventoryChangeVO>>(){});
+	    
+	    tvo.setInchangeList(icvoList);
+	    logger.debug("tvo : " + tvo);
+	    logger.debug("icvoList : " + icvoList);
+	    
+	    sService.stockReceivingAdd(tvo);
 	}
 	
+	// 재고 데이터 호출
+	@ResponseBody
+    @RequestMapping(value="/invenList", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<InventoryVO> getInventoryList(@RequestParam String goods_num) throws Exception{
+    
+		logger.debug("Received goods_num: " + goods_num);
 	
+		List<InventoryVO> result = sService.getInventoryList(goods_num);
+		
+		logger.debug("result : "+ result);
+		
+		return result;
+	}
+		
 	
 	
 	

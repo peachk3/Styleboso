@@ -137,7 +137,7 @@
 
 
 	<!-- 상태업데이트_입고 -->
-    <update id="updateStatus">
+    <update id="updateRecevingStatus">
 		    UPDATE transaction
 		    SET pro_status = #{pro_status},
 		        rec_date = CASE 
@@ -153,7 +153,20 @@
 
 
 
-
+	<!-- 상태업데이트_출고 -->
+    <update id="updateReleaseStatus">
+		    UPDATE transaction
+		    SET pro_status = #{pro_status},
+		        rel_date = CASE 
+		                     WHEN #{pro_status} = '출고 완료' THEN NOW()
+		                     WHEN #{pro_status} = '출고 준비' THEN NULL
+		                     ELSE rel_date
+		                   END
+		    WHERE tran_num IN
+		    <foreach item="tran_num" index="index" collection="tran_nums" open="(" separator="," close=")">
+		        #{tran_num}
+		    </foreach>
+    </update>
 
 
 

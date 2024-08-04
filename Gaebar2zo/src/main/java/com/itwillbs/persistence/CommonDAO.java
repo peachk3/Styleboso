@@ -29,8 +29,11 @@ public interface CommonDAO {
 	// 거래번호 -> 품목 정보 호출
 	public List<TransactionGoodsVO> getTransactionGoods(String tran_num) throws Exception;
 
-	// 상태 업데이트
-	public void updateStatus(List<String> tran_nums, String pro_status) throws Exception;
+	// 입고 상태 업데이트
+	public void updateRecevingStatus(List<String> tran_nums, String pro_status) throws Exception;
+	
+	// 출고 상태 업데이트
+	public void updateReleaseStatus(List<String> tran_nums, String pro_status) throws Exception;
 
 
 

@@ -47,6 +47,13 @@ public interface StockService {
 	List<InventoryVO> getInventoryList(String goods_num) throws Exception;
 
 	
+	// 출고 등록
+	public void stockReleaseAdd(TransactionVO tvo) throws Exception;
+
+	// 출고 삭제
+	public void deleteReleaseList(List<String> trannums) throws Exception;
+
+	
 	// 상태 업데이트
 //    void updateStatus(List<String> tranNums, String status) throws Exception;
 

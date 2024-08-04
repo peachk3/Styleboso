@@ -25,10 +25,10 @@ public interface StockDAO {
 	// 입고 모달창 정보 화출
 	Map<String, Object> getTransactionDetails(String tran_num) throws Exception;
 
-	// 입고 목록 삭제
+	// 입고/출고 삭제
 	void deleteRecevingList(List<String> trannums) throws Exception;
 
-	// 입고 inventory change 삭제
+	// 입고/츨고 inventory change 삭제
 	void deleteInventoryChange(List<String> trannums) throws Exception;
 
 	
@@ -57,6 +57,14 @@ public interface StockDAO {
 	
 	// 재고 데이터 로드 
 	List<InventoryVO> getInventoryList(String goods_num) throws Exception;
+
+	
+	// 출고 등록_TransactionVO
+	public void stockReleaseAdd_TransactionVO(TransactionVO tvo) throws Exception;
+	
+	// 출고 등록_InventoryChangeVO
+	public void stockReleaseAdd_InventoryChangeVO(InventoryChangeVO newIvcb) throws Exception;
+
 
 	
 	

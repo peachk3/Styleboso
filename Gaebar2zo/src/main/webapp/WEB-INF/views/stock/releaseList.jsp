@@ -101,7 +101,7 @@
                 <div class="search-container">
                     <div class="col-md-6">
                         <label for="validationCustom04" class="form-label">출고 예정일</label>
-                        <input type="date" class="form-control" id="modal-rel_date" required>
+                        <input type="date" class="form-control" id="modal-tran_date" required>
                     </div>
                     <div class="col-md-3">
                         <label for="validationCustom05" class="form-label">담당자 아이디</label>
@@ -183,7 +183,7 @@ $(document).ready(function() {
                 $("#modal-tran_num").val(response.top_tran_num);
                 $("#modal-cli_num").val(response.cli_num);
                 $("#modal-cli_name").val(response.cli_name);
-                $("#modal-rel_date").val(formatDateForInput(response.rel_date)); 
+                $("#modal-tran_date").val(formatDateForInput(response.tran_date)); 
                 $("#modal-pic_username").val(response.pic_username);
                 $("#modal-user_per_name").val(response.user_per_name);
                 
@@ -232,7 +232,7 @@ $(document).ready(function() {
 	        }
 
 	        $.ajax({
-	            url: '/common/updateStatus',
+	            url: '/common/updateReleaseStatus',
 	            type: 'POST',
 	            contentType: 'application/json',
 	            data: JSON.stringify({ tran_nums: tran_nums, pro_status: pro_status }),
@@ -250,53 +250,45 @@ $(document).ready(function() {
 	    });
     
     
-    
-    $("#deleteItemBtn").click(function(){
-        const checkedCheckboxes = $('input[type="checkbox"].form-check-input:checked');
-        console.log("선택된 체크박스 수:", checkedCheckboxes.length);
-        const item_nums = [];
-    
-        checkedCheckboxes.each(function() {
-            const item_num = $(this).closest('tr').find('td:eq(1)').text();
-            if (item_num) {  // 빈 문자열이 아닌 경우에만 추가
-                console.log("추출된 item_num:", item_num);
-                item_nums.push(item_num);
-            }
-        });
-        
-        // 중복 제거
-        const uniqueItemNums = [...new Set(item_nums)];
-     
-        console.log("최종 item_nums 배열:", item_nums);
-        
-        if (item_nums.length === 0) {
-            alert('삭제할 항목을 선택해주세요.');
-            return;
-        }
-    
-        if (confirm('선택한 ' + item_nums.length + '개의 항목을 삭제하시겠습니까?')) {
-            $.ajax({
-                url: '/stock/deleteRL',
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ item_nums: item_nums }),
-                success: function(response) {
-                    // Handle success, e.g., reload the page or show a message
-                    location.reload();
-                    alert("삭제 완료 되었습니다");
-                },
-                error: function(xhr, status, error) {
-                    // Handle error
-                    alert("An error occurred: " + error);
-                }
-            });
-        } //if
-    }); // 버튼
-});
+	    $("#deleteItemBtn").click(function(){
+	        const checkedCheckboxes = $('input[type="checkbox"].form-check-input:checked');
+	        console.log("선택된 체크박스 수:", checkedCheckboxes.length);
+	        const tran_nums = []; // 여기서 tran_nums를 배열로 선언
 
-    
-    
+	        checkedCheckboxes.each(function() {
+	            const tran_num = $(this).closest('tr').find('td:eq(1)').text();
+	            if (tran_num) {  // 빈 문자열이 아닌 경우에만 추가
+	                console.log("추출된 tran_num:", tran_num);
+	                tran_nums.push(tran_num); // tran_nums 배열에 추가
+	            }
+	        });
+	        
+	        console.log("최종 tran_nums 배열:", tran_nums);
+	        
+	        if (tran_nums.length === 0) {
+	            alert('삭제할 항목을 선택해주세요.');
+	            return;
+	        }
+
+	        if (confirm('선택한 ' + tran_nums.length + '개의 항목을 삭제하시겠습니까?')) {
+	            $.ajax({
+	                url: '/stock/deleteRL',
+	                beforeSend: function(xhr) {
+	                    xhr.setRequestHeader(header, token);
+	                },
+	                type: 'POST',
+	                contentType: 'application/json',
+	                data: JSON.stringify({ tran_nums: tran_nums }),
+	                success: function(response) {
+	                    location.reload();
+	                    alert("삭제 완료 되었습니다");
+	                },
+	                error: function(xhr, status, error) {
+	                    console.error("AJAX 오류:", status, error);
+	                    alert("An error occurred: " + error);
+	                }
+	            });
+	        }
+	    });
+	}); 
 </script>

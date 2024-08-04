@@ -231,7 +231,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: '/common/updateStatus',
+            url: '/common/updateRecevingStatus',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ tran_nums: tran_nums, pro_status: pro_status }),

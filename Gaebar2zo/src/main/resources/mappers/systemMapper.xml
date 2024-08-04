@@ -57,6 +57,12 @@
 </delete>
 
 
+
+
+
+
+
+
 <!--  공통코드 전체 리스트에서 품목공통 코드 리스트 -->
 <select id="itemCodeListAll" resultType="ItemCodeVO">
 	select * from item_code 
@@ -71,11 +77,11 @@
 </update>
 
 <!-- 공통 품목코드 리스트 (삭제) -->
-<delete id="deleteGroupCode">
-    DELETE FROM code 
-    WHERE group_code IN 
-    <foreach item="group_code" collection="list" open="(" separator="," close=")">
-        #{group_code}
+<delete id="deleteItemCode">
+    DELETE FROM item_code
+    WHERE s_cate_item_code IN 
+    <foreach item="s_cate_item_code" collection="list" open="(" separator="," close=")">
+        #{s_cate_item_code}
     </foreach>
 </delete>
 

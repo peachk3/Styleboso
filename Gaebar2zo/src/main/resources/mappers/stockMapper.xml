@@ -149,14 +149,24 @@
  
 
 
-   	<delete id="deleteItem">
+   	<delete id="deleteRecevingList">
    		delete from transaction
    		where tran_num in
    		<foreach collection="list" item="tran_num" open="(" separator="," close=")">
    			#{tran_num}
    		</foreach>
-   	
    	</delete>
+
+   	<delete id="deleteInventoryChange">
+	  	delete from inventory_change
+	    where tran_num in
+   		 <foreach collection="list" item="tran_num" open="(" separator="," close=")">
+      				  #{tran_num}
+   		 </foreach>
+   	</delete>
+
+
+
 
 	<!-- 입고 등록_TransactionVO -->
 	<insert id="stockReceivingAdd_TransactionVO">

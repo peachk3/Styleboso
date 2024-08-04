@@ -27,6 +27,10 @@ public interface StockDAO {
 
 	// 입고 목록 삭제
 	void deleteRecevingList(List<String> trannums) throws Exception;
+
+	// 입고 inventory change 삭제
+	void deleteInventoryChange(List<String> trannums) throws Exception;
+
 	
 	// 출고 모달창 정보 호출
 	Map<String, Object> getTransactionDetails2(String tran_num) throws Exception;

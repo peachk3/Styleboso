@@ -77,6 +77,15 @@ public class StockDAOImpl implements StockDAO{
 		
 		sqlSession.delete(NAMESPACE + "deleteRecevingList", trannums);
 	}
+	
+	@Override
+	public void deleteInventoryChange(List<String> trannums) throws Exception {
+	    logger.debug("deleteInventoryChange(List<String> trannums) 실행");
+	    sqlSession.delete(NAMESPACE + "deleteInventoryChange", trannums);
+	}
+	
+	
+	
 
 	@Override
 	public Map<String, Object> getTransactionDetails2(String tran_num) throws Exception {

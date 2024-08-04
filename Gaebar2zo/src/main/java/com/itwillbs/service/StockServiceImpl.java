@@ -78,7 +78,10 @@ public class StockServiceImpl implements StockService{
 	@Override
 	public void deleteRecevingList(List<String> trannums) throws Exception {
 		logger.debug(" 입고 삭제 ");
-		
+		// 먼저 inventory_change 테이블에서 삭제
+	    sdao.deleteInventoryChange(trannums);
+	    
+	    
 		sdao.deleteRecevingList(trannums);
 	}
 

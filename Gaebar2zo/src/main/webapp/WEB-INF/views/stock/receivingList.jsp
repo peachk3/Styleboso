@@ -251,27 +251,24 @@ $(document).ready(function() {
     $("#deleteItemBtn").click(function(){
         const checkedCheckboxes = $('input[type="checkbox"].form-check-input:checked');
         console.log("선택된 체크박스 수:", checkedCheckboxes.length);
-        const item_nums = [];
+        const tran_nums = []; // 여기서 tran_nums를 배열로 선언
 
         checkedCheckboxes.each(function() {
-            const item_num = $(this).closest('tr').find('td:eq(1)').text();
-            if (item_num) {  // 빈 문자열이 아닌 경우에만 추가
-                console.log("추출된 item_num:", item_num);
-                item_nums.push(item_num);
+            const tran_num = $(this).closest('tr').find('td:eq(1)').text();
+            if (tran_num) {  // 빈 문자열이 아닌 경우에만 추가
+                console.log("추출된 tran_num:", tran_num);
+                tran_nums.push(tran_num); // tran_nums 배열에 추가
             }
         });
         
-        // 중복 제거
-        const uniqueItemNums = [...new Set(item_nums)];
-     
-        console.log("최종 item_nums 배열:", item_nums);
+        console.log("최종 tran_nums 배열:", tran_nums);
         
-        if (item_nums.length === 0) {
+        if (tran_nums.length === 0) {
             alert('삭제할 항목을 선택해주세요.');
             return;
         }
-    
-        if (confirm('선택한 ' + item_nums.length + '개의 항목을 삭제하시겠습니까?')) {
+
+        if (confirm('선택한 ' + tran_nums.length + '개의 항목을 삭제하시겠습니까?')) {
             $.ajax({
                 url: '/stock/deleteRC',
                 beforeSend: function(xhr) {
@@ -279,18 +276,17 @@ $(document).ready(function() {
                 },
                 type: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify({ item_nums: item_nums }),
+                data: JSON.stringify({ tran_nums: tran_nums }),
                 success: function(response) {
-                    // Handle success, e.g., reload the page or show a message
                     location.reload();
                     alert("삭제 완료 되었습니다");
                 },
                 error: function(xhr, status, error) {
-                    // Handle error
+                    console.error("AJAX 오류:", status, error);
                     alert("An error occurred: " + error);
                 }
             });
-        } // if
-    }); // 버튼
+        }
+    });
 });  
 </script>

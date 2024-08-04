@@ -21,6 +21,9 @@ public interface SystemDAO {
 	// 공통 코드 등록
 	void saveGroupCode(CodeVO codeVo) throws Exception;
 	
+	//공통 코드 수정(update)
+	void updateCode(CodeVO codeVo) throws Exception;
+	
 	// 공통 코드 삭제
 	void deleteCode(List<String> Codes) throws Exception;
 	
@@ -39,6 +42,8 @@ public interface SystemDAO {
 
 	//공통 품목코드 유효성&중복검사
 	ItemCodeVO getItemCodeAndCheck(String s_cate_item_code) throws Exception;
+
+	
 
 
 	

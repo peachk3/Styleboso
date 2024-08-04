@@ -70,6 +70,96 @@
   
 
 //===================================================================
+//수정(update)기능
+    var originalGroupCode = '';
+    var originalGroupName = '';
+
+    // 수정 버튼 클릭 시 호출
+    function updateCode() {
+        // 체크된 체크박스를 찾아 해당 그룹 코드 가져오기
+        var checkedBoxes = document.querySelectorAll('.item-checkbox:checked');
+      
+        //체크박스 여러개 선택시 
+        if (checkedBoxes.length !== 1) {
+            Swal.fire('알림', '수정할 항목을 하나만 선택하세요.', 'warning');
+            return;
+        }
+        
+        //체크박스가 속한 테이블 행에서 특정 데이터 가져오기
+        var selectedCode = checkedBoxes[0].value;
+        var selectedRow = checkedBoxes[0].closest('tr');
+        var selectedName = selectedRow.querySelector('td:nth-child(3)').innerText;
+
+        // 모달에 값 설정
+        document.getElementById('edit_group_code').value = selectedCode;
+        document.getElementById('edit_group_name').value = selectedName;
+
+        // 초기값 저장
+        originalGroupCode = selectedCode;
+        originalGroupName = selectedName;
+
+        // 모달 열기
+        $('#commonModal').modal('show');
+    }
+
+
+    // 수정된 코드 저장
+    function saveEditedCode() {
+        // CSRF 토큰 설정
+        const token = $("meta[name='_csrf']").attr("content");
+        const header = $("meta[name='_csrf_header']").attr("content");
+
+        var groupCode = document.getElementById('edit_group_code').value;
+        var groupName = document.getElementById('edit_group_name').value;
+
+        $.ajax({
+            url: '/system/updateCode', // 실제 서버 측 URL
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ group_code: groupCode, group_name: groupName }),
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);  // CSRF 토큰 설정
+            },
+            success: function(response) {
+                Swal.fire('저장 완료', '공통 그룹코드가 저장되었습니다.', 'success')
+                    .then(() => {
+                        $('#commonModal').modal('hide');
+                        location.reload();
+                    });
+            },
+            error: function(error) {
+                Swal.fire('Error', '저장 중 오류가 발생했습니다.', 'error');
+            }
+        });
+    }
+
+    // 취소 버튼 클릭 시
+    function cancelEdit() {
+        // 초기값으로 되돌리기
+        document.getElementById('edit_group_code').value = originalGroupCode;
+        document.getElementById('edit_group_name').value = originalGroupName;
+
+        // 모달 닫기
+        $('#commonModal').modal('hide');
+    }   
+    
+    
+    
+    //aria-hidden 속성이 부모 요소에 남아 있으면 문제를 일으킬 수 있기 때문에 -> 모달 외부 요소에 적용 
+    // 모달이 열리고 닫힐 때 aria-hidden 속성 관리
+    $('#insertCodeModal').on('show.bs.modal', function () {
+        // 모달이 열릴 때
+        $('body > *').not('#insertCodeModal').attr('aria-hidden', 'true');
+        $('#insertCodeModal').removeAttr('aria-hidden');
+    });
+
+    $('#insertCodeModal').on('hidden.bs.modal', function () {
+        // 모달이 닫힐 때
+        $('body > *').removeAttr('aria-hidden');
+    });
+    
+    
+ //===================================================================
   //삭제기능 - onclick=deleteCode()()
     function deleteCode(){
         const token = $("meta[name='_csrf']").attr("content");

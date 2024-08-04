@@ -56,7 +56,7 @@ public class SystemController {
 
 	// -------------------------------------------------------------------------------------------
 	// 로그아웃
-	@RequestMapping(value = "logout", method = RequestMethod.POST)
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	public String logout_POST(HttpSession session) throws Exception {
 
 		logger.debug("/logout -> logoutPOST() 호출");
@@ -137,8 +137,18 @@ public class SystemController {
 			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("failure");
 		 }
 	 }
-	//공통 코드 (수정)
 	
+	//공통 코드 (수정)
+		 @ResponseBody
+		@RequestMapping(value = "/updateCode", method = RequestMethod.POST)
+		public ResponseEntity<String> updateCode(@RequestBody CodeVO codeVo) throws Exception {
+			 logger.debug(" @@@ updateCode() 실행");
+			 sService.updateCode(codeVo);
+			 
+			logger.debug("controller => 공통 코드 업데이트 출력 성공: {}" + codeVo);
+			
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
 	
 	
 	
@@ -176,6 +186,18 @@ public class SystemController {
 	  logger.debug(" @@@@@@@itemCodeList : " + itemCodeList);
 	  
      }
+	 //그룹 -> 품목코드 (등록)
+	 @ResponseBody
+	 @RequestMapping(value = "/saveItemCode", method = RequestMethod.POST)
+	 public ResponseEntity<String> saveItemCode(@RequestBody ItemCodeVO icVo){
+		 
+		 try {
+			 sService.saveItemCode(icVo);
+			 return ResponseEntity.ok("success");
+		 }catch(Exception e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("failure");
+		 }
+	 }
 	 
 	// 그룹-> 품목코드 수정 
 	 @ResponseBody
@@ -202,18 +224,7 @@ public class SystemController {
 	        }
 	 }
 	 
-	 //그룹 -> 품목코드 (등록)
-	 @ResponseBody
-	 @RequestMapping(value = "/saveItemCode", method = RequestMethod.POST)
-	 public ResponseEntity<String> saveItemCode(@RequestBody ItemCodeVO icVo){
-		 
-		 try {
-			 sService.saveItemCode(icVo);
-			 return ResponseEntity.ok("success");
-		 }catch(Exception e) {
-			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("failure");
-		 }
-	 }
+	
 		 
 	 
 	 // 공통 품목 코드 중복 검사

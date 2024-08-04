@@ -24,6 +24,9 @@ public interface SystemService {
 	// 공통 코드 등록
 	void saveGroupCode(CodeVO codeVo) throws Exception;
 	
+	//공통 코드 수정
+	void updateCode(CodeVO codeVo) throws Exception;
+	
 	// 공통 코드 삭제
 	void deleteCode(List<String> Codes) throws Exception;
 	
@@ -42,6 +45,8 @@ public interface SystemService {
 	
 	//공통 품목 중복체크&유효성
 	boolean checkItemCode(String s_cate_item_code) throws Exception;
+
+
 
 
 	

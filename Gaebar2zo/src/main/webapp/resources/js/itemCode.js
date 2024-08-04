@@ -11,9 +11,21 @@
     //================================
     // 등록 기능
     // 등록모달
+
+    
+    const pageType = document.body.getAttribute('data-page-type'); // 예: 'IS', 'IO', 'IB', 'IT' 중 하나
+    
+    function insertItemCode() { //버튼 onclick=insertItemCode()
+	    $('#insertItemModal').modal('show');
+	    if (pageType) {
+	        $('#new_s_cate_item_code').val(pageType + '%'); // 페이지 유형에 맞는 기본 코드 형식 설정
+	    }
+    }
+
 //    function insertItemCode() { //버튼 onclick=insertItemCode()
 //	    $('#insertItemModal').modal('show');
 //    }
+
     
   
     //유효성 검사 & 중복체크

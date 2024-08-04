@@ -47,8 +47,14 @@
 </insert>
 
 
-
-
+<!-- 공통 그룹코드  (삭제) -->
+<delete id="deleteCode" parameterType="CodeVO">
+    delete from code
+    where group_code in 
+    <foreach item="group_code" index="index" collection="list"  open="(" separator="," close=")">
+        #{group_code}
+    </foreach>
+</delete>
 
 
 <!--  공통코드 전체 리스트에서 품목공통 코드 리스트 -->
@@ -65,12 +71,12 @@
 </update>
 
 <!-- 공통 품목코드 리스트 (삭제) -->
-<delete id="deleteItemCode">
-	delete from item_code
-    where s_cate_item_code in
-    <foreach item="item_code" collection="list" open="(" separator="," close=")">
-        #{item_code}
-    </foreach> 
+<delete id="deleteGroupCode">
+    DELETE FROM code 
+    WHERE group_code IN 
+    <foreach item="group_code" collection="list" open="(" separator="," close=")">
+        #{group_code}
+    </foreach>
 </delete>
 
 <!-- 공통 품목코드 리스트 (등록) -->

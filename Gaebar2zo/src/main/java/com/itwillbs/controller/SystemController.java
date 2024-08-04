@@ -2,7 +2,7 @@ package com.itwillbs.controller;
 
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -139,9 +139,27 @@ public class SystemController {
 	 }
 	//공통 코드 (수정)
 	
-	//공통 코드 (삭제
 	
-	//==========================================================================
+	
+	
+	
+	
+	//공통 코드 (삭제)
+	@ResponseBody
+	@RequestMapping(value = "/deleteCode", method = RequestMethod.POST)
+	public ResponseEntity<String> deleteCode(@RequestBody List<String> Codes) {
+			try {
+	            sService.deleteCode(Codes);
+	            return ResponseEntity.ok("삭제되었습니다.");
+	        } catch (Exception e) {
+	        	 e.printStackTrace(); // 콘솔에 예외 로그를 출력
+	            return ResponseEntity.status(500).body("삭제 중 오류가 발생했습니다.");
+	        }
+	    }
+	   
+	
+	
+//========================================================================
 	// 품목 분류 코드 관리
 	
 	 @RequestMapping(value = "/code/item", method = RequestMethod.GET) 

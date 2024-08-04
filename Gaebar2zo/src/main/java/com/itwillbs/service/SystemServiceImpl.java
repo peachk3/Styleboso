@@ -59,6 +59,17 @@ public class SystemServiceImpl implements SystemService{
 		sdao.saveGroupCode(codeVo);
 	}
 
+	
+	//공통 코드 삭제
+	@Override
+	public void deleteCode(List<String> Codes) throws Exception {
+		logger.debug("공통 코드 삭제");
+		
+		 sdao.deleteCode(Codes);
+	}
+	
+	//공통 코드 수정
+
 	//=============================================================================
 	// 공통코드에 따라 품목 정보를 출력
 	@Override
@@ -67,6 +78,8 @@ public class SystemServiceImpl implements SystemService{
 		
 		return sdao.itemCodeListAll(group_code);
 	}
+
+	
 
 	//공통 품목 코드 수정(update)
 	@Override

@@ -23,6 +23,8 @@
 <%@ include file="../../include/header.jsp"%>
 
 
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <%
     String groupCode = request.getParameter("group_code");

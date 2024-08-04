@@ -116,11 +116,12 @@
 
 <!-- 	거래번호 -> 모든 정보 호출 -->
  	<select id="getTransactionDetails" resultMap="transMap">
-        SELECT tra.tran_num, tra.top_tran_num, tra.cli_num, cli.cli_name, tra.rec_date, tra.rel_date, tra.pic_username,users.username, users.user_per_name
+        SELECT tra.tran_num, tra.top_tran_num, tra.cli_num, cli.cli_name,tra.tran_date, tra.rec_date, tra.rel_date, tra.pic_username,users.username, users.user_per_name
         FROM transaction tra
         JOIN client cli ON tra.cli_num = cli.cli_num
         JOIN users users ON tra.pic_username = users.username
-        WHERE top_tran_num = #{tran_num}
+        WHERE tran_num = #{tran_num}
+        
     </select>
 
 <!-- 	거래번호 -> 품목 정보 호출 -->

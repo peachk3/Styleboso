@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify({
                     tvo: JSON.stringify(formData),
-                    tgvo: JSON.stringify(tableData)
+                    icvo: JSON.stringify(tableData)
                 }),
                 success: function(response) {
                     console.log('서버 응답:', response);
@@ -379,13 +379,13 @@ $('#modal1-table tbody').on('click', 'tr', function() {
         var tableData = [];
         
         tableRows.each(function() {
-            var row = $(this);
-            var goods_num = row.find('td:eq(0)').text().trim();
-            var goods_qty = row.find('td:eq(3) input').val();
-            
-            var rowData = {
-                goods_num: goods_num,
-                goods_qty: goods_qty,
+        	  var row = $(this);
+              var inven_num = row.find('td:eq(2) input').val(); // 재고번호
+              var inven_qty = row.find('td:eq(3)').text(); // 수량
+
+              var rowData = {
+       		   	 inven_num: inven_num,
+                 inven_qty: inven_qty,
             };
             
             tableData.push(rowData);

@@ -117,13 +117,13 @@ public class StockDAOImpl implements StockDAO{
 
 	@Override
 	public void stockReceivingAdd_TransactionVO(TransactionVO tvo) {
-	logger.debug("DAO : salesOrderAdd_TransactionVO() 호출");
+	logger.debug("DAO : stockReceivingAdd_TransactionVO() 호출");
 		
 		logger.debug("tvo : "+ tvo);
 		
 		sqlSession.insert(NAMESPACE + "stockReceivingAdd_TransactionVO", tvo);
 		
-		logger.debug("DAO : 수주 거래 테이블 등록 완료");
+		logger.debug("DAO : 입고 거래 테이블 등록 완료");
 				
 	}
 	
@@ -136,7 +136,7 @@ public class StockDAOImpl implements StockDAO{
 		
 		sqlSession.insert(NAMESPACE + "stockReceivingAdd_InventoryChangeVO", newIvcb);
 		
-		logger.debug("DAO : 수주 거래 품목 테이블 등록 완료");	
+		logger.debug("DAO : 입고 거래 품목 테이블 등록 완료");	
 		
 	}
 	

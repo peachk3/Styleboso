@@ -62,11 +62,13 @@ public class SystemServiceImpl implements SystemService{
 	
 	//공통 코드 삭제
 	@Override
-	public void deleteGroupCode(List<String> groupCodes) throws Exception {
+	public void deleteCode(List<String> Codes) throws Exception {
 		logger.debug("공통 코드 삭제");
 		
-		sdao.deleteGroupCode(groupCodes);
+		 sdao.deleteCode(Codes);
 	}
+	
+	//공통 코드 수정
 
 	//=============================================================================
 	// 공통코드에 따라 품목 정보를 출력

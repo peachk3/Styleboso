@@ -146,34 +146,20 @@ public class SystemController {
 	
 	//공통 코드 (삭제)
 	@ResponseBody
-	@RequestMapping(value = "/deleteGroupCode", method = RequestMethod.POST)
-	public String deleteGroupCode(@RequestBody List<CodeVO> codeVo) {
-	    try {
-	        // 삭제할 그룹 코드를 추출하여 서비스로 전달
-	        List<String> groupCodes = codeVo.stream()
-	                                       .map(CodeVO::getGroup_code) // 각 CodeVO 객체에서 group_code를 추출
-	                                       .collect(Collectors.toList()); // 추출한 group_code들을 리스트로 수집
-	        // 서비스 계층에 삭제 요청
-	        sService.deleteGroupCode(groupCodes);
-	        return "success";
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return "error";
+	@RequestMapping(value = "/deleteCode", method = RequestMethod.POST)
+	public ResponseEntity<String> deleteCode(@RequestBody List<String> Codes) {
+			try {
+	            sService.deleteCode(Codes);
+	            return ResponseEntity.ok("삭제되었습니다.");
+	        } catch (Exception e) {
+	        	 e.printStackTrace(); // 콘솔에 예외 로그를 출력
+	            return ResponseEntity.status(500).body("삭제 중 오류가 발생했습니다.");
+	        }
 	    }
-	}
-//	
-//	@ResponseBody
-//	@RequestMapping(value = "/deleteGroupCode", method = RequestMethod.POST)
-//	public String deleteGroupCode(@RequestBody List<String> groupCodes) {
-//	    try {
-//	        sService.deleteGroupCode(groupCodes);
-//	        return "success";
-//	    } catch (Exception e) {
-//	        e.printStackTrace();
-//	        return "error";
-//	    }
-//	}
-	//==========================================================================
+	   
+	
+	
+//========================================================================
 	// 품목 분류 코드 관리
 	
 	 @RequestMapping(value = "/code/item", method = RequestMethod.GET) 

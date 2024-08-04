@@ -25,7 +25,7 @@ public interface SystemService {
 	void saveGroupCode(CodeVO codeVo) throws Exception;
 	
 	// 공통 코드 삭제
-	void deleteGroupCode(List<String> groupCodes) throws Exception;
+	void deleteCode(List<String> Codes) throws Exception;
 	
 	//================================================
 	// 그룹 코드에 따라 품목 정보를 조회하는 로직

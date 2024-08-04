@@ -17,7 +17,7 @@
     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right: 10px; padding: 10px;">
         <button class="btn btn-primary" type="button" onclick="insertGroupCode()">등록</button>
         <button class="btn btn-primary" type="button" onclick="">수정</button>
-        <button class="btn btn-primary" type="button" onclick="deleteGroupCode()">삭제</button>
+        <button class="btn btn-primary" type="button" onclick="deleteCode()">삭제</button>
     </div>
     <table class="table table-hover">
         <thead>
@@ -35,8 +35,8 @@
             <c:forEach var="codetbl" items="${codeList}">
                 <tr>
                     <td>
-                        <div class="form-check">
-                            <input class="form-check-input item-checkbox" type="checkbox" value="" id="checkAll" value="${codetbl.group_code}">
+                        <div class="form-check">  <!-- 체크박스의 value 속성을 codetbl.group_code로 설정 -->
+                            <input class="form-check-input item-checkbox" type="checkbox" id="checkAll" value="${codetbl.group_code}">
                         </div>
                     </td>
                     <td>

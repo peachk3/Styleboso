@@ -61,11 +61,12 @@ public class SystemDAOImpl implements SystemDAO{
 
 	//공통코드 삭제
 	@Override
-	public void deleteGroupCode(List<String> groupCodes) throws Exception {
+	public void deleteCode(List<String> Codes) throws Exception {
 		
-		logger.debug("service -> dao / deleteGroupCode() 실행");
-		
-		sqlSession.delete(NAMESPACE + "deleteGroupCode", groupCodes);
+		logger.debug("service -> dao / deleteCode() 실행");
+
+		sqlSession.delete(NAMESPACE + "deleteCode", Codes);
+		 
 	}
 
 	

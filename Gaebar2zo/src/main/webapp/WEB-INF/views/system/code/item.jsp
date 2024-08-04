@@ -15,7 +15,14 @@
 
 <!-- sweet alert 사용 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
 <%@ include file="../../include/header.jsp"%>
+
+
 
 <%
     String groupCode = request.getParameter("group_code");

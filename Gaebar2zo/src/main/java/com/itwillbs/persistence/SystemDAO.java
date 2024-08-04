@@ -22,7 +22,7 @@ public interface SystemDAO {
 	void saveGroupCode(CodeVO codeVo) throws Exception;
 	
 	// 공통 코드 삭제
-	void deleteGroupCode(List<String> groupCodes) throws Exception;
+	void deleteCode(List<String> Codes) throws Exception;
 	
 	 //=====================================================
 	// 공통코드에 따라 공통 품목 코드 정보를 출력

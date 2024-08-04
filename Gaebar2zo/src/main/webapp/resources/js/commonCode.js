@@ -70,63 +70,57 @@
   
 
 //===================================================================
-  //삭제기능 - onclick=deleteGroupCode()()
-   	function deleteGroupCode(){
-   	    const token = $("meta[name='_csrf']").attr("content");
-   	    const header = $("meta[name='_csrf_header']").attr("content");
-    	const name = $("#userName").val();
+  //삭제기능 - onclick=deleteCode()()
+    function deleteCode(){
+        const token = $("meta[name='_csrf']").attr("content");
+        const header = $("meta[name='_csrf_header']").attr("content");
+        const name = $("#userName").val();
+        
+        // 체크된 체크박스의 값을 배열로 가져오기
+        let selectedCodes = [];
+        $(".item-checkbox:checked").each(function() {
+            selectedCodes.push($(this).val()); // 선택된 체크박스의 value 값을 추가
+        });
 
-    	   // 선택된 체크박스 가져오기
-        const selectedCheckboxes = document.querySelectorAll('.item-checkbox:checked');
-
-        // 선택된 항목이 없는 경우 경고 메시지
-        if (selectedCheckboxes.length === 0) {
-            Swal.fire('삭제할 항목을 선택하세요.');
+        // selectedCodes 배열에 저장된 값을 콘솔에 출력하여 확인
+        console.log("Selected Codes:", selectedCodes);
+        
+        if (selectedCodes.length === 0) {
+            Swal.fire('Error', '삭제할 그룹코드를 선택해주세요.', 'error');
             return;
         }
 
-     // 선택된 항목의 값을 배열로 수집 (group_code 값만)
-        const selectedItems = [];
-        selectedCheckboxes.forEach(function(checkbox) {
-            selectedItems.push(checkbox.value); // 단순히 group_code 값만 추가
-        });
-
-        // SweetAlert로 삭제 확인
         Swal.fire({
             title: "삭제 확인",
-            text: "선택한 항목 " + selectedItems.length + "개를 삭제하시겠습니까?",
+            text: "선택한 항목 " + selectedCodes.length + "개를 삭제하시겠습니까?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: "예, 삭제합니다.",
             cancelButtonText: "아니요, 취소합니다."
         }).then((result) => {
             if (result.isConfirmed) {
-                // AJAX 요청 보내기
                 $.ajax({
-                    url: "/system/deleteGroupCode",
+                    url: '/system/deleteCode',  // 서버 측 컨트롤러 매핑 URL
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(selectedCodes),
                     beforeSend: function(xhr) {
-                        xhr.setRequestHeader(header, token);
+                        xhr.setRequestHeader(header, token);  // CSRF 토큰 설정
                     },
-                    type: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify({ groupCodes: selectedItems }), // groupCodes로 묶어 전송
                     success: function(response) {
-                        if (response === 'success') {
-                            Swal.fire('삭제 완료', '선택한 항목이 삭제되었습니다.', 'success')
-                                .then(() => {
-                                    location.reload(); // 페이지 새로고침
-                                });
-                        } else {
-                            Swal.fire('삭제 실패', '항목 삭제 중 오류가 발생했습니다.', 'error');
-                        }
+                        Swal.fire('Deleted!', '그룹코드가 삭제되었습니다.', 'success').then(() => {
+                            location.reload();  // 페이지 새로고침
+                        });
                     },
-                    error: function() {
-                        Swal.fire('삭제 실패', '서버와의 통신 중 오류가 발생했습니다.', 'error');
+                    error: function(error) {
+                    	console.log("AJAX Error:", error); // 오류 정보를 콘솔에 출력
+                        Swal.fire('Error', '삭제 중 오류가 발생했습니다.', 'error');
                     }
-                });//ajax
+                });
             }
         });
     }
+
 //===================================================================
    // '전체 선택' 체크박스가 클릭될 때 호출되는 함수
    	function checkAll(source) {

@@ -94,7 +94,7 @@
 	JOIN item_code ic ON i.item_cate_code = ic.s_cate_item_code
 	JOIN code c ON c.group_code = ic.m_cate_item_code
 	ORDER BY i.item_num
-	LIMIT #{page}, #{pageSize}
+	LIMIT #{pageStart}, #{pageSize}
 	]]>
 	</select>
 	

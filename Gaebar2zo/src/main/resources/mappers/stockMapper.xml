@@ -115,7 +115,7 @@
 		on tr.goods_num = go.goods_num
 		join inventory_change ic
 		on tr.tran_num = ic.tran_num
-		WHERE tr.tran_num like 'RC%'
+		WHERE tr.tran_num like 'RC%'  and pro_status in ("입고 예정","입고 완료")
 	</select>
 
 	<!-- 출고 리스트 호출 -->
@@ -144,16 +144,64 @@
 		on tr.goods_num = go.goods_num
 		join inventory_change ic
 		on tr.tran_num = ic.tran_num
-		WHERE tr.tran_num like 'RL%'
+		WHERE tr.tran_num like 'RL%' and pro_status in ("출고 준비","출고 완료");
+	</select>
+ 
+
+<!-- 입고/출고 transaction 삭제 -->
+   	<delete id="deleteTransactionList">
+   		delete from transaction
+   		where tran_num in
+   		<foreach collection="list" item="tran_num" open="(" separator="," close=")">
+   			#{tran_num}
+   		</foreach>
+   	</delete>
+
+<!-- 입고/출고 inventory_change 삭제 -->
+   	<delete id="deleteInventoryChange">
+	  	delete from inventory_change
+	    where tran_num in
+   		 <foreach collection="list" item="tran_num" open="(" separator="," close=")">
+      				  #{tran_num}
+   		 </foreach>
+   	</delete>
+
+
+
+
+	<!-- 입고 등록_TransactionVO -->
+	<insert id="stockReceivingAdd_TransactionVO">
+	    insert into transaction(tran_num,top_tran_num, cli_num, pic_username, tran_date, pro_status, tran_cate_code, comm)
+	    values(#{tran_num}, #{top_tran_num},#{cli_num}, #{pic_username}, #{tran_date}, "입고 예정" , #{tran_cate_code}, #{comm})
+	</insert>	
+
+	<!-- 입고/출고 등록_InventoryChangeVO-->
+	<insert id="stockAdd_InventoryChangeVO">
+	   insert into inventory_change
+	   values(#{tran_num},#{inven_num},#{inven_qty})
+	</insert>
+
+
+	<!-- tran_num 출력 -->
+	<select id="getTranNum" resultType="String">
+		<![CDATA[
+			select DISTINCT CONCAT(#{tran_cate_code}, LPAD(MAX(CAST(SUBSTRING(tran_num, 3) AS UNSIGNED)) + 1, 3, '0')) from transaction
+		]]>
 	</select>
 
+	<!-- 출고 등록_TransactionVO -->
+	<insert id="stockReleaseAdd_TransactionVO">
+	    insert into transaction(tran_num,top_tran_num, cli_num, pic_username, tran_date, pro_status, tran_cate_code, comm)
+	    values(#{tran_num}, #{top_tran_num},#{cli_num}, #{pic_username}, #{tran_date}, "출고 준비" , #{tran_cate_code}, #{comm})
+	</insert>	
 
-	<!-- 상태 변경 -->
-<!-- 	<update id="updateStatus"> -->
-<!-- 		UPDATE transaction -->
-<!-- 		SET pro_status = #{status} -->
-<!-- 		WHERE tran_num = #{tranNum} -->
-<!-- 	</update> -->
+	<!-- 출고 등록_InventoryChangeVO-->
+	<insert id="stockReleaseAdd_InventoryChangeVO">
+	   insert into inventory_change
+	   values(#{tran_num},#{inven_num},#{inven_qty})
+	</insert>
+
+
 
 	<!-- InventoryVO resultMap -->
 	<resultMap type="com.itwillbs.domain.InventoryVO"
@@ -166,7 +214,32 @@
 		<collection property="itemList" resultMap="itemMap"></collection>
 		<collection property="goodsList" resultMap="goodsMap"></collection>
 		<collection property="warehouseList" resultMap="wareMap"></collection>
+		<collection property="warehouseCodeList" resultMap="wareCodeMap"></collection>
 	</resultMap>
+
+
+<!-- WarehouseCodeVO resultMap -->
+	<resultMap type="com.itwillbs.domain.WarehouseCodeVO"
+		id="wareCodeMap">
+		<id property="s_cate_wh_code" column="s_cate_wh_code" />
+		<result property="s_cate_wh_code" column="s_cate_wh_code" />
+		<result property="s_cate_wh_name" column="s_cate_wh_name" />
+		<result property="wh_tel" column="wh_tel" />
+		<result property="wh_postCode" column="wh_postCode" />
+		<result property="wh_add1" column="wh_add1" />
+		<result property="wh_add2" column="wh_add2" />
+		<result property="wh_add3" column="wh_add3" />
+		<result property="wh_man" column="wh_man" />
+		<result property="wh_status" column="wh_status" />
+		<result property="m_cate_wh_code" column="m_cate_wh_code" />
+	</resultMap>
+
+
+
+
+
+
+
 
 	<!-- WarehouseVO resultMap -->
 	<resultMap type="com.itwillbs.domain.WarehouseVO"
@@ -341,9 +414,24 @@
 		values(#{tran_num}, #{cli_num}, #{pic_username}, #{tran_date}, #{ex_due_date}, "반품 접수" , #{tran_cate_code}, #{comm})
 	</insert>
 
-	<!-- 모달창 - 발주리스트,거래처,담당자,입고예정일 출력 -->
+
+
+
+	<!-- 출고 모달창 - 발주리스트,거래처,담당자,입고예정일 출력 -->
+	<select id="getTransactionDetails2" resultType="map">
+		select top_tran_num,tra.cli_num,cl.cli_name,tra.pic_username,user.user_per_name,tra.tran_date
+		from transaction tra
+		join client cl
+		on tra.cli_num = cl.cli_num
+		join users user
+		on tra.pic_username = user.username
+		WHERE tra.tran_num like 'RL%'  and tra.tran_num = #{tran_num}
+	</select>
+	
+	
+	<!-- 입고 모달창 - 발주리스트,거래처,담당자,입고예정일 출력 -->
 	<select id="getTransactionDetails" resultType="map">
-		select top_tran_num,tra.cli_num,cl.cli_name,tra.pic_username,user.user_per_name,tra.rec_date
+		select top_tran_num,tra.cli_num,cl.cli_name,tra.pic_username,user.user_per_name,tra.tran_date
 		from transaction tra
 		join client cl
 		on tra.cli_num = cl.cli_num
@@ -351,6 +439,33 @@
 		on tra.pic_username = user.username
 		WHERE tra.tran_num like 'RC%'  and tra.tran_num = #{tran_num}
 	</select>
+
+	<!-- 입고 모달창 - 품목 정보 가져오기 -->
+	<select id="getTransactionItems" resultType="map">
+		select item.item_num, item.item_name, trg.goods_qty, tra.top_tran_num, tra.comm, ich.inven_num, tra.tran_num,g.goods_num
+	    from transaction tra
+	    join transaction_goods trg on tra.top_tran_num = trg.tran_num
+	    join inventory_change ich on ich.tran_num = tra.tran_num
+	    join goods g on trg.goods_num = g.goods_num
+	    join item item on item.item_num = g.item_num
+	    where tra.top_tran_num = #{top_tran_num}
+	</select>
+
+
+
+	<!-- 재고 데이터 호출 -->
+  <select id="getInventoryList" resultMap="invenMap">
+        SELECT   inven.inven_num,inven.wh_num,inven.goods_num,inven.inven_qty,warecode.s_cate_wh_name
+        FROM inventory inven
+        JOIN warehouse ware ON ware.wh_num = inven.wh_num
+        JOIN warehouse_code warecode ON ware.wh_code = warecode.s_cate_wh_code
+        WHERE inven.goods_num = #{goods_num}
+    </select>
+
+
+
+
+
 
 
 

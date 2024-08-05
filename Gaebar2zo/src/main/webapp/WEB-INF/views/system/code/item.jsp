@@ -15,7 +15,16 @@
 
 <!-- sweet alert 사용 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
 <%@ include file="../../include/header.jsp"%>
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <%
     String groupCode = request.getParameter("group_code");
@@ -30,8 +39,8 @@
 				</h2>
 			</div>
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right: 10px; padding: 10px;">
-				<button class="btn btn-primary" type="button" onclick="insertItemCodeBtn">등록</button>
-				<button class="btn btn-primary" id="deleteItemCodeBtn" type="button" onclick="deleteSelectedItems()">삭제</button>
+				<button class="btn btn-primary" type="button" onclick="insertItemCode()">등록</button>
+				<button class="btn btn-primary" type="button" onclick="deleteSelectedItems()">삭제</button>
 			</div>
 		</div>
 		<table class="table table-hover">
@@ -158,7 +167,49 @@
 				</div>
 			</form>
 		</div>
-	</div>
+	</div><!-- 수정,삭제 모달 -->
+	
+	<!-- 등록 모달 -->
+	<div class="modal fade" id="insertItemModal" tabindex="-1" role="dialog" aria-labelledby="insertItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <form class="needs-validation" id="fm1" novalidate>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100 text-center" id="insertItemModalLabel">공통 품목코드 등록</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <table class="table text-center mb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="align-middle">공통 품목코드</th>
+                                <th scope="col" class="align-middle">공통 품목코드 명</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text" id="new_s_cate_item_code" class="form-control" required>
+                               		<span id="validationMessage"></span>
+                                </td>
+                                <td>
+                                    <input type="text" id="new_s_cate_item_name" class="form-control" required>
+                                    <span id="validationMessage"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="saveNewItemCode()">저장</button>
+                </div>
+              </div>
+           </form>
+       </div>
+    </div>
+
+	
 	<jsp:include page="../../include/footer.jsp" />
 </body>
 </html>

@@ -28,6 +28,7 @@ import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryChangeVO;
 import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.PageVO;
+import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.service.StockService;
 
@@ -179,39 +180,74 @@ public class StockController {
 	    
 	}
 
-	@RequestMapping(value = "/getTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	
+	// 입고 모달 정보
 	@ResponseBody
-	public Map<String, Object> getTransactionDetails(@RequestParam("tran_num") String tran_num) {
+	@RequestMapping(value = "/getTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public Map<String, Object> getTransactionDetails(@RequestParam("tran_num") String tran_num, 
+	                                                 @RequestParam("top_tran_num") String top_tran_num) throws Exception {
+	    Map<String, Object> result = new HashMap<>();
+	    
+	    // 기본 거래 정보 가져오기
 	    Map<String, Object> details = sService.getTransactionDetails(tran_num);
-
+	    
+	    // 품목 정보 가져오기
+	    List<Map<String, Object>> items = sService.getTransactionItems(top_tran_num);
+	    
 	    // LocalDateTime을 String으로 변환
-	    LocalDateTime recDate = (LocalDateTime) details.get("rec_date");
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-	    String recDateString = recDate.format(formatter);
-
-	    // 변환된 String을 다시 맵에 추가
-	    details.put("rec_date", recDateString);
-
-	    return details;
+	    LocalDateTime tranDate = (LocalDateTime) details.get("tran_date");
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+	    String tranDateString = tranDate.format(formatter);
+	    
+	    // 결과 맵에 모든 정보 추가
+	    result.putAll(details);
+	    result.put("tran_date", tranDateString);
+	    result.put("items", items);
+	    
+	    logger.debug("details : " + details);
+	    logger.debug("items : " + items);
+	    logger.debug("result : " + result);
+	    
+	    logger.debug("tran_num: " + tran_num);
+	    logger.debug("top_tran_num: " + top_tran_num);
+	    
+	    return result;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 입고 삭제
+	@ResponseBody
+	@RequestMapping(value = "/deleteRC", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> deleteReceivingList_POST(@RequestBody Map<String, Object> payload) throws Exception {
+		logger.debug(" deleteRC_POST() 실행 ");
+		
+		@SuppressWarnings("unchecked")
+        List<String> trannums = (List<String>) payload.get("tran_nums");
 
-	
-	
-	
+        if (trannums == null || trannums.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                 .body(Map.of("status", "error", "message", "No clients selected"));
+        }
+        logger.debug("@@@@tran_nums  " + trannums);
 
-//	@ResponseBody
-//	 @RequestMapping(value="/updateStatus",method=RequestMethod.POST,
-//			 		produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//	    public ResponseEntity<?> updateStatus(@RequestBody StatusUpdateRequest request) {
-//	        try {
-//	            sService.updateStatus(request.getTran_nums(), request.getStatus());
-//	            return ResponseEntity.ok().build();
-//	        } catch (Exception e) {
-//	            e.printStackTrace(); // 예외 로그 출력
-//	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Status update failed");
-//	        }
-//	    }
-//	   
+        try {
+            sService.deleteRecevingList(trannums);
+            return ResponseEntity.ok(Map.of("status", "success"));
+        } catch (Exception e) {
+            logger.error(" @@@@@@@@Error deleting clients", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("status", "error", "message", e.getMessage()));
+        }
+		
+	}
 //	
 	
 	
@@ -219,7 +255,7 @@ public class StockController {
 	
 	
 	
-	// 입고 등록
+	// 입고 등록 - get
 	@RequestMapping(value="/receivingAdd",method=RequestMethod.GET)
 	public void receivingAdd_GET() throws Exception{
 		logger.debug(" receivingAdd_GET() 실행 ");
@@ -227,6 +263,41 @@ public class StockController {
 
 	}
 
+	
+	// 입고 등록 - post
+	@RequestMapping(value="/receivingAdd",method = RequestMethod.POST)
+	@ResponseBody
+	public void receivingAdd_POST(@RequestBody Map<String, String> requestData) throws Exception{
+	    
+	    ObjectMapper mapper = new ObjectMapper();
+	    
+	    TransactionVO tvo = mapper.readValue(requestData.get("tvo"), TransactionVO.class);
+	    List<InventoryChangeVO> icvoList = mapper.readValue(requestData.get("icvo"), 
+	                                new TypeReference<List<InventoryChangeVO>>(){});
+	    
+	    tvo.setInchangeList(icvoList);
+	    logger.debug("tvo : " + tvo);
+	    logger.debug("icvoList : " + icvoList);
+	    
+	    sService.stockReceivingAdd(tvo);
+	}
+	
+	// 재고 데이터 호출
+	@ResponseBody
+    @RequestMapping(value="/invenList", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<InventoryVO> getInventoryList(@RequestParam String goods_num) throws Exception{
+    
+		logger.debug("Received goods_num: " + goods_num);
+	
+		List<InventoryVO> result = sService.getInventoryList(goods_num);
+		
+		logger.debug("result : "+ result);
+		
+		return result;
+	}
+		
+	
+	
 	
 	
 	
@@ -244,6 +315,39 @@ public class StockController {
 
 	}
 
+	// 출고 모달 정보
+	@RequestMapping(value = "/getTransactionDetails2", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public Map<String, Object> getTransactionDetails2(@RequestParam("tran_num") String tran_num,
+														@RequestParam("top_tran_num") String top_tran_num) throws Exception{
+		Map<String, Object> result = new HashMap<>();
+
+		Map<String, Object> details = sService.getTransactionDetails2(tran_num);
+	    
+		// 품목 정보 가져오기
+		List<Map<String, Object>> items = sService.getTransactionItems2(top_tran_num);
+		
+		// LocalDateTime을 String으로 변환
+	    LocalDateTime tranDate = (LocalDateTime) details.get("tran_date");
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+	    String tranDateString = tranDate.format(formatter);
+	    // 변환된 String을 다시 맵에 추가
+	    result.putAll(details);
+	    result.put("tran_date", tranDateString);
+	    result.put("items", items);
+	    
+	    logger.debug("details : " + details);
+	    logger.debug("items : " + items);
+	    logger.debug("result : " + result);
+	    
+	    logger.debug("tran_num: " + tran_num);
+	    
+	    return result;
+	    
+	}
+
+	    
+	
 	// 출고 등록
 	@RequestMapping(value="/releaseAdd",method=RequestMethod.GET)
 	public void releaseAdd_GET() throws Exception{
@@ -252,7 +356,49 @@ public class StockController {
 
 	}
 
+	// 출고 등록 - post
+		@RequestMapping(value="/releaseAdd",method = RequestMethod.POST)
+		@ResponseBody
+		public void releaseAdd_POST(@RequestBody Map<String, String> requestData) throws Exception{
+		    
+		    ObjectMapper mapper = new ObjectMapper();
+		    
+		    TransactionVO tvo = mapper.readValue(requestData.get("tvo"), TransactionVO.class);
+		    List<InventoryChangeVO> icvoList = mapper.readValue(requestData.get("icvo"), 
+		                                new TypeReference<List<InventoryChangeVO>>(){});
+		    
+		    tvo.setInchangeList(icvoList);
+		    logger.debug("tvo : " + tvo);
+		    logger.debug("icvoList : " + icvoList);
+		    
+		    sService.stockReleaseAdd(tvo);
+		}
+	
+	// 출고 삭제 
+		@ResponseBody
+		@RequestMapping(value = "/deleteRL", method = RequestMethod.POST)
+		public ResponseEntity<Map<String, Object>> deleteReleaseList_POST(@RequestBody Map<String, Object> payload) throws Exception {
+			logger.debug(" deleteRL_POST() 실행 ");
+			
+			@SuppressWarnings("unchecked")
+	        List<String> trannums = (List<String>) payload.get("tran_nums");
 
+	        if (trannums == null || trannums.isEmpty()) {
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+	                                 .body(Map.of("status", "error", "message", "No clients selected"));
+	        }
+	        logger.debug("@@@@tran_nums  " + trannums);
+
+	        try {
+	            sService.deleteReleaseList(trannums);
+	            return ResponseEntity.ok(Map.of("status", "success"));
+	        } catch (Exception e) {
+	            logger.error(" @@@@@@@@Error deleting clients", e);
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("status", "error", "message", e.getMessage()));
+	        }
+			
+		}
+	
 
 
 

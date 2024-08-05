@@ -1,6 +1,8 @@
 package com.itwillbs.controller;
 
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -54,7 +56,7 @@ public class SystemController {
 
 	// -------------------------------------------------------------------------------------------
 	// 로그아웃
-	@RequestMapping(value = "logout", method = RequestMethod.POST)
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	public String logout_POST(HttpSession session) throws Exception {
 
 		logger.debug("/logout -> logoutPOST() 호출");
@@ -110,7 +112,7 @@ public class SystemController {
 		model.addAttribute("employeeList", employeeList);
 
 	}
-
+	// ==========================================================================
 	// 공통 코드 관리
 	@RequestMapping(value = "/code/common", method = RequestMethod.GET)
 	public void code_common_GET(Model model) throws Exception {
@@ -122,7 +124,52 @@ public class SystemController {
 		model.addAttribute("codeList", codeList);
 		
 	}
-	//==========================================================================
+	
+	//공통 코드 (등록)
+	@ResponseBody
+	 @RequestMapping(value = "/saveGroupCode", method = RequestMethod.POST)
+	 public ResponseEntity<String> saveGroupCode(@RequestBody CodeVO codeVo){
+		 
+		 try {
+			 sService.saveGroupCode(codeVo);
+			 return ResponseEntity.ok("success");
+		 }catch(Exception e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("failure");
+		 }
+	 }
+	
+	//공통 코드 (수정)
+		 @ResponseBody
+		@RequestMapping(value = "/updateCode", method = RequestMethod.POST)
+		public ResponseEntity<String> updateCode(@RequestBody CodeVO codeVo) throws Exception {
+			 logger.debug(" @@@ updateCode() 실행");
+			 sService.updateCode(codeVo);
+			 
+			logger.debug("controller => 공통 코드 업데이트 출력 성공: {}" + codeVo);
+			
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+	
+	
+	
+	
+	
+	//공통 코드 (삭제)
+	@ResponseBody
+	@RequestMapping(value = "/deleteCode", method = RequestMethod.POST)
+	public ResponseEntity<String> deleteCode(@RequestBody List<String> Codes) {
+			try {
+	            sService.deleteCode(Codes);
+	            return ResponseEntity.ok("삭제되었습니다.");
+	        } catch (Exception e) {
+	        	 e.printStackTrace(); // 콘솔에 예외 로그를 출력
+	            return ResponseEntity.status(500).body("삭제 중 오류가 발생했습니다.");
+	        }
+	    }
+	   
+	
+	
+//========================================================================
 	// 품목 분류 코드 관리
 	
 	 @RequestMapping(value = "/code/item", method = RequestMethod.GET) 
@@ -139,6 +186,18 @@ public class SystemController {
 	  logger.debug(" @@@@@@@itemCodeList : " + itemCodeList);
 	  
      }
+	 //그룹 -> 품목코드 (등록)
+	 @ResponseBody
+	 @RequestMapping(value = "/saveItemCode", method = RequestMethod.POST)
+	 public ResponseEntity<String> saveItemCode(@RequestBody ItemCodeVO icVo){
+		 
+		 try {
+			 sService.saveItemCode(icVo);
+			 return ResponseEntity.ok("success");
+		 }catch(Exception e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("failure");
+		 }
+	 }
 	 
 	// 그룹-> 품목코드 수정 
 	 @ResponseBody
@@ -164,12 +223,22 @@ public class SystemController {
 	            return "error";
 	        }
 	 }
+	 
+	
+		 
+	 
+	 // 공통 품목 코드 중복 검사
+//	 @ResponseBody
+//	 @RequestMapping(value = "/checkItemCode", method = RequestMethod.GET)
+//	 public ResponseEntity<String>checkItemCode(@RequestBody ItemCodeVO icVo) throws Exception{
+//		 boolean checkDuplicate = sService.checkItemCode(icVo.getS_cate_item_code());
+//		 
+//		 if(checkDuplicate){
+//			 return ResponseEntity.ok("duplicate");
+//		 }else {
+//			 return ResponseEntity.ok("not_duplicate");
+//		 }
+//	 }
 	// ==========================================================================
-	
-	 
-	 
-	
-	
-	
 
 }

@@ -25,11 +25,50 @@
 	select * from users
 </select>
 
+<!-- 이메일 중복체크 -->
+<select id="emailCheck" parameterType="String" resultType="int" > 
+	select count (*) from users
+	where user_email =#{user_email}
+</select>
+
+
+
+
 
 <!-- 공통코드 전체 리스트 출력 -->
 <select id="codeListAll" resultType="CodeVO">
 	select * from code
 </select>
+
+<!-- 공통코드 등록 -->
+<insert id="saveGroupCode" parameterType="CodeVO">
+	insert into code(group_code, group_name) 
+	values(#{group_code}, #{group_name})
+</insert>
+
+<!--공통코드(수정/업데이트)  -->
+<update id="updateCode">
+	update code
+	set  group_name=#{group_name}
+	where group_code=#{group_code};
+</update>
+
+
+<!-- 공통 그룹코드  (삭제) -->
+<delete id="deleteCode" parameterType="CodeVO">
+    delete from code
+    where group_code in 
+    <foreach item="group_code" index="index" collection="list"  open="(" separator="," close=")">
+        #{group_code}
+    </foreach>
+</delete>
+
+
+
+
+
+
+
 
 <!--  공통코드 전체 리스트에서 품목공통 코드 리스트 -->
 <select id="itemCodeListAll" resultType="ItemCodeVO">
@@ -46,18 +85,41 @@
 
 <!-- 공통 품목코드 리스트 (삭제) -->
 <delete id="deleteItemCode">
-	delete from item_code
-    where s_cate_item_code in
-    <foreach item="item_code" collection="list" open="(" separator="," close=")">
-        #{item_code}
-    </foreach> 
+    DELETE FROM item_code
+    WHERE s_cate_item_code IN 
+    <foreach item="s_cate_item_code" collection="list" open="(" separator="," close=")">
+        #{s_cate_item_code}
+    </foreach>
 </delete>
 
-<!-- 이메일 중복체크 -->
-<select id="emailCheck" parameterType="String" resultType="int" > 
-	select count (*) from users
-	where user_email =#{user_email}
-</select>
+<!-- 공통 품목코드 리스트 (등록) -->
+
+<insert id="saveItemCode" parameterType="ItemCodeVO">
+	insert into item_code (s_cate_item_code, s_cate_item_name, m_cate_item_code)
+    values (
+        #{s_cate_item_code}, 
+        #{s_cate_item_name}, 
+        substring(#{s_cate_item_code}, 1, 2)
+    )
+</insert>
+
+<!-- 공통품목코드 유효성&중복체크 검사 -->
+ <!-- <select id="getItemCodeAndCheck" parameterType="String" resultType="ItemCodeVO">
+	 select 
+        ic.s_cate_item_code, 
+        ic.s_cate_item_name, 
+        ic.m_cate_item_code
+    from 
+        item_code ic
+    join 
+        code c 
+    on 
+        ic.m_cate_item_code = c.group_code
+    where 
+        ic.s_cate_item_code = #{group_code}
+</select> -->
+ 
+
 
 
 

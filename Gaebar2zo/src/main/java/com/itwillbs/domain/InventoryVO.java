@@ -15,4 +15,5 @@ public class InventoryVO {
 	private List<ItemVO> itemList;
 	private List<GoodsVO> goodsList;
 	private List<WarehouseVO> warehouseList;
+	private List<WarehouseCodeVO> warehouseCodeList;
 }

@@ -279,7 +279,7 @@ select distinct
 	<!-- 재고 리스트 호출 -->
 	<select id="getStockList" resultMap="invenMap">
 	    <![CDATA[
-	    SELECT i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack, SUM(inven_qty) as inven_qty
+	    SELECT y.inven_num, i.item_name, g.goods_size, g.goods_color, w.wh_name, w.wh_zone, w.wh_rack, SUM(inven_qty) as inven_qty
 	    FROM inventory y
 	    JOIN warehouse w ON y.wh_num = w.wh_num
 	    JOIN goods g ON y.goods_num = g.goods_num
@@ -289,7 +289,7 @@ select distinct
 	        <if test="searchType != null and keyword != null and keyword != ''">
 	            <choose>
 	                <when test="searchType == 'code'">
-	                    AND i.item_cate_code LIKE CONCAT('%', #{keyword}, '%')
+	                    AND y.inven_num LIKE CONCAT('%', #{keyword}, '%')
 	                </when>
 	                <when test="searchType == 'name'">
 	                    AND i.item_name LIKE CONCAT('%', #{keyword}, '%')
@@ -297,26 +297,30 @@ select distinct
 	                <when test="searchType == 'warehouse'">
 	                    AND w.wh_name LIKE CONCAT('%', #{keyword}, '%')
 	                </when>
+	                <when test="searchType == 'color'">
+	                    AND g.goods_color LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
 	                <otherwise>
-	                    AND (i.item_cate_code LIKE CONCAT('%', #{keyword}, '%')
+	                    AND (y.inven_num LIKE CONCAT('%', #{keyword}, '%')
 	                    OR i.item_name LIKE CONCAT('%', #{keyword}, '%')
-	                    OR w.wh_name LIKE CONCAT('%', #{keyword}, '%'))
+	                    OR w.wh_name LIKE CONCAT('%', #{keyword}, '%')
+	                    OR g.goods_color LIKE CONCAT('%', #{keyword}, '%'))
 	                </otherwise>
 	            </choose>
 	        </if>
 	    </where>
 	    <![CDATA[
-	    GROUP BY i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
-	    HAVING COUNT(y.inven_num) > 0
-	    ORDER BY i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
-	    LIMIT #{page}, #{pageSize}
+	    GROUP BY y.inven_num, i.item_name, g.goods_size, g.goods_color, w.wh_name, w.wh_zone, w.wh_rack
+	    HAVING COUNT(y.inven_num) >= 0
+	    ORDER BY y.inven_num, i.item_name, g.goods_size, g.goods_color, w.wh_name, w.wh_zone, w.wh_rack
+	    LIMIT #{pageStart}, #{pageSize}
 	    ]]>
 	</select>
 	
 	<select id="totalCount" resultType="int">
 	    <![CDATA[
 	    SELECT COUNT(*) FROM (
-	        SELECT i.item_cate_code
+	        SELECT y.inven_num
 	        FROM inventory y
 	        JOIN warehouse w ON y.wh_num = w.wh_num
 	        JOIN goods g ON y.goods_num = g.goods_num
@@ -326,7 +330,7 @@ select distinct
 	        <if test="searchType != null and keyword != null and keyword != ''">
 	            <choose>
 	                <when test="searchType == 'code'">
-	                    AND i.item_cate_code LIKE CONCAT('%', #{keyword}, '%')
+	                    AND y.inven_num LIKE CONCAT('%', #{keyword}, '%')
 	                </when>
 	                <when test="searchType == 'name'">
 	                    AND i.item_name LIKE CONCAT('%', #{keyword}, '%')
@@ -335,7 +339,7 @@ select distinct
 	                    AND w.wh_name LIKE CONCAT('%', #{keyword}, '%')
 	                </when>
 	                <otherwise>
-	                    AND (i.item_cate_code LIKE CONCAT('%', #{keyword}, '%')
+	                    AND (y.inven_num LIKE CONCAT('%', #{keyword}, '%')
 	                    OR i.item_name LIKE CONCAT('%', #{keyword}, '%')
 	                    OR w.wh_name LIKE CONCAT('%', #{keyword}, '%'))
 	                </otherwise>
@@ -343,11 +347,85 @@ select distinct
 	        </if>
 	    </where>
 	    <![CDATA[
-	        GROUP BY i.item_cate_code, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
-	        HAVING COUNT(y.inven_num) > 0
+	        GROUP BY y.inven_num, i.item_name, w.wh_name, w.wh_zone, w.wh_rack
+	        HAVING COUNT(y.inven_num) >= 0
 	    ) AS subquery
 	    ]]>
 	</select>
+	
+	<!-- 교환 리스트 호출 -->
+	<select id="exchangeList" resultMap="transMap">
+		SELECT
+		    tr.tran_num, tr.top_tran_num, tr.cli_num, c.cli_name, tr.pic_username, tr.rec_date,
+		    tr.tran_date, tr.rel_date, tr.due_date, tr.pro_status, tr.tran_cate_code, tr.comm, 
+		    go.goods_num, tr.goods_qty, go.item_num, go.item_name, ic.inven_num
+		FROM (
+		    SELECT
+		        tr.tran_num, tr.top_tran_num, tr.cli_num, tr.pic_username,
+		        tr.tran_date, tr.rel_date, tr.due_date, tr.pro_status, tr.tran_cate_code, tr.comm, 
+		        trg.goods_num, trg.goods_qty, tr.rec_date
+		    FROM transaction tr
+		    JOIN transaction_goods trg ON tr.top_tran_num = trg.tran_num
+		) tr
+		JOIN client c ON tr.cli_num = c.cli_num
+		JOIN (
+		    SELECT item.item_num, goods.goods_num, item.item_name
+		    FROM item 
+		    JOIN goods ON item.item_num = goods.item_num
+		    WHERE goods.item_num IN (
+		        SELECT item_num
+		        FROM goods
+		        WHERE goods_num IN (
+		            SELECT trg.goods_num
+		            FROM transaction tr
+		            JOIN transaction_goods trg ON tr.top_tran_num = trg.tran_num
+		        )
+		    )
+		) go ON tr.goods_num = go.goods_num
+		JOIN inventory_change ic ON tr.tran_num = ic.tran_num 
+		WHERE tr.tran_num LIKE 'EX%'
+	</select>
+	
+	<!-- 교환 등록 -->
+	
+	<!-- 반품 리스트 호출 -->
+	<select id="returnList" resultMap="transMap">
+		SELECT
+		    tr.tran_num, tr.top_tran_num, tr.cli_num, c.cli_name, tr.pic_username, tr.rec_date,
+		    tr.tran_date, tr.rel_date, tr.due_date, tr.pro_status, tr.tran_cate_code, tr.comm, 
+		    go.goods_num, tr.goods_qty, go.item_num, go.item_name, ic.inven_num
+		FROM (
+		    SELECT
+		        tr.tran_num, tr.top_tran_num, tr.cli_num, tr.pic_username,
+		        tr.tran_date, tr.rel_date, tr.due_date, tr.pro_status, tr.tran_cate_code, tr.comm, 
+		        trg.goods_num, trg.goods_qty, tr.rec_date
+		    FROM transaction tr
+		    JOIN transaction_goods trg ON tr.top_tran_num = trg.tran_num
+		) tr
+		JOIN client c ON tr.cli_num = c.cli_num
+		JOIN (
+		    SELECT item.item_num, goods.goods_num, item.item_name
+		    FROM item 
+		    JOIN goods ON item.item_num = goods.item_num
+		    WHERE goods.item_num IN (
+		        SELECT item_num
+		        FROM goods
+		        WHERE goods_num IN (
+		            SELECT trg.goods_num
+		            FROM transaction tr
+		            JOIN transaction_goods trg ON tr.top_tran_num = trg.tran_num
+		        )
+		    )
+		) go ON tr.goods_num = go.goods_num
+		JOIN inventory_change ic ON tr.tran_num = ic.tran_num 
+		WHERE tr.tran_num LIKE 'RE%'
+	</select>
+
+	<!-- 반품 등록 -->
+	<insert id="returnAdd" useGeneratedKeys="true" keyProperty="tran_num">
+		insert into transaction(tran_num, cli_num, pic_username, tran_date, ex_due_date, pro_status, tran_cate_code, comm)
+		values(#{tran_num}, #{cli_num}, #{pic_username}, #{tran_date}, #{ex_due_date}, "반품 접수" , #{tran_cate_code}, #{comm})
+	</insert>
 
 
 

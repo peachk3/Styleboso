@@ -16,8 +16,8 @@
 <body>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right: 10px; padding: 10px;">
         <button class="btn btn-primary" type="button" onclick="insertGroupCode()">등록</button>
-        <button class="btn btn-primary" type="button" onclick="">수정</button>
-        <button class="btn btn-primary" type="button">삭제</button>
+        <button class="btn btn-primary" type="button" onclick="updateCode()">수정</button>
+        <button class="btn btn-primary" type="button" onclick="deleteCode()">삭제</button>
     </div>
     <table class="table table-hover">
         <thead>
@@ -35,8 +35,8 @@
             <c:forEach var="codetbl" items="${codeList}">
                 <tr>
                     <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkAll">
+                        <div class="form-check">  <!-- 체크박스의 value 속성을 codetbl.group_code로 설정 -->
+                            <input class="form-check-input item-checkbox" type="checkbox" id="checkAll" value="${codetbl.group_code}">
                         </div>
                     </td>
                     <td>
@@ -97,6 +97,41 @@
        </div>
     </div>
 	
+	<!-- 상세&수정모달 -->
+	<div class="modal fade" id="commonModal" tabindex="-1" role="dialog"
+		aria-labelledby="commonModalLabel">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<form class="needs-validation" id="fm1" novalidate>
+				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title w-100 text-center" id="commonModalLabel">공통코드 상세정보</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<table class="table text-center mb-0">
+						<thead>
+							<tr>
+								<th scope="col" class="align-middle">공통그룹 코드</th>
+								<th scope="col" class="align-middle">공통그룹 코드 명</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="text" id="edit_group_code" class="form-control" readonly></td>
+								<td><input type="text" id="edit_group_name" class="form-control"></td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="modal-footer">
+						 <button type="button" class="btn btn-secondary d-none" onclick="cancelEdit()">취소</button>
+                        <button type="button" class="btn btn-primary" onclick="saveEditedCode()">저장</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 
 
     <jsp:include page="../../include/footer.jsp" />

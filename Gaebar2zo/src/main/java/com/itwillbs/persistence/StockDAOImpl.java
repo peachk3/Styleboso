@@ -60,7 +60,52 @@ public class StockDAOImpl implements StockDAO{
 		return sqlSession.selectOne(NAMESPACE+"totalCount");
 	}
 
-    // 거래 상세 정보 호출
+	// 교환 리스트 호출
+	@Override
+	public List<TransactionVO> exList() throws Exception {
+		logger.debug("DAOImpl : 교환 리스트 호출");
+		return sqlSession.selectList(NAMESPACE+"exchangeList");
+	}
+
+	// 반품 리스트 호출
+	@Override
+	public List<TransactionVO> reList() throws Exception {
+		logger.debug("DAOImpl : 반품 리스트 호출");
+		return sqlSession.selectList(NAMESPACE+"returnList");
+	}
+	
+	// 반품 모달창 정보 호출
+    @Override
+	public Map<String, Object> getReturnDetails(String tran_num) {
+		logger.debug(" DAOImpl : 반품 모달창 정보 호출 ");
+		return sqlSession.selectOne(NAMESPACE + "getReturnDetails", tran_num);
+	}
+
+    // 반품 모달창 품목 정보 호출
+	@Override
+	public List<Map<String, Object>> getReturnItems(String top_tran_num) {
+		logger.debug(" DAOImpl : 반품 모달창 품목 정보 호출 ");
+		return sqlSession.selectOne(NAMESPACE + "getReturnItems", top_tran_num);
+	}
+	
+	// 반품 등록 - TransactionVO
+	@Override
+	public void adjustReturnAdd_TransactionVO(TransactionVO tvo) {
+		logger.debug(" DAOImpl : 반품 등록 - TransactionVO ");
+		sqlSession.insert(NAMESPACE + "adjustReturnAdd_TransactionVO", tvo);
+		
+	}
+
+	// 반품 등록 - InventoryChangeVO
+	@Override
+	public void adjustReturnAdd_InventoryChangeVO(InventoryChangeVO newIvcb) {
+		logger.debug(" DAOImpl : 반품 등록 - InventoryChangeVO ");
+		sqlSession.insert(NAMESPACE + "adjustReturnAdd_InventoryChangeVO", newIvcb);
+		
+		
+	}
+
+	// 거래 상세 정보 호출
     @Override
     public Map<String, Object> getTransactionDetails(String tran_num) {
         logger.debug("DAOImpl : 입고 상세 정보 호출");

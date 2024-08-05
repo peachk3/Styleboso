@@ -43,6 +43,7 @@ public class StockController {
 	private static final Logger logger = LoggerFactory.getLogger(StockController.class);
 
 	// 재고 현황
+	//http://localhost:8088/stock/status
 	@RequestMapping(value="/status",method=RequestMethod.GET)
 	public String status_GET(Criteria cri,Model model,
 							 @RequestParam(value="searchType", required = false) String searchType,
@@ -59,6 +60,7 @@ public class StockController {
 		
 		List<InventoryVO> sl = sService.getStockList(cri);
 		logger.debug(" size : " + sl.size());
+		logger.debug(" sl : " + sl);
 		
 		// 하단 페이징처리 정보객체 생성
 		PageVO pageVO = new PageVO();
@@ -82,24 +84,88 @@ public class StockController {
 
 	// 재고 교환
 	@RequestMapping(value="/adjustment/exchange",method=RequestMethod.GET)
-	public void adjustment_exchange_GET() throws Exception{
+	public void adjustment_exchange_GET(Model model) throws Exception{
 		logger.debug(" adjustment_exchange_GET() 실행");
+		
+		// 교환 리스트 호출
+		List<TransactionVO> ex = sService.exList();
+		logger.debug("size : "+ ex.size());
+		model.addAttribute("ex", ex);
+	}
+	
+	// 교환 등록
+	@RequestMapping(value="/adjustment/exchangeAdd",method=RequestMethod.GET)
+	public void exchangeAdd_GET() throws Exception{
+		logger.debug(" exchangeAdd_GET() 실행 ");
 	}
 
+	
 	// 재고 반품
 	@RequestMapping(value="/adjustment/return",method=RequestMethod.GET)
-	public void adjustment_return_GET() throws Exception{
+	public void adjustment_return_GET(Model model) throws Exception{
 		logger.debug(" adjustment_return_GET() 실행");
+		
+		// 반품 리스트 호출
+		List<TransactionVO> re = sService.reList();
+		logger.debug("size : "+ re.size());
+		model.addAttribute("re", re);
+	}
+	
+	// 반품 모달 정보
+	@ResponseBody
+	@RequestMapping(value = "/getReturnDetails",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public Map<String, Object> getReturnDetails(@RequestParam("tran_num") String tran_num,
+												@RequestParam("top_tran_num") String top_tran_num) throws Exception {
+		Map<String, Object> result = new HashMap<>();
+		
+		// 기본 거래 정보 가져오기
+		Map<String, Object> details = sService.getReturnDetails(tran_num);
+		
+		// 품목 정보 가져오기
+		List<Map<String, Object>> items = sService.getReturnItems(top_tran_num);
+
+		// LocalDateTime을 String으로 변환
+		LocalDateTime tranDate = (LocalDateTime) details.get("tran_date");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+		String tranDateString = tranDate.format(formatter);
+
+		// 결과 맵에 모든 정보 추가
+		result.putAll(details);
+		result.put("tran_date", tranDateString);
+		result.put("items", items);
+
+		logger.debug("details : " + details);
+		logger.debug("items : " + items);
+		logger.debug("result : " + result);
+
+		logger.debug("tran_num: " + tran_num);
+		logger.debug("top_tran_num: " + top_tran_num);
+
+		return result;
 	}
 
+	// 반품 등록 - GET
+	@RequestMapping(value = "/adjustment/returnAdd", method = RequestMethod.GET)
+	public void returnAdd_GET() throws Exception {
+		logger.debug(" returnAdd_GET() 실행 ");
+	}
+	
+	// 반품 등록 - POST
+	@RequestMapping(value = "/returnAdd",method = RequestMethod.POST)
+	@ResponseBody
+	public void returnAdd_POST(@RequestBody Map<String, String> requestData) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		TransactionVO tvo = mapper.readValue(requestData.get("tvo"), TransactionVO.class);
+		List<InventoryChangeVO> icvoList = mapper.readValue(requestData.get("icvo"), new TypeReference<List<InventoryChangeVO>>() {
+		});
+		tvo.setInchangeList(icvoList);
+		logger.debug(" tvo : " + tvo);
+		logger.debug(" icvoList : " + icvoList);
+		
+		sService.adjustReturnAdd(tvo);
+	}
 
-	
-	
-	
-	
-	
-	
-	
 	// 입고 관리
 	@RequestMapping(value="/receivingList",method=RequestMethod.GET)
 	public void receivingList_GET(Model model) throws Exception{

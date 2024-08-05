@@ -252,21 +252,22 @@ public class StockController {
 	// 출고 모달 정보
 	@RequestMapping(value = "/getTransactionDetails2", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public Map<String, Object> getTransactionDetails2(@RequestParam("tran_num") String tran_num) throws Exception{
+	public Map<String, Object> getTransactionDetails2(@RequestParam("tran_num") String tran_num,
+														@RequestParam("top_tran_num") String top_tran_num) throws Exception{
 		Map<String, Object> result = new HashMap<>();
 
 		Map<String, Object> details = sService.getTransactionDetails2(tran_num);
 	    
 		// 품목 정보 가져오기
-		List<Map<String, Object>> items = sService.getTransactionItems2(tran_num);
+		List<Map<String, Object>> items = sService.getTransactionItems2(top_tran_num);
 		
 		// LocalDateTime을 String으로 변환
-	    LocalDateTime relDate = (LocalDateTime) details.get("rel_date");
+	    LocalDateTime tranDate = (LocalDateTime) details.get("tran_date");
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-	    String relDateString = relDate.format(formatter);
+	    String tranDateString = tranDate.format(formatter);
 	    // 변환된 String을 다시 맵에 추가
 	    result.putAll(details);
-	    result.put("rel_date", relDateString);
+	    result.put("tran_date", tranDateString);
 	    result.put("items", items);
 	    
 	    logger.debug("details : " + details);
@@ -276,11 +277,10 @@ public class StockController {
 	    logger.debug("tran_num: " + tran_num);
 	    
 	    return result;
+	    
+	}
 
-}
-	
-	
-	
+	    
 	
 	// 출고 등록
 	@RequestMapping(value="/releaseAdd",method=RequestMethod.GET)

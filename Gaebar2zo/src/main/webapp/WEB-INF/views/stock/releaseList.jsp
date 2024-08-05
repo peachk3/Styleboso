@@ -87,7 +87,7 @@
                 <div class="search-container">
                     <div class="col-md-6">
                         <label for="validationCustom01" class="form-label">발주리스트</label>
-                        <input type="text" class="form-control" id="modal-tran_num" readonly>
+                        <input type="text" class="form-control" id="modal-top_tran_num" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="validationCustom02" class="form-label">거래처 코드</label>
@@ -159,10 +159,10 @@ function toggleCheckboxes(source) {
 
 function formatDateForInput(dateStr) {
     if (!dateStr) return '';
-    var date = new Date(dateStr);
-    return date.toISOString().split('T')[0];
+    // 날짜 문자열에서 'T'와 그 이후의 모든 문자를 제거합니다.
+    dateStr = dateStr.split('T')[0];
+    return dateStr;
 }
-
 
 $(document).ready(function() {
 	const token = $("meta[name='_csrf']").attr("content");
@@ -170,17 +170,21 @@ $(document).ready(function() {
 	
 	 $(".clickable-cell").click(function() {
         var tran_num = $(this).closest("tr").find("td:nth-child(2)").text();
+        var top_tran_num = $(this).closest("tr").find("td:nth-child(7)").text();
 
         $.ajax({
             url: '/stock/getTransactionDetails2',
             type: 'GET',
-            data: {tran_num: tran_num},
+            data: { 
+                tran_num: tran_num,
+                top_tran_num: top_tran_num
+            },
             dataType: "json",
             success: function(response) {
                 console.log("AJAX 응답:", response);
                 
                 // 기본 거래 정보 설정
-                $("#modal-tran_num").val(response.top_tran_num);
+                $("#modal-top_tran_num").val(response.top_tran_num);
                 $("#modal-cli_num").val(response.cli_num);
                 $("#modal-cli_name").val(response.cli_name);
                 $("#modal-tran_date").val(formatDateForInput(response.tran_date)); 
@@ -192,7 +196,7 @@ $(document).ready(function() {
                 
                 // 품목 정보 행 생성 및 추가
                 $(response.items).each(function(idx, item){
-               	 var row = "<tr><th scope='row'></th><td>" + item.goods_num + "</td><td>" 
+               	 var row = "<tr><th scope='row'></th><td>" + item.item_num + "</td><td>" 
             	 + item.item_name + "</td><td>" + item.goods_qty + "</td><td>" + item.top_tran_num + "</td><td>" 
             	 + item.comm + "</td><td>" + item.inven_num + "</td><td>" + item.tran_num + "</td></tr>";
                     

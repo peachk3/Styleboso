@@ -104,11 +104,11 @@ public class StockDAOImpl implements StockDAO{
 	}
 
 	@Override
-	public List<Map<String, Object>> getTransactionItems2(String tran_num) throws Exception {
+	public List<Map<String, Object>> getTransactionItems2(String top_tran_num) throws Exception {
 		logger.debug("DAOImpl : 출고 모달창 - 품목정보 호출");
 		
 		
-		return sqlSession.selectList(NAMESPACE+"getTransactionItems", tran_num);
+		return sqlSession.selectList(NAMESPACE+"getTransactionItems", top_tran_num);
 		
 	}
 

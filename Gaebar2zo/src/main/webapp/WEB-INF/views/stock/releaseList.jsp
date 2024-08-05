@@ -145,35 +145,35 @@
 
 
 	<!-- Modal2 -->
-							<div class="modal fade" id="exampleModal2" tabindex="-1"
-								aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog modal-dialog-scrollable">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">담당자</h5>
-											<button type="button" class="btn-close"
-												data-coreui-dismiss="modal" aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											<table class="table table-hover text-center" id="modal2-table">
-												<thead class="table-light">
-													<tr>
-														<th scope="col"></th>
-														<th scope="col">담당자 아이디</th>
-														<th scope="col">담당자 명</th>
-													</tr>
-												</thead>
-												<tbody>
-													
-												</tbody>
-											</table>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
-										</div>
-									</div>
-								</div>
-							</div>
+			<div class="modal fade" id="exampleModal2" tabindex="-1"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">담당자</h5>
+							<button type="button" class="btn-close"
+								data-coreui-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<table class="table table-hover text-center" id="modal2-table">
+								<thead class="table-light">
+									<tr>
+										<th scope="col"></th>
+										<th scope="col">담당자 아이디</th>
+										<th scope="col">담당자 명</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
 
 
 
@@ -236,9 +236,9 @@ $(document).ready(function() {
                 $("#modal-user_per_name").val(response.user_per_name);
                 
                 // 숨겨진 필드에 tran_num 설정
-                $("#modal-tran_num").val(response.tran_num);
-                
-                // 테이블 바디를 비웁니다.
+            	$("#modal-tran_num").val(tran_num); // 여기서 tran_num 값을 올바르게 설정
+
+            	// 테이블 바디를 비웁니다.
                 $("#modal-table-body").empty();
                 
                 // 중복 제거를 위한 객체
@@ -263,7 +263,7 @@ $(document).ready(function() {
                 
                 // 모달을 엽니다.
                 $("#exampleModal1").modal("show");
-            },
+            	},
             error: function(error) {
                 console.log("에러 발생: ", error);
             }
@@ -374,19 +374,26 @@ $(document).ready(function() {
 	    $("#saveButton").click(function(event) {
 	        event.preventDefault();
 
+	        const tran_num = $("#modal-tran_num").val();
+	        console.log("Save Button 클릭 시 tran_num: " + tran_num); // 확인용 로그 추가
+	        
 	        const updatedData = {
-                tran_num: $("#modal-tran_num").val(),  // tran_num을 사용합니다.
-	            tran_date: $("#modal-tran_date").val(),
-	            pic_username: $("#modal-pic_username").val(),
-	            user_per_name: $("#modal-user_per_name").val()
-	        };
+        		tran_num: tran_num,
+                tran_date: $("#modal-tran_date").val(),
+                pic_username: $("#modal-pic_username").val(),
+                user_per_name: $("#modal-user_per_name").val()
+            };
 
+	        console.log("Updated Data: ", updatedData); // 확인용 로그 추가
+	        
 	        $.ajax({
-	            url: '/stock/updateReleaseDetails',
+	            url: '/stock/updateDetails',
 	            type: 'POST',
 	            contentType: 'application/json',
 	            data: JSON.stringify(updatedData),
 	            beforeSend: function(xhr) {
+	                const token = $("meta[name='_csrf']").attr("content");
+	                const header = $("meta[name='_csrf_header']").attr("content");
 	                xhr.setRequestHeader(header, token);
 	            },
 	            success: function(response) {

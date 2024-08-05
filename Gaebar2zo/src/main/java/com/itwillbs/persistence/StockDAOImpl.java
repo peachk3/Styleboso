@@ -184,13 +184,13 @@ public class StockDAOImpl implements StockDAO{
 	}
 
 	@Override
-	public int updateReleaseDetails(TransactionVO changetrvo) throws Exception {
+	public int updateDetails(TransactionVO changetrvo) throws Exception {
 
-		logger.debug("DAO : updateReleaseDetails() 호출");
+		logger.debug("DAO : updateDetails() 호출");
 		
 		logger.debug("changetrvo : "+ changetrvo);
 		
-		return sqlSession.update(NAMESPACE + "updateReleaseDetails", changetrvo);
+		return sqlSession.update(NAMESPACE + "updateDetails", changetrvo);
 	}
 
 

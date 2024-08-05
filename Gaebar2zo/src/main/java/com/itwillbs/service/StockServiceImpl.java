@@ -241,11 +241,11 @@ public class StockServiceImpl implements StockService{
 
 
 	@Override
-	public int updateReleaseDetails(TransactionVO changetrvo) throws Exception {
-			logger.debug("  출고 수정 ");
+	public int updateDetails(TransactionVO changetrvo) throws Exception {
+			logger.debug(" 입고 or 출고 수정 ");
 		// 먼저 inventory_change 테이블에서 삭제
 	   
-		return sdao.updateReleaseDetails(changetrvo);
+		return sdao.updateDetails(changetrvo);
 		
 	}
 	

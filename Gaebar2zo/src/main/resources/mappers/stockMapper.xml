@@ -205,9 +205,9 @@ select distinct
 	   values(#{tran_num},#{inven_num},#{inven_qty})
 	</insert>
 
-	<!-- 출고 수정 -->
 
-	<update id="updateReleaseDetails">
+	<!-- 입고 / 출고 수정 -->
+	<update id="updateDetails">
 		UPDATE transaction
 		SET tran_date=#{tran_date},pic_username=#{pic_username}
 		WHERE tran_num=#{tran_num}

@@ -1,6 +1,7 @@
 package com.itwillbs.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
 import com.itwillbs.domain.WarehouseVO;
@@ -27,7 +29,7 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 
 	// 창고코드 리스트 출력
 	@Override
-	public List<WarehouseCodeVO> listAll() {
+	public List<WarehouseCodeVO> listAll() throws Exception {
 		logger.debug(" listAll() 실행 ");
 
 		return sqlSession.selectList(NAMESPACE + "listALL");
@@ -35,7 +37,7 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 
 	// 거래처 리스트 출력
 	@Override
-	public List<ClientVO> cliListAll() {
+	public List<ClientVO> cliListAll() throws Exception {
 		logger.debug(" cliListAll() 실행 ");
 
 		return sqlSession.selectList(NAMESPACE + "cliListALL");
@@ -169,7 +171,45 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 		sqlSession.update(NAMESPACE+"updateWhCode", whcvo);
 	}
 
+	// 창고 zone 불러오기
+	@Override
+	public List<String> getzones(String wh_code) throws Exception {
+		logger.debug("  getzones 실행");
+		
+		return sqlSession.selectList(NAMESPACE + "getZones", wh_code);
+	}
 
-	 
+	// 창고 rack 불러오기
+	@Override
+	public List<String> getRacks(String wh_code, String wh_zone) throws Exception {
+		logger.debug(" getRacks() 실행 ");
+		
+		return sqlSession.selectList(NAMESPACE + "getRacks", Map.of("wh_code", wh_code, "wh_zone", wh_zone));
+	}
+
+	// 창고 열 불러오기
+	@Override
+	public List<String> getColumns(String wh_code, String wh_zone, String wh_rack) {
+		logger.debug(" getColumns() 실행");
+		
+		return sqlSession.selectList(NAMESPACE + "getColumns", Map.of("wh_code", wh_code, "wh_zone", wh_zone, "wh_rack", wh_rack));
+	}
+
+	// 창고 행 불러오기
+	@Override
+	public List<String> getRows(String wh_code, String wh_zone, String wh_rack) {
+		logger.debug(" getRows() 실행");
+		
+		return sqlSession.selectList(NAMESPACE + "getRows", Map.of("wh_code", wh_code, "wh_zone", wh_zone, "wh_rack", wh_rack));
+	}
+	
+	// 창고 -> 재고 불러오기
+	@Override
+	public List<InventoryVO> getInventory(String wh_num) throws Exception {
+		logger.debug(" getInventory() 실행 ");
+		
+		return sqlSession.selectList(NAMESPACE + "getInventory", wh_num) ;
+	}
+	
+
 }
-

@@ -3,9 +3,7 @@ package com.itwillbs.controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
-
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +22,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.InventoryChangeVO;
 import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.PageVO;
 import com.itwillbs.domain.TransactionVO;
@@ -91,7 +92,7 @@ public class StockController {
 		model.addAttribute("ex", ex);
 	}
 	
-	// 반품 등록
+	// 교환 등록
 	@RequestMapping(value="/adjustment/exchangeAdd",method=RequestMethod.GET)
 	public void exchangeAdd_GET() throws Exception{
 		logger.debug(" exchangeAdd_GET() 실행 ");
@@ -109,16 +110,61 @@ public class StockController {
 		model.addAttribute("re", re);
 	}
 	
-	// 반품 등록
-	@RequestMapping(value="/adjustment/returnAdd",method=RequestMethod.GET)
-	public void returnAdd_GET() throws Exception{
-		logger.debug(" returnAdd_GET() 실행 ");
+	// 반품 모달 정보
+	@ResponseBody
+	@RequestMapping(value = "/getReturnDetails",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public Map<String, Object> getReturnDetails(@RequestParam("tran_num") String tran_num,
+												@RequestParam("top_tran_num") String top_tran_num) throws Exception {
+		Map<String, Object> result = new HashMap<>();
+		
+		// 기본 거래 정보 가져오기
+		Map<String, Object> details = sService.getReturnDetails(tran_num);
+		
+		// 품목 정보 가져오기
+		List<Map<String, Object>> items = sService.getReturnItems(top_tran_num);
+
+		// LocalDateTime을 String으로 변환
+		LocalDateTime tranDate = (LocalDateTime) details.get("tran_date");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+		String tranDateString = tranDate.format(formatter);
+
+		// 결과 맵에 모든 정보 추가
+		result.putAll(details);
+		result.put("tran_date", tranDateString);
+		result.put("items", items);
+
+		logger.debug("details : " + details);
+		logger.debug("items : " + items);
+		logger.debug("result : " + result);
+
+		logger.debug("tran_num: " + tran_num);
+		logger.debug("top_tran_num: " + top_tran_num);
+
+		return result;
 	}
 
+	// 반품 등록 - GET
+	@RequestMapping(value = "/adjustment/returnAdd", method = RequestMethod.GET)
+	public void returnAdd_GET() throws Exception {
+		logger.debug(" returnAdd_GET() 실행 ");
+	}
 	
-	
-	
-	
+	// 반품 등록 - POST
+	@RequestMapping(value = "/returnAdd",method = RequestMethod.POST)
+	@ResponseBody
+	public void returnAdd_POST(@RequestBody Map<String, String> requestData) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		TransactionVO tvo = mapper.readValue(requestData.get("tvo"), TransactionVO.class);
+		List<InventoryChangeVO> icvoList = mapper.readValue(requestData.get("icvo"), new TypeReference<List<InventoryChangeVO>>() {
+		});
+		tvo.setInchangeList(icvoList);
+		logger.debug(" tvo : " + tvo);
+		logger.debug(" icvoList : " + icvoList);
+		
+		sService.adjustReturnAdd(tvo);
+	}
+
 	// 입고 관리
 	@RequestMapping(value="/receivingList",method=RequestMethod.GET)
 	public void receivingList_GET(Model model) throws Exception{

@@ -23,12 +23,24 @@ public interface StockService {
 	int getTotalCount() throws Exception;
 	
 	// 교환 리스트 호출
-	List<TransactionVO> exList() throws Exception;;
+	List<TransactionVO> exList() throws Exception;
 		
 	// 반품 리스트 호출
-	List<TransactionVO> reList() throws Exception;;
+	List<TransactionVO> reList() throws Exception;
+	
+	// 반품 모달창 정보 호출
+	Map<String, Object> getReturnDetails(String tran_num) throws Exception;
+	
+	// 반품 - 품목 정보 호출
+	List<Map<String, Object>> getReturnItems(String top_tran_num) throws Exception;
 
+	// 반품 등록
+	void adjustReturnAdd(TransactionVO tvo) throws Exception;
+	
 	Map<String, Object> getTransactionDetails(String tran_num);
+
+
+
 
 	
 	// 상태 업데이트

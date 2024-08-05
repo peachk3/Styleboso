@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.InventoryChangeVO;
 import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.persistence.StockDAO;
@@ -71,7 +72,49 @@ public class StockServiceImpl implements StockService{
 		logger.debug(" ServiceImpl + 반품 리스트 호출 ");
 		return sdao.reList();
 	}
+	
+	// 반품 모달창 정보
+	@Override
+	public Map<String, Object> getReturnDetails(String tran_num) {
+		logger.debug(" 반품 모달창 정보 확인 ");
+		return sdao.getReturnDetails(tran_num);
+	}
+	
+	// 반품 모달창 품목 정보
+	@Override
+	public List<Map<String, Object>> getReturnItems(String top_tran_num) {
+		logger.debug(" 반품 모달창 품목 정보 ");
+		return sdao.getReturnItems(top_tran_num);
+	}
 
+	// 반품 등록
+	@Override
+	public void adjustReturnAdd(TransactionVO tvo) throws Exception {
+		logger.debug(" adjustReturnAdd(TransactionVO tvo) 실행 ");
+		String tran_num = GetTranNum(tvo);
+		logger.debug(" 생성된 tran_num : " + tran_num);
+		tvo.setTran_num(tran_num);
+		
+		sdao.adjustReturnAdd_TransactionVO(tvo);
+		
+		List<InventoryChangeVO> icvoList = tvo.getInchangeList();
+		
+		for(InventoryChangeVO icvo : icvoList) {
+			InventoryChangeVO newIvcb = new InventoryChangeVO();
+			
+			newIvcb.setTran_num(tran_num);
+			newIvcb.setInven_num(icvo.getInven_num());
+			newIvcb.setInven_qty(icvo.getInven_qty());
+			
+			sdao.adjustReturnAdd_InventoryChangeVO(newIvcb);
+		}
+	}
+	
+	
+	private String GetTranNum(TransactionVO tvo) {
+		String tran_num = sdao.getTranNum(tvo);
+		return tran_num;
+	}
 
 
 	@Override
@@ -79,6 +122,8 @@ public class StockServiceImpl implements StockService{
 		// TODO Auto-generated method stub
         return sdao.getTransactionDetails(tran_num);
 	}
+
+
 
 
 

@@ -14,10 +14,10 @@ import com.itwillbs.domain.WarehouseVO;
 public interface BasicInfoDAO {
 
 	// 창고코드 리스트 출력
-	List<WarehouseCodeVO> listAll();
+	List<WarehouseCodeVO> listAll() throws Exception;
 
 	// 거래처 리스트 출력
-	List<ClientVO> cliListAll();
+	List<ClientVO> cliListAll() throws Exception;
 
 	// 품목 리스트 출력
 	List<ItemVO> itemListAll(Criteria cri) throws Exception;
@@ -65,15 +65,18 @@ public interface BasicInfoDAO {
 	// 창고 수정
 	public void updateWhCode(WarehouseCodeVO whcvo) throws Exception;
 
-	//----
-	List<WarehouseVO> getAllWarehouses() throws Exception;
+	// 창고 zone 불러오기
+	public List<String> getzones(String wh_code) throws Exception;
 
-	List<String> getzones(String wh_code) throws Exception;
+	// 창고 rack 불러오기
+	public List<String> getRacks(String wh_code, String wh_zone) throws Exception;
 
-	List<String> getRacks(String wh_code, String wh_zone) throws Exception;
-
-	List<String> getColumns(@Param ("wh_code")String wh_code, @Param ("wh_zone") String wh_zone, @Param ("wh_rack") String wh_rack) throws Exception;
-    List<String> getRows(@Param ("wh_code")String wh_code, @Param ("wh_zone") String wh_zone, @Param ("wh_rack") String wh_rack) throws Exception;
-
-	List<InventoryVO> getInventory(String wh_num, String wh_code, String wh_zone, String wh_rack, String wh_row, String wh_column) throws Exception;
+	// 창고 열 불러오기
+	public List<String> getColumns(@Param ("wh_code")String wh_code, @Param ("wh_zone") String wh_zone, @Param ("wh_rack") String wh_rack) throws Exception;
+	
+	// 창고 열 불러오기
+	public List<String> getRows(@Param ("wh_code")String wh_code, @Param ("wh_zone") String wh_zone, @Param ("wh_rack") String wh_rack) throws Exception;
+	
+	// 창고 -> 재고 불러오기
+	public List<InventoryVO> getInventory(String wh_num) throws Exception;
 }

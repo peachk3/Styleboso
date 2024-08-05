@@ -328,13 +328,11 @@ public class BasicInfoController {
 		        logger.error("Error updating", e);
 		        return new ResponseEntity<>("Error updating", HttpStatus.INTERNAL_SERVER_ERROR);
 		    }
-		
 	}
 	
-	
-	//------------------------------
+	// 창고 -> 재고 출력 페이지
     @RequestMapping(value = "/warehouse", method = RequestMethod.GET)
-    public void getWarehouse(Model model) {
+    public void getWarehouse(Model model) throws Exception {
     	logger.debug("getWarehouse() 실행 ");
     		
 		List<WarehouseCodeVO> whCodeList = bService.listAll();
@@ -342,6 +340,7 @@ public class BasicInfoController {
 		model.addAttribute("whCodeList",whCodeList);
     }
     
+    // 창고 zone 불러오기
     @ResponseBody
     @RequestMapping(value = "/getZones", method = RequestMethod.POST)
     public List<String> getZones(@RequestParam String wh_code)throws Exception {
@@ -354,6 +353,7 @@ public class BasicInfoController {
     	
     }
     
+    // 창고 rack 불러오기
     @ResponseBody
     @RequestMapping(value = "/getRacks", method = RequestMethod.POST)
     public List<String> getRacks(@RequestParam String wh_code, @RequestParam String wh_zone) throws Exception{
@@ -363,7 +363,7 @@ public class BasicInfoController {
     	return bService.getRacks(wh_code, wh_zone);
     }
     
-    
+    // 창고 열/행 불러오기
     @ResponseBody
     @RequestMapping(value = "/getColumnRows", method = RequestMethod.POST)
     public Map<String, Object> getColumnRows(@RequestParam String wh_code, @RequestParam String wh_zone, @RequestParam String wh_rack) throws Exception{
@@ -378,13 +378,15 @@ public class BasicInfoController {
         response.put("rows", rows);
         return response;
     }
-
+    
+    // 창고 -> 재고 불러오기
     @ResponseBody
     @RequestMapping(value="/getInventory", method = RequestMethod.POST)
-    public List<InventoryVO> getInventory(@RequestParam String wh_num, @RequestParam String wh_code,@RequestParam String wh_zone, @RequestParam String wh_rack, @RequestParam String wh_row, @RequestParam String wh_column) throws Exception{
+	public List<InventoryVO> getInventory(
+			@RequestParam String wh_num) throws Exception{
     	logger.debug(" getInventory() 실행  ");
     	logger.debug("wh_num : " + wh_num );
     	
-    	return bService.getInventory(wh_num, wh_code, wh_zone, wh_rack, wh_row, wh_column);
+		return bService.getInventory(wh_num);
     }
 }

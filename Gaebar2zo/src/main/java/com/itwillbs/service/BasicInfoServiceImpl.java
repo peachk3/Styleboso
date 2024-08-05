@@ -26,7 +26,7 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 
 	// 창고코드 리스트 출력
 	@Override
-	public List<WarehouseCodeVO> listAll() {
+	public List<WarehouseCodeVO> listAll() throws Exception {
 		logger.debug("창고 리스트 조회");
 		
 		return bidao.listAll();
@@ -34,7 +34,7 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 
 	// 거래처 리스트 출력
 	@Override
-	public List<ClientVO> cliListAll() {
+	public List<ClientVO> cliListAll() throws Exception {
 		logger.debug("고객사 리스트 조회");
 		
 		return bidao.cliListAll();
@@ -139,7 +139,6 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		
 		bidao.warehouseCodeDelete(whNums);
 	}
-
 	
 	@Override
 	public List<WarehouseCodeVO> warehouseDetailsList(String s_cate_wh_code) throws Exception {
@@ -148,7 +147,6 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		return bidao.warehouseDetailsList(s_cate_wh_code);
 	}
 
-
 	@Override
 	public void updateWhCode(WarehouseCodeVO whcvo) throws Exception {
 		logger.debug(" 창고 정보 수정 ");
@@ -156,19 +154,14 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		bidao.updateWhCode(whcvo);
 	}
 	
-
-	// --------------------------
-	@Override
-	  public List<WarehouseVO> getAllWarehouses() throws Exception {
-        return bidao.getAllWarehouses();
-    }
-
+	 // 창고 zone 불러오기
 	@Override
 	public List<String> getZones(String wh_code) throws Exception {
 		logger.debug(" 창고 존 ");
 		return bidao.getzones(wh_code);
 	}
 
+	// 창고 rack 불러오기
 	@Override
 	public List<String> getRacks(String wh_code, String wh_zone) throws Exception {
 		logger.debug(" 창고 렉 ");
@@ -176,24 +169,26 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		return bidao.getRacks(wh_code, wh_zone);
 	}
 
+	// 창고 열 불러오기
     @Override
     public List<String> getColumns(String wh_code, String wh_zone, String wh_rack) throws Exception {
-       
+       logger.debug(" 창고 열 ");
     	return bidao.getColumns(wh_code, wh_zone, wh_rack);
     }
 
+    // 창고 행 불러오기
     @Override
     public List<String> getRows(String wh_code, String wh_zone, String wh_rack) throws Exception {
-        logger.debug(" getRows() 실행 ");
+        logger.debug(" 창고 행 ");
         
     	return bidao.getRows(wh_code, wh_zone, wh_rack);
     }
 
+    // 창고 -> 재고 불러오기
 	@Override
-	public List<InventoryVO> getInventory(String wh_num, String wh_code, String wh_zone, String wh_rack, String wh_row,
-			String wh_column) throws Exception {
+	public List<InventoryVO> getInventory(String wh_num) throws Exception {
 		logger.debug(" getInventory() 실행 ");
-		return bidao.getInventory(wh_num, wh_code, wh_zone, wh_rack, wh_row, wh_column);
+		return bidao.getInventory(wh_num);
 	}
 
 	

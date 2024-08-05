@@ -1,25 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../include/header.jsp" %>
 <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
+       table { 
+             width: 100%; 
+            border-collapse: collapse; 
+         } 
+         th, td { 
+             padding: 10px; 
+             text-align: center; 
+        } 
         .cell {
             cursor: pointer;
         }
         .selected {
             background-color: #f0f0f0;
         }
- .grid-container {
+ 		.grid-container {
             display: grid;
             gap: 1px;
             background-color: #ccc;
@@ -36,30 +32,59 @@
         }
     </style>
 <body>
-        <h1>Warehouse Management</h1>
-        
-    <select id="warehouseSelect">
-        <option value="">Select Warehouse</option>
-        <c:forEach items="${whCodeList}" var="whCodeList">
-            <option value="${whCodeList.s_cate_wh_code}">${whCodeList.s_cate_wh_name}</option>
-        </c:forEach>
-    </select>
-    
-    <select id="zoneSelect">
-        <option value="">Select Zone</option>
-    </select>
-    
-    <select id="rackSelect">
-        <option value="">Select Rack</option>
-    </select>
-    
+        <h1>창고별 재고 출력</h1>
+
+	<div class="row">
+		<div class="col">
+			<select id="warehouseSelect" class="form-select"
+				aria-label="Default select example">
+				<option value="">Select Warehouse</option>
+				<c:forEach items="${whCodeList}" var="whCodeList">
+					<option value="${whCodeList.s_cate_wh_code}">${whCodeList.s_cate_wh_name}</option>
+				</c:forEach>
+			</select> <br>
+		</div>
+
+		<div class="col">
+			<select id="zoneSelect" class="form-select"
+				aria-label="Default select example">
+				<option value="">Select Zone</option>
+			</select>
+		</div>
+		<div class="col">
+			<select id="rackSelect" class="form-select"
+				aria-label="Default select example">
+				<option value="">Select Rack</option>
+			</select> <br>
+		</div>
+	</div>
+	
 	<div id="gridContainer" class="grid-container"></div>
 	
-	<ul id="inventoryList"></ul>
-    
+<!-- 	<ul id="inventoryList"></ul> -->
+
+
+	<div id="exampleModalToggle" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalToggleLabel">재고 리스트</h5>
+				</div>
+				<div class="modal-body">
+					<ul id="inventoryList"></ul>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>				
+				</div>
+			</div>
+		</div>
+	</div>
+
 </body>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@3.2.2/dist/js/coreui.min.js"></script>
+
 <script>
 const token = $("meta[name='_csrf']").attr("content")
 const header = $("meta[name='_csrf_header']").attr("content");
@@ -124,7 +149,7 @@ $(document).ready(function() {
             	 var columns = data.columns;
                  var rows = data.rows;
                  
-                 var tableHtml = '<table><thead><tr><th></th>';
+                 var tableHtml = '<table class="table"><thead><tr><th></th>';
                  
               // Add column headers
                  $.each(columns, function(index, column) {
@@ -148,7 +173,9 @@ $(document).ready(function() {
         });
     });
     
- // Handle cell clicks
+    $('.modal').modal(); // Initialize modal
+    
+ // 표 선택
     $(document).on('click', '.cell', function() {
         var row = $(this).data('row');
         var column = $(this).data('column');
@@ -164,20 +191,31 @@ $(document).ready(function() {
              },
             type: 'POST',
 	        dataType: "json",
-            data: { wh_num: wh_num, wh_code: wh_code, wh_zone: wh_zone, wh_rack: wh_rack, wh_row: row, wh_column: column },
+            data: { wh_num: wh_num },
             success: function(data) {
             	 console.log('Inventory data:', data); // 데이터 확인
-                 if (data && Array.isArray(data)) {
                      $('#inventoryList').empty();
+                 if (data && Array.isArray(data) && data.length > 0) {
+                     
+                     var tableHtml = '<table class="table"><thead><tr><th>품목 번호</th><th>재고량</th></tr></thead><tbody>';
                      $.each(data, function(index, value) {
-                         $('#inventoryList').append('<li>' + value.goods_num + ': ' + value.inven_qty + '</li>');
+                    	 tableHtml += '<tr><td>' + value.goods_num + '</td><td>' + value.inven_qty + '</td></tr>';
+//                          $('#inventoryList').append('<table><thead><tr><th>'+ 품목 번호 + '</th><th>' + 재고량 + '</th></tr></thead><tbody><td>'
+//                         		  + value.goods_num + '</td><td>' + value.inven_qty + '</td></tbody></table>');
                      });
+                     tableHtml += '</tbody></table>';
+                     
+                     $('#inventoryList').append(tableHtml);
+                     
                  } else {
-                     $('#inventoryList').html('<li>No data available</li>');
+                	 $('#inventoryList').html('해당 구역 재고 없음 ');
                  }
+	                 $('#exampleModalToggle').modal("show");
              },
              error: function(xhr, status, error) {
                  console.error('Error fetching inventory:', error); // 오류 처리
+                 $('#inventoryList').html('<li>오류 발생: 재고를 가져올 수 없습니다</li>');
+                 $('#inventoryModal').modal('open'); // Open the modal to show the error message
              }
         });
 

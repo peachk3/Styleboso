@@ -113,12 +113,6 @@ public class StockServiceImpl implements StockService{
 	}
 	
 	
-	private String GetTranNum(TransactionVO tvo) {
-		String tran_num = sdao.getTranNum(tvo);
-		return tran_num;
-	}
-
-
 	@Override
 	public Map<String, Object> getTransactionDetails(String tran_num) throws Exception{
 

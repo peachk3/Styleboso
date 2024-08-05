@@ -105,12 +105,6 @@ public class StockDAOImpl implements StockDAO{
 		
 	}
 
-	@Override
-	public String getTranNum(TransactionVO tvo) {
-		String tran_num = sqlSession.selectOne(NAMESPACE + "getTranNum", tvo);
-		return tran_num;
-	}
-
 	// 거래 상세 정보 호출
     @Override
     public Map<String, Object> getTransactionDetails(String tran_num) {

@@ -37,8 +37,6 @@ public interface StockService {
 	// 반품 등록
 	void adjustReturnAdd(TransactionVO tvo) throws Exception;
 	
-	Map<String, Object> getTransactionDetails(String tran_num);
-
 	// 입고 모달창 정보 호출
 	Map<String, Object> getTransactionDetails(String tran_num) throws Exception;
 

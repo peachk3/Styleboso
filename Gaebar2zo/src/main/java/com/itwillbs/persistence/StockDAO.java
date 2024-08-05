@@ -39,8 +39,6 @@ public interface StockDAO {
 	// 반품 등록 - InventoryChangeVO
 	void adjustReturnAdd_InventoryChangeVO(InventoryChangeVO newIvcb);
 	
-	Map<String, Object> getTransactionDetails(String tran_num);
-  
 	// 입고 모달창 정보 화출
 	Map<String, Object> getTransactionDetails(String tran_num) throws Exception;
 

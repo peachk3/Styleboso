@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
 import com.itwillbs.domain.WarehouseVO;
@@ -155,6 +156,46 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		bidao.updateWhCode(whcvo);
 	}
 	
+
+	// --------------------------
+	@Override
+	  public List<WarehouseVO> getAllWarehouses() throws Exception {
+        return bidao.getAllWarehouses();
+    }
+
+	@Override
+	public List<String> getZones(String wh_code) throws Exception {
+		logger.debug(" 창고 존 ");
+		return bidao.getzones(wh_code);
+	}
+
+	@Override
+	public List<String> getRacks(String wh_code, String wh_zone) throws Exception {
+		logger.debug(" 창고 렉 ");
+		
+		return bidao.getRacks(wh_code, wh_zone);
+	}
+
+    @Override
+    public List<String> getColumns(String wh_code, String wh_zone, String wh_rack) throws Exception {
+       
+    	return bidao.getColumns(wh_code, wh_zone, wh_rack);
+    }
+
+    @Override
+    public List<String> getRows(String wh_code, String wh_zone, String wh_rack) throws Exception {
+        logger.debug(" getRows() 실행 ");
+        
+    	return bidao.getRows(wh_code, wh_zone, wh_rack);
+    }
+
+	@Override
+	public List<InventoryVO> getInventory(String wh_num, String wh_code, String wh_zone, String wh_rack, String wh_row,
+			String wh_column) throws Exception {
+		logger.debug(" getInventory() 실행 ");
+		return bidao.getInventory(wh_num, wh_code, wh_zone, wh_rack, wh_row, wh_column);
+	}
+
 	
 	
 }

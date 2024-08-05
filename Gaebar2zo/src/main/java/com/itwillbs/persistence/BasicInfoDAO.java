@@ -2,8 +2,11 @@ package com.itwillbs.persistence;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
 import com.itwillbs.domain.WarehouseVO;
@@ -62,5 +65,15 @@ public interface BasicInfoDAO {
 	// 창고 수정
 	public void updateWhCode(WarehouseCodeVO whcvo) throws Exception;
 
+	//----
+	List<WarehouseVO> getAllWarehouses() throws Exception;
 
+	List<String> getzones(String wh_code) throws Exception;
+
+	List<String> getRacks(String wh_code, String wh_zone) throws Exception;
+
+	List<String> getColumns(@Param ("wh_code")String wh_code, @Param ("wh_zone") String wh_zone, @Param ("wh_rack") String wh_rack) throws Exception;
+    List<String> getRows(@Param ("wh_code")String wh_code, @Param ("wh_zone") String wh_zone, @Param ("wh_rack") String wh_rack) throws Exception;
+
+	List<InventoryVO> getInventory(String wh_num, String wh_code, String wh_zone, String wh_rack, String wh_row, String wh_column) throws Exception;
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
 import com.itwillbs.domain.WarehouseVO;
@@ -67,7 +68,18 @@ public interface BasicInfoService {
 
 
 
+	//----
+	public List<WarehouseVO> getAllWarehouses() throws Exception;
 
+	public List<String> getZones(String wh_code) throws Exception;
 
+	public List<String> getRacks(String wh_code, String wh_zone) throws Exception;
+
+	public List<String> getColumns(String wh_code, String wh_zone, String wh_rack) throws Exception;
+	
+	public List<String> getRows(String wh_code, String wh_zone, String wh_rack) throws Exception;
+
+	public List<InventoryVO> getInventory(String wh_num, String wh_code, String wh_zone, String wh_rack, String wh_row,
+			String wh_column) throws Exception;
 
 }

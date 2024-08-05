@@ -1,6 +1,7 @@
 package com.itwillbs.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
 import com.itwillbs.domain.WarehouseVO;
@@ -170,6 +172,45 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 	}
 
 
-	 
-}
+	//--
+	@Override
+	public List<WarehouseVO> getAllWarehouses() {
+        return sqlSession.selectList(NAMESPACE + "getAllWarehouses");
+    }
 
+	@Override
+	public List<String> getzones(String wh_code) throws Exception {
+		logger.debug("  getzones 실행");
+		return sqlSession.selectList(NAMESPACE + "getZones", wh_code);
+	}
+
+	@Override
+	public List<String> getRacks(String wh_code, String wh_zone) throws Exception {
+		logger.debug(" getRacks 실행 ");
+		
+		return sqlSession.selectList(NAMESPACE + "getRacks", Map.of("wh_code", wh_code, "wh_zone", wh_zone));
+	}
+
+	@Override
+	public List<String> getColumns(String wh_code, String wh_zone, String wh_rack) {
+		return sqlSession.selectList(NAMESPACE + "getColumns",
+				Map.of("wh_code", wh_code, "wh_zone", wh_zone, "wh_rack", wh_rack));
+	}
+
+	@Override
+	public List<String> getRows(String wh_code, String wh_zone, String wh_rack) {
+		return sqlSession.selectList(NAMESPACE + "getRows",
+				Map.of("wh_code", wh_code, "wh_zone", wh_zone, "wh_rack", wh_rack));
+
+	}
+
+	@Override
+	public List<InventoryVO> getInventory(String wh_num, String wh_code, String wh_zone, String wh_rack, String wh_row,
+			String wh_column) throws Exception {
+		logger.debug(" getInventory() 실행 ");
+		
+		return sqlSession.selectList(NAMESPACE  + "getInventory", Map.of("wh_num", wh_num, "wh_code", wh_code, "wh_zone", wh_zone, "wh_rack", wh_rack, "wh_row", wh_row, "wh_column", wh_column)) ;
+	}
+	
+
+}

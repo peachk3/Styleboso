@@ -233,4 +233,40 @@
 		where inv.wh_num=#{wh_num};
    	</select>
    	
+<!--    	dlk -->
+    <select id="getAllWarehouses" resultType="WarehouseVO">
+        SELECT * FROM warehouse
+    </select>
+
+    <select id="getZones" parameterType="String" resultType="String">
+        SELECT DISTINCT wh_zone FROM warehouse WHERE wh_code = #{wh_code}
+    </select>
+   	
+   	<select id="getRacks" parameterType="map" resultType="String">
+        SELECT DISTINCT wh_rack FROM warehouse WHERE wh_code = #{wh_code} AND wh_zone = #{wh_zone}
+    </select>
+    
+    <!-- Get columns -->
+    <select id="getColumns" parameterType="map" resultType="String">
+        SELECT DISTINCT wh_column
+        FROM warehouse
+        WHERE wh_code = #{wh_code} AND wh_zone = #{wh_zone} AND wh_rack = #{wh_rack}
+    </select>
+
+    <!-- Get rows -->
+    <select id="getRows" parameterType="map" resultType="String">
+        SELECT DISTINCT wh_row
+        FROM warehouse
+        WHERE wh_code = #{wh_code} AND wh_zone = #{wh_zone} AND wh_rack = #{wh_rack}
+    </select>
+    
+<!--     <select id="getInventory" parameterType="map" resultType="InventoryVO"> -->
+<!--         SELECT * FROM inventory WHERE wh_code = #{wh_code} AND wh_zone = #{wh_zone} AND wh_rack = #{wh_rack} AND wh_row = #{wh_row} AND wh_column = #{wh_column} -->
+<!--     </select> -->
+    <select id="getInventory" parameterType="String" resultMap="invenMap">
+   		select inv.inven_num, inv.wh_num, inv.goods_num, inv.inven_qty, wa.wh_name, wa.wh_zone, wa.wh_rack, wa.wh_row, wa.wh_column
+		from inventory inv
+		join warehouse wa on inv.wh_num = wa.wh_num
+		where inv.wh_num=#{wh_num};
+   	</select>
 </mapper>

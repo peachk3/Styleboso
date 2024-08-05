@@ -1,5 +1,6 @@
 package com.itwillbs.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.PageVO;
 import com.itwillbs.domain.WarehouseCodeVO;
@@ -327,4 +331,60 @@ public class BasicInfoController {
 		
 	}
 	
+	
+	//------------------------------
+    @RequestMapping(value = "/warehouse", method = RequestMethod.GET)
+    public void getWarehouse(Model model) {
+    	logger.debug("getWarehouse() 실행 ");
+    		
+		List<WarehouseCodeVO> whCodeList = bService.listAll();
+		
+		model.addAttribute("whCodeList",whCodeList);
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/getZones", method = RequestMethod.POST)
+    public List<String> getZones(@RequestParam String wh_code)throws Exception {
+    	logger.debug(" getZones() 실행");
+    	logger.debug(" wh_code : " + wh_code);
+    	
+    	List<String> zones = bService.getZones(wh_code);
+    	logger.debug(" zones : " + zones);
+    	return zones;
+    	
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/getRacks", method = RequestMethod.POST)
+    public List<String> getRacks(@RequestParam String wh_code, @RequestParam String wh_zone) throws Exception{
+    	
+    	logger.debug(" getRacks() 실행 ");
+    	logger.debug(" wh_zone : "+ wh_zone);
+    	return bService.getRacks(wh_code, wh_zone);
+    }
+    
+    
+    @ResponseBody
+    @RequestMapping(value = "/getColumnRows", method = RequestMethod.POST)
+    public Map<String, Object> getColumnRows(@RequestParam String wh_code, @RequestParam String wh_zone, @RequestParam String wh_rack) throws Exception{
+    	logger.debug(" getColumnRows() 실행 ");
+    	
+    	Map<String, Object> response = new HashMap<>();
+    	
+    	List<String> columns = bService.getColumns(wh_code, wh_zone, wh_rack);
+        List<String> rows = bService.getRows(wh_code, wh_zone, wh_rack);
+
+        response.put("columns", columns);
+        response.put("rows", rows);
+        return response;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/getInventory", method = RequestMethod.POST)
+    public List<InventoryVO> getInventory(@RequestParam String wh_num, @RequestParam String wh_code,@RequestParam String wh_zone, @RequestParam String wh_rack, @RequestParam String wh_row, @RequestParam String wh_column) throws Exception{
+    	logger.debug(" getInventory() 실행  ");
+    	logger.debug("wh_num : " + wh_num );
+    	
+    	return bService.getInventory(wh_num, wh_code, wh_zone, wh_rack, wh_row, wh_column);
+    }
 }

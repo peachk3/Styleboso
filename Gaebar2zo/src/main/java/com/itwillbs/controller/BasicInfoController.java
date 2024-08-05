@@ -149,12 +149,21 @@ public class BasicInfoController {
 	// ----------------------------------거래처 관리------------------------------------------------
 	//http://localhost:8088/basicInfo/clientList
 	@RequestMapping(value="/clientList",method=RequestMethod.GET)
-	public void clientList_GET(Model model) throws Exception{
+	public void clientList_GET(Criteria cri, Model model) throws Exception{
 		logger.debug(" clientList_GET() 실행 ");
+		logger.debug(" cri " + cri);
 		
-		List<ClientVO> clientList = bService.cliListAll();
+		List<ClientVO> clientList = bService.cliListAll(cri);
+	    logger.debug(" size : " + clientList.size());
 		
-		model.addAttribute("clientList", clientList);	
+	    PageVO pageVO = new PageVO();
+	    pageVO.setCri(cri);
+	    pageVO.setTotalCount(bService.getTotalClientCount());
+	    logger.debug(" cri " + pageVO.getCri());
+
+	    model.addAttribute("clientList", clientList);	
+	    model.addAttribute("pageVO", pageVO);
+		
 	}
 
 	// 거래처 추가 - 등록 페이지로 이동

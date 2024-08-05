@@ -37,10 +37,18 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 
 	// 거래처 리스트 출력
 	@Override
-	public List<ClientVO> cliListAll() throws Exception {
+	public List<ClientVO> cliListAll(Criteria cri) throws Exception {
 		logger.debug(" cliListAll() 실행 ");
 
-		return sqlSession.selectList(NAMESPACE + "cliListALL");
+		return sqlSession.selectList(NAMESPACE + "cliListALL", cri);
+	}
+	
+
+	@Override
+	public int getTotalClientCount() throws Exception {
+		logger.debug(" getTotalClientCount() 실행 ");
+		
+		return sqlSession.selectOne(NAMESPACE+"totalClientCount");
 	}
 
 	// 품목 리스트 출력

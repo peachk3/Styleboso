@@ -34,10 +34,16 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 
 	// 거래처 리스트 출력
 	@Override
-	public List<ClientVO> cliListAll() throws Exception {
+	public List<ClientVO> cliListAll(Criteria cri) throws Exception {
 		logger.debug("고객사 리스트 조회");
 		
-		return bidao.cliListAll();
+		return bidao.cliListAll(cri);
+	}
+ 
+	@Override
+	public int getTotalClientCount() throws Exception {
+		logger.debug(" getTotalClientCount() 실행 ");
+		return bidao.getTotalClientCount();
 	}
 
 	// 품목 리스트 출력

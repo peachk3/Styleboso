@@ -333,8 +333,20 @@ public class StockController {
 			
 		}
 	
+	// 출고 수정
+	  @RequestMapping(value="/updateReleaseDetails",method=RequestMethod.POST)
+	    @ResponseBody
+	    public ResponseEntity<Integer> updateReleaseDetails(@RequestBody TransactionVO changetrvo) throws Exception {
+			logger.debug(" updateReleaseDetails() 실행 ");
 
+			int result = sService.updateReleaseDetails(changetrvo);
+			
+		    logger.debug("Received tran_num: " + changetrvo.getTran_num());
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	  
+	  }
 
+		
 
 
 

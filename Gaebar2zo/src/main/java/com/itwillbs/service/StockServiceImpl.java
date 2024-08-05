@@ -238,6 +238,16 @@ public class StockServiceImpl implements StockService{
 	    
 		sdao.deleteRecevingList(trannums);
 	}
+
+
+	@Override
+	public int updateReleaseDetails(TransactionVO changetrvo) throws Exception {
+			logger.debug("  출고 수정 ");
+		// 먼저 inventory_change 테이블에서 삭제
+	   
+		return sdao.updateReleaseDetails(changetrvo);
+		
+	}
 	
 	
 	

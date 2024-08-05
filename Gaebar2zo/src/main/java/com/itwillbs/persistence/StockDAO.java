@@ -65,6 +65,9 @@ public interface StockDAO {
 	// 출고 등록_InventoryChangeVO
 	public void stockReleaseAdd_InventoryChangeVO(InventoryChangeVO newIvcb) throws Exception;
 
+	// 출고 수정
+	public int updateReleaseDetails(TransactionVO changetrvo) throws Exception;
+
 
 	
 	

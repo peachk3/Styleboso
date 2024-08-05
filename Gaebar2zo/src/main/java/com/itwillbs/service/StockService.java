@@ -53,6 +53,9 @@ public interface StockService {
 	// 출고 삭제
 	public void deleteReleaseList(List<String> trannums) throws Exception;
 
+	// 출고 수정
+	public int updateReleaseDetails(TransactionVO changetrvo) throws Exception;
+
 	
 	// 상태 업데이트
 //    void updateStatus(List<String> tranNums, String status) throws Exception;

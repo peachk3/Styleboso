@@ -91,7 +91,7 @@
 
 	<!-- 입고 리스트 호출 -->
 	<select id="receivingList" resultMap="transMap">
-		select
+		select distinct
 		tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
 		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
 		go.item_num,go.item_name,inven_num
@@ -108,19 +108,21 @@
 		on item.item_num = goods.item_num
 		where goods.item_num in (select item_num
 		from goods go
-		where goods_num in (select trg.goods_num
+		where goods_num in (select distinct trg.goods_num
 		from transaction tr
 		join transaction_goods trg
 		on tr.top_tran_num = trg.tran_num))) go
 		on tr.goods_num = go.goods_num
-		join inventory_change ic
-		on tr.tran_num = ic.tran_num
-		WHERE tr.tran_num like 'RC%'  and pro_status in ("입고 예정","입고 완료")
+		join (select tran_num, ic.inven_num, goods_num
+		from inventory inv join inventory_change ic
+		on inv.inven_num = ic.inven_num) ic
+		on tr.tran_num = ic.tran_num and tr.goods_num = ic.goods_num
+		WHERE tr.tran_num like 'RC%' and pro_status in ("입고 예정","입고 완료")
 	</select>
 
 	<!-- 출고 리스트 호출 -->
 	<select id="releaseList" resultMap="transMap">
-		select
+select distinct
 		tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
 		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
 		go.item_num,go.item_name,inven_num
@@ -137,14 +139,16 @@
 		on item.item_num = goods.item_num
 		where goods.item_num in (select item_num
 		from goods go
-		where goods_num in (select trg.goods_num
+		where goods_num in (select distinct trg.goods_num
 		from transaction tr
 		join transaction_goods trg
 		on tr.top_tran_num = trg.tran_num))) go
 		on tr.goods_num = go.goods_num
-		join inventory_change ic
-		on tr.tran_num = ic.tran_num
-		WHERE tr.tran_num like 'RL%' and pro_status in ("출고 준비","출고 완료");
+		join (select tran_num, ic.inven_num, goods_num
+		from inventory inv join inventory_change ic
+		on inv.inven_num = ic.inven_num) ic
+		on tr.tran_num = ic.tran_num and tr.goods_num = ic.goods_num
+		WHERE tr.tran_num like 'RL%' and pro_status in ("출고 준비","출고 완료")
 	</select>
  
 
@@ -200,6 +204,15 @@
 	   insert into inventory_change
 	   values(#{tran_num},#{inven_num},#{inven_qty})
 	</insert>
+
+	<!-- 출고 수정 -->
+
+	<update id="updateReleaseDetails">
+		UPDATE transaction
+		SET tran_date=#{tran_date},pic_username=#{pic_username}
+		WHERE tran_num=#{tran_num}
+	</update>
+
 
 
 
@@ -384,7 +397,7 @@
         WHERE inven.goods_num = #{goods_num}
     </select>
 
-
+	
 
 
 

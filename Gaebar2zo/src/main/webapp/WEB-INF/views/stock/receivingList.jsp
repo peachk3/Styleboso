@@ -42,32 +42,30 @@
             <th scope="col">상태</th>
         </tr>
         </thead>
-        <tbody>
-        <c:forEach var="rc" items="${rc}">
-            <c:forEach var="item" items="${rc.itemList}" varStatus="rcStatus">
-                <c:forEach var="inchange" items="${rc.inchangeList}">
-                    <c:forEach var="goods" items="${item.tranGoodsList}">
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault${item.item_num }"> 
-                                </div>
-                            </td>
-                            <td class="clickable-cell">${rc.tran_num}</td>
-                            <td class="clickable-cell">${goods.goods_num}</td>
-                            <td class="clickable-cell">${item.item_name}</td>
-                            <td class="clickable-cell">${goods.goods_qty}</td>
-                            <td class="clickable-cell">${rc.rec_date}</td>
-                            <td class="clickable-cell">${rc.top_tran_num}</td>
-                            <td class="clickable-cell">${inchange.inven_num}</td>
-                            <td class="clickable-cell">${rc.comm}</td>
-                            <td class="clickable-cell">${rc.pro_status}</td>
-                        </tr>
-                    </c:forEach>
-                </c:forEach>
+     <tbody>
+    <c:forEach var="rc" items="${rc}">
+        <c:forEach var="item" items="${rc.itemList}">
+            <c:forEach var="goods" items="${item.tranGoodsList}">
+                <tr>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault${goods.goods_num}"> 
+                        </div>
+                    </td>
+                    <td class="clickable-cell">${rc.tran_num}</td>
+                    <td class="clickable-cell">${goods.goods_num}</td>
+                    <td class="clickable-cell">${item.item_name}</td>
+                    <td class="clickable-cell">${goods.goods_qty}</td>
+                    <td class="clickable-cell">${rc.rec_date}</td>
+                    <td class="clickable-cell">${rc.top_tran_num}</td>
+                    <td class="clickable-cell">${rc.inchangeList[0].inven_num}</td>
+                    <td class="clickable-cell">${rc.comm}</td>
+                    <td class="clickable-cell">${rc.pro_status}</td>
+                </tr>
             </c:forEach>
         </c:forEach>
-        </tbody>
+    </c:forEach>
+</tbody>
     </table>
 
     <div class="container mt-3">

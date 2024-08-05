@@ -24,10 +24,20 @@ public class SalesServiceImpl implements SalesService{
 	@Override
 	public List<TransactionVO> SalesOrderList() throws Exception {
 		
-		logger.debug("SalesOrderAdd() 실행");
+		logger.debug("SalesOrderList() 실행");
 		
 		return sdao.salesOrderList();
 	}
+	
+	@Override
+	public List<TransactionVO> SalesOrderInfo(String tran_num) throws Exception {
+		
+		logger.debug("SalesOrderInfo() 실행");
+
+		return sdao.salesOrderInfo(tran_num);
+	}
+
+
 
 	@Override
 	@Transactional

@@ -28,6 +28,13 @@ public class SalesDAOImpl implements SalesDAO{
 		
 		return sqlSession.selectList(NAMESPACE + "salesOrderList");
 	}
+	
+	@Override
+	public List<TransactionVO> salesOrderInfo(String tran_num) throws Exception {
+		logger.debug("DAO : salesOrderInfo() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "salesOrderInfo", tran_num);
+	}
 
 	@Override
 	public void salesOrderAdd_TransactionVO(TransactionVO tvo) throws Exception {

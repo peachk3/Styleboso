@@ -43,24 +43,22 @@
         </thead>
         <tbody>
 	        <c:forEach var="so" items="${so}">
-	            <tr data-coreui-toggle="modal" data-coreui-target="#soInfoModal">
-	                <td>
-	                    <div class="form-check">
+	            <tr data-tran-num="${so.tran_num}">
+	                <td><div class="form-check">
 	                        <input class="form-check-input" type="checkbox" value="${so.tran_num}" id="${so.tran_num}"> 
-	                    </div>
-	                </td>
-	                <td class="clickable-cell">${so.tran_num}</td>
+	                </div></td>
+	                <td class="clickable-cell" data-coreui-toggle="modal" data-coreui-target="#soInfoModal">${so.tran_num}</td>
             <c:forEach var="cli" items="${so.clientList}">
-	                <td class="clickable-cell">${cli.cli_name}</td>
+	                <td class="clickable-cell" data-coreui-toggle="modal" data-coreui-target="#soInfoModal">${cli.cli_name}</td>
 	        </c:forEach>
-	                <td class="clickable-cell">${so.tran_date}</td>
-	                <td class="clickable-cell">${so.rel_date}</td>
-	                <td class="clickable-cell">${so.due_date}</td>
-	                <td class="clickable-cell">${so.income}</td>
+	                <td class="clickable-cell" data-coreui-toggle="modal" data-coreui-target="#soInfoModal">${so.tran_date}</td>
+	                <td class="clickable-cell" data-coreui-toggle="modal" data-coreui-target="#soInfoModal">${so.rel_date}</td>
+	                <td class="clickable-cell" data-coreui-toggle="modal" data-coreui-target="#soInfoModal">${so.due_date}</td>
+	                <td class="clickable-cell" data-coreui-toggle="modal" data-coreui-target="#soInfoModal">${so.income}</td>
             <c:forEach var="user" items="${so.userList}">
-	                <td class="clickable-cell">${user.user_per_name}</td>
+	                <td class="clickable-cell" data-coreui-toggle="modal" data-coreui-target="#soInfoModal">${user.user_per_name}</td>
 	        </c:forEach>
-	                <td class="clickable-cell">${so.pro_status}</td>
+	                <td class="clickable-cell" data-coreui-toggle="modal" data-coreui-target="#soInfoModal">${so.pro_status}</td>
 	            </tr>
 	        </c:forEach>
         </tbody>
@@ -69,7 +67,7 @@
     <div class="container mt-3">
         <button id="statusChangeBtn" class="btn btn-outline-info">상태 변경</button>
         <div class="status-buttons mt-2">
-            <button class="btn btn-outline-info" id="preReceiveBtn">입고 예정</button>
+            <button class="btn btn-outline-info" id="preReceiveBtn">수주 접수</button>
             <button class="btn btn-outline-info" id="completedReceiveBtn">입고 완료</button>
         </div>
     </div>
@@ -86,35 +84,43 @@
 					<div class="row g-3">
 						<div class="col-12">
 							<label for="soInfo01" class="form-label">수주번호</label>
-								<input type="text" class="form-control" id="soInfo01" name="tran_num" readonly>
+								<input type="text" class="form-control" id="tran_num" name="tran_num" readonly>
 						</div>
 						<div class="col-md-6">
-							<label for="soInfo02" class="form-label">납기예정 일자</label> 
-								<input type="date" class="form-control" id="soInfo02" name="ex_due_date" readonly>
+							<label for="soInfo02" class="form-label">수주일자</label> 
+								<input type="text" class="form-control" id="tran_date" name="tran_date" readonly>
 						</div>
 						<div class="col-md-6">
-							<label for="soInfo03" class="form-label">수주일자</label> 
-								<input type="date" class="form-control" id="soInfo03" name="tran_date" readonly>
+							<label for="soInfo03" class="form-label">출고일자</label> 
+								<input type="text" class="form-control" id="rel_date" name="rel_date" readonly>
+						</div>
+						<div class="col-md-6">
+							<label for="soInfo04" class="form-label">납기예정 일자</label> 
+								<input type="text" class="form-control" id="ex_due_date" name="ex_due_date" readonly>
+						</div>
+						<div class="col-md-6">
+							<label for="soInfo05" class="form-label">납기일자</label> 
+								<input type="text" class="form-control" id="due_date" name="due_date" readonly>
 						</div>
 						<div class="col-md-3">
-							<label for="soInfo04" class="form-label">거래처 번호</label>
-								<input type="text" class="form-control" id="soInfo04" name="cli_num" readonly>
+							<label for="soInfo06" class="form-label">거래처 번호</label>
+								<input type="text" class="form-control" id="cli_num" name="cli_num" readonly>
 						</div>
 						<div class="col-md-3">
-							<label for="soInfo05" class="form-label">거래처명</label>
-								<input type="text" class="form-control" id="soInfo05" readonly>
+							<label for="soInfo07" class="form-label">거래처명</label>
+								<input type="text" class="form-control" id="cli_name" readonly>
 						</div>
 						<div class="col-md-3">
-							<label for="soInfo06" class="form-label">담당자 아이디</label>
-								<input type="text" class="form-control" id="soInfo06" name="pic_username" readonly>
+							<label for="soInfo08" class="form-label">담당자 아이디</label>
+								<input type="text" class="form-control" id="pic_username" name="pic_username" readonly>
 						</div>
 						<div class="col-md-3">
-							<label for="soInfo07" class="form-label">담당자명</label>
-								<input type="text" class="form-control" id="soInfo07" readonly>
+							<label for="soInfo09" class="form-label">담당자명</label>
+								<input type="text" class="form-control" id="user_per_name" readonly>
 						</div>
 						<div class="col-12">
-							<label for="soInfo08" class="form-label">비고</label>
-								<input type="text" class="form-control" id="soInfo08" name="comm" readonly>
+							<label for="soInfo10" class="form-label">비고</label>
+								<input type="text" class="form-control" id="comm" name="comm" readonly>
 						</div>
 						
 						<div class="example">
@@ -147,6 +153,11 @@
 </html>
 
 <script>
+
+const token = $("meta[name='_csrf']").attr("content")
+const header = $("meta[name='_csrf_header']").attr("content");
+const name = $("#userName").val();
+
 function toggleCheckboxes(source) {
     const checkboxes = document.querySelectorAll('input[type="checkbox"].form-check-input');
     checkboxes.forEach(checkbox => checkbox.checked = source.checked);
@@ -162,71 +173,59 @@ $(document).ready(function() {
     const token = $("meta[name='_csrf']").attr("content");
     const header = $("meta[name='_csrf_header']").attr("content");
 
-    $("#soInfoModal").on('shown.coreui.modal', function(event) {
-        var tran_num = $(this).closest("tr").find("td:nth-child(2)").text();
-        var top_tran_num = $(this).closest("tr").find("td:nth-child(7)").text();
-        
+    $('td[data-coreui-toggle="modal"]').on('click', function() {
+        var tran_num = $(this).closest('tr').data('tran-num');
         console.log(tran_num);
-        console.log(top_tran_num);
 
-//         $.ajax({
-//             url: '/stock/getTransactionDetails',
-//             type: 'GET',
-//             data: { 
-//                 tran_num: tran_num,
-//                 top_tran_num: top_tran_num
-//             },
-//             dataType: "json",
-//             success: function(response) {
-//                 console.log("AJAX 응답:", response);
+        $.ajax({
+            type: 'POST',               // 요청 방식
+            url: '/sales/salesOrderInfo',  // AJAX 요청을 보낼 URL
+            beforeSend: function(xhr) {
+            	xhr.setRequestHeader(header, token);
+            },
+            contentType: 'application/json; charset=utf-8', // 데이터 형식
+            data: tran_num, // 전송할 데이터
+            dataType: "json",
+            success: function(response) {
+                console.log('성공:', response);
                 
-//                 // 기본 거래 정보 설정
-//                 $("#modal-tran_num").val(response.top_tran_num);
-//                 $("#modal-cli_num").val(response.cli_num);
-//                 $("#modal-cli_name").val(response.cli_name);
-//                 $("#modal-rec_date").val(formatDateForInput(response.rec_date)); 
-//                 $("#modal-pic_username").val(response.pic_username);
-//                 $("#modal-user_per_name").val(response.user_per_name);
-                
-//                 // 테이블 바디를 비웁니다.
-//                 $("#modal-table-body").empty();
-                
-//                 // 품목 정보 행 생성 및 추가
-//                 $(response.items).each(function(idx,item){
-//                     var row = "<tr><th scope='row'></th><td>" + item.goods_num + "</td><td>" 
-//                     + item.item_name + "</td><td>" + item.goods_qty + "</td><td>" + item.top_tran_num + "</td><td>" 
-//                     + item.comm + "</td><td>" + item.inven_num + "</td><td>" + item.tran_num + "</td></tr>";
-                         
-//                     $("#modal-table-body").append(row);    
-//                 });
-
-//                 // 모달을 엽니다.
-//                 $("#exampleModal1").modal("show");
-//             },
-//             error: function(error) {
-//                 console.log("에러 발생: ", error);
-//             }
-//         });
+                $('.item-table tbody tr').remove();
+                response.forEach(function(item, idx){
+                	document.getElementById('tran_num').value = item.tran_num;
+                	document.getElementById('tran_date').value = timestampToDateString(item.tran_date);
+                	document.getElementById('rel_date').value = timestampToDateString(item.rel_date);
+                	document.getElementById('ex_due_date').value = timestampToDateString(item.ex_due_date);
+                	document.getElementById('due_date').value = timestampToDateString(item.due_date);
+                	document.getElementById('cli_num').value = item.cli_num;
+                	document.getElementById('cli_name').value = item.clientList[0].cli_name;
+                	document.getElementById('pic_username').value = item.userList[0].username;
+                	document.getElementById('user_per_name').value = item.userList[0].user_per_name;
+                	document.getElementById('comm').value = item.comm;
+	        	    addRow(item.itemList);
+                   
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('에러:', status, error);
+                // 에러 시 처리할 내용
+            }
+        });
     });
     
     function addRow(data) {
 	    var cnt = 1;
 	    
 	    data.forEach(function(item, idx){
-			console.log(item);
-			
 			var row ='<tr id="row'+ cnt +'">'+
-			'<td> <div id="goods-num'+ cnt +'" name="goods_num">'+ item.goods_num +
+			'<td> <div id="goods-num'+ cnt +'" name="goods_num">'+ item.goodsList[0].goods_num+
 			'</div></td>'+
-			'<td><div id="goods-name'+ cnt +'">'+ item.goods_name +
+			'<td><div id="goods-name'+ cnt +'">'+ item.item_name +
 			'</div></td>'+
-			'<td><div id="goods_size'+ cnt +'">'+ item.goods_size +
+			'<td><div id="goods_size'+ cnt +'">'+ item.goodsList[0].goods_size +
 			'</div></td>'+
-			'<td><div id="goods_color'+ cnt +'">'+ item.goods_color +
+			'<td><div id="goods_color'+ cnt +'">'+ item.goodsList[0].goods_color +
 			'</div></td>'+
-			'<td><div>'+
-			'<input type="text" id="goods-qty'+ cnt +'" class="form-control form-control-sm" name="goods_qty" required>'+
-			'</div></td>'+
+			'<td><div id="goods_qty'+ cnt +'">'+ item.tranGoodsList[0].goods_qty +
 			'</tr>';
 			
 			$('.item-table tbody').append(row);
@@ -235,6 +234,19 @@ $(document).ready(function() {
 		});
            
 	}
+    
+    function timestampToDateString(timestamp) {
+    	if(timestamp == null) {
+	        return "``";
+    	} else {
+	        var date = new Date(parseInt(timestamp)); // 밀리초 단위로 변환
+	        var year = date.getFullYear();
+	        var month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+	        var day = String(date.getDate()).padStart(2, '0'); // 날짜는 1부터 시작
+	        
+	        return year +'-'+ month +'-'+ day; // YYYY-MM-DD 형식
+    	}
+    }
 
     $("#statusChangeBtn").click(function() {
         $(".status-buttons").toggle();
@@ -279,43 +291,40 @@ $(document).ready(function() {
     $("#deleteItemBtn").click(function(){
         const checkedCheckboxes = $('input[type="checkbox"].form-check-input:checked');
         console.log("선택된 체크박스 수:", checkedCheckboxes.length);
-        const item_nums = [];
+        const tran_nums = [];
 
         checkedCheckboxes.each(function() {
-            const item_num = $(this).closest('tr').find('td:eq(1)').text();
-            if (item_num) {  // 빈 문자열이 아닌 경우에만 추가
-                console.log("추출된 item_num:", item_num);
-                item_nums.push(item_num);
+            const tran_num = $(this).closest('tr').find('td:eq(1)').text();
+            if (tran_num) {  // 빈 문자열이 아닌 경우에만 추가
+                console.log("추출된 tran_num:", tran_num);
+                tran_nums.push(tran_num);
             }
         });
         
-        // 중복 제거
-        const uniqueItemNums = [...new Set(item_nums)];
-     
-        console.log("최종 item_nums 배열:", item_nums);
+        console.log("최종 tran_nums 배열:", tran_nums);
         
-        if (item_nums.length === 0) {
+        if (tran_nums.length === 0) {
             alert('삭제할 항목을 선택해주세요.');
             return;
         }
     
-        if (confirm('선택한 ' + item_nums.length + '개의 항목을 삭제하시겠습니까?')) {
+        if (confirm('선택한 ' + tran_nums.length + '개의 항목을 삭제하시겠습니까?')) {
             $.ajax({
-                url: '/stock/deleteRC',
+                url: '/common/deleteTran',
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
                 },
                 type: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify({ item_nums: item_nums }),
+                data: JSON.stringify({ tran_num : tran_nums }),
                 success: function(response) {
-                    // Handle success, e.g., reload the page or show a message
                     location.reload();
                     alert("삭제 완료 되었습니다");
                 },
-                error: function(xhr, status, error) {
-                    // Handle error
-                    alert("An error occurred: " + error);
+                error: function(xhr) {
+                    // 서버에서 반환된 오류 메시지 처리
+                    alert(xhr.responseText);  // 오류 메시지 표시
+                    location.reload();
                 }
             });
         } // if

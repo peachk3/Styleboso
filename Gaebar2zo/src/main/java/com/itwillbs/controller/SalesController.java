@@ -47,6 +47,17 @@ public class SalesController {
 
 	}
 
+	// 수주 정보
+	@RequestMapping(value="/salesOrderInfo",method=RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<List<TransactionVO>> salesOrderInfo_POST(@RequestBody String tran_num) throws Exception {
+		logger.debug(" salesOrderInfo_POST() 실행 ");
+		
+		List<TransactionVO> soInfo = sService.SalesOrderInfo(tran_num);
+		
+		return ResponseEntity.ok(soInfo);
+	}
+
 	// 수주 추가
 	@RequestMapping(value="/salesOrderAdd",method=RequestMethod.GET)
 	public void salesOrderAdd_GET() throws Exception{

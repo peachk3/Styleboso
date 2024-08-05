@@ -17,6 +17,7 @@
 		<result property="rec_date" column="rec_date" />
 		<result property="rel_date" column="rel_date" />
 		<result property="due_date" column="due_date" />
+		<result property="ex_due_date" column="ex_due_date" />
 		<result property="pro_status" column="pro_status" />
 		<result property="tran_cate_code" column="tran_cate_code" />
 		<result property="comm" column="comm" />
@@ -34,6 +35,7 @@
 		<result property="item_mat" column="item_mat" />
 		<result property="comm" column="comm" />
 		<collection property="tranGoodsList" resultMap="tranGoodsMap"></collection>
+		<collection property="goodsList" resultMap="goodsMap"></collection>
 	</resultMap>
 
 	<resultMap type="com.itwillbs.domain.TransactionGoodsVO" id="tranGoodsMap">
@@ -73,6 +75,14 @@
 		<result property="enabled" column="enabled" />
 	</resultMap>
 
+	<resultMap type="com.itwillbs.domain.GoodsVO" id="goodsMap">
+		<id property="goods_num" column="goods_num" />
+		<result property="goods_num" column="goods_num" />
+		<result property="item_num" column="item_num" />
+		<result property="goods_color" column="goods_color" />
+		<result property="goods_size" column="goods_size" />
+	</resultMap>
+
 	<!-- 수주 리스트 -->
 	<select id="salesOrderList" resultMap="transMap">
 		select tran_num, cli_name, date(tran_date) "tran_date", date(rel_date) "rel_date", date(due_date) "due_date", income, user_per_name, pro_status
@@ -82,6 +92,24 @@
 		where tran_cate_code = "SO"
 	</select>
 
+	<!-- 수주 정보 -->
+	<select id="salesOrderInfo" resultMap="transMap">
+		<![CDATA[
+		select distinct t.tran_num, tran_date, rel_date, due_date, ex_due_date, income, username, user_per_name, t.cli_num, cli_name, pro_status, comm, tg.goods_num, tg.item_name, goods_size, goods_color, goods_qty 
+		from (select tran_num, t.cli_num, cli_name, date(tran_date) "tran_date", date(rel_date) "rel_date", date(due_date) "due_date", date(ex_due_date) "ex_due_date", income, username, user_per_name, pro_status, comm  
+			from transaction t 
+			join users u on t.pic_username = u.username 
+			join client c on t.cli_num = c.cli_num 
+			where tran_cate_code = "SO") t 
+		join (select tran_num, g.goods_num, i.item_name, goods_size, goods_color, goods_qty 
+			from goods g 
+			join item i on i.item_num = g.item_num 
+			join transaction_goods tg on tg.goods_num = g.goods_num) tg 
+		on t.tran_num =  tg.tran_num 
+		where t.tran_num = #{tran_num}
+		]]>
+	</select>
+	
 	<!-- 수주 등록_TransactionVO -->
 	<insert id="salesOrderAdd_TransactionVO" useGeneratedKeys="true" keyProperty="tran_num">
 		insert into transaction(tran_num, cli_num, pic_username, tran_date, ex_due_date, pro_status, tran_cate_code, comm)

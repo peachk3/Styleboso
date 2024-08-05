@@ -53,6 +53,15 @@ public class SystemServiceImpl implements SystemService{
 	
 		return sdao.employeeListAll();
 	}
+	
+	
+	//사용자 등록
+	@Override
+	public int addEmp(UsersVO usersVo) throws Exception {
+		logger.info("service -> 사용자 등록");
+		
+		return sdao.addEmp(usersVo);
+	}
 	//=============================================================================
 
 	//공통코드 전체 리스트 출력
@@ -62,6 +71,7 @@ public class SystemServiceImpl implements SystemService{
 	
 		return sdao.codeListAll();
 	}
+
 
 	// 공통 코드 등록
 	@Override

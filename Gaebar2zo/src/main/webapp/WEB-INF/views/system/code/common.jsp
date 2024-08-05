@@ -65,7 +65,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title w-100 text-center" id="insertCodeModalLabel">공통 그룹코드 등록</h5>
-                    <button type="button" class="close" id="modalCloseBtn" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" id="insertModalCloseBtn" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -106,7 +106,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title w-100 text-center" id="commonModalLabel">공통코드 상세정보</h5>
-						<button type="button" class="close" id="modalCloseBtn" data-dismiss="modal" aria-label="Close">
+						<button type="button" class="close" id="commonModalCloseBtn" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>

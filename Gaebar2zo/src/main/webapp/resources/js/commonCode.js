@@ -148,17 +148,17 @@
     
     //aria-hidden 속성이 부모 요소에 남아 있으면 문제를 일으킬 수 있기 때문에 -> 모달 외부 요소에 적용 
     // 모달이 열리고 닫힐 때 aria-hidden 속성 관리
-    $('#insertCodeModal').on('show.bs.modal', function () {
-        // 모달이 열릴 때
-        $('body > *').not('#insertCodeModal').attr('aria-hidden', 'true');
-        $('#insertCodeModal').removeAttr('aria-hidden');
-    });
-
-    $('#insertCodeModal').on('hidden.bs.modal', function () {
-        // 모달이 닫힐 때
-        $('body > *').removeAttr('aria-hidden');
-    });
-    
+//    $('#insertCodeModal').on('show.bs.modal', function () {
+//        // 모달이 열릴 때
+//        $('body > *').not('#insertCodeModal').attr('aria-hidden', 'true');
+//        $('#insertCodeModal').removeAttr('aria-hidden');
+//    });
+//
+//    $('#insertCodeModal').on('hidden.bs.modal', function () {
+//        // 모달이 닫힐 때
+//        $('body > *').removeAttr('aria-hidden');
+//    });
+//    
     
  //===================================================================
   //삭제기능 - onclick=deleteCode()()
@@ -221,11 +221,12 @@
    	    }
    	}
    	
-   	//모달닫기 
+  
   //모달 닫기
-	$('#modalCloseBtn').on('click', function() {
+   	$('#insertModalCloseBtn').on('click', function() {
+	    $('#"insertCodeModal"').modal('hide');
+	});
+	$('#commonModalCloseBtn').on('click', function() {
 	    $('#commonModal').modal('hide');
 	});
-	$('#modalCloseBtn').on('click', function() {
-	    $('#insertCodeModal').modal('hide');
-	});
+	

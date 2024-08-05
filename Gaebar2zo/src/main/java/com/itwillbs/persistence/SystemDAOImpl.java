@@ -48,12 +48,20 @@ public class SystemDAOImpl implements SystemDAO{
 	//운영자,관리자,사원 전체 리스트 출력
 	@Override
 	public List<UsersVO> employeeListAll() throws Exception {
-		logger.debug("employeeListAll() 실행");
+		logger.info("employeeListAll() 실행");
 		
 		return sqlSession.selectList(NAMESPACE+"employeeListAll");
 	}
 
+	//사용자등록
+	@Override
+	public int addEmp(UsersVO usersVo) throws Exception {
+		logger.info("dao -> 사용자 등록");
+		
+		return sqlSession.insert(NAMESPACE+"addEmp", usersVo);
+	}
 
+	
 	//==============================================================
 	//공통코드 전체 리스트 출력
 	@Override
@@ -63,10 +71,11 @@ public class SystemDAOImpl implements SystemDAO{
 		return sqlSession.selectList(NAMESPACE + "codeListAll");
 	}
 
+
 	//공통코드 등록
 	@Override
 	public void saveGroupCode(CodeVO codeVo) throws Exception {
-		logger.debug("service-> dao saveGroupCode() 실행");
+		logger.info("service-> dao saveGroupCode() 실행");
 		
 		sqlSession.insert(NAMESPACE +"saveGroupCode",codeVo);
 	}
@@ -74,7 +83,7 @@ public class SystemDAOImpl implements SystemDAO{
 	//공통 품목코드 수정(update) 
 	@Override
 	public void updateCode(CodeVO codeVo) throws Exception {
-		logger.debug("serviece -> dao => updateCode() 실행");
+		logger.info("serviece -> dao => updateCode() 실행");
 	
 		sqlSession.update(NAMESPACE+"updateCode", codeVo);
 	}
@@ -84,7 +93,7 @@ public class SystemDAOImpl implements SystemDAO{
 	@Override
 	public void deleteCode(List<String> Codes) throws Exception {
 		
-		logger.debug("service -> dao / deleteCode() 실행");
+		logger.info("service -> dao / deleteCode() 실행");
 
 		sqlSession.delete(NAMESPACE + "deleteCode", Codes);
 		 
@@ -95,7 +104,7 @@ public class SystemDAOImpl implements SystemDAO{
 	 // 그룹 코드에 따라 품목 정보를 출력
 	@Override
 	public List<ItemCodeVO> itemCodeListAll(String group_code) throws Exception {
-		logger.debug(" service --> DAO itemCodeListAll() 실행 ");
+		logger.info(" service --> DAO itemCodeListAll() 실행 ");
 		
 		return sqlSession.selectList(NAMESPACE + "itemCodeListAll", group_code);
 	}
@@ -103,7 +112,7 @@ public class SystemDAOImpl implements SystemDAO{
 	//공통 품목코드 수정(update) 
 	@Override
 	public void updateItemCode(ItemCodeVO icVo) {
-		logger.debug("service --> DAO 공통 품목 코드 (수정) 실행 ");
+		logger.info("service --> DAO 공통 품목 코드 (수정) 실행 ");
 		
 		sqlSession.update(NAMESPACE + "updateItemCode", icVo);
 	}
@@ -111,7 +120,7 @@ public class SystemDAOImpl implements SystemDAO{
 	//공통 품목코드 삭제
 	@Override
 	public void deleteItemCode(List<String> itemCodes) throws Exception {
-		logger.debug("service--> DAO 공통 품목 코드(삭제) 실행");
+		logger.info("service--> DAO 공통 품목 코드(삭제) 실행");
 		
 		sqlSession.delete(NAMESPACE + "deleteItemCode", itemCodes);
 	}
@@ -119,7 +128,7 @@ public class SystemDAOImpl implements SystemDAO{
 	//공통 품목코드 등록
 	@Override
 	public void saveItemCode(ItemCodeVO icVo) throws Exception {
-		logger.debug("service ->DAO 공통 품목 코드(등록) 실행");
+		logger.info("service ->DAO 공통 품목 코드(등록) 실행");
 		
 		sqlSession.insert(NAMESPACE + "saveItemCode",icVo);
 	}
@@ -127,7 +136,7 @@ public class SystemDAOImpl implements SystemDAO{
 	//공통 품목코드 유효성&중복검사
 	@Override
 	public ItemCodeVO getItemCodeAndCheck(String s_cate_item_code) throws Exception {
-		logger.debug("service -> DAO 공통 품목코드 유효성&중복검사 실행");
+		logger.info("service -> DAO 공통 품목코드 유효성&중복검사 실행");
 		
 		return sqlSession.selectOne(NAMESPACE + "getItemCodeAndCheck", s_cate_item_code);
 	}

@@ -27,18 +27,29 @@
 
 <!-- 이메일 중복체크 -->
 <select id="emailCheck" parameterType="String" resultType="int" > 
-	select count (*) from users
-	where user_email =#{user_email}
+	 select count(*) from users where user_email = #{user_email}
 </select>
 
 <!-- 전화번호 중복체크 -->
 <select id="phoneCheck" parameterType="String" resultType="int">
-	select count(*)from users
-	where user_phone = #{user_phone}
+	select count(*)from users where user_phone = #{user_phone}
 </select>
 
+<!-- 사용자등록 -->
+<insert id="addEmp" parameterType="UsersVO">
+        INSERT INTO users (username, user_per_name, password, user_email, user_pos, user_phone, enabled)
+        VALUES (
+            (SELECT CONCAT('US', LPAD(COALESCE(MAX(CAST(SUBSTRING(username, 3) AS UNSIGNED)), 0) + 1, 4, '0')) FROM users),
+            #{user_per_name}, 
+            #{password}, 
+            #{user_email}, 
+            #{user_pos}, 
+            #{user_phone}, 
+            '1'
+        )
+    </insert>
 
-
+<!-- 사요 -->
 
 <!-- 공통코드 전체 리스트 출력-->
 <select id="codeListAll" resultType="CodeVO">

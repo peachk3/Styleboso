@@ -14,7 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -94,10 +96,6 @@ public class SystemController {
 		return result;
 	}
 	
-	
-	
-	
-	
 	// -------------------------------------------------------------------------------------------
 	// http://localhost:8088/system/main
 	// 대시보드 ( 메인 페이지 )
@@ -111,7 +109,7 @@ public class SystemController {
 
 	// -------------------------------------------------------------------------------------------
 	// http://localhost:8088/system/employeeList
-	// 사용자 관리(추가,삭제,조회)
+	// 사용자 관리 - 사용자 전체 리스트 출력
 	@RequestMapping(value = "/employeeList", method = RequestMethod.GET)
 	public void employeeList_GET(Model model) throws Exception {
 		logger.debug(" employeeList_GET() 실행 ");
@@ -121,6 +119,21 @@ public class SystemController {
 
 		model.addAttribute("employeeList", employeeList);
 
+	}
+	
+	//사용자 등록
+	@RequestMapping(value = "/employeeList", method = RequestMethod.POST)
+	public String addEmp(UsersVO usersVo) throws Exception {
+		logger.info("controller ->(사용자 등록 실행)");
+		sService.addEmp(usersVo);
+		
+		int result = sService.addEmp(usersVo);
+		
+		 if (result > 0) {
+		        return "redirect:/employeeList"; // 성공적으로 등록되면 사용자 목록 페이지로 리다이렉트
+		    } else {
+		        return "error"; // 실패한 경우 에러 페이지로 이동할 수도 있습니다.
+		    }
 	}
 	// ==========================================================================
 	// 공통 코드 관리

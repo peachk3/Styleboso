@@ -79,7 +79,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="row g-3 needs-validation" novalidate>
+                    <form class="row g-3 needs-validation"id="registerForm" action="/employeeList" method="post" novalidate>
                     <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"> <!-- 시큐리티 토큰!! -->
 						<div class="form-floating">
 						  <input type="text" class="form-control" id="user_per_name" name="user_per_name" placeholder="이름" required>
@@ -88,7 +88,7 @@
                             <span id="nameSuccess" class="text-success" style="display: none;">사용 가능한 이름입니다.</span>
 						</div>
 						<div class="form-floating">
-						  <input type="password" class="form-control" id="password" placeholder="Password" required>
+						  <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
 						  <label for="floatingPassword" style="margin-left: 10px">비밀번호</label>
 						 	<span id="pwError" class="text-danger" style="display: none;">비밀번호는 8~16자의 영문, 숫자, 특수기호를 포함해야 합니다.</span>
 						</div>
@@ -123,8 +123,8 @@
 							</select>
 							<div class="invalid-feedback" style="margin-left: 10px">직책을 선택해 주세요</div>
 						</div>
-						<div class="col-12">
-							<button class="btn btn-primary" type="submit">Submit Form</button>
+						<div class="col-12 d-flex justify-content-end" style="margin-bottom: 10px;">
+							<button class="btn btn-primary" type="submit">저장</button>
 						</div>
 					</form>
                 </div>

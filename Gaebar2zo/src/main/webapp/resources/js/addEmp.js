@@ -1,211 +1,209 @@
 /**
  * 시스템 등록 - 등록, 수정,삭제
  */
-	function showRegisterModal() {
+function showRegisterModal() {
     $('#registerModal').modal('show');
-    
 }
+
+$(document).ready(function() {
 	// CSRF 토큰을 가져오는 부분 
 	const token = $("meta[name='_csrf']").attr("content");
     const header = $("meta[name='_csrf_header']").attr("content");
     const name = $("#userName").val();
+	
+    // 모든 AJAX 요청에 CSRF 토큰을 포함시키기 위해 전역 AJAX 설정
+    $.ajaxSetup({
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token);
+        }
+    });
+    
+ // 유효성 검사 함수들
+    function regMemberName(user_per_name) {
+        var regExp = /^[가-힣]{1,10}$/;
+        return regExp.test(user_per_name);
+    }
 
-   	//==============유효성 검사===============
-	//회원 이름 
-	$(document).ready(function() {
-            function regMemberName(user_per_name) {
-                var regExp = /^[가-힣]{1,10}$/;
-                return regExp.test(user_per_name);
-            }
+    function regMemberPassword(password) {
+        var regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$/;
+        return regExp.test(password);
+    }
 
+    function regMemberEmail(user_email) {
+        var regExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return regExp.test(user_email);
+    }
 
-            function checkName() {
-                var user_name = $('#user_per_name').val();
-                var nameError = $('#nameError');
-                var nameSuccess = $('#nameSuccess');
-                
-                if (!regMemberName(user_name)) {
-                    nameError.show();
-                    nameSuccess.hide();
+    function regMemberPhone(user_phone) {
+        var regExp = /^010-\d{4}-\d{4}$/;
+        return regExp.test(user_phone);
+    }
+
+    // 유효성 검사 로직
+    $('#user_per_name').on('input', function() {
+        checkName();
+    });
+
+    $('#password, #passwordCheck').on('input', function() {
+        validatePassword();
+        validatePasswordMatch();
+    });
+
+    $('#emailCheck').on('input', function() {
+        validateEmail();
+    });
+
+    $('#inputTel').on('input', function() {
+        validateCheckPhone();
+    });
+
+    // 유효성 검사 함수들
+    function checkName() {
+        var user_name = $('#user_per_name').val();
+        var nameError = $('#nameError');
+        var nameSuccess = $('#nameSuccess');
+
+        if (!regMemberName(user_name)) {
+            nameError.show();
+            nameSuccess.hide();
+        } else {
+            nameError.hide();
+            nameSuccess.show();
+        }
+    }
+
+    function validatePassword() {
+        var upwd = $('#password').val();
+        var passwordError = $('#pwError');
+
+        if (regMemberPassword(upwd)) {
+            passwordError.hide();
+        } else {
+            passwordError.show();
+        }
+    }
+
+    function validatePasswordMatch() {
+        var upwd = $('#password').val();
+        var cpwd = $('#passwordCheck').val();
+        var pwMatchSuccess = $('#pwMatchSuccess');
+        var pwMatchError = $('#pwMatchError');
+
+        if (upwd === cpwd && upwd !== '' && cpwd !== '') {
+            pwMatchSuccess.show();
+            pwMatchError.hide();
+        } else {
+            pwMatchSuccess.hide();
+            pwMatchError.show();
+        }
+    }
+
+    function validateEmail() {
+        var email = $('#emailCheck').val();
+        var emailError = $('#emailError');
+        var emailExists = $('#emailExists');
+        var emailAvailable = $('#emailAvailable');
+
+        if (!regMemberEmail(email)) {
+            emailError.show();
+            emailExists.hide();
+            emailAvailable.hide();
+            return;
+        } else {
+            emailError.hide();
+        }
+
+        // 이메일 중복 체크를 위한 Ajax 요청
+        $.ajax({
+            url: '/system/emailCheck',
+            type: 'GET',
+            data: { user_email: email },
+            dataType: 'json',
+            success: function(response) {
+                if (response.exists) {
+                    emailExists.show();
+                    emailAvailable.hide();
                 } else {
-                    nameError.hide();
-                    nameSuccess.show();
+                    emailExists.hide();
+                    emailAvailable.show();
                 }
             }
+        });
+    }
 
-            // 이름 필드에서 입력할 때마다 checkName 함수를 호출합니다..
-            $('#user_per_name').on('input', function() {
-                checkName();
+    function validateCheckPhone() {
+        var user_phone = $('#inputTel').val();
+        var telError = $('#telError');
+        var telSuccess = $('#telSuccess');
+        var telExists = $('#telExists');
+
+        if (!regMemberPhone(user_phone)) {
+            telError.show();
+            telSuccess.hide();
+            telExists.hide();
+        } else {
+            telError.hide();
+         
+         console.log("AJAX 전화번호 요청을 보냅니다.");
+         
+         
+         //전화번호 중복 체크를 위한 Ajax 요청
+            $.ajax({
+                url: '/system/phoneCheck',
+                method: 'GET',
+                data: { user_phone: user_phone },
+                success: function(response) {
+                	console.log("AJAX  전화번호 응답:", response);
+                    if (response.exists) { // 중복된 전화번호
+                        telExists.show();
+                        telSuccess.hide();
+                    } else {
+                        telExists.hide();
+                        telSuccess.show();
+                    }
+                }
             });
-	 });
-	
-	/**
-	 * 
-	 *비밀번호
-	 */
-	
-		//패스워드 유효성
-			 function regMemberPassword(password){ //패스워드 //8~16자 영문,숫자,특수기호 숫자최소 1 특수기호최소 1
-					var regExp= /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$/;
-					return regExp.test(password);
-	            }
-			 
-			 function validatePassword() {
-		            var upwd = $('#password').val();
-		            var passwordFeedback = $('#pwSuccess');
-		            var passwordError = $('#pwError');
+        }
+    }
 
-		            if (regMemberPassword(upwd)) {
-		                passwordFeedback.show();
-		                passwordError.hide();
-		            } else {
-		                passwordFeedback.hide();
-		                passwordError.show();
-		            }
-		        }
-			 
-			 function validatePasswordMatch() {
-		            var upwd = $('#password').val();
-		            var cpwd = $('#passwordCheck').val();
-		            var pwMatchSuccess = $('#pwMatchSuccess');
-		            var pwMatchError = $('#pwMatchError');
+    // 폼 제출 시 모든 유효성 검사 및 중복 체크 확인
+    $('#registerForm').on('submit', function(event) {
+        event.preventDefault();
 
-		            if (upwd === cpwd && upwd !== '' && cpwd !== '') {
-		                pwMatchSuccess.show();
-		                pwMatchError.hide();
-		            } else {
-		                pwMatchSuccess.hide();
-		                pwMatchError.show();
-		            }
-		        }
-			  $(document).ready(function() {
-				  $('#password, #passwordCheck').on('input', function() {
-		                validatePassword();
-		                validatePasswordMatch();
-		            });
-			  });
-			  $('#registerForm').on('submit', function(event) {
-	                event.preventDefault();
+        if (!validateForm()) {
+            return;
+        }
 
-	                var upwd = $('#password').val();
-	                var cpwd = $('#passwordCheck').val();
+        Swal.fire('성공', '사용자 등록 완료', 'success').then(function() {
+            location.reload();
+        });
+    });
 
-	                if (!regMemberPassword(upwd)) {
-	                    $('#password').val('');
-	                    $('#pwError').show();
-	                    return;
-	                }
-	                if (upwd !== cpwd) {
-	                    $('#passwordCheck').val('');
-	                    $('#pwMatchError').show();
-	                    return;
-	                }
+    // 모든 유효성 검사 및 중복 체크 확인
+    function validateForm() {
+        checkName();
+        validatePassword();
+        validatePasswordMatch();
+        validateEmail();
+        validateCheckPhone();
 
-	                Swal.fire('성공', '사용자 등록 완료', 'success').then(function() {
-	                    location.reload();
-	                });
-	            });
-/**
- *  이메일 중복체크
- */	
-			  
-			  function regMemberEmail(user_email) { // 이메일 형식 검사
-				    var regExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-				    return regExp.test(user_email);
-				}
+        if ($('#nameError').is(':visible') ||
+            $('#pwError').is(':visible') ||
+            $('#pwMatchError').is(':visible') ||
+            $('#emailError').is(':visible') ||
+            $('#emailExists').is(':visible') ||
+            $('#telError').is(':visible') ||
+            $('#telExists').is(':visible')) {
+            return false; // 유효성 검사 실패 시 폼 제출 중단
+        }
 
-				$(document).ready(function() {
-				    $('#emailCheck').on('input', function() {
-				        var email = $(this).val();
-				        var emailError = $('#emailError');
-				        var emailExists = $('#emailExists');
-				        var emailAvailable = $('#emailAvailable');
+        return true; // 모든 검사를 통과한 경우
+    }
+});
 
-				        if (!regMemberEmail(email)) {
-				            emailError.show();
-				            emailExists.hide();
-				            emailAvailable.hide();
-				            return;
-				        } else {
-				            emailError.hide();
-				        }
 
-				        // 이메일 중복 체크를 위한 Ajax 요청
-				        $.ajax({
-				            url: '/system/emailCheck', // 서버의 이메일 중복 체크 엔드포인트
-				            type: 'GET',
-				            data: { user_email: email },
-				            dataType: 'json',
-				            success: function(response) {
-				                console.log(response); // 응답 확인을 위한 로그 추가
-				                if (response.exists) {
-				                    emailExists.show();
-				                    emailAvailable.hide();
-				                } else {
-				                    emailExists.hide();
-				                    emailAvailable.show();
-				                }
-				            },
-				            error: function() {
-				                // 에러 처리
-				                emailError.show();
-				                emailExists.hide();
-				                emailAvailable.hide();
-				            }
-				        });
-				    });
-				});
-	
-		/*
-		 * 전화번호 중복체크
-		 */
-				   // 전화번호 필드에서 입력할 때마다 validateAndCheckPhone 함수를 호출
-			    $('#inputTel').on('input', function() {
-			        validateAndCheckPhone();
-			    });
 
-			    function validateAndCheckPhone() {
-			        var phoneInput = document.getElementById('inputTel').value;
-			        var telError = document.getElementById('telError');
-			        var telSuccess = document.getElementById('telSuccess');
-			        var telExists = document.getElementById('telExists');
 
-			        // 전화번호 유효성 검사 정규식
-			        var phoneRegex = /^010-\d{4}-\d{4}$/;
-
-			        if (!phoneRegex.test(phoneInput)) {
-			            telError.style.display = 'block';
-			            telSuccess.style.display = 'none';
-			            telExists.style.display = 'none';
-			        } else {
-			            telError.style.display = 'none';
-			            // 유효한 전화번호인 경우 중복 체크 수행
-			            checkPhoneDuplicate(phoneInput);
-			        }
-			    }
-
-			    function checkPhoneDuplicate(phoneNumber) {
-			        $.ajax({
-			            url: '/checkPhone', // 서버의 중복 체크 API 엔드포인트
-			            method: 'GET',
-			            data: { user_phone: phoneNumber },
-			            success: function(response) {
-			                var telExists = document.getElementById('telExists');
-			                var telSuccess = document.getElementById('telSuccess');
-
-			                if (response === 1) { // 서버에서 중복된 전화번호로 응답한 경우
-			                    telExists.style.display = 'block';
-			                    telSuccess.style.display = 'none';
-			                } else {
-			                    telExists.style.display = 'none';
-			                    telSuccess.style.display = 'block';
-			                }
-			            },
-			            error: function() {
-			                alert('전화번호 중복 체크 중 오류가 발생했습니다.');
-			            }
-			        });
-			    }
 	//==============유효성 검사 끝===============		
 				
 	//==============사원등록=================	

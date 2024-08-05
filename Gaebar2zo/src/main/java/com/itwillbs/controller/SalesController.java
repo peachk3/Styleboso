@@ -38,7 +38,7 @@ public class SalesController {
 	// 수주 관리
 	@RequestMapping(value="/salesOrderList",method=RequestMethod.GET)
 	public void salesOrderList_GET(Model model) throws Exception{
-		logger.debug(" salesOrderList_GET() 실행 ");
+		logger.debug(" salesOrderList_GET() 실행1 ");
 		
 		List<TransactionVO> so = sService.SalesOrderList();
 		logger.debug("size : "+ so.size());

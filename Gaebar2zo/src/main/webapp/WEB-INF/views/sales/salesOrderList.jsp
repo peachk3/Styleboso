@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../include/header.jsp" %>
 
     <style>
@@ -16,9 +17,9 @@
 </head>
 
 <body>
-	<h1>/Styleboso/sales/salesOrderList.jsp</h1>
- <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
-        <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/stock/receivingAdd'">
+	<h1>/sales/salesOrderList.jsp</h1>
+	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
+        <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/sales/salesOrderAdd'">
         <input type="button" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
     </div>
     
@@ -42,7 +43,7 @@
         </thead>
         <tbody>
 	        <c:forEach var="so" items="${so}">
-	            <tr>
+	            <tr data-coreui-toggle="modal" data-coreui-target="#soInfoModal">
 	                <td>
 	                    <div class="form-check">
 	                        <input class="form-check-input" type="checkbox" value="${so.tran_num}" id="${so.tran_num}"> 
@@ -74,65 +75,68 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="soInfoModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">주문 리스트</h5>
+                    <h5 class="modal-title">수주 상세정보</h5>
                     <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="search-container">
-                        <div class="col-md-6">
-                            <label for="validationCustom01" class="form-label">주문 리스트</label>
-                            <input type="text" class="form-control" id="modal-tran_num" readonly>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="validationCustom02" class="form-label">거래처 코드</label>
-                            <input type="text" class="form-control" id="modal-cli_num" readonly>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="validationCustom03" class="form-label">거래처 명</label>
-                            <input type="text" class="form-control" id="modal-cli_name" readonly>
-                        </div>
-                    </div>
-                    <div class="search-container">
-                        <div class="col-md-6">
-                            <label for="validationCustom04" class="form-label">입고 예정일</label>
-                            <input type="date" class="form-control" id="modal-rec_date" required>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="validationCustom05" class="form-label">담당자 아이디</label>
-                            <input type="text" class="form-control" id="modal-pic_username" readonly>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="validationCustom06" class="form-label">담당자 명</label>
-                            <input type="text" class="form-control" id="modal-user_per_name" readonly>
-                        </div>
-                   </div>
-                   <div class="modal-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>제품코드</th>
-                                        <th>품목명</th>
-                                        <th>수량</th>
-                                        <th>상위거래번호</th>
-                                        <th>비고</th>
-                                        <th>재고 번호</th>
-                                        <th>거래 번호</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="modal-table-body">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
-                    </div>
+					<div class="row g-3">
+						<div class="col-12">
+							<label for="soInfo01" class="form-label">수주번호</label>
+								<input type="text" class="form-control" id="soInfo01" name="tran_num" readonly>
+						</div>
+						<div class="col-md-6">
+							<label for="soInfo02" class="form-label">납기예정 일자</label> 
+								<input type="date" class="form-control" id="soInfo02" name="ex_due_date" readonly>
+						</div>
+						<div class="col-md-6">
+							<label for="soInfo03" class="form-label">수주일자</label> 
+								<input type="date" class="form-control" id="soInfo03" name="tran_date" readonly>
+						</div>
+						<div class="col-md-3">
+							<label for="soInfo04" class="form-label">거래처 번호</label>
+								<input type="text" class="form-control" id="soInfo04" name="cli_num" readonly>
+						</div>
+						<div class="col-md-3">
+							<label for="soInfo05" class="form-label">거래처명</label>
+								<input type="text" class="form-control" id="soInfo05" readonly>
+						</div>
+						<div class="col-md-3">
+							<label for="soInfo06" class="form-label">담당자 아이디</label>
+								<input type="text" class="form-control" id="soInfo06" name="pic_username" readonly>
+						</div>
+						<div class="col-md-3">
+							<label for="soInfo07" class="form-label">담당자명</label>
+								<input type="text" class="form-control" id="soInfo07" readonly>
+						</div>
+						<div class="col-12">
+							<label for="soInfo08" class="form-label">비고</label>
+								<input type="text" class="form-control" id="soInfo08" name="comm" readonly>
+						</div>
+						
+						<div class="example">
+							<ul class="nav nav-underline-border" role="tablist"></ul>
+							<table class="table item-table text-left">
+								<thead class="table-light">
+									<tr>
+										<th scope="col" style="width:25%">제품번호</th>
+										<th scope="col" style="width:25%">제품명</th>
+										<th scope="col" style="width:12%">사이즈</th>
+										<th scope="col" style="width:12%">색상</th>
+										<th scope="col" style="width:25%">수량</th>
+									</tr>
+								</thead>
+								<tbody id="tableBody">
+								</tbody>
+							</table>
+						</div>
+					</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>
@@ -158,49 +162,79 @@ $(document).ready(function() {
     const token = $("meta[name='_csrf']").attr("content");
     const header = $("meta[name='_csrf_header']").attr("content");
 
-    $(".clickable-cell").click(function() {
+    $("#soInfoModal").on('shown.coreui.modal', function(event) {
         var tran_num = $(this).closest("tr").find("td:nth-child(2)").text();
         var top_tran_num = $(this).closest("tr").find("td:nth-child(7)").text();
+        
+        console.log(tran_num);
+        console.log(top_tran_num);
 
-        $.ajax({
-            url: '/stock/getTransactionDetails',
-            type: 'GET',
-            data: { 
-                tran_num: tran_num,
-                top_tran_num: top_tran_num
-            },
-            dataType: "json",
-            success: function(response) {
-                console.log("AJAX 응답:", response);
+//         $.ajax({
+//             url: '/stock/getTransactionDetails',
+//             type: 'GET',
+//             data: { 
+//                 tran_num: tran_num,
+//                 top_tran_num: top_tran_num
+//             },
+//             dataType: "json",
+//             success: function(response) {
+//                 console.log("AJAX 응답:", response);
                 
-                // 기본 거래 정보 설정
-                $("#modal-tran_num").val(response.top_tran_num);
-                $("#modal-cli_num").val(response.cli_num);
-                $("#modal-cli_name").val(response.cli_name);
-                $("#modal-rec_date").val(formatDateForInput(response.rec_date)); 
-                $("#modal-pic_username").val(response.pic_username);
-                $("#modal-user_per_name").val(response.user_per_name);
+//                 // 기본 거래 정보 설정
+//                 $("#modal-tran_num").val(response.top_tran_num);
+//                 $("#modal-cli_num").val(response.cli_num);
+//                 $("#modal-cli_name").val(response.cli_name);
+//                 $("#modal-rec_date").val(formatDateForInput(response.rec_date)); 
+//                 $("#modal-pic_username").val(response.pic_username);
+//                 $("#modal-user_per_name").val(response.user_per_name);
                 
-                // 테이블 바디를 비웁니다.
-                $("#modal-table-body").empty();
+//                 // 테이블 바디를 비웁니다.
+//                 $("#modal-table-body").empty();
                 
-                // 품목 정보 행 생성 및 추가
-                $(response.items).each(function(idx,item){
-                    var row = "<tr><th scope='row'></th><td>" + item.goods_num + "</td><td>" 
-                    + item.item_name + "</td><td>" + item.goods_qty + "</td><td>" + item.top_tran_num + "</td><td>" 
-                    + item.comm + "</td><td>" + item.inven_num + "</td><td>" + item.tran_num + "</td></tr>";
+//                 // 품목 정보 행 생성 및 추가
+//                 $(response.items).each(function(idx,item){
+//                     var row = "<tr><th scope='row'></th><td>" + item.goods_num + "</td><td>" 
+//                     + item.item_name + "</td><td>" + item.goods_qty + "</td><td>" + item.top_tran_num + "</td><td>" 
+//                     + item.comm + "</td><td>" + item.inven_num + "</td><td>" + item.tran_num + "</td></tr>";
                          
-                    $("#modal-table-body").append(row);    
-                });
+//                     $("#modal-table-body").append(row);    
+//                 });
 
-                // 모달을 엽니다.
-                $("#exampleModal1").modal("show");
-            },
-            error: function(error) {
-                console.log("에러 발생: ", error);
-            }
-        });
+//                 // 모달을 엽니다.
+//                 $("#exampleModal1").modal("show");
+//             },
+//             error: function(error) {
+//                 console.log("에러 발생: ", error);
+//             }
+//         });
     });
+    
+    function addRow(data) {
+	    var cnt = 1;
+	    
+	    data.forEach(function(item, idx){
+			console.log(item);
+			
+			var row ='<tr id="row'+ cnt +'">'+
+			'<td> <div id="goods-num'+ cnt +'" name="goods_num">'+ item.goods_num +
+			'</div></td>'+
+			'<td><div id="goods-name'+ cnt +'">'+ item.goods_name +
+			'</div></td>'+
+			'<td><div id="goods_size'+ cnt +'">'+ item.goods_size +
+			'</div></td>'+
+			'<td><div id="goods_color'+ cnt +'">'+ item.goods_color +
+			'</div></td>'+
+			'<td><div>'+
+			'<input type="text" id="goods-qty'+ cnt +'" class="form-control form-control-sm" name="goods_qty" required>'+
+			'</div></td>'+
+			'</tr>';
+			
+			$('.item-table tbody').append(row);
+			cnt++;
+		
+		});
+           
+	}
 
     $("#statusChangeBtn").click(function() {
         $(".status-buttons").toggle();

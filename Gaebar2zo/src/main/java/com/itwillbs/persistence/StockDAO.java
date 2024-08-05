@@ -39,7 +39,7 @@ public interface StockDAO {
 	List<Map<String, Object>> getTransactionItems(String top_tran_num) throws Exception;
 
 	// 출고 모달창 품목 정보 호출 
-	List<Map<String, Object>> getTransactionItems2(String tran_num) throws Exception;
+	List<Map<String, Object>> getTransactionItems2(String top_tran_num) throws Exception;
 
 	
 	

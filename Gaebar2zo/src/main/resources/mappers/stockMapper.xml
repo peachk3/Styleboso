@@ -341,7 +341,7 @@
 
 	<!-- 출고 모달창 - 발주리스트,거래처,담당자,입고예정일 출력 -->
 	<select id="getTransactionDetails2" resultType="map">
-		select top_tran_num,tra.cli_num,cl.cli_name,tra.pic_username,user.user_per_name,tra.rel_date
+		select top_tran_num,tra.cli_num,cl.cli_name,tra.pic_username,user.user_per_name,tra.tran_date
 		from transaction tra
 		join client cl
 		on tra.cli_num = cl.cli_num

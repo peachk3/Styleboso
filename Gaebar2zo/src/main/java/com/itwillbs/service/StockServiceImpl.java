@@ -105,11 +105,11 @@ public class StockServiceImpl implements StockService{
 
 
 	@Override
-	public List<Map<String, Object>> getTransactionItems2(String tran_num) throws Exception {
+	public List<Map<String, Object>> getTransactionItems2(String top_tran_num) throws Exception {
 		logger.debug("출고 모달창 품목 정보 확인");
 		
 		
-		return sdao.getTransactionItems2(tran_num);
+		return sdao.getTransactionItems2(top_tran_num);
 	}
 
 

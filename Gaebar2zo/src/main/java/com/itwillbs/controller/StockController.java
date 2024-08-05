@@ -1,4 +1,4 @@
-package com.itwillbs.controller;
+ package com.itwillbs.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -399,8 +399,20 @@ public class StockController {
 			
 		}
 	
+	// 입고/출고 수정
+	  @RequestMapping(value="/updateDetails",method=RequestMethod.POST)
+	    @ResponseBody
+	    public ResponseEntity<Integer> updateDetails(@RequestBody TransactionVO changetrvo) throws Exception {
+			logger.debug(" updateDetails() 실행 ");
+			logger.debug("Received tran_num: " + changetrvo.getTran_num());
 
+			int result = sService.updateDetails(changetrvo);
+			
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	  
+	  }
 
+		
 
 
 

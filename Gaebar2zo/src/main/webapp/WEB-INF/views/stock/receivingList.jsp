@@ -42,32 +42,30 @@
             <th scope="col">상태</th>
         </tr>
         </thead>
-        <tbody>
-        <c:forEach var="rc" items="${rc}">
-            <c:forEach var="item" items="${rc.itemList}" varStatus="rcStatus">
-                <c:forEach var="inchange" items="${rc.inchangeList}">
-                    <c:forEach var="goods" items="${item.tranGoodsList}">
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault${item.item_num }"> 
-                                </div>
-                            </td>
-                            <td class="clickable-cell">${rc.tran_num}</td>
-                            <td class="clickable-cell">${goods.goods_num}</td>
-                            <td class="clickable-cell">${item.item_name}</td>
-                            <td class="clickable-cell">${goods.goods_qty}</td>
-                            <td class="clickable-cell">${rc.rec_date}</td>
-                            <td class="clickable-cell">${rc.top_tran_num}</td>
-                            <td class="clickable-cell">${inchange.inven_num}</td>
-                            <td class="clickable-cell">${rc.comm}</td>
-                            <td class="clickable-cell">${rc.pro_status}</td>
-                        </tr>
-                    </c:forEach>
-                </c:forEach>
+     <tbody>
+    <c:forEach var="rc" items="${rc}">
+        <c:forEach var="item" items="${rc.itemList}">
+            <c:forEach var="goods" items="${item.tranGoodsList}">
+                <tr>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault${goods.goods_num}"> 
+                        </div>
+                    </td>
+                    <td class="clickable-cell">${rc.tran_num}</td>
+                    <td class="clickable-cell">${goods.goods_num}</td>
+                    <td class="clickable-cell">${item.item_name}</td>
+                    <td class="clickable-cell">${goods.goods_qty}</td>
+                    <td class="clickable-cell">${rc.rec_date}</td>
+                    <td class="clickable-cell">${rc.top_tran_num}</td>
+                    <td class="clickable-cell">${rc.inchangeList[0].inven_num}</td>
+                    <td class="clickable-cell">${rc.comm}</td>
+                    <td class="clickable-cell">${rc.pro_status}</td>
+                </tr>
             </c:forEach>
         </c:forEach>
-        </tbody>
+    </c:forEach>
+</tbody>
     </table>
 
     <div class="container mt-3">
@@ -115,6 +113,7 @@
                             <input type="text" class="form-control" id="modal-user_per_name" readonly>
                         </div>
                    </div>
+                  <input type="hidden" id="modal-tran_num">
                    <div class="modal-body">
                         <div class="table-responsive">
                             <table class="table">
@@ -135,14 +134,50 @@
                             </table>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
-                    </div>
+               <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="editButton">수정</button>
+                    <button type="submit" class="btn btn-success" id="saveButton" style="display: none;">저장</button>
+                    <button type="button" class="btn btn-success" id="saveCancelButton" style="display: none;">취소</button>
+                    <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>
     </div>
-
+</div>
+    
+<!-- Modal2 -->
+			<div class="modal fade" id="exampleModal2" tabindex="-1"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">담당자</h5>
+							<button type="button" class="btn-close"
+								data-coreui-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<table class="table table-hover text-center" id="modal2-table">
+								<thead class="table-light">
+									<tr>
+										<th scope="col"></th>
+										<th scope="col">담당자 아이디</th>
+										<th scope="col">담당자 명</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			
     <%@ include file="../include/footer.jsp" %>
 </body>
 </html>
@@ -187,21 +222,36 @@ $(document).ready(function() {
                 $("#modal-pic_username").val(response.pic_username);
                 $("#modal-user_per_name").val(response.user_per_name);
                 
+                // 숨겨진 필드에 tran_num 설정
+            	$("#modal-tran_num").val(tran_num); // 여기서 tran_num 값을 올바르게 설정
+                console.log("Modal tran_num 설정: " + $("#modal-tran_num").val()); // 확인용 로그 추가
+
                 // 테이블 바디를 비웁니다.
                 $("#modal-table-body").empty();
                 
+                // 중복 제거를 위한 객체
+                var uniqueItems = {};
+                
                 // 품목 정보 행 생성 및 추가
-                $(response.items).each(function(idx,item){
-                    var row = "<tr><th scope='row'></th><td>" + item.item_num + "</td><td>" 
-                    + item.item_name + "</td><td>" + item.goods_qty + "</td><td>" + item.top_tran_num + "</td><td>" 
-                    + item.comm + "</td><td>" + item.inven_num + "</td><td>" + item.tran_num + "</td></tr>";
-                         
-                    $("#modal-table-body").append(row);    
+                $(response.items).each(function(idx, item){
+                    // item_num과 inven_num을 조합하여 고유 키 생성
+                    var uniqueKey = item.item_num + '_' + item.inven_num;
+                    
+                    if (!uniqueItems[uniqueKey]) {
+                        var row = "<tr><th scope='row'></th><td>" + item.item_num + "</td><td>" 
+                            + item.item_name + "</td><td>" + item.goods_qty + "</td><td>" + item.top_tran_num + "</td><td>" 
+                            + item.comm + "</td><td>" + item.inven_num + "</td><td>" + item.tran_num + "</td></tr>";
+                        
+                        $("#modal-table-body").append(row);
+                        
+                        // 항목을 uniqueItems에 추가
+                        uniqueItems[uniqueKey] = true;
+                    }
                 });
-
+                
                 // 모달을 엽니다.
                 $("#exampleModal1").modal("show");
-            },
+            	},
             error: function(error) {
                 console.log("에러 발생: ", error);
             }
@@ -270,7 +320,7 @@ $(document).ready(function() {
 
         if (confirm('선택한 ' + tran_nums.length + '개의 항목을 삭제하시겠습니까?')) {
             $.ajax({
-                url: '/stock/deleteRC',
+                url: '/stock/deleteRL',
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
                 },
@@ -288,5 +338,113 @@ $(document).ready(function() {
             });
         }
     });
-});  
+    
+    
+
+    $("#editButton").click(function(event) {
+        event.preventDefault();
+        
+        $("#modal-tran_date").removeAttr('readonly');
+        
+        // 담당자 아이디/담당자 명 클릭 시 모달 열기
+        $("#modal-pic_username, #modal-user_per_name").click(function() {
+            $("#exampleModal2").modal("show");
+        });
+        
+        $(this).hide();
+        $("#saveButton, #saveCancelButton").show();
+    });
+
+    
+    
+    $("#saveButton").click(function(event) {
+        event.preventDefault();
+
+        const tran_num = $("#modal-tran_num").val();
+        console.log("Save Button 클릭 시 tran_num: " + tran_num); // 확인용 로그 추가
+        
+        const updatedData = {
+    		tran_num: tran_num,
+            tran_date: $("#modal-tran_date").val(),
+            pic_username: $("#modal-pic_username").val(),
+            user_per_name: $("#modal-user_per_name").val()
+        };
+
+        console.log("Updated Data: ", updatedData); // 확인용 로그 추가
+        
+        $.ajax({
+            url: '/stock/updateDetails',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(updatedData),
+            beforeSend: function(xhr) {
+                const token = $("meta[name='_csrf']").attr("content");
+                const header = $("meta[name='_csrf_header']").attr("content");
+                xhr.setRequestHeader(header, token);
+            },
+            success: function(response) {
+                alert("수정되었습니다.");
+                $("#exampleModal1").modal("hide");
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert("An error occurred: " + error);
+            }
+        });
+
+        $("#modal-tran_date").attr('readonly', 'readonly');
+        $(this).hide();
+        $("#editButton").show();
+        $("#saveCancelButton").hide();
+    });
+
+    $("#saveCancelButton").click(function(event) {
+        event.preventDefault();
+        
+        $("#modal-tran_date").attr('readonly', 'readonly');
+        $(this).hide();
+        $("#saveButton").hide();
+        $("#editButton").show();
+    });
+
+    $('#modal2-table tbody').on('click', 'tr', function() {
+        var username = $(this).find('td:nth-child(2)').text();
+        var user_per_name = $(this).find('td:nth-child(3)').text();
+
+        $("#modal-pic_username").val(username);
+        $("#modal-user_per_name").val(user_per_name);
+
+        $("#exampleModal2").modal("hide");
+    });
+        
+      getManagerList();
+      
+      function getManagerList() {
+         
+          $('#modal2-table tbody tr').remove();
+          
+          $.ajax({
+              url: "/common/managerList",
+              type: "get",
+              contentType: 'application/json; charset=utf-8',
+              dataType: "json",
+              success: function(data) {
+                  // body 태그에 내용 추가
+                  console.log(data);
+                  data.forEach(function(item, idx){
+                     console.log(idx);
+                     var row = "<tr><th scope='row'>" + (parseInt(idx)+1) + "</th><td>" + item.username + "</td><td>" + item.user_per_name + "</td></tr>"
+                      $('#modal2-table tbody').append(row);
+                  });
+                  
+              },
+              error: function(jqXHR, textStatus, errorThrown) {
+                  console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
+                  alert("AJAX 요청 실패!");
+              }
+          });
+      }
+    
+    
+}); 
 </script>

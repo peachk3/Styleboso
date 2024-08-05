@@ -68,11 +68,10 @@ public interface StockService {
 	public void deleteReleaseList(List<String> trannums) throws Exception;
 
 
+	// 입고 / 출고 수정
+	public int updateDetails(TransactionVO changetrvo) throws Exception;
 
 
-	
-	// 상태 업데이트
-//    void updateStatus(List<String> tranNums, String status) throws Exception;
 
 
 

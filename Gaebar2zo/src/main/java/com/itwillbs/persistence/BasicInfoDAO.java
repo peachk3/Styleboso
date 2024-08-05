@@ -17,7 +17,8 @@ public interface BasicInfoDAO {
 	List<WarehouseCodeVO> listAll() throws Exception;
 
 	// 거래처 리스트 출력
-	List<ClientVO> cliListAll() throws Exception;
+	List<ClientVO> cliListAll(Criteria cri) throws Exception;
+	int getTotalClientCount() throws Exception;
 
 	// 품목 리스트 출력
 	List<ItemVO> itemListAll(Criteria cri) throws Exception;

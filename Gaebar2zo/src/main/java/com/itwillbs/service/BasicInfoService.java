@@ -18,7 +18,9 @@ public interface BasicInfoService {
 	public List<WarehouseCodeVO> listAll() throws Exception;
 
 	// 거래처 리스트 출력
-	public List<ClientVO> cliListAll() throws Exception;
+	public List<ClientVO> cliListAll(Criteria cri) throws Exception;
+	
+	public int getTotalClientCount() throws Exception;
 
 	// 품목 리스트 출력
 	public List<ItemVO> itemListAll(Criteria cri) throws Exception;

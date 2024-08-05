@@ -83,7 +83,19 @@
 
 	<!-- 거래처 리스트 출력 -->
 	<select id="cliListALL" resultType="ClientVO">
-		select * from client
+	<![CDATA[
+	SELECT * 
+	FROM client
+	ORDER BY cli_id
+	LIMIT #{pageStart}, #{pageSize}
+	]]>
+	</select>
+	
+	<select id="totalClientCount" resultType="int">
+	<![CDATA[
+	SELECT COUNT(*)
+	FROM client
+	]]>
 	</select>
 
 	<!-- 품목 리스트 출력 -->
@@ -105,7 +117,7 @@
 	JOIN item_code ic ON i.item_cate_code = ic.s_cate_item_code
 	JOIN code c ON c.group_code = ic.m_cate_item_code
 	]]>
-</select>
+	</select>
 	
 	
 	

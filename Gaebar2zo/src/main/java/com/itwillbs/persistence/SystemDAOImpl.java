@@ -33,6 +33,17 @@ public class SystemDAOImpl implements SystemDAO{
 				return result;
 	}
 
+	//전화번호 중복
+	@Override
+	public int phoneCheck(String user_phone) throws Exception {
+		int result = sqlSession.selectOne(NAMESPACE + "phoneCheck", user_phone);
+		
+		logger.info("result(service-> dao) :" + result);
+		
+		return result;
+	}
+	
+	
 
 	//운영자,관리자,사원 전체 리스트 출력
 	@Override
@@ -41,6 +52,8 @@ public class SystemDAOImpl implements SystemDAO{
 		
 		return sqlSession.selectList(NAMESPACE+"employeeListAll");
 	}
+
+
 	//==============================================================
 	//공통코드 전체 리스트 출력
 	@Override

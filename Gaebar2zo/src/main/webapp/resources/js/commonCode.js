@@ -108,7 +108,8 @@
         // CSRF 토큰 설정
         const token = $("meta[name='_csrf']").attr("content");
         const header = $("meta[name='_csrf_header']").attr("content");
-
+        const name = $("#userName").val();
+        
         var groupCode = document.getElementById('edit_group_code').value;
         var groupName = document.getElementById('edit_group_name').value;
 
@@ -219,3 +220,12 @@
    	        checkboxes[i].checked = source.checked; // '전체 선택' 체크박스의 상태에 따라 개별 체크박스의 체크 상태를 변경
    	    }
    	}
+   	
+   	//모달닫기 
+  //모달 닫기
+	$('#modalCloseBtn').on('click', function() {
+	    $('#commonModal').modal('hide');
+	});
+	$('#modalCloseBtn').on('click', function() {
+	    $('#insertCodeModal').modal('hide');
+	});

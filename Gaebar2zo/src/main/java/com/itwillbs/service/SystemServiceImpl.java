@@ -31,6 +31,18 @@ public class SystemServiceImpl implements SystemService{
 		
 		return result;
 	}
+	
+	//전화번호 중복 체크
+
+	@Override
+	public int phoneCheck(String user_phone) throws Exception {
+		
+		int result = sdao.phoneCheck(user_phone);
+		
+		logger.debug("result :" + result);
+		
+		return result;
+	}
 
 
 

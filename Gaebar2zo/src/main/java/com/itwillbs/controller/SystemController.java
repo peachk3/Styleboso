@@ -66,7 +66,7 @@ public class SystemController {
 	}
 	// -------------------------------------------------------------------------------------------
 	//이메일 중복 체크 
-	@GetMapping("/emailCheck")
+	@RequestMapping(value = "/emailCheck", method = RequestMethod.GET)
 	@ResponseBody
 	public int emailCheck(@RequestParam("user_email")String user_email ) throws Exception {
 		
@@ -82,7 +82,17 @@ public class SystemController {
 	
 	// -------------------------------------------------------------------------------------------
 	//전화번호 중복 
-	
+	@RequestMapping(value = "/phoneCheck", method = RequestMethod.GET)
+	@ResponseBody
+	public int phoneCheck(@RequestParam("user_phone")String user_phone) throws Exception {
+		logger.debug("user_phone"+ user_phone); // 0: 사용 가능, 1: 중복됨
+		
+		int result = sService.phoneCheck(user_phone);
+		
+		logger.debug("결과값 : " + result);
+		
+		return result;
+	}
 	
 	
 	

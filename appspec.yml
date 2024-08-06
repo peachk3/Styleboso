@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: Gaebar2zo.war
+  - source: myapp.war
     destination: /usr/local/tomcat/webapps
 hooks:
   BeforeInstall:

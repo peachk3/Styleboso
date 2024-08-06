@@ -34,13 +34,19 @@
 <body>
         <h1>창고별 재고 출력</h1>
 
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
+      <button class="btn btn-primary" type="button" onclick="">검색</button>
+      <button class="btn btn-primary" id="registWhBtn" name="registWhBtn" type="button" >등록</button>
+      <button class="btn btn-primary" id="deleteClientBtn" name="deleteClientBtn" type="button">삭제</button>
+   </div>
+
 	<div class="row">
 		<div class="col">
 			<select id="warehouseSelect" class="form-select"
 				aria-label="Default select example">
 				<option value="">Select Warehouse</option>
 				<c:forEach items="${whCodeList}" var="whCodeList">
-					<option value="${whCodeList.s_cate_wh_code}">${whCodeList.s_cate_wh_name}</option>
+					<option value="${whCodeList.s_cate_wh_code}" data-wh-name="${whCodeList.s_cate_wh_name}">${whCodeList.s_cate_wh_name}</option>
 				</c:forEach>
 			</select> <br>
 		</div>
@@ -79,7 +85,8 @@
 			</div>
 		</div>
 	</div>
-
+	
+	
 </body>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -91,6 +98,48 @@ const header = $("meta[name='_csrf_header']").attr("content");
 const name = $("#userName").val();
 
 $(document).ready(function() {
+    
+	$('#registWhBtn').click(function(){
+        var wh_code = $('#warehouseSelect').val();
+        var wh_zone = $('#zoneSelect').val();
+        var fullWhName = $('#warehouseSelect option:selected').data('wh-name');
+        
+        // 앞 두 글자만 추출
+        var wh_name = fullWhName ? fullWhName.substring(0, 2) : '';
+        
+        if (wh_code && wh_zone) {
+            $.ajax({
+                url: '/basicInfo/addRack',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                type: 'POST',
+                dataType: 'json',
+                data: { wh_code: wh_code, wh_zone: wh_zone, wh_name: wh_name },
+                success: function(data) {
+                    console.log('Response data:', data);
+                    if (data.success) {
+                    	console.log(data.newRack);
+                        alert("렉이 성공적으로 추가되었습니다.");
+                        // 새로 추가된 렉을 UI에 반영
+                        $('#rackSelect').append('<option value="' + data.newRack + '">' + data.newRack + '</option>');
+                        // Optional: column과 row도 업데이트
+                    } else {
+                        alert("렉 추가에 실패했습니다.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error adding rack:', error);
+                    alert('오류 발생: 렉을 추가할 수 없습니다');
+                }
+            });
+        } else {
+            alert('창고와 구역을 선택하세요.');
+        }
+    });
+
+	
+    // 창고 선택
     $('#warehouseSelect').change(function() {
         var wh_code = $(this).val();
         $.ajax({
@@ -112,6 +161,7 @@ $(document).ready(function() {
         });
     });
     
+    // zone 선택
     $('#zoneSelect').change(function() {
         var wh_code = $('#warehouseSelect').val();
         var wh_zone = $(this).val();
@@ -132,7 +182,9 @@ $(document).ready(function() {
             }
         });
     });
+
     
+    // rack 선택
     $('#rackSelect').change(function() {
         var wh_code = $('#warehouseSelect').val();
         var wh_zone = $('#zoneSelect').val();

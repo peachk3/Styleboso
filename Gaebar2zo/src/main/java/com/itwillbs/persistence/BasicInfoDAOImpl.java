@@ -218,6 +218,34 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 		
 		return sqlSession.selectList(NAMESPACE + "getInventory", wh_num) ;
 	}
+
+	@Override
+	public String addRack(String wh_code, String wh_zone, String wh_name) throws Exception {
+		logger.debug(" addRack() 실행");
+		
+		// 현재 최대 렉 번호 가져오기
+	    Integer maxRackNumber = sqlSession.selectOne(NAMESPACE + "getMaxRackNumber", Map.of("wh_code", wh_code, "wh_zone", wh_zone));
+	    int newRackNumber = (maxRackNumber != null ? maxRackNumber : 0) + 1;
+	    logger.debug("@@ new : " + newRackNumber);
+
+	    // 새로운 렉 추가
+	    Map<String, Object> params = Map.of(
+	        "wh_code", wh_code,
+	        "wh_zone", wh_zone,
+	        "wh_name", wh_name,
+	        "newRack", newRackNumber
+	    );
+	    
+	    int result = sqlSession.insert(NAMESPACE + "addRack", params);
+
+	    // 추가 성공 여부에 따라 반환 값 설정
+	    if (result > 0) {
+	        return String.valueOf(newRackNumber); // 새로 추가된 렉의 번호를 문자열로 반환
+	    } else {
+	        return null; // 실패 시 null 반환
+	    }
+		
+	}
 	
 
 }

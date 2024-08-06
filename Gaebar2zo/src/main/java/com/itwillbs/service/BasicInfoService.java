@@ -83,4 +83,6 @@ public interface BasicInfoService {
 	// 창고 -> 재고 불러오기
 	public List<InventoryVO> getInventory(String wh_num) throws Exception;
 
+	public String addRack(String wh_code, String wh_zone, String wh_name) throws Exception;
+
 }

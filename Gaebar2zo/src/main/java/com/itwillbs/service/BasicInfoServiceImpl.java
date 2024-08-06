@@ -197,6 +197,14 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		return bidao.getInventory(wh_num);
 	}
 
+	@Override
+	public String addRack(String wh_code, String wh_zone, String wh_name) throws Exception {
+		logger.debug(" addRack() 실행 ");
+		
+		
+		return bidao.addRack(wh_code, wh_zone, wh_name);
+	}
+
 	
 	
 }

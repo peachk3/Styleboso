@@ -8,9 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.itwillbs.controller.CustomException;
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.GoodsVO;
 import com.itwillbs.domain.TransactionGoodsVO;
@@ -90,7 +88,7 @@ public class CommonServiceImpl implements CommonService{
             cdao.deleteTran(tran_num);
         } catch (DataIntegrityViolationException e) {
             // 외래 키 제약 조건 오류를 감지하여 커스텀 예외를 발생
-            throw new RuntimeException("출고가 진행되어 삭제할 수 없습니다.");
+            throw new RuntimeException("다음 단계가 진행되어 삭제할 수 없습니다.");
         }
 	}
 	

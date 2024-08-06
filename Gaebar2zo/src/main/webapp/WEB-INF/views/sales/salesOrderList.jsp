@@ -361,9 +361,7 @@
 		        dataType: "json",
 		        success: function(data) {
 		            // body 태그에 내용 추가
-		            console.log(data);
 		            data.forEach(function(item, idx){
-		               console.log(idx);
 		               var row = "<tr><th scope='row'>" + (parseInt(idx)+1) + "</th><td>" + item.username + "</td><td>" + item.user_per_name + "</td></tr>"
 		                $('#modal2-table tbody').append(row);
 		            });
@@ -562,46 +560,6 @@
 	    	}
         });
 		
-	    $("#statusChangeBtn").click(function() {
-	        $(".status-buttons").toggle();
-	    });
-	
-	    $(".status-buttons .btn").click(function() {
-	        const pro_status = $(this).text().trim(); // "입고 예정" 혹은 "입고 완료" 버튼의 텍스트를 상태로 사용
-	
-	        const checkedCheckboxes = $('input[type="checkbox"].form-check-input:checked');
-	        const tran_nums = [];
-	
-	        checkedCheckboxes.each(function() {
-	            const tran_num = $(this).closest('tr').find('td:eq(1)').text(); // Assuming tran_num is in the first column
-	            if (tran_num) {
-	                tran_nums.push(tran_num);
-	            }
-	        });
-	
-	        if (tran_nums.length === 0) {
-	            alert('변경할 항목을 선택해주세요.');
-	            return;
-	        }
-	
-	        $.ajax({
-	            url: '/common/updateStatus',
-	            type: 'POST',
-	            contentType: 'application/json',
-	            data: JSON.stringify({ tran_nums: tran_nums, pro_status: pro_status }),
-	            beforeSend: function(xhr) {
-	                xhr.setRequestHeader(header, token);
-	            },
-	            success: function(response) {
-	                location.reload();
-	                alert("상태가 성공적으로 변경되었습니다.");
-	            },
-	            error: function(xhr, status, error) {
-	                alert("An error occurred: " + error);
-	            }
-	        });
-	    });
-	
 	    $("#deleteItemBtn").click(function(){
 	        const checkedCheckboxes = $('input[type="checkbox"].form-check-input:checked');
 	        console.log("선택된 체크박스 수:", checkedCheckboxes.length);

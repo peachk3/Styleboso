@@ -107,9 +107,13 @@ public class SalesController {
 
 	// 발주 관리
 	@RequestMapping(value="/purchaseOrderList",method=RequestMethod.GET)
-	public void puchaseOrderList_GET() throws Exception{
+	public void puchaseOrderList_GET(Model model) throws Exception{
 		logger.debug(" puchaseOrderList_GET() 실행 ");
 
+		List<TransactionVO> po = sService.PurchaseOrderList();
+		logger.debug("size : "+ po.size());
+		logger.debug("po : "+ po);
+	    model.addAttribute("po", po);
 	}
 
 	// 발주 추가
@@ -137,6 +141,37 @@ public class SalesController {
 		logger.debug("tgvo : " + tgvo);
 		
 		sService.PurchaseOrderAdd(tvo);
+	}
+	
+	// 발주 정보
+	@RequestMapping(value="/purchaseOrderInfo",method=RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<List<TransactionVO>> purchaseOrderInfo_POST(@RequestBody String tran_num) throws Exception {
+		logger.debug(" salesOrderInfo_POST() 실행 ");
+		
+		List<TransactionVO> poInfo = sService.PurchaseOrderInfo(tran_num);
+		
+		return ResponseEntity.ok(poInfo);
+	}
+	
+	// 발주 정보 수정
+	@RequestMapping(value="/purchaseOrderUpdate",method=RequestMethod.POST)
+	@ResponseBody
+	public void purchaseOrderInfo_POST(@RequestBody Map<String, String> requestData) throws Exception {
+		logger.debug("salesOrderUpdate_POST() 실행 ");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		TransactionVO tvo = mapper.readValue(requestData.get("tvo"), TransactionVO.class);
+		List<TransactionGoodsVO> tgvo = mapper.readValue(requestData.get("tgvo"), 
+				new TypeReference<List<TransactionGoodsVO>>(){});
+		
+		tvo.setTgvo(tgvo);
+		
+		logger.debug("tvo : " + tvo);
+		logger.debug("tgvo : " + tgvo);
+		
+		sService.PurchaseOrderUpdate(tvo);
 	}
 
 	// 출하 관리

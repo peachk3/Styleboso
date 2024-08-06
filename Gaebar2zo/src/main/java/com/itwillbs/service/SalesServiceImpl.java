@@ -28,16 +28,6 @@ public class SalesServiceImpl implements SalesService{
 		
 		return sdao.salesOrderList();
 	}
-	
-	@Override
-	public List<TransactionVO> SalesOrderInfo(String tran_num) throws Exception {
-		
-		logger.debug("SalesOrderInfo() 실행");
-
-		return sdao.salesOrderInfo(tran_num);
-	}
-
-
 
 	@Override
 	@Transactional
@@ -73,6 +63,41 @@ public class SalesServiceImpl implements SalesService{
 	}
 	
 	@Override
+	public List<TransactionVO> SalesOrderInfo(String tran_num) throws Exception {
+		
+		logger.debug("SalesOrderInfo() 실행");
+		
+		return sdao.salesOrderInfo(tran_num);
+	}
+	
+	@Override
+	public void salesOrderUpdate(TransactionVO tvo) throws Exception {
+		logger.debug("salesOrderUpdate() 실행");
+		
+		// DAO 메서드 호출
+		sdao.salesOrderUpdate_TransactionVO(tvo);
+		
+		List<TransactionGoodsVO> tgvoList = tvo.getTgvo();
+		
+		// tgvoList에서 각 TransactionGoodsVO 객체를 꺼내어 처리
+		for (TransactionGoodsVO tgvo : tgvoList) {
+			
+		    // 새로운 TransactionGoodsVO 객체 생성
+		    TransactionGoodsVO newTgvo = new TransactionGoodsVO();
+		    
+		    // 원래 tgvo의 goods_num과 goods_qty 설정
+		    newTgvo.setTran_num(tgvo.getTran_num());
+		    newTgvo.setGoods_num(tgvo.getGoods_num());
+		    newTgvo.setGoods_qty(tgvo.getGoods_qty());
+		    
+		    sdao.salesOrderUpdate_TransactionGoodsVO(newTgvo);
+		}
+		
+		logger.debug("수주 정보 수정 성공");
+		
+	}
+
+	@Override
 	public void PurchaseOrderAdd(TransactionVO tvo) throws Exception {
 		
 		logger.debug("PurchaseOrderAdd() 실행");
@@ -106,7 +131,7 @@ public class SalesServiceImpl implements SalesService{
 
 
 
-	private String GetTranNum(TransactionVO tvo) {
+	private String GetTranNum(TransactionVO tvo) throws Exception {
 		logger.debug("GetTranNum() 실행");
 		
 		String tran_num = sdao.GetTranNum(tvo);

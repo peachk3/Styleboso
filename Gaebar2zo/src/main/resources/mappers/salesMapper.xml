@@ -121,6 +121,20 @@
 		insert into transaction_goods(tran_num, goods_num, goods_qty)
 		values((select tran_num from transaction where tran_id = #{tran_num}), #{goods_num}, #{goods_qty})
 	</insert>
+	
+	<!-- 수주 정보 수정_TransactionVO -->
+	<update id="salesOrderUpdate_TransactionVO">
+		update transaction 
+		set cli_num = #{cli_num}, pic_username = #{pic_username}, tran_date = #{tran_date}, ex_due_date = #{ex_due_date}, comm = #{comm} 
+		where tran_num = #{tran_num}
+	</update>
+
+	<!-- 수주 정보 수정_TransactionGoodsVO -->
+	<update id="salesOrderUpdate_TransactionGoodsVO">
+		update transaction_goods 
+		set goods_qty = #{goods_qty} 
+		where tran_num = #{tran_num} and goods_num = #{goods_num}
+	</update>
 
 	<!-- 발주 등록_TransactionVO -->
 	<insert id="purchaseOrderAdd_TransactionVO" useGeneratedKeys="true" keyProperty="tran_num">

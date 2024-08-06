@@ -38,24 +38,13 @@ public class SalesController {
 	// 수주 관리
 	@RequestMapping(value="/salesOrderList",method=RequestMethod.GET)
 	public void salesOrderList_GET(Model model) throws Exception{
-		logger.debug(" salesOrderList_GET() 실행1 ");
+		logger.debug(" salesOrderList_GET() 실행 ");
 		
 		List<TransactionVO> so = sService.SalesOrderList();
 		logger.debug("size : "+ so.size());
 		logger.debug("so : "+ so);
 	    model.addAttribute("so", so);
 
-	}
-
-	// 수주 정보
-	@RequestMapping(value="/salesOrderInfo",method=RequestMethod.POST)
-	@ResponseBody
-	public ResponseEntity<List<TransactionVO>> salesOrderInfo_POST(@RequestBody String tran_num) throws Exception {
-		logger.debug(" salesOrderInfo_POST() 실행 ");
-		
-		List<TransactionVO> soInfo = sService.SalesOrderInfo(tran_num);
-		
-		return ResponseEntity.ok(soInfo);
 	}
 
 	// 수주 추가
@@ -83,6 +72,37 @@ public class SalesController {
 	    logger.debug("tgvo : " + tgvo);
 	    
 	    sService.SalesOrderAdd(tvo);
+	}
+	
+	// 수주 정보
+	@RequestMapping(value="/salesOrderInfo",method=RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<List<TransactionVO>> salesOrderInfo_POST(@RequestBody String tran_num) throws Exception {
+		logger.debug(" salesOrderInfo_POST() 실행 ");
+		
+		List<TransactionVO> soInfo = sService.SalesOrderInfo(tran_num);
+		
+		return ResponseEntity.ok(soInfo);
+	}
+	
+	// 수주 정보 수정
+	@RequestMapping(value="/salesOrderUpdate",method=RequestMethod.POST)
+	@ResponseBody
+	public void salesOrderUpdate_POST(@RequestBody Map<String, String> requestData) throws Exception {
+		logger.debug("salesOrderUpdate_POST() 실행 ");
+		
+	    ObjectMapper mapper = new ObjectMapper();
+	    
+	    TransactionVO tvo = mapper.readValue(requestData.get("tvo"), TransactionVO.class);
+	    List<TransactionGoodsVO> tgvo = mapper.readValue(requestData.get("tgvo"), 
+                						new TypeReference<List<TransactionGoodsVO>>(){});
+	    
+	    tvo.setTgvo(tgvo);
+	    
+	    logger.debug("tvo : " + tvo);
+	    logger.debug("tgvo : " + tgvo);
+	    
+	    sService.salesOrderUpdate(tvo);
 	}
 
 	// 발주 관리

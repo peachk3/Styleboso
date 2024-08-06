@@ -8,7 +8,6 @@
 	<div class="container-lg px-4">
 		<div class="row">
 			<div class="col-12">
-<!-- 				<div class="card mb-4"> -->
 					<div class="card-body">
 						<form class="row g-3 needs-validation" action="/sales/salesOrderAdd" method="post" novalidate>
 							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">			
@@ -176,7 +175,6 @@
 					</div>
 				</div>
 			</div>
-<!-- 			</div> -->
    
 
 <!--    <h1>/sales/salesOrderAdd.jsp</h1> -->
@@ -210,9 +208,6 @@
    
 		submitFormBtn.addEventListener('click', function(event) {
 			event.preventDefault(); // 기본 제출 동작 방지
-			
-			console.log(document.getElementById('validationCustom01').value);
-			console.log(document.getElementById('validationCustom02').value);
 			
 			const formData = {
 					ex_due_date: String(document.getElementById('validationCustom01').value),

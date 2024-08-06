@@ -33,4 +33,11 @@ public interface CommonDAO {
 	public void updateStatus(List<String> tran_nums, String pro_status) throws Exception;
 
 	
+	// 거래 리스트 삭제
+	public void deleteTran(List<String> tran_num) throws Exception;
+
+
+
+
+	
 }

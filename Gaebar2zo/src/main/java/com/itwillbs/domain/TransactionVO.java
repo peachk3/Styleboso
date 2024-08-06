@@ -1,5 +1,6 @@
 package com.itwillbs.domain;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +14,13 @@ public class TransactionVO {
 	private	String	top_tran_num;
 	private	String	cli_num;
 	private	String	pic_username;
-	private	Timestamp	tran_date;
-	private	Timestamp	rec_date;
-	private	Timestamp	rel_date;
-	private	Timestamp	due_date;
-	private	Timestamp	ex_due_date;
+	private	int	expenditure;
+	private	int	income;
+	private	Date	tran_date;
+	private	Date	rec_date;
+	private	Date	rel_date;
+	private	Date	due_date;
+	private	Date	ex_due_date;
 	private	String	pro_status;
 	private	String	tran_cate_code;
 	private	String	comm;

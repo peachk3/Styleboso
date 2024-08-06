@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.WarehouseCodeVO;
 import com.itwillbs.domain.WarehouseVO;
@@ -14,10 +15,12 @@ import com.itwillbs.domain.WarehouseVO;
 public interface BasicInfoService {
 	
 	// 창고코드 리스트 출력
-	public List<WarehouseCodeVO> listAll();
+	public List<WarehouseCodeVO> listAll() throws Exception;
 
 	// 거래처 리스트 출력
-	public List<ClientVO> cliListAll();
+	public List<ClientVO> cliListAll(Criteria cri) throws Exception;
+	
+	public int getTotalClientCount() throws Exception;
 
 	// 품목 리스트 출력
 	public List<ItemVO> itemListAll(Criteria cri) throws Exception;
@@ -62,12 +65,22 @@ public interface BasicInfoService {
 	// 창고 상세보기
 	public List<WarehouseCodeVO> warehouseDetailsList(String s_cate_wh_code) throws Exception;
 
-	// 창고 수정
+	// 창고 정보 수정
 	public void updateWhCode(WarehouseCodeVO whcvo) throws Exception;
 
+	// 창고 zone 불러오기
+	public List<String> getZones(String wh_code) throws Exception;
 
+	// 창고 rack 불러오기
+	public List<String> getRacks(String wh_code, String wh_zone) throws Exception;
 
+	// 창고 열 불러오기
+	public List<String> getColumns(String wh_code, String wh_zone, String wh_rack) throws Exception;
+	
+	// 창고 행 불러오기
+	public List<String> getRows(String wh_code, String wh_zone, String wh_rack) throws Exception;
 
-
+	// 창고 -> 재고 불러오기
+	public List<InventoryVO> getInventory(String wh_num) throws Exception;
 
 }

@@ -59,12 +59,12 @@ public class CommonController {
         List<TransactionGoodsVO> tranGoods = cService.getTransactionGoods(tran_num);
         // rec_date 포맷팅
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = sdf.format(tranDetails.getRec_date());
+        String formattedDate = sdf.format(tranDetails.getTran_date());
         
         
         response.put("tranDetails", tranDetails);
         response.put("tranGoods", tranGoods);
-        response.put("formattedRecDate", formattedDate);  // 포맷팅된 날짜 추가
+        response.put("formattedTranDate", formattedDate);  // 포맷팅된 날짜 추가
 
         logger.debug("tranDetails : "+tranDetails);
         logger.debug("tranGoods : "+tranGoods);
@@ -166,6 +166,30 @@ public class CommonController {
         }
 		
 	}
+
+	// 입고 상태 업데이트 
+	@RequestMapping(value="/updateRecevingStatus",method=RequestMethod.POST)
+	@ResponseBody
+    public ResponseEntity<String> updateRecevingStatus(@RequestBody StatusUpdateRequest request) {
+	        try {
+	            cService.updateRecevingStatus(request.getTran_nums(), request.getPro_status());
+	            return ResponseEntity.ok("Status updated successfully");
+	        } catch (Exception e) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating status");
+	        }
+	    }
+
+	// 출고 상태 업데이트 
+	@RequestMapping(value="/updateReleaseStatus",method=RequestMethod.POST)
+	@ResponseBody
+    public ResponseEntity<String> updateReleaseStatus(@RequestBody StatusUpdateRequest request) {
+	        try {
+	            cService.updateReleaseStatus(request.getTran_nums(), request.getPro_status());
+	            return ResponseEntity.ok("Status updated successfully");
+	        } catch (Exception e) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating status");
+	        }
+	    }
 
 
 

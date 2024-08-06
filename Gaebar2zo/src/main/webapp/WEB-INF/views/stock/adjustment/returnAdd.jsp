@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../include/header.jsp" %>
+<%@ include file="../../include/header.jsp" %>
 
 <body>
 <div class="container-lg px-4">
@@ -7,7 +7,7 @@
          <div class="col-12">
             <div class="card mb-4">
                <div class="card-body">
-                  <form class="row g-3 needs-validation" action="/stock/receivingAdd" method="post" novalidate>
+                  <form class="row g-3 needs-validation" action="/adjustment/returnAdd" method="post" novalidate>
                      <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">         
                   
                      <div class="col-md-6">
@@ -239,16 +239,16 @@ $('#modal1-table tbody').on('click', 'tr', function() {
         $('#exampleModal1').modal('hide');
     });
     
-	// 재고 모달에서 선택된 데이터 처리
-	$('#inventoryModalBody').on('click', 'tr', function() {
-	    var inventoryNum = $(this).data('inventory');
-	    var warehouseName = $(this).data('warehouse');
-	
-	    var input = $('.inventory-input[data-row="' + $(this).data('row') + '"]');
-	    input.val(inventoryNum);
-	    
-	    $('#inventoryModal').modal('hide');
-	});
+   // 재고 모달에서 선택된 데이터 처리
+   $('#inventoryModalBody').on('click', 'tr', function() {
+       var inventoryNum = $(this).data('inventory');
+       var warehouseName = $(this).data('warehouse');
+   
+       var input = $('.inventory-input[data-row="' + $(this).data('row') + '"]');
+       input.val(inventoryNum);
+       
+       $('#inventoryModal').modal('hide');
+   });
     
 
     $('#modal0-table tbody').on('click', 'tr', function() {
@@ -279,7 +279,7 @@ $('#modal1-table tbody').on('click', 'tr', function() {
                 var tableBody = $('#tableBody');
                 tableBody.empty();
                 data.tranGoods.forEach(function(item, index) {
-                	var row = '<tr>' +
+                   var row = '<tr>' +
                     '<td>' + item.goods_num + '</td>' +
                     '<td>' + item.itemList[0].item_name + '</td>' +
                     '<td><input type="text" class="form-control form-control-sm inventory-input" data-row="' + index + '" data-goods-num="' + item.goods_num + '" readonly></td>' +
@@ -342,7 +342,7 @@ $('#modal1-table tbody').on('click', 'tr', function() {
 
     function loadInventoryData(rowIndex, goods_num) {
         $.ajax({
-            url: "/stock/invenList",
+            url: "/adjustment/returnAdd",
             type: "GET",
             data: { goods_num: goods_num },
             dataType: "json",
@@ -374,17 +374,17 @@ $('#modal1-table tbody').on('click', 'tr', function() {
     }
 
     // 테이블 데이터를 JSON으로 변환
-	function dataChangeJSON() {
+   function dataChangeJSON() {
         var tableRows = $('#tableBody tr');
         var tableData = [];
         
         tableRows.each(function() {
-        	  var row = $(this);
+             var row = $(this);
               var inven_num = row.find('td:eq(2) input').val(); // 재고번호
               var inven_qty = row.find('td:eq(3)').text(); // 수량
 
               var rowData = {
-       		   	 inven_num: inven_num,
+                    inven_num: inven_num,
                  inven_qty: inven_qty,
             };
             
@@ -410,5 +410,5 @@ $('#modal1-table tbody').on('click', 'tr', function() {
 });
 </script>
 
-<%@ include file="../include/footer.jsp" %>
+<%@ include file="../../include/footer.jsp" %>
 </html>

@@ -83,7 +83,19 @@
 
 	<!-- 거래처 리스트 출력 -->
 	<select id="cliListALL" resultType="ClientVO">
-		select * from client
+	<![CDATA[
+	SELECT * 
+	FROM client
+	ORDER BY cli_id
+	LIMIT #{pageStart}, #{pageSize}
+	]]>
+	</select>
+	
+	<select id="totalClientCount" resultType="int">
+	<![CDATA[
+	SELECT COUNT(*)
+	FROM client
+	]]>
 	</select>
 
 	<!-- 품목 리스트 출력 -->
@@ -94,7 +106,7 @@
 	JOIN item_code ic ON i.item_cate_code = ic.s_cate_item_code
 	JOIN code c ON c.group_code = ic.m_cate_item_code
 	ORDER BY i.item_num
-	LIMIT #{page}, #{pageSize}
+	LIMIT #{pageStart}, #{pageSize}
 	]]>
 	</select>
 	
@@ -105,7 +117,7 @@
 	JOIN item_code ic ON i.item_cate_code = ic.s_cate_item_code
 	JOIN code c ON c.group_code = ic.m_cate_item_code
 	]]>
-</select>
+	</select>
 	
 	
 	
@@ -219,6 +231,7 @@
 		where s_cate_wh_code = #{s_cate_wh_code}
 	</select>
 	
+	<!-- 창고 정보 수정 -->
 	<update id="updateWhCode">
 		update warehouse_code
 		set s_cate_wh_name=#{s_cate_wh_name}, wh_tel=#{wh_tel}, wh_postCode=#{wh_postCode}, wh_add1=#{wh_add1}, wh_add2=#{wh_add2}, wh_add3=#{wh_add3},
@@ -226,6 +239,7 @@
 		where s_cate_wh_code=#{s_cate_wh_code}
 	</update>
    	
+	<!--  재고 조회 -->
    	<select id="whInvenList" parameterType="String" resultMap="invenMap">
    		select inv.inven_num, inv.wh_num, inv.goods_num, inv.inven_qty, wa.wh_name, wa.wh_zone, wa.wh_rack, wa.wh_row, wa.wh_column
 		from inventory inv
@@ -233,4 +247,42 @@
 		where inv.wh_num=#{wh_num};
    	</select>
    	
+<!--    	dlk -->
+<!--     <select id="getAllWarehouses" resultType="WarehouseVO"> -->
+<!--         SELECT * FROM warehouse -->
+<!--     </select> -->
+
+	<!-- 창고 zone 불러오기 -->
+    <select id="getZones" parameterType="String" resultType="String">
+        SELECT DISTINCT wh_zone FROM warehouse WHERE wh_code = #{wh_code}
+    </select>
+   	
+	<!-- 창고 rack 불러오기 -->
+   	<select id="getRacks" parameterType="map" resultType="String">
+        SELECT DISTINCT wh_rack FROM warehouse WHERE wh_code = #{wh_code} AND wh_zone = #{wh_zone}
+    </select>
+    
+    <!-- 창고 열 불러오기 -->
+    <select id="getColumns" parameterType="map" resultType="String">
+        SELECT DISTINCT wh_column
+        FROM warehouse
+        WHERE wh_code = #{wh_code} AND wh_zone = #{wh_zone} AND wh_rack = #{wh_rack}
+        order by wh_column ASC
+    </select>
+
+    <!-- 창고 행 불러오기 -->
+    <select id="getRows" parameterType="map" resultType="String">
+        SELECT DISTINCT wh_row
+        FROM warehouse
+        WHERE wh_code = #{wh_code} AND wh_zone = #{wh_zone} AND wh_rack = #{wh_rack}
+        order by wh_row ASC
+    </select>
+    
+	<!-- 창고 -> 재고 불러오기 -->
+    <select id="getInventory" parameterType="String" resultMap="invenMap">
+   		select inv.inven_num, inv.wh_num, inv.goods_num, inv.inven_qty, wa.wh_name, wa.wh_zone, wa.wh_rack, wa.wh_row, wa.wh_column
+		from inventory inv
+		join warehouse wa on inv.wh_num = wa.wh_num
+		where inv.wh_num=#{wh_num};
+   	</select>
 </mapper>

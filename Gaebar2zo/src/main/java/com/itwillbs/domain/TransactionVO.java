@@ -2,6 +2,7 @@ package com.itwillbs.domain;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
@@ -38,5 +39,12 @@ public class TransactionVO {
 	private List<UsersVO> userList;
 	
 	private List<GoodsVO> goodsList;
+	
+	
+	public void setInchangeList(List<InventoryChangeVO> inchangeList) {
+	    this.inchangeList = new ArrayList<>(inchangeList);
+	}
+	
+	
 	
 }

@@ -116,11 +116,12 @@
 
 <!-- 	거래번호 -> 모든 정보 호출 -->
  	<select id="getTransactionDetails" resultMap="transMap">
-        SELECT tra.tran_num, tra.top_tran_num, tra.cli_num, cli.cli_name, tra.rec_date, tra.rel_date, tra.pic_username,users.username, users.user_per_name
+        SELECT tra.tran_num, tra.top_tran_num, tra.cli_num, cli.cli_name,tra.tran_date, tra.rec_date, tra.rel_date, tra.pic_username,users.username, users.user_per_name
         FROM transaction tra
         JOIN client cli ON tra.cli_num = cli.cli_num
         JOIN users users ON tra.pic_username = users.username
-        WHERE top_tran_num = #{tran_num}
+        WHERE tran_num = #{tran_num}
+        
     </select>
 
 <!-- 	거래번호 -> 품목 정보 호출 -->
@@ -133,13 +134,38 @@
 		where tra.tran_num=#{tran_num}
     </select>
 
-    <update id="updateStatus">
-        UPDATE transaction
-        SET pro_status = #{pro_status}
-        WHERE tran_num IN
-        <foreach item="tran_num" index="index" collection="tran_nums" open="(" separator="," close=")">
-            #{tran_num}
-        </foreach>
+
+
+	<!-- 상태업데이트_입고 -->
+    <update id="updateRecevingStatus">
+		    UPDATE transaction
+		    SET pro_status = #{pro_status},
+		        rec_date = CASE 
+		                     WHEN #{pro_status} = '입고 완료' THEN NOW()
+		                     WHEN #{pro_status} = '입고 예정' THEN NULL
+		                     ELSE rec_date
+		                   END
+		    WHERE tran_num IN
+		    <foreach item="tran_num" index="index" collection="tran_nums" open="(" separator="," close=")">
+		        #{tran_num}
+		    </foreach>
+    </update>
+
+
+
+	<!-- 상태업데이트_출고 -->
+    <update id="updateReleaseStatus">
+		    UPDATE transaction
+		    SET pro_status = #{pro_status},
+		        rel_date = CASE 
+		                     WHEN #{pro_status} = '출고 완료' THEN NOW()
+		                     WHEN #{pro_status} = '출고 준비' THEN NULL
+		                     ELSE rel_date
+		                   END
+		    WHERE tran_num IN
+		    <foreach item="tran_num" index="index" collection="tran_nums" open="(" separator="," close=")">
+		        #{tran_num}
+		    </foreach>
     </update>
     
     <delete id="deleteTran">
@@ -149,10 +175,6 @@
    			#{tran_num}
    		</foreach>
    	</delete>
-
-
-
-
 
 
 

@@ -59,6 +59,7 @@ public class BasicInfoController {
 
 	    List<ItemVO> itemList = bService.itemListAll(cri);
 	    logger.debug(" size : " + itemList.size());
+	    logger.debug(" itemList : " + itemList);
 
 	    // 하단 페이징처리 정보객체 생성
 	    PageVO pageVO = new PageVO();
@@ -69,12 +70,10 @@ public class BasicInfoController {
 	    // 연결된 뷰페이지로 정보 전달
 	    model.addAttribute("itemList", itemList);
 	    model.addAttribute("pageVO", pageVO);
-//	    model.addAttribute("searchType", searchType);
-//	    model.addAttribute("keyword", keyword);
+	    model.addAttribute("searchType", searchType);
+	    model.addAttribute("keyword", keyword);
 
-	    logger.debug("@@@@@@@ itemList : " + itemList);
-
-	    return "basicInfo/itemList";
+	    return "/basicInfo/itemList";
 	}
 	
 
@@ -150,9 +149,17 @@ public class BasicInfoController {
 	// ----------------------------------거래처 관리------------------------------------------------
 	//http://localhost:8088/basicInfo/clientList
 	@RequestMapping(value="/clientList",method=RequestMethod.GET)
-	public void clientList_GET(Criteria cri, Model model) throws Exception{
+	public String clientList_GET(Criteria cri, Model model,
+            @RequestParam(value="searchType", required = false) String searchType,
+            @RequestParam(value="keyword", required = false) String keyword) throws Exception{
 		logger.debug(" clientList_GET() 실행 ");
 		logger.debug(" cri " + cri);
+		
+	    // 검색 기능
+	    if(searchType != null && keyword != null && !keyword.trim().isEmpty()) {
+	        cri.setSearchType(searchType);
+	        cri.setKeyword(keyword);
+	    }
 		
 		List<ClientVO> clientList = bService.cliListAll(cri);
 	    logger.debug(" size : " + clientList.size());
@@ -163,8 +170,11 @@ public class BasicInfoController {
 	    logger.debug(" cri " + pageVO.getCri());
 
 	    model.addAttribute("clientList", clientList);	
-	    model.addAttribute("pageVO", pageVO);
-		
+	    model.addAttribute("pageVO", pageVO);    
+	    model.addAttribute("searchType", searchType);
+	    model.addAttribute("keyword", keyword);
+	    
+	    return "/basicInfo/clientList";
 	}
 
 	// 거래처 추가 - 등록 페이지로 이동

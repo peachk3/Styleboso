@@ -28,6 +28,7 @@ import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryChangeVO;
 import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.PageVO;
+import com.itwillbs.domain.StatusUpdateRequest;
 import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.service.StockService;
@@ -414,6 +415,38 @@ public class StockController {
 
 		
 
+	  
+
+		// 입고 상태 업데이트 
+		@RequestMapping(value="/updateRecevingStatus",method=RequestMethod.POST)
+		@ResponseBody
+	    public ResponseEntity<String> updateRecevingStatus(@RequestBody StatusUpdateRequest request) {
+		        try {
+		            sService.updateRecevingStatus(request.getTran_nums(), request.getPro_status(),request.getTop_tran_nums());
+		            return ResponseEntity.ok("Status updated successfully");
+		        } catch (Exception e) {
+		            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating status");
+		        }
+		    }
+
+		// 출고 상태 업데이트 
+		@RequestMapping(value="/updateReleaseStatus",method=RequestMethod.POST)
+		@ResponseBody
+	    public ResponseEntity<String> updateReleaseStatus(@RequestBody StatusUpdateRequest request) {
+		        try {
+		            sService.updateReleaseStatus(request.getTran_nums(), request.getPro_status(),request.getTop_tran_nums());
+		            return ResponseEntity.ok("Status updated successfully");
+		        } catch (Exception e) {
+		            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating status");
+		        }
+		    }
+
+
+	  
+	  
+	  
+	  
+	  
 
 
 }

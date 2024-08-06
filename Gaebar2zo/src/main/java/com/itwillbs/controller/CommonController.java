@@ -134,31 +134,18 @@ public class CommonController {
 	}
 
 
-	// 입고 상태 업데이트 
-	@RequestMapping(value="/updateRecevingStatus",method=RequestMethod.POST)
+
+	// 상태 업데이트 
+	@RequestMapping(value="/updateStatus",method=RequestMethod.POST)
 	@ResponseBody
-    public ResponseEntity<String> updateRecevingStatus(@RequestBody StatusUpdateRequest request) {
+    public ResponseEntity<String> updateStatus(@RequestBody StatusUpdateRequest request) {
 	        try {
-	            cService.updateRecevingStatus(request.getTran_nums(), request.getPro_status());
+	            cService.updateStatus(request.getTran_nums(), request.getPro_status());
 	            return ResponseEntity.ok("Status updated successfully");
 	        } catch (Exception e) {
 	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating status");
 	        }
 	    }
-
-	// 출고 상태 업데이트 
-	@RequestMapping(value="/updateReleaseStatus",method=RequestMethod.POST)
-	@ResponseBody
-    public ResponseEntity<String> updateReleaseStatus(@RequestBody StatusUpdateRequest request) {
-	        try {
-	            cService.updateReleaseStatus(request.getTran_nums(), request.getPro_status());
-	            return ResponseEntity.ok("Status updated successfully");
-	        } catch (Exception e) {
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating status");
-	        }
-	    }
-
-
 
 
 

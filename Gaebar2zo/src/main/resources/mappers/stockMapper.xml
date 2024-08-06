@@ -212,8 +212,20 @@ select distinct
 		SET tran_date=#{tran_date},pic_username=#{pic_username}
 		WHERE tran_num=#{tran_num}
 	</update>
+	
+	<!-- 입고 등록시 상위거래번호 상태 변경 -->
+		<update id="updateReceivingTopTranstatus">
+			UPDATE transaction
+			set pro_status = "입고 예정"
+			where tran_num=#{top_tran_num}		
+		</update>
 
-
+	<!-- 출고 등록시 상위거래번호 상태 변경 -->
+		<update id="updateReleaseTopTranstatus">
+			UPDATE transaction
+			set pro_status = "출고 준비"
+			where tran_num=#{top_tran_num}		
+		</update>
 
 
 	<!-- InventoryVO resultMap -->
@@ -480,7 +492,66 @@ select distinct
 
 
 
+	<!-- 상태업데이트_입고 -->
+    <update id="updateRecevingStatus">
+		    UPDATE transaction
+		    SET pro_status = #{pro_status},
+		        rec_date = CASE 
+		                     WHEN #{pro_status} = '입고 완료' THEN NOW()
+		                     WHEN #{pro_status} = '입고 예정' THEN NULL
+		                     ELSE rec_date
+		                   END
+		    WHERE tran_num IN
+		    <foreach item="tran_num" index="index" collection="tran_nums" open="(" separator="," close=")">
+		        #{tran_num}
+		    </foreach>
+    </update>
+	
+	<!-- 상태 업데이트시_상위거래번호 상태도 변경 -->
+	<update id="updateRecevingTopTranStatus">
+	    UPDATE transaction
+	    SET pro_status = #{pro_status},
+	        rec_date = CASE 
+	                      WHEN #{pro_status} = '입고 완료' THEN NOW()
+	                      WHEN #{pro_status} = '입고 예정' THEN NULL
+	                      ELSE rec_date
+	                    END
+	    WHERE tran_num IN
+	    <foreach item="top_tran_num" index="index" collection="top_tran_nums" open="(" separator="," close=")">
+	        #{top_tran_num}
+	    </foreach>
+	</update>
+	
 
+	<!-- 상태업데이트_출고 -->
+    <update id="updateReleaseStatus">
+		    UPDATE transaction
+		    SET pro_status = #{pro_status},
+		        rel_date = CASE 
+		                     WHEN #{pro_status} = '출고 완료' THEN NOW()
+		                     WHEN #{pro_status} = '출고 준비' THEN NULL
+		                     ELSE rel_date
+		                   END
+		    WHERE tran_num IN
+		    <foreach item="tran_num" index="index" collection="tran_nums" open="(" separator="," close=")">
+		        #{tran_num}
+		    </foreach>
+    </update>
 
+	
+	<!-- 상태 업데이트시_상위거래번호 상태도 변경 -->
+	<update id="updateReleaseTopTranStatus">
+	    UPDATE transaction
+	    SET pro_status = #{pro_status},
+	        rel_date = CASE 
+	                      WHEN #{pro_status} = '출고 완료' THEN NOW()
+	                      WHEN #{pro_status} = '출고 준비' THEN NULL
+	                      ELSE rel_date
+	                    END
+	    WHERE tran_num IN
+	    <foreach item="top_tran_num" index="index" collection="top_tran_nums" open="(" separator="," close=")">
+	        #{top_tran_num}
+	    </foreach>
+	</update>
 
 </mapper>

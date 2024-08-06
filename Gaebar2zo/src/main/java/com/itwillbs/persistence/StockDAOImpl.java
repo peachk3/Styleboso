@@ -238,18 +238,71 @@ public class StockDAOImpl implements StockDAO{
 		return sqlSession.update(NAMESPACE + "updateDetails", changetrvo);
 	}
 
+	@Override
+	public void updateReceivingTopTranstatus(TransactionVO tvo) throws Exception {
 
-//	@Override
-//	public void stockReceivingAdd_TransactionGoodsVO(TransactionGoodsVO newTgvo) {
-//		logger.debug("DAO : salesOrderAdd_TransactionGoodsVO() 호출");
-//		
-//		logger.debug("tgvo : "+ newTgvo);
-//		
-//		sqlSession.insert(NAMESPACE + "stockReceivingAdd_TransactionGoodsVO", newTgvo);
-//		
-//		logger.debug("DAO : 수주 거래 품목 테이블 등록 완료");	
-//	}
+		logger.debug("DAO :updateTopTranstatus(TransactionVO tvo)");
+		logger.debug(" 상위 거래번호 상태 변경");
+		
+		sqlSession.update(NAMESPACE+"updateReceivingTopTranstatus",tvo);
+	}
 
+	@Override
+	public void updateReleaseTopTranstatus(TransactionVO tvo) throws Exception {
+		logger.debug("DAO :updateReleaseTopTranstatus(TransactionVO tvo)");
+		logger.debug(" 상위 거래번호 상태 변경");
+		
+		sqlSession.update(NAMESPACE+"updateReleaseTopTranstatus",tvo);
+		
+	}
+
+
+	@Override
+	public void updateRecevingStatus(List<String> tran_nums, String pro_status) throws Exception {
+		logger.debug("DAO : updateStatus(List<String> tran_nums, String pro_status) 호출 ");
+		
+		Map<String, Object> params = new HashMap<>();
+        params.put("tran_nums", tran_nums);
+        params.put("pro_status", pro_status);
+        sqlSession.update(NAMESPACE+"updateRecevingStatus", params);
+		
+		
+	}
+	
+	@Override
+	public void updateRecevingTopTranStatus(List<String> top_tran_nums, String pro_status) throws Exception {
+	    logger.debug("DAO : updateRecevingTopTranStatus(List<String> top_tran_nums, String pro_status) 호출 ");
+	    
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("top_tran_nums", top_tran_nums);
+	    params.put("pro_status", pro_status);
+	    sqlSession.update(NAMESPACE+"updateRecevingTopTranStatus", params);
+	}
+	
+	
+	
+	@Override
+	public void updateReleaseStatus(List<String> tran_nums, String pro_status) throws Exception {
+		logger.debug("DAO : updateReleaseStatus(List<String> tran_nums, String pro_status) 호출 ");
+		
+		Map<String, Object> params = new HashMap<>();
+        params.put("tran_nums", tran_nums);
+        params.put("pro_status", pro_status);
+        sqlSession.update(NAMESPACE+"updateReleaseStatus", params);
+		
+		
+	}
+
+	@Override
+	public void updateReleaseTopTranStatus(List<String> top_tran_nums, String pro_status) throws Exception {
+		  logger.debug("DAO : updateReleaseTopTranStatus(List<String> top_tran_nums, String pro_status) 호출 ");
+		    
+		    Map<String, Object> params = new HashMap<>();
+		    params.put("top_tran_nums", top_tran_nums);
+		    params.put("pro_status", pro_status);
+		    sqlSession.update(NAMESPACE+"updateReleaseTopTranStatus", params);
+		
+	}
 
 
 

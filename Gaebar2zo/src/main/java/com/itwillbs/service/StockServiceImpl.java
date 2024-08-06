@@ -178,6 +178,8 @@ public class StockServiceImpl implements StockService{
 	    sdao.stockReceivingAdd_TransactionVO(tvo);
 	    logger.debug("transaction 테이블에 데이터 삽입 완료");
 	    
+	    logger.debug("top_tran_num : "+tvo.getTop_tran_num());
+	    sdao.updateReceivingTopTranstatus(tvo);
 	    
 		List<InventoryChangeVO> icvoList = tvo.getInchangeList();
 		
@@ -251,6 +253,11 @@ public class StockServiceImpl implements StockService{
 	    sdao.stockReleaseAdd_TransactionVO(tvo);
 	    logger.debug("transaction 테이블에 데이터 삽입 완료");
 	    
+	    logger.debug("top_tran_num : "+tvo.getTop_tran_num());
+	    sdao.updateReleaseTopTranstatus(tvo);
+
+	    
+	    
 	    
 		List<InventoryChangeVO> icvoList = tvo.getInchangeList();
 		
@@ -299,7 +306,26 @@ public class StockServiceImpl implements StockService{
 	
 	
 	
-	
+	@Transactional
+	@Override
+	public void updateRecevingStatus(List<String> tran_nums, String pro_status, List<String> top_tran_nums) throws Exception {
+		logger.debug(" 입고 상태 업데이트");
+		
+	    sdao.updateRecevingTopTranStatus(top_tran_nums, pro_status);
+		
+		sdao.updateRecevingStatus(tran_nums, pro_status);
+	}
+
+	@Override
+	public void updateReleaseStatus(List<String> tran_nums, String pro_status,List<String> top_tran_nums) throws Exception {
+		logger.debug(" 출고 상태 업데이트");
+		
+	    sdao.updateReleaseTopTranStatus(top_tran_nums, pro_status);
+
+		sdao.updateReleaseStatus(tran_nums, pro_status);		
+	}
+
+
 	
 	
 	

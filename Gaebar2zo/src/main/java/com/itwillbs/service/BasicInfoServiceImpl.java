@@ -197,6 +197,15 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		return bidao.getInventory(wh_num);
 	}
 
+	// 창고 -> zone 추가
+	@Override
+	public String addZone(String wh_code, String wh_name) throws Exception {
+		logger.debug(" addZone() 실행 ");
+		
+		return bidao.addZone(wh_code, wh_name);
+	}
+	
+	// 창고 -> rack 추가
 	@Override
 	public String addRack(String wh_code, String wh_zone, String wh_name) throws Exception {
 		logger.debug(" addRack() 실행 ");
@@ -205,6 +214,5 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		return bidao.addRack(wh_code, wh_zone, wh_name);
 	}
 
-	
 	
 }

@@ -36,7 +36,8 @@
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
       <button class="btn btn-primary" type="button" onclick="">검색</button>
-      <button class="btn btn-primary" id="registWhBtn" name="registWhBtn" type="button" >등록</button>
+      <button class="btn btn-primary" id="registWhZoneBtn" name="registWhZoneBtn" type="button" >Zone 등록</button>
+      <button class="btn btn-primary" id="registWhBtn" name="registWhBtn" type="button" >Rack 등록</button>
       <button class="btn btn-primary" id="deleteClientBtn" name="deleteClientBtn" type="button">삭제</button>
    </div>
 
@@ -98,6 +99,50 @@ const header = $("meta[name='_csrf_header']").attr("content");
 const name = $("#userName").val();
 
 $(document).ready(function() {
+	
+	$('#registWhZoneBtn').click(function(){
+        var wh_code = $('#warehouseSelect').val();
+        var fullWhName = $('#warehouseSelect option:selected').data('wh-name');
+        
+        // 앞 두 글자만 추출
+        var wh_name = fullWhName ? fullWhName.substring(0, 2) : '';
+        
+        if (wh_code) {
+            $.ajax({
+                url: '/basicInfo/addZone',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                type: 'POST',
+                dataType: 'json',
+                data: { wh_code: wh_code, wh_name: wh_name },
+                success: function(data) {
+                    console.log('Response data:', data);
+                    if (data.success) {
+                    	console.log('Raw newZone data:', data.newZone);
+                    	
+                    	const asciiValues = data.newZone;
+                    	
+                    	let newZoneStr = String.fromCharCode(data.newZone);
+                        
+                    	console.log(newZoneStr);
+                        alert("Zone이 성공적으로 추가되었습니다.");
+                        // 새로 추가된 렉을 UI에 반영
+                         $('#zoneSelect').append('<option value="' + newZoneStr + '">' + newZoneStr + '</option>');
+                        // Optional: column과 row도 업데이트
+                    } else {
+                        alert("zone 추가에 실패했습니다.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error adding rack:', error);
+                    alert('오류 발생: zone을 추가할 수 없습니다');
+                }
+            });
+        } else {
+            alert('창고 선택하세요.');
+        }
+    });
     
 	$('#registWhBtn').click(function(){
         var wh_code = $('#warehouseSelect').val();
@@ -137,6 +182,7 @@ $(document).ready(function() {
             alert('창고와 구역을 선택하세요.');
         }
     });
+
 
 	
     // 창고 선택

@@ -77,6 +77,7 @@ public class CommonDAOImpl implements CommonDAO{
         return sqlSession.selectList(NAMESPACE + "getTransactionGoods", tran_num);
 	}
 
+
 	@Override
 	public void updateStatus(List<String> tran_nums, String pro_status) throws Exception {
 		logger.debug("DAO : updateStatus(List<String> tran_nums, String pro_status) 호출 ");

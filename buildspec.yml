@@ -10,11 +10,12 @@ phases:
   pre_build:
     commands:
       - echo Build started on `date`
-      - cd Styleboso && mvn clean install
+      - cd Styleboso
+      - mvn clean install
   build:
     commands:
       - echo Packaging application
-      - mv target/controller-1.0.0-BUILD-SNAPSHOT.war Styleboso.war
+      - mv Styleboso/target/controller-1.0.0-BUILD-SNAPSHOT.war Styleboso.war
   post_build:
     commands:
       - echo Build completed on `date`

@@ -101,14 +101,15 @@ $(document).ready(function() {
         validatePasswordMatch();
     });
 
-    $('#emailCheck').on('input', function() {
+    $('#user_email').on('input', function() {
         validateEmail();
     });
 
-    $('#inputTel').on('input', function() {
+    $('#user_phone').on('input', function() {
         validateCheckPhone();
     });
 
+    // 여기서부터 문제발생~!
     // 폼 제출 시 모든 유효성 검사 및 중복 체크 확인
     $('#registerForm').on('submit', function(event) {
         event.preventDefault(); // 폼 제출 막음
@@ -207,7 +208,7 @@ $(document).ready(function() {
     }
 
     function validateEmail() {
-        var email = $('#emailCheck').val();
+        var email = $('#user_email').val();
         var emailError = $('#emailError');
         var emailExists = $('#emailExists');
         var emailAvailable = $('#emailAvailable');

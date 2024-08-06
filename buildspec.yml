@@ -15,12 +15,12 @@ phases:
   build:
     commands:
       - echo Packaging application
-      - mv Styleboso/target/controller-1.0.0-BUILD-SNAPSHOT.war Styleboso.war
+      - mv Styleboso/target/controller-1.0.0-BUILD-SNAPSHOT.war myapp.war
   post_build:
     commands:
       - echo Build completed on `date`
 artifacts:
   files:
-    - Styleboso.war
+    - myapp.war
     - appspec.yml
     - scripts/*

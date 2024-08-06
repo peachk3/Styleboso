@@ -76,19 +76,12 @@ public class CommonServiceImpl implements CommonService{
 	}
 
 	@Override
-	public void updateRecevingStatus(List<String> tran_nums, String pro_status) throws Exception {
-		logger.debug(" 입고 상태 업데이트");
+	public void updateStatus(List<String> tran_nums, String pro_status) throws Exception {
+		logger.debug(" 상태 업데이트");
 		
-		cdao.updateRecevingStatus(tran_nums, pro_status);
+		cdao.updateStatus(tran_nums, pro_status);
 	}
-
-	@Override
-	public void updateReleaseStatus(List<String> tran_nums, String pro_status) throws Exception {
-		logger.debug(" 출고 상태 업데이트");
-		
-		cdao.updateReleaseStatus(tran_nums, pro_status);		
-	}
-
+	
 	@Override
 	public void deleteTran(List<String> tran_num) throws Exception {
 		logger.debug("거래 리스트 삭제");

@@ -38,11 +38,5 @@ public interface CommonService {
 	// 거래 리스트 삭제
 	public void deleteTran(List<String> tran_num) throws Exception;
 
-  // 입고 상태 업데이트
-	public void updateRecevingStatus(List<String> tran_nums, String pro_status) throws Exception;
-	
-	// 출고 상태 업데이트
-	public void updateReleaseStatus(List<String> tran_nums, String pro_status) throws Exception;
-
 
 }

@@ -82,6 +82,13 @@ public class SalesDAOImpl implements SalesDAO{
 		logger.debug("DAO : 수주 거래 품목 테이블 수정 완료");
 		
 	}
+	
+	@Override
+	public List<TransactionVO> purchaseOrderList() throws Exception {
+		logger.debug("DAO : purchaseOrderList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "purchaseOrderList");
+	}
 
 	@Override
 	public void purchaseOrderAdd_TransactionVO(TransactionVO tvo) throws Exception {
@@ -104,6 +111,37 @@ public class SalesDAOImpl implements SalesDAO{
 		sqlSession.insert(NAMESPACE + "purchaseOrderAdd_TransactionGoodsVO", tgvo);
 		
 		logger.debug("DAO : 발주 거래 품목 테이블 등록 완료");	
+		
+	}
+	
+	@Override
+	public List<TransactionVO> purchaseOrderInfo(String tran_num) throws Exception {
+		logger.debug("DAO : purchaseOrderInfo() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "purchaseOrderInfo", tran_num);
+	}
+	
+	@Override
+	public void purchaseOrderUpdate_TransactionVO(TransactionVO tvo) throws Exception {
+		logger.debug("DAO : purchaseOrderUpdate_TransactionVO() 호출");
+		
+		logger.debug("tvo : "+ tvo);
+		
+		sqlSession.insert(NAMESPACE + "purchaseOrderUpdate_TransactionVO", tvo);
+		
+		logger.debug("DAO : 발주 거래 테이블 수정 완료");
+		
+	}
+	
+	@Override
+	public void purchaseOrderUpdate_TransactionGoodsVO(TransactionGoodsVO tgvo) throws Exception {
+		logger.debug("DAO : purchaseOrderUpdate_TransactionGoodsVO() 호출");
+		
+		logger.debug("tgvo : "+ tgvo);
+		
+		sqlSession.insert(NAMESPACE + "purchaseOrderrUpdate_TransactionGoodsVO", tgvo);
+		
+		logger.debug("DAO : 발주 거래 품목 테이블 수정 완료");
 		
 	}
 

@@ -22,14 +22,26 @@ public interface SalesDAO {
 	// 수주 정보 수정_TransactionVO
 	public void salesOrderUpdate_TransactionVO(TransactionVO tvo) throws Exception;
 	
-	// 수주 등록 수정_TransactionGoodsVO
+	// 수주 정보 수정_TransactionGoodsVO
 	public void salesOrderUpdate_TransactionGoodsVO(TransactionGoodsVO newTgvo) throws Exception;
+
+	// 발주 리스트
+	public List<TransactionVO> purchaseOrderList() throws Exception;
 	
 	// 발주 등록_TransactionVO
 	public void purchaseOrderAdd_TransactionVO(TransactionVO tvo) throws Exception;
 	
 	// 발주 등록_TransactionGoodsVO
 	public void purchaseOrderAdd_TransactionGoodsVO(TransactionGoodsVO newTgvo) throws Exception;
+	
+	// 발주 정보
+	public List<TransactionVO> purchaseOrderInfo(String tran_num) throws Exception;
+	
+	// 발주 정보 수정_TransactionVO
+	public void purchaseOrderUpdate_TransactionVO(TransactionVO tvo) throws Exception;
+	
+	// 발주 정보 수정_TransactionGoodsVO
+	public void purchaseOrderUpdate_TransactionGoodsVO(TransactionGoodsVO newTgvo) throws Exception;
 
 	// GetTranNum 추출
 	public String GetTranNum(TransactionVO tvo) throws Exception;

@@ -144,7 +144,13 @@
         </foreach>
     </update>
 
-
+	<delete id="deleteTran">
+   		delete from transaction
+   		where tran_num in
+   		<foreach collection="list" item="tran_num" open="(" separator="," close=")">
+   			#{tran_num}
+   		</foreach>
+   	</delete>
 
 
 

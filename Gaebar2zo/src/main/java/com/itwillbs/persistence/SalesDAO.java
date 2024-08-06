@@ -1,9 +1,17 @@
 package com.itwillbs.persistence;
 
+import java.util.List;
+
 import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 
 public interface SalesDAO {
+
+	// 수주 리스트
+	public List<TransactionVO> salesOrderList() throws Exception;
+	
+	// 수주 정보
+	public List<TransactionVO> salesOrderInfo(String tran_num) throws Exception;
 
 	// 수주 등록_TransactionVO
 	public void salesOrderAdd_TransactionVO(TransactionVO tvo) throws Exception;
@@ -19,6 +27,7 @@ public interface SalesDAO {
 
 	// GetTranNum 추출
 	public String GetTranNum(TransactionVO tvo);
+
 
 
 

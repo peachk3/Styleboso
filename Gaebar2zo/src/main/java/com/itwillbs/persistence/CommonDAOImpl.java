@@ -74,20 +74,24 @@ public class CommonDAOImpl implements CommonDAO{
 	public List<TransactionGoodsVO> getTransactionGoods(String tran_num) throws Exception {
 		logger.debug("DAO : getTransactionGoods(String tran_num) 호출");	
 		
-		
         return sqlSession.selectList(NAMESPACE + "getTransactionGoods", tran_num);
 	}
 
 	@Override
-	public void updateRecevingStatus(List<String> tran_nums, String pro_status) throws Exception {
+	public void updateStatus(List<String> tran_nums, String pro_status) throws Exception {
 		logger.debug("DAO : updateStatus(List<String> tran_nums, String pro_status) 호출 ");
 		
 		Map<String, Object> params = new HashMap<>();
         params.put("tran_nums", tran_nums);
         params.put("pro_status", pro_status);
-        sqlSession.update(NAMESPACE+"updateRecevingStatus", params);
+        sqlSession.update(NAMESPACE+"updateStatus", params);
+	}
+
+	@Override
+	public void deleteTran(List<String> tran_num) throws Exception {
+		logger.debug(" deleteTran(List<String> tran_num) 실행");
 		
-		
+		sqlSession.delete(NAMESPACE + "deleteTran", tran_num);
 	}
 
 	@Override

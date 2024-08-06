@@ -74,9 +74,6 @@ public class CommonController {
         return ResponseEntity.ok(response);
     }
 
-	
-	
-	
 	// 거래처 리스트 조회
 	@ResponseBody
 	@RequestMapping(value="/clientList",method=RequestMethod.GET,
@@ -130,9 +127,45 @@ public class CommonController {
 		logger.debug("gList : "+ gList);
 		
 		return gList;
-		
 	}
 
+	// 상태 업데이트 
+	@RequestMapping(value="/updateStatus",method=RequestMethod.POST)
+	@ResponseBody
+    public ResponseEntity<String> updateStatus(@RequestBody StatusUpdateRequest request) {
+        try {
+            cService.updateStatus(request.getTran_nums(), request.getPro_status());
+            return ResponseEntity.ok("Status updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating status");
+        }
+    }
+
+	// 거래 리스트 삭제
+	@ResponseBody
+	@RequestMapping(value = "/deleteTran", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> deleteReceivingList_POST(@RequestBody Map<String, Object> tran_nums) throws Exception {
+		logger.debug("deleteTran_POST() 실행 ");
+		
+		System.out.println(tran_nums);
+		
+		@SuppressWarnings("unchecked")
+        List<String> tran_num = (List<String>) tran_nums.get("tran_num");
+		System.out.println(tran_num);
+
+        if (tran_num == null || tran_num.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("status", "error", "message", "No clients selected"));
+        }
+        logger.debug("@@@@cli_num " + tran_num);
+
+        try {
+        	cService.deleteTran(tran_num);
+            return ResponseEntity.ok(Map.of("status", "success"));
+        } catch (RuntimeException e) {
+        	throw e;
+        }
+		
+	}
 
 	// 입고 상태 업데이트 
 	@RequestMapping(value="/updateRecevingStatus",method=RequestMethod.POST)

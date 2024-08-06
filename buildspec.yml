@@ -16,6 +16,8 @@ phases:
   build:
     commands:
       - echo Packaging application
+      - ls -al
+      - ls Gaebar2zo/target
       - mv Gaebar2zo/target/controller-1.0.0-BUILD-SNAPSHOT.war myapp.war
   post_build:
     commands:

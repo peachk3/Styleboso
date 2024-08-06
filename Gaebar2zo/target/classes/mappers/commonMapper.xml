@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itwillbs.mapper.commonMapper">
+
+	<resultMap type="com.itwillbs.domain.GoodsVO" id="goodsMap">
+		<id property="goods_num" column="goods_num"/>
+		<result property="goods_num" column="goods_num"/>
+		<result property="item_num" column="item_num"/>
+		<result property="goods_color" column="goods_color"/>
+		<result property="goods_size" column="goods_size"/>
+		<collection property="itemList" resultMap="itemMap"></collection>
+	</resultMap>
+
+	<resultMap type="com.itwillbs.domain.ItemVO" id="itemMap">
+		<id property="item_num" column="item_num"/>
+		<result property="item_num" column="item_num"/>
+		<result property="item_cate_code" column="item_cate_code"/>
+		<result property="item_cli_code" column="item_cli_code"/>
+		<result property="item_name" column="item_name"/>
+		<result property="item_mat" column="item_mat"/>
+		<result property="comm" column="comm"/>
+	</resultMap>
+	
+	<resultMap type="com.itwillbs.domain.TransactionVO"
+		id="transMap">
+		<id property="tran_num" column="tran_num" />
+		<result property="tran_num" column="tran_num" />
+		<result property="top_tran_num" column="top_tran_num" />
+		<result property="cli_num" column="cli_num" />
+		<result property="pic_username" column="pic_username" />
+		<result property="tran_date" column="tran_date" />
+		<result property="rec_date" column="rec_date" />
+		<result property="rel_date" column="rel_date" />
+		<result property="due_date" column="due_date" />
+		<result property="pro_status" column="pro_status" />
+		<result property="tran_cate_code" column="tran_cate_code" />
+		<result property="comm" column="comm" />
+		<collection property="itemList" resultMap="itemMap"></collection>
+		<collection property="clientList" resultMap="clientMap"></collection>
+		<collection property="userList" resultMap="userMap"></collection>
+	</resultMap>
+	
+	<resultMap type="com.itwillbs.domain.ClientVO"
+		id="clientMap">
+		<id property="cli_num" column="cli_num" />
+		<result property="cli_num" column="cli_num" />
+		<result property="cli_name" column="cli_name" />
+		<result property="cli_crn" column="cli_crn" />
+		<result property="cli_cate" column="cli_cate" />
+		<result property="cli_ind" column="cli_ind" />
+		<result property="cli_add1" column="cli_add1" />
+		<result property="cli_add2" column="cli_add2" />
+		<result property="cli_tel" column="cli_tel" />
+		<result property="cli_rep" column="cli_rep" />
+		<result property="cli_email" column="cli_email" />
+		<result property="pic_username" column="pic_username" />
+		<result property="cli_id" column="cli_id" />
+	</resultMap>
+
+	<resultMap type="com.itwillbs.domain.UsersVO"
+		id="userMap">
+		<id property="username" column="username" />
+		<result property="username" column="username" />
+		<result property="user_per_name" column="user_per_name" />
+		<result property="password" column="password" />
+		<result property="user_email" column="user_email" />
+		<result property="user_pos" column="user_pos" />
+		<result property="user_phone" column="user_phone" />
+		<result property="enabled" column="enabled" />
+	</resultMap>
+	
+	<resultMap type="com.itwillbs.domain.TransactionGoodsVO"
+		id="tranGoodsMap">
+		<id property="tran_num" column="tran_num" />
+		<id property="goods_num" column="goods_num" />
+		<result property="tran_num" column="tran_num" />
+		<result property="goods_num" column="goods_num" />
+		<result property="goods_qty" column="goods_qty" />
+		<collection property="itemList" resultMap="itemMap"></collection>
+	</resultMap>
+	
+	
+	
+	
+	<!-- 거래처 리스트 조회 -->
+	<select id="clientList" resultType="ClientVO">
+		SELECT cli_num, cli_name FROM client
+	</select>
+	
+	<select id="clientList_cate" resultType="ClientVO">
+		SELECT cli_num, cli_name FROM client where cli_cate in (#{cli_cate})
+	</select>
+	
+	<!-- 담당자 리스트 조회 -->
+	<select id="managerList" resultType="UsersVO">
+		select username, user_per_name
+		from users
+		where username in (select username from authorities where authority = "ROLE_MANAGER")
+	</select>
+	
+	<!-- 제품 리스트 조회 -->
+	<select id="goodsList" resultMap="goodsMap">
+		select goods_num, item_name, goods_size, goods_color
+        from goods g join item i
+        on g.item_num = i.item_num
+        order by goods_num desc;
+	</select>
+
+	<!-- 거래 리스트 조회 -->
+	<select id="tranList" resultType="TransactionVO">
+        select * from transaction
+	</select>
+
+<!-- 	거래번호 -> 모든 정보 호출 -->
+ 	<select id="getTransactionDetails" resultMap="transMap">
+        SELECT tra.tran_num, tra.top_tran_num, tra.cli_num, cli.cli_name,tra.tran_date, tra.rec_date, tra.rel_date, tra.pic_username,users.username, users.user_per_name
+        FROM transaction tra
+        JOIN client cli ON tra.cli_num = cli.cli_num
+        JOIN users users ON tra.pic_username = users.username
+        WHERE tran_num = #{tran_num}
+        
+    </select>
+
+<!-- 	거래번호 -> 품목 정보 호출 -->
+    <select id="getTransactionGoods" resultMap="tranGoodsMap">
+		select trg.tran_num,trg.goods_num,trg.goods_qty,item.item_name
+		from transaction_goods trg
+		join transaction tra on tra.tran_num = trg.tran_num
+		join goods goods on trg.goods_num=goods.goods_num
+		join item item on item.item_num = goods.item_num
+		where tra.tran_num=#{tran_num}
+    </select>
+
+
+
+	<!-- 상태업데이트_입고 -->
+    <update id="updateRecevingStatus">
+		    UPDATE transaction
+		    SET pro_status = #{pro_status},
+		        rec_date = CASE 
+		                     WHEN #{pro_status} = '입고 완료' THEN NOW()
+		                     WHEN #{pro_status} = '입고 예정' THEN NULL
+		                     ELSE rec_date
+		                   END
+		    WHERE tran_num IN
+		    <foreach item="tran_num" index="index" collection="tran_nums" open="(" separator="," close=")">
+		        #{tran_num}
+		    </foreach>
+    </update>
+
+
+
+	<!-- 상태업데이트_출고 -->
+    <update id="updateReleaseStatus">
+		    UPDATE transaction
+		    SET pro_status = #{pro_status},
+		        rel_date = CASE 
+		                     WHEN #{pro_status} = '출고 완료' THEN NOW()
+		                     WHEN #{pro_status} = '출고 준비' THEN NULL
+		                     ELSE rel_date
+		                   END
+		    WHERE tran_num IN
+		    <foreach item="tran_num" index="index" collection="tran_nums" open="(" separator="," close=")">
+		        #{tran_num}
+		    </foreach>
+    </update>
+
+
+
+
+</mapper>

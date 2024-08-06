@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.itwillbs.mapper.systemMapper">
+
+<!-- join절을 사용하기 위한 resultMap 모두 직접 설정하기 -->
+<!--  itemCodeVo -->
+<resultMap type="com.itwillbs.domain.ItemCodeVO" id="itemCGMap">
+	<id property="s_cate_item_code" column="s_cate_item_code" />
+	<result property="s_cate_item_name" column="s_cate_item_name"/>
+	<result property="m_cate_item_code" column="m_cate_item_code"/>
+	<collection property="codeGroupList" resultMap="codeGroupMap"></collection>
+</resultMap>
+
+<!-- CodeVO -->
+<resultMap type="com.itwillbs.domain.CodeVO" id="codeGroupMap">
+	<result property="group_code" column="group_code"/>
+	<result property="group_name" column="group_name"/>
+</resultMap>
+
+<!-- 시스템관리 (사용자 등록 - 전체리스트) -->
+<select id="employeeListAll" resultType="UsersVO">
+	select * from users
+</select>
+
+<!-- 이메일 중복체크 -->
+<select id="emailCheck" parameterType="String" resultType="int" > 
+	select count (*) from users
+	where user_email =#{user_email}
+</select>
+
+
+
+
+
+<!-- 공통코드 전체 리스트 출력 -->
+<select id="codeListAll" resultType="CodeVO">
+	select * from code
+</select>
+
+<!-- 공통코드 등록 -->
+<insert id="saveGroupCode" parameterType="CodeVO">
+	insert into code(group_code, group_name) 
+	values(#{group_code}, #{group_name})
+</insert>
+
+
+
+
+
+
+<!--  공통코드 전체 리스트에서 품목공통 코드 리스트 -->
+<select id="itemCodeListAll" resultType="ItemCodeVO">
+	select * from item_code 
+	where m_cate_item_code = #{group_code}
+</select>
+
+<!-- 품목공통코드 리스트 (수정/업데이트)  -->
+<update id="updateItemCode">
+	update item_code
+	set  s_cate_item_name=#{s_cate_item_name}
+	where s_cate_item_code=#{s_cate_item_code};
+</update>
+
+<!-- 공통 품목코드 리스트 (삭제) -->
+<delete id="deleteItemCode">
+	delete from item_code
+    where s_cate_item_code in
+    <foreach item="item_code" collection="list" open="(" separator="," close=")">
+        #{item_code}
+    </foreach> 
+</delete>
+
+<!-- 공통 품목코드 리스트 (등록) -->
+
+<insert id="saveItemCode" parameterType="ItemCodeVO">
+	insert into item_code (s_cate_item_code, s_cate_item_name, m_cate_item_code)
+    values (
+        #{s_cate_item_code}, 
+        #{s_cate_item_name}, 
+        substring(#{s_cate_item_code}, 1, 2)
+    )
+</insert>
+
+<!-- 공통품목코드 유효성&중복체크 검사 -->
+ <!-- <select id="getItemCodeAndCheck" parameterType="String" resultType="ItemCodeVO">
+	 select 
+        ic.s_cate_item_code, 
+        ic.s_cate_item_name, 
+        ic.m_cate_item_code
+    from 
+        item_code ic
+    join 
+        code c 
+    on 
+        ic.m_cate_item_code = c.group_code
+    where 
+        ic.s_cate_item_code = #{group_code}
+</select> -->
+ 
+
+
+
+
+
+</mapper>

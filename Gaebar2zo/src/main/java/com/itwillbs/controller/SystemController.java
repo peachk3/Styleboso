@@ -1,6 +1,7 @@
 package com.itwillbs.controller;
 
 
+import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -80,8 +81,6 @@ public class SystemController {
 	}
 	
 	
-	
-	
 	// -------------------------------------------------------------------------------------------
 	//전화번호 중복 
 	@RequestMapping(value = "/phoneCheck", method = RequestMethod.GET)
@@ -122,7 +121,7 @@ public class SystemController {
 	}
 	
 	//사용자 등록
-	@RequestMapping(value = "/employeeList", method = RequestMethod.POST)
+	@RequestMapping(value = "/addEmp", method = RequestMethod.POST)
 	public String addEmp(UsersVO usersVo) throws Exception {
 		logger.info("controller ->(사용자 등록 실행)");
 		sService.addEmp(usersVo);
@@ -130,11 +129,29 @@ public class SystemController {
 		int result = sService.addEmp(usersVo);
 		
 		 if (result > 0) {
-		        return "redirect:/employeeList"; // 성공적으로 등록되면 사용자 목록 페이지로 리다이렉트
+		       logger.info("사용자 등록 성공!!!!!!");
 		    } else {
-		        return "error"; // 실패한 경우 에러 페이지로 이동할 수도 있습니다.
+		        logger.info("사용자 등록 실패~~~`");
 		    }
+		 
+		 return "redirect:/system/employeeList";
 	}
+	
+	
+	//사용자 삭제
+	@ResponseBody
+	@RequestMapping(value = "/deleteEmp", method = RequestMethod.POST)
+	public ResponseEntity<String> deleteEmp(@RequestBody List<String> users) {
+			try {
+	            sService.deleteEmp(users);
+	            return ResponseEntity.ok("사용자 리스트 삭제되었습니다.");
+	        } catch (Exception e) {
+	        	 e.printStackTrace(); // 콘솔에 예외 로그를 출력
+	            return ResponseEntity.status(500).body("사용자 리스트 삭제 중 오류가 발생했습니다.");
+	        }
+	    }
+	   
+	
 	// ==========================================================================
 	// 공통 코드 관리
 	@RequestMapping(value = "/code/common", method = RequestMethod.GET)

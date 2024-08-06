@@ -28,7 +28,7 @@ public class SystemDAOImpl implements SystemDAO{
 	public int emailCheck(String user_email) throws Exception {
 		int result = sqlSession.selectOne(NAMESPACE + "emailCheck", user_email);
 		
-		logger.info("result :" + result);
+		logger.info("이메일 dao (result) :" + result);
 				
 				return result;
 	}
@@ -38,7 +38,7 @@ public class SystemDAOImpl implements SystemDAO{
 	public int phoneCheck(String user_phone) throws Exception {
 		int result = sqlSession.selectOne(NAMESPACE + "phoneCheck", user_phone);
 		
-		logger.info("result(service-> dao) :" + result);
+		logger.info("전화번호 dao (result):" + result);
 		
 		return result;
 	}
@@ -61,7 +61,14 @@ public class SystemDAOImpl implements SystemDAO{
 		return sqlSession.insert(NAMESPACE+"addEmp", usersVo);
 	}
 
-	
+	//사용자 삭제
+	@Override
+	public void deleteEmp(List<String> users) throws Exception {
+		logger.info("dao -> 사용자 삭제");
+		
+		sqlSession.delete(NAMESPACE+"deleteEmp", users);
+	}
+
 	//==============================================================
 	//공통코드 전체 리스트 출력
 	@Override
@@ -72,6 +79,7 @@ public class SystemDAOImpl implements SystemDAO{
 	}
 
 
+	
 	//공통코드 등록
 	@Override
 	public void saveGroupCode(CodeVO codeVo) throws Exception {

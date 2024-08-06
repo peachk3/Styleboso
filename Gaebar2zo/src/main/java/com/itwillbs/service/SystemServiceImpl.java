@@ -27,7 +27,7 @@ public class SystemServiceImpl implements SystemService{
 	public int emailCheck(String user_email) throws Exception {
 
 		 int result = sdao.emailCheck(user_email);
-		logger.info("result " + result);
+		logger.info("이메일 result " + result);
 		
 		return result;
 	}
@@ -39,7 +39,7 @@ public class SystemServiceImpl implements SystemService{
 		
 		int result = sdao.phoneCheck(user_phone);
 		
-		logger.debug("result :" + result);
+		logger.debug("전화번호 result :" + result);
 		
 		return result;
 	}
@@ -62,6 +62,14 @@ public class SystemServiceImpl implements SystemService{
 		
 		return sdao.addEmp(usersVo);
 	}
+	
+	//사용자 삭제
+	@Override
+	public void deleteEmp(List<String> users) throws Exception {
+		logger.info("service --> 사용자 삭제");
+		
+		sdao.deleteEmp(users);
+	}
 	//=============================================================================
 
 	//공통코드 전체 리스트 출력
@@ -71,6 +79,7 @@ public class SystemServiceImpl implements SystemService{
 	
 		return sdao.codeListAll();
 	}
+
 
 
 	// 공통 코드 등록

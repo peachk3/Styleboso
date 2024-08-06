@@ -22,6 +22,9 @@ public interface SystemService {
 	
 	//사용자 등록
 	int addEmp(UsersVO usersVo) throws Exception;
+	
+	//사용자 삭제
+	void deleteEmp(List<String> users) throws Exception;
 	//================================================
 	//공통코드 전체 리스트 출력 
 	List<CodeVO> codeListAll() throws Exception;
@@ -50,6 +53,8 @@ public interface SystemService {
 	
 	//공통 품목 중복체크&유효성
 	boolean checkItemCode(String s_cate_item_code) throws Exception;
+
+	
 
 	
 

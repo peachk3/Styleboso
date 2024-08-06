@@ -37,19 +37,26 @@
 
 <!-- 사용자등록 -->
 <insert id="addEmp" parameterType="UsersVO">
-        INSERT INTO users (username, user_per_name, password, user_email, user_pos, user_phone, enabled)
-        VALUES (
-            (SELECT CONCAT('US', LPAD(COALESCE(MAX(CAST(SUBSTRING(username, 3) AS UNSIGNED)), 0) + 1, 4, '0')) FROM users),
-            #{user_per_name}, 
-            #{password}, 
-            #{user_email}, 
-            #{user_pos}, 
-            #{user_phone}, 
-            '1'
-        )
+    insert into users (username, user_per_name, password, user_email, user_pos, user_phone)
+    select 
+    	CONCAT('US',LPAD(COALESCE(MAX(CAST(SUBSTRING(username, 3) AS UNSIGNED)), 0) + 1, 4, '0')),
+    	#{user_per_name},
+    	#{password},
+    	#{user_email},
+    	#{user_pos},
+    	#{user_phone}
+    	from users
+    	where username REGEXP '^US[0-9]+$'
     </insert>
 
-<!-- 사요 -->
+<!-- 사용자 삭제 -->
+<delete id="deleteEmp" parameterType="UsersVO">
+    delete from users
+    where username in
+    <foreach item="username" index="index" collection="list" open="(" separator="," close=")">
+        #{username}
+    </foreach>
+</delete>
 
 <!-- 공통코드 전체 리스트 출력-->
 <select id="codeListAll" resultType="CodeVO">

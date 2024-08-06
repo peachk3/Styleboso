@@ -25,8 +25,8 @@
     </div>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
 		<button class="btn btn-primary" type="button" onclick="showRegisterModal()">등록</button>
-		<button class="btn btn-primary" type="button" onclick="updateRegister()">수정</button>
-		<button class="btn btn-primary" type="button" onclick="deleteRegister()">삭제</button>
+		<button class="btn btn-primary" type="button" id="updateEmp">수정</button>
+		<button class="btn btn-primary" type="button" id="deleteEmp">삭제</button>
 	</div>
 </div>
 	<table class="table table-hover">
@@ -34,7 +34,7 @@
       	<tr>
          <th scope="col"> 
             <div class="form-check">
-           	   <input class="form-check-input" type="checkbox" value="" id="checkAll" onclick="checkAll(this)">
+           	   <input class="form-check-input" type="checkbox" value="" id="selectAll" onclick = "toggleCheckboxes(this)"> 
             </div>
          </th>
 	         <th scope="col">사용자ID</th>
@@ -79,7 +79,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="row g-3 needs-validation"id="registerForm" action="/employeeList" method="post" novalidate>
+                    <form class="row g-3 needs-validation" id="registerForm" action="/employeeList" method="get" novalidate>
                     <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"> <!-- 시큐리티 토큰!! -->
 						<div class="form-floating">
 						  <input type="text" class="form-control" id="user_per_name" name="user_per_name" placeholder="이름" required>
@@ -99,32 +99,29 @@
                             <span id="pwMatchSuccess" class="text-success" style="display: none;">비밀번호가 일치합니다</span>
 						</div>
 						<div class="form-floating">
-						  <input type="email" class="form-control" id="emailCheck" name="emailCheck" placeholder="name@example.com" >
+						  <input type="email" class="form-control" id="emailCheck" name="user_email" placeholder="name@example.com" >
 							<label for="floatingInput" style="margin-left: 10px">이메일</label>
 							<span id="emailError" class="text-danger" style="display: none;">유효한 이메일을 입력해주세요.</span>
                             <span id="emailExists" class="text-danger" style="display: none;">사용중인 이메일입니다.</span>
                             <span id="emailAvailable" class="text-success" style="display: none;">사용 가능한 이메일입니다.</span>
 						</div>
 						<div class="form-floating">
-						  <input type="text" class="form-control" id="inputTel" placeholder="010-1111-2222" required>
+						  <input type="text" class="form-control" id="inputTel" name="user_phone" placeholder="010-1111-2222" required>
 						  <label for="floatingInput" style="margin-left: 10px">전화번호</label>
 						    <span id="telError" class="text-danger" style="display: none;">유효하지 않은 전화번호입니다.</span>
                             <span id="telSuccess" class="text-success" style="display: none;">사용 가능한 전화번호입니다.</span>
 							 <span id="telExists" class="text-danger" style="display: none;">이미 사용 중인 전화번호입니다.</span>
 						</div>
 						<div class="mb-3">
-							<select class="form-select" required aria-label="select example" >
-								<option value="1">관리자</option>
-								<option value="2">팀장</option>
-								<option value="3">과장</option>
-								<option value="4">차장</option>
-								<option value="5">대리</option>
-								<option value="6">사원</option>
+							<select class="form-select" id="selectePosition" name="user_pos" required aria-label="select example">
+								<option value="관리자">관리자</option>
+								<option value="팀장">팀장</option>
+								<option value="사원">사원</option>
 							</select>
 							<div class="invalid-feedback" style="margin-left: 10px">직책을 선택해 주세요</div>
 						</div>
 						<div class="col-12 d-flex justify-content-end" style="margin-bottom: 10px;">
-							<button class="btn btn-primary" type="submit">저장</button>
+							<button class="btn btn-primary" type="submit" id="submitBtn">저장</button>
 						</div>
 					</form>
                 </div>

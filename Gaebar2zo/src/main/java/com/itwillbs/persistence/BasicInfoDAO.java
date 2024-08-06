@@ -80,4 +80,12 @@ public interface BasicInfoDAO {
 	
 	// 창고 -> 재고 불러오기
 	public List<InventoryVO> getInventory(String wh_num) throws Exception;
+
+	// 창고 -> zone 추가
+	public String addZone(String wh_code, String wh_name) throws Exception;
+
+	// 창고 -> rack 추가 
+	public String addRack(String wh_code, String wh_zone, String wh_name) throws Exception;
+
+	
 }

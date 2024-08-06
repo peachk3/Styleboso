@@ -285,4 +285,47 @@
 		join warehouse wa on inv.wh_num = wa.wh_num
 		where inv.wh_num=#{wh_num};
    	</select>
+   	
+	<!-- 창고 -> MaxZone 불러오기 -->
+    <select id="getMaxZoneNumber" parameterType="map" resultType="Integer">
+        SELECT MAX(CAST(SUBSTR((ascii(wh_zone)), 1) AS UNSIGNED)) 
+        FROM warehouse
+        WHERE wh_code = #{wh_code} 
+    </select>
+    
+	<!-- 창고 - zone 추가 -->
+	<insert id="addZone">
+		INSERT INTO warehouse (wh_num, wh_name, wh_zone, wh_rack, wh_row, wh_column, wh_code)
+		VALUES (CONCAT(#{wh_code}, char(#{newZone}), 1, 1, 'A'), #{wh_name}, char(#{newZone}), 1, 1, 'A', #{wh_code})
+	</insert>
+	
+	<!-- 창고 -> MaxRack 불러오기 -->
+    <select id="getMaxRackNumber" parameterType="map" resultType="Integer">
+        SELECT MAX(CAST(SUBSTR(wh_rack, 1) AS UNSIGNED)) 
+        FROM warehouse
+        WHERE wh_code = #{wh_code} 
+          AND wh_zone = #{wh_zone}
+    </select>
+    
+	<!-- 창고 -> rack 추가 -->
+   	<insert id="addRack">
+		INSERT INTO warehouse (wh_num, wh_name, wh_zone, wh_rack, wh_row, wh_column, wh_code)
+		VALUES <!-- (CONCAT(#{wh_code}, #{wh_zone}, #{newRack}, 1, 'A'), #{wh_name}, #{wh_zone}, #{newRack}, 1, 'A', #{wh_code}), -->
+			   (CONCAT(#{wh_code}, #{wh_zone}, #{newRack}, 1, 'B'), #{wh_name}, #{wh_zone}, #{newRack}, 1, 'B', #{wh_code}),
+    	       (CONCAT(#{wh_code}, #{wh_zone}, #{newRack}, 1, 'C'), #{wh_name}, #{wh_zone}, #{newRack}, 1, 'C', #{wh_code}),
+    		   (CONCAT(#{wh_code}, #{wh_zone}, #{newRack}, 1, 'D'), #{wh_name}, #{wh_zone}, #{newRack}, 1, 'D', #{wh_code}),
+    		   (CONCAT(#{wh_code}, #{wh_zone}, #{newRack}, 2, 'A'), #{wh_name}, #{wh_zone}, #{newRack}, 2, 'A', #{wh_code}),
+			   (CONCAT(#{wh_code}, #{wh_zone}, #{newRack}, 2, 'B'), #{wh_name}, #{wh_zone}, #{newRack}, 2, 'B', #{wh_code}),
+    	       (CONCAT(#{wh_code}, #{wh_zone}, #{newRack}, 2, 'C'), #{wh_name}, #{wh_zone}, #{newRack}, 2, 'C', #{wh_code}),
+    		   (CONCAT(#{wh_code}, #{wh_zone}, #{newRack}, 2, 'D'), #{wh_name}, #{wh_zone}, #{newRack}, 2, 'D', #{wh_code}),
+    		   (CONCAT(#{wh_code}, #{wh_zone}, #{newRack}, 3, 'A'), #{wh_name}, #{wh_zone}, #{newRack}, 3, 'A', #{wh_code}),
+			   (CONCAT(#{wh_code}, #{wh_zone}, #{newRack}, 3, 'B'), #{wh_name}, #{wh_zone}, #{newRack}, 3, 'B', #{wh_code}),
+    	       (CONCAT(#{wh_code}, #{wh_zone}, #{newRack}, 3, 'C'), #{wh_name}, #{wh_zone}, #{newRack}, 3, 'C', #{wh_code}),
+    		   (CONCAT(#{wh_code}, #{wh_zone}, #{newRack}, 3, 'D'), #{wh_name}, #{wh_zone}, #{newRack}, 3, 'D', #{wh_code}),
+    		   (CONCAT(#{wh_code}, #{wh_zone}, #{newRack}, 4, 'A'), #{wh_name}, #{wh_zone}, #{newRack}, 4, 'A', #{wh_code}),
+			   (CONCAT(#{wh_code}, #{wh_zone}, #{newRack}, 4, 'B'), #{wh_name}, #{wh_zone}, #{newRack}, 4, 'B', #{wh_code}),
+    	       (CONCAT(#{wh_code}, #{wh_zone}, #{newRack}, 4, 'C'), #{wh_name}, #{wh_zone}, #{newRack}, 4, 'C', #{wh_code}),
+    		   (CONCAT(#{wh_code}, #{wh_zone}, #{newRack}, 4, 'D'), #{wh_name}, #{wh_zone}, #{newRack}, 4, 'D', #{wh_code})
+   	</insert>
+   	
 </mapper>

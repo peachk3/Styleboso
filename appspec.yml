@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: Styleboso.war
+  - source: Gaebar2zo.war
     destination: /usr/local/tomcat/webapps
 hooks:
   BeforeInstall:

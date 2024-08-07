@@ -90,42 +90,47 @@ public class StockDAOImpl implements StockDAO{
 	
 	// 반품 모달창 정보 호출
     @Override
-	public Map<String, Object> getReturnDetails(String tran_num) {
+	public Map<String, Object> getReturnDetails(String tran_num) throws Exception {
 		logger.debug(" DAOImpl : 반품 모달창 정보 호출 ");
 		return sqlSession.selectOne(NAMESPACE + "getReturnDetails", tran_num);
 	}
 
     // 반품 모달창 품목 정보 호출
 	@Override
-	public List<Map<String, Object>> getReturnItems(String top_tran_num) {
+	public List<Map<String, Object>> getReturnItems(String top_tran_num) throws Exception {
 		logger.debug(" DAOImpl : 반품 모달창 품목 정보 호출 ");
-		return sqlSession.selectOne(NAMESPACE + "getReturnItems", top_tran_num);
+		return sqlSession.selectOne(NAMESPACE + "getTransactionItems", top_tran_num);
 	}
 	
 	// 반품 등록 - TransactionVO
 	@Override
-	public void adjustReturnAdd_TransactionVO(TransactionVO tvo) {
+	public void adjustReturnAdd_TransactionVO(TransactionVO tvo) throws Exception {
 		logger.debug(" DAOImpl : 반품 등록 - TransactionVO ");
 		sqlSession.insert(NAMESPACE + "adjustReturnAdd_TransactionVO", tvo);
-		
 	}
 
 	// 반품 등록 - InventoryChangeVO
 	@Override
-	public void adjustReturnAdd_InventoryChangeVO(InventoryChangeVO newIvcb) {
+	public void adjustReturnAdd_InventoryChangeVO(InventoryChangeVO newIvcb) throws Exception {
 		logger.debug(" DAOImpl : 반품 등록 - InventoryChangeVO ");
 		sqlSession.insert(NAMESPACE + "adjustReturnAdd_InventoryChangeVO", newIvcb);
-		
-		
+	}
+	
+	// 반품 삭제
+	@Override
+	public void deleteReturnList(List<String> trannums) throws Exception {
+		logger.debug(" deleteReturnList(List<String> trannums) 실행 ");
+		sqlSession.delete(NAMESPACE + "deleteTransactionList", trannums);
 	}
 
 	// 거래 상세 정보 호출
     @Override
-    public Map<String, Object> getTransactionDetails(String tran_num) {
+    public Map<String, Object> getTransactionDetails(String tran_num) throws Exception {
         logger.debug("DAOImpl : 입고 상세 정보 호출");
         // 쿼리 파라미터로 tran_num을 전달하여 결과를 반환합니다.
         return sqlSession.selectOne(NAMESPACE + "getTransactionDetails", tran_num);
     }
+
 
 	@Override
 	public void deleteRecevingList(List<String> trannums) throws Exception {
@@ -293,8 +298,6 @@ public class StockDAOImpl implements StockDAO{
 	    sqlSession.update(NAMESPACE+"updateRecevingTopTranStatus", params);
 	}
 	
-	
-	
 	@Override
 	public void updateReleaseStatus(List<String> tran_nums, String pro_status) throws Exception {
 		logger.debug("DAO : updateReleaseStatus(List<String> tran_nums, String pro_status) 호출 ");
@@ -303,8 +306,6 @@ public class StockDAOImpl implements StockDAO{
         params.put("tran_nums", tran_nums);
         params.put("pro_status", pro_status);
         sqlSession.update(NAMESPACE+"updateReleaseStatus", params);
-		
-		
 	}
 
 	@Override
@@ -315,13 +316,44 @@ public class StockDAOImpl implements StockDAO{
 		    params.put("top_tran_nums", top_tran_nums);
 		    params.put("pro_status", pro_status);
 		    sqlSession.update(NAMESPACE+"updateReleaseTopTranStatus", params);
-		
 	}
 
+	
+	@Override
+	public List<TransactionVO> receivingPurchaseOrderList() throws Exception {
+		logger.debug("DAO : receivingPurchaseOrderList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "receivingPurchaseOrderList");
+	}
 
-
+	@Override
+	public List<TransactionVO> receivingExchangeList() throws Exception {
+		logger.debug("DAO : receivingExchangeList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "receivingExchangeList");
+	}
+	
+	@Override
+	public List<TransactionVO> receivingReturnList() throws Exception {
+		logger.debug("DAO : receivingReturnList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "receivingReturnList");
+	}
 	
 	
+	@Override
+	public List<TransactionVO> releaseSalesOrderList() throws Exception {
+		logger.debug("DAO : releaseSalesOrderList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "releaseSalesOrderList");
+	}
+	
+	@Override
+	public List<TransactionVO> releaseExchangeList() throws Exception {
+		logger.debug("DAO : releaseExchangeList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "releaseExchangeList");
+	}
 	
 	
 	

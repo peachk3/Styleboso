@@ -16,11 +16,14 @@ public class TransactionVO {
 	private	String	pic_username;
 	private	int	expenditure;
 	private	int	income;
+  
 	private	Date	tran_date;
 	private	Date	rec_date;
 	private	Date	rel_date;
 	private	Date	due_date;
 	private	Date	ex_due_date;
+  private Date  regdate;
+  
 	private	String	pro_status;
 	private	String	tran_cate_code;
 	private	String	comm;

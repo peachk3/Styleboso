@@ -22,9 +22,7 @@ public class StockServiceImpl implements StockService{
 	@Inject
 	private StockDAO sdao;
 
-	
 	private static final Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
-	
 	
 	// 입고 리스트 호출
 	@Override
@@ -44,13 +42,18 @@ public class StockServiceImpl implements StockService{
 	}
 
 
+		return sdao.rcList();
+	}
+
 	// 출고 리스트 호출
 	@Override
 	public List<TransactionVO> rsList(Criteria cri) throws Exception {
 		logger.debug("ServiceImpl + 출고 리스트 호출");
 		
+
 		
 		return sdao.rsList(cri);
+
 	}
 
 	@Override
@@ -93,14 +96,14 @@ public class StockServiceImpl implements StockService{
 	
 	// 반품 모달창 정보
 	@Override
-	public Map<String, Object> getReturnDetails(String tran_num) {
+	public Map<String, Object> getReturnDetails(String tran_num) throws Exception {
 		logger.debug(" 반품 모달창 정보 확인 ");
 		return sdao.getReturnDetails(tran_num);
 	}
 	
 	// 반품 모달창 품목 정보
 	@Override
-	public List<Map<String, Object>> getReturnItems(String top_tran_num) {
+	public List<Map<String, Object>> getReturnItems(String top_tran_num) throws Exception {
 		logger.debug(" 반품 모달창 품목 정보 ");
 		return sdao.getReturnItems(top_tran_num);
 	}
@@ -128,15 +131,23 @@ public class StockServiceImpl implements StockService{
 		}
 	}
 	
-	
+	// 반품 삭제
 	@Override
-	public Map<String, Object> getTransactionDetails(String tran_num) throws Exception{
+	public void deleteReturnList(List<String> trannums) throws Exception {
+		logger.debug(" 반품 삭제 ");
+		
+		sdao.deleteInventoryChange(trannums);
+		sdao.deleteReturnList(trannums);
+	}
+
+
+	@Override
+	public Map<String, Object> getTransactionDetails(String tran_num) throws Exception {
 
 		logger.debug("입고 모달창 정보 확인");
 		
 		return sdao.getTransactionDetails(tran_num);
 	}
-
 
 	@Override
 	public void deleteRecevingList(List<String> trannums) throws Exception {
@@ -144,37 +155,29 @@ public class StockServiceImpl implements StockService{
 		// 먼저 inventory_change 테이블에서 삭제
 	    sdao.deleteInventoryChange(trannums);
 	    
-	    
 		sdao.deleteRecevingList(trannums);
 	}
-
 
 	@Override
 	public Map<String, Object> getTransactionDetails2(String tran_num) throws Exception {
 		logger.debug("출고 모달창 정보 확인");
 		
-		
 		return sdao.getTransactionDetails2(tran_num);
 	}
-
 
 	@Override
 	public List<Map<String, Object>> getTransactionItems(String top_tran_num) throws Exception {
 		logger.debug("입고 모달창 품목 정보 확인");
 		
-		
 		return sdao.getTransactionItems(top_tran_num);
 	}
-
 
 	@Override
 	public List<Map<String, Object>> getTransactionItems2(String top_tran_num) throws Exception {
 		logger.debug("출고 모달창 품목 정보 확인");
 		
-		
 		return sdao.getTransactionItems2(top_tran_num);
 	}
-
 
 	@Override
 	@Transactional
@@ -182,13 +185,9 @@ public class StockServiceImpl implements StockService{
 		
 		logger.debug("stockReceivingAdd(TransactionVO tvo) 실행 ");
 		
-		
-//		tvo.setTran_num(GetTranNum(tvo));
-		
 		String tran_num = GetTranNum(tvo);
 	    logger.debug("생성된 tran_num: " + tran_num);
 	    tvo.setTran_num(tran_num);
-	    
 	    
 	    logger.debug("transaction 테이블에 데이터 삽입 시도");
 	    sdao.stockReceivingAdd_TransactionVO(tvo);
@@ -216,8 +215,6 @@ public class StockServiceImpl implements StockService{
 		}
 	    logger.debug("stockReceivingAdd 완료. 최종 tran_num: " + tran_num);
 		logger.debug("입고 등록 성공");
-
-		
 	}
 
 	
@@ -231,7 +228,6 @@ public class StockServiceImpl implements StockService{
 		return tran_num;
 	}
 
-
 	@Override
 	public List<InventoryVO> getInventoryList(String goods_num) throws Exception {
 		logger.debug("getInventoryList(String goodsNum) 실행");
@@ -239,31 +235,15 @@ public class StockServiceImpl implements StockService{
 		return sdao.getInventoryList(goods_num);
 	}
 
-	
-	
-	
-	
-//	@Override
-//	  public void updateStatus(List<String> tranNums, String status) throws Exception{
-//        for (String tranNum : tranNums) {
-//            sdao.updateStatus(tranNum, status);
-//        }
-//    }
-
-
 	@Override
 	@Transactional
 	public void stockReleaseAdd(TransactionVO tvo) throws Exception {
 		
 		logger.debug("stockReleaseAdd(TransactionVO tvo) 실행 ");
 		
-		
-//		tvo.setTran_num(GetTranNum(tvo));
-		
 		String tran_num = GetTranNum(tvo);
 	    logger.debug("생성된 tran_num: " + tran_num);
 	    tvo.setTran_num(tran_num);
-	    
 	    
 	    logger.debug("transaction 테이블에 데이터 삽입 시도");
 	    sdao.stockReleaseAdd_TransactionVO(tvo);
@@ -272,9 +252,6 @@ public class StockServiceImpl implements StockService{
 	    logger.debug("top_tran_num : "+tvo.getTop_tran_num());
 	    sdao.updateReleaseTopTranstatus(tvo);
 
-	    
-	    
-	    
 		List<InventoryChangeVO> icvoList = tvo.getInchangeList();
 		
 		// tgvoList에서 각 TransactionGoodsVO 객체를 꺼내어 처리
@@ -295,16 +272,13 @@ public class StockServiceImpl implements StockService{
 	    logger.debug("stockReceivingAdd 완료. 최종 tran_num: " + tran_num);
 		logger.debug("입고 등록 성공");
 
-		
 	}
-
 
 	@Override
 	public void deleteReleaseList(List<String> trannums) throws Exception {
 		logger.debug(" 입고 삭제 ");
 		// 먼저 inventory_change 테이블에서 삭제
 	    sdao.deleteInventoryChange(trannums);
-	    
 	    
 		sdao.deleteRecevingList(trannums);
 	}
@@ -316,11 +290,7 @@ public class StockServiceImpl implements StockService{
 		// 먼저 inventory_change 테이블에서 삭제
 	   
 		return sdao.updateDetails(changetrvo);
-		
 	}
-	
-	
-	
 	
 	@Transactional
 	@Override
@@ -341,10 +311,44 @@ public class StockServiceImpl implements StockService{
 		sdao.updateReleaseStatus(tran_nums, pro_status);		
 	}
 
-
+	@Override
+	public List<TransactionVO> receivingPurchaseOrderList() throws Exception {
+		
+		logger.debug("receivingPurchaseOrderList() 실행");
+		
+		return sdao.receivingPurchaseOrderList();
+	}
 	
+	@Override
+	public List<TransactionVO> receivingExchangeList() throws Exception {
+		
+		logger.debug("receivingPurchaseOrderList() 실행");
+		
+		return sdao.receivingExchangeList();
+	}
 	
+	@Override
+	public List<TransactionVO> receivingReturnList() throws Exception {
+		
+		logger.debug("receivingPurchaseOrderList() 실행");
+		
+		return sdao.receivingReturnList();
+	}
 	
+	@Override
+	public List<TransactionVO> releaseSalesOrderList() throws Exception {
+		
+		logger.debug("releaseSalesOrderList() 실행");
+		
+		return sdao.releaseSalesOrderList();
+	}
 	
+	@Override
+	public List<TransactionVO> releaseExchangeList() throws Exception {
+		
+		logger.debug("releaseExchangeList() 실행");
+		
+		return sdao.releaseExchangeList();
+	}
 
 }

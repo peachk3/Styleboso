@@ -43,6 +43,7 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 	@Override
 	public int getTotalClientCount() throws Exception {
 		logger.debug(" getTotalClientCount() 실행 ");
+		
 		return bidao.getTotalClientCount();
 	}
 

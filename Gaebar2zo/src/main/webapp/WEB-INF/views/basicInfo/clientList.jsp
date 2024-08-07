@@ -29,6 +29,30 @@
       <button class="btn btn-primary" id="deleteClientBtn" name="deleteClientBtn" type="button">삭제</button>
       </sec:authorize>
    </div>
+   
+   <div class="container">
+        <div class="container-fluid mt-5">
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <form action="/basicInfo/clientList" method="get" class="form-inline mt-3">
+                        <div class="input-group w-500">
+                            <div class="input-group-prepend">
+                                <select class="form-select custom-select-radius custom-select-width" id="searchType" name="searchType">
+                                    <option value="" <c:if test="${empty searchType}">selected</c:if>>전체</option>
+                                    <option value="code" <c:if test="${searchType eq 'code'}">selected</c:if>>거래처 코드</option>
+                                    <option value="name" <c:if test="${searchType eq 'name'}">selected</c:if>>거래처명</option>
+                                    <option value="crn" <c:if test="${searchType eq 'crn'}">selected</c:if>>사업자번호</option>
+                                    <option value="cate" <c:if test="${searchType eq 'cate'}">selected</c:if>>구분</option>
+                                    <option value="ind" <c:if test="${searchType eq 'ind'}">selected</c:if>>업종</option>
+                                </select>
+                            </div>
+                            <input type="text" class="form-control" placeholder="검색어를 입력하세요" name="keyword" value="${keyword}">
+                            <button class="btn btn-outline-secondary" type="submit">검색</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
    <table class="table table-hover">
       <thead>
@@ -89,8 +113,38 @@
       </tbody>
    </table>
 
+<c:url var="pageUrl" value="/basicInfo/clientList">
+            <c:param name="searchType" value="${searchType}"/>
+            <c:param name="keyword" value="${keyword}"/>
+        </c:url>
+
+        <nav aria-label="Page navigation" class="pagination-container">
+            <ul class="pagination justify-content-center">
+                <c:if test="${pageVO.prev}">
+                    <li class="page-item">
+                        <a class="page-link" href="${pageUrl}&page=${pageVO.startPage - 1}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                </c:if>
+                <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+                    <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
+                        <a class="page-link" href="${pageUrl}&page=${i}">${i}</a>
+                    </li>
+                </c:forEach>
+                <c:if test="${pageVO.next && pageVO.endPage > 0}">
+                    <li class="page-item">
+                        <a class="page-link" href="${pageUrl}&page=${pageVO.endPage + 1}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </c:if>
+            </ul>
+        </nav>
+    </div>
+    
 <!-- 페이징 처리 -->
-   <nav aria-label="Page navigation" class="pagination-container">
+  <%--  <nav aria-label="Page navigation" class="pagination-container">
       <ul class="pagination justify-content-center">
          <c:if test="${pageVO.prev}">
             <li class="page-item">
@@ -112,7 +166,7 @@
             </li>
          </c:if>
       </ul>
-   </nav>
+   </nav> --%>
 
 <!-- Modal -->
 <!-- <div class="modal fade" id="exampleModalToggle" data-coreui-backdrop="static" data-coreui-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"> -->

@@ -86,6 +86,36 @@
 	<![CDATA[
 	SELECT * 
 	FROM client
+	]]>
+	 <where>
+	        <if test="searchType != null and keyword != null and keyword != ''">
+	            <choose>
+	                <when test="searchType == 'code'">
+	                    AND cli_num LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'name'">
+	                    AND cli_name LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'crn'">
+	                    AND cli_crn LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'cate'">
+	                    AND cli_cate LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'ind'">
+	                    AND cli_ind LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <otherwise>
+	                    AND (cli_num LIKE CONCAT('%', #{keyword}, '%')
+	                    OR cli_name LIKE CONCAT('%', #{keyword}, '%')
+	                    OR cli_crn LIKE CONCAT('%', #{keyword}, '%')
+	                    OR cli_cate LIKE CONCAT('%', #{keyword}, '%')
+	                    OR cli_ind LIKE CONCAT('%', #{keyword}, '%')
+	                </otherwise>
+	            </choose>
+	        </if>
+	    </where>
+	<![CDATA[
 	ORDER BY cli_id
 	LIMIT #{pageStart}, #{pageSize}
 	]]>
@@ -105,23 +135,41 @@
 	FROM item i
 	JOIN item_code ic ON i.item_cate_code = ic.s_cate_item_code
 	JOIN code c ON c.group_code = ic.m_cate_item_code
+	]]>
+	 <where>
+	        <if test="searchType != null and keyword != null and keyword != ''">
+	            <choose>
+	                <when test="searchType == 'code'">
+	                    AND i.item_num LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'name'">
+	                    AND i.item_name LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'type'">
+	                    AND c.group_name LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <otherwise>
+	                    AND (i.item_num LIKE CONCAT('%', #{keyword}, '%')
+	                    OR i.item_cli_code LIKE CONCAT('%', #{keyword}, '%')
+	                    OR c.group_name LIKE CONCAT('%', #{keyword}, '%')
+	                </otherwise>
+	            </choose>
+	        </if>
+	    </where>
+	<![CDATA[
 	ORDER BY i.item_num
 	LIMIT #{pageStart}, #{pageSize}
 	]]>
 	</select>
 	
 	<select id="totalItemCount" resultType="int">
-	<![CDATA[
-	SELECT COUNT(*)
-	FROM item i
-	JOIN item_code ic ON i.item_cate_code = ic.s_cate_item_code
-	JOIN code c ON c.group_code = ic.m_cate_item_code
-	]]>
+		<![CDATA[
+		SELECT COUNT(*)
+		FROM item i
+		JOIN item_code ic ON i.item_cate_code = ic.s_cate_item_code
+		JOIN code c ON c.group_code = ic.m_cate_item_code
+		]]>
 	</select>
-	
-	
-	
-	
 
 	<!-- item 등록 -->
 	<insert id="insertItem">

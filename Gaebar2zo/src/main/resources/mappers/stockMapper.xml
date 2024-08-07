@@ -620,7 +620,7 @@
 		from transaction t
 		join client c on t.cli_num = c.cli_num
 		where tran_cate_code = "PO" and pro_status = "발주 승인"
-		and  tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC")
+		and  tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC" AND top_tran_num IS NOT NULL)
 	</select>
 	
 	<!-- 교환 리스트 -->
@@ -629,7 +629,7 @@
 		from transaction t
 		join client c on t.cli_num = c.cli_num
 		where tran_cate_code = "EX"
-		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC")
+		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC" AND top_tran_num IS NOT NULL)
 	</select>
 	
 	<!-- 반품 리스트 -->
@@ -638,7 +638,7 @@
 		from transaction t
 		join client c on t.cli_num = c.cli_num
 		where tran_cate_code = "RE"
-		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC")
+		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC" AND top_tran_num IS NOT NULL)
 	</select>
 	
 	
@@ -648,7 +648,7 @@
 		from transaction t
 		join client c on t.cli_num = c.cli_num
 		where tran_cate_code = "SO" and pro_status = "수주 접수"
-		and  tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RL")
+		and  tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RL" AND top_tran_num IS NOT NULL)
 	</select>
 	
 	<!-- 교환 리스트 -->
@@ -657,7 +657,7 @@
 		from transaction t
 		join client c on t.cli_num = c.cli_num
 		where tran_cate_code = "EX"
-		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RL")
+		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RL" AND top_tran_num IS NOT NULL)
 	</select>
 	
 	

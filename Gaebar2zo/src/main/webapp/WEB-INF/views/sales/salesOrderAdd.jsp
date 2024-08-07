@@ -209,6 +209,9 @@
 		submitFormBtn.addEventListener('click', function(event) {
 			event.preventDefault(); // 기본 제출 동작 방지
 			
+			// 모든 폼이 유효성 검사를 통과했는지 여부를 저장하는 변수
+			let allFormsValid = true; 
+			
 			const formData = {
 					ex_due_date: String(document.getElementById('validationCustom01').value),
 					tran_date: String(document.getElementById('validationCustom02').value),
@@ -230,9 +233,6 @@
 			
 			// 필요한 유효성 검사를 적용할 모든 폼을 가져오기
 			const forms = document.querySelectorAll('.needs-validation');
-			
-			// 모든 폼이 유효성 검사를 통과했는지 여부를 저장하는 변수
-			let allFormsValid = true; 
 			
 			// NodeList를 배열로 변환하고 각각의 폼에 대해 처리
 			Array.from(forms).forEach(form => {

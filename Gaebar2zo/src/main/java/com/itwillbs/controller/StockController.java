@@ -258,10 +258,23 @@ public class StockController {
 	
 	// 입고 등록 - get
 	@RequestMapping(value="/receivingAdd",method=RequestMethod.GET)
-	public void receivingAdd_GET() throws Exception{
+	public void receivingAdd_GET(Model model) throws Exception{
 		logger.debug(" receivingAdd_GET() 실행 ");
-
-
+		
+		List<TransactionVO> po = sService.PurchaseOrderList();
+		logger.debug("size : "+ po.size());
+		logger.debug("po : "+ po);
+	    model.addAttribute("po", po);
+	    
+	    List<TransactionVO> ex = sService.ExchangeList();
+		logger.debug("size : "+ ex.size());
+		logger.debug("ex : "+ ex);
+	    model.addAttribute("ex", ex);
+	    
+	    List<TransactionVO> re = sService.ReturnList();
+		logger.debug("size : "+ re.size());
+		logger.debug("re : "+ re);
+	    model.addAttribute("re", re);
 	}
 
 	

@@ -41,21 +41,21 @@
 <body>
 	<h1>/Styleboso/basicInfo/warehouseList.jsp</h1>
 
-	<div class="container-fluid px-4">
-		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb my-0">
-				<li class="breadcrumb-item"><a href="#" data-coreui-i18n="home">김포창고</a>
-				</li>
-				<li class="breadcrumb-item"><span data-coreui-i18n="plugins">구역</span>
-				</li>
-				<li class="breadcrumb-item active"><span>열</span></li>
-			</ol>
-		</nav>
-	</div>
+<!-- 	<div class="container-fluid px-4"> -->
+<!-- 		<nav aria-label="breadcrumb"> -->
+<!-- 			<ol class="breadcrumb my-0"> -->
+<!-- 				<li class="breadcrumb-item"><a href="#" data-coreui-i18n="home">김포창고</a> -->
+<!-- 				</li> -->
+<!-- 				<li class="breadcrumb-item"><span data-coreui-i18n="plugins">구역</span> -->
+<!-- 				</li> -->
+<!-- 				<li class="breadcrumb-item active"><span>열</span></li> -->
+<!-- 			</ol> -->
+<!-- 		</nav> -->
+<!-- 	</div> -->
 
 <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
-	<input class="button btn-primary" type="button" value="등록" onclick="location.href='/basicInfo/warehouseAdd'" class="btn btn-primary">
-	<input class="button btn-primary" id="deleteWarehouseBtn" type="button" value="삭제">
+	<input type="button" class="btn btn-primary" value="등록" onclick="location.href='/basicInfo/warehouseAdd'" >
+	<input class="btn btn-primary" id="deleteWarehouseBtn" type="button" value="삭제">
 </div>
 	
 	<table class="table table-hover">

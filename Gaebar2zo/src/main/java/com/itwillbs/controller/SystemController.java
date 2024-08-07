@@ -138,7 +138,7 @@ public class SystemController {
 	
 	//사용자 수정 
 	@ResponseBody
-	@RequestMapping(value = "/updateEmp", method = RequestMethod.GET)
+	@RequestMapping(value = "/updateEmp", method = RequestMethod.POST)
 	public ResponseEntity<String>updateEmp(@RequestBody UsersVO usersVo) throws Exception{
 		 logger.debug(" @@@ updateEmp() 실행");
 		 sService.updateEmp(usersVo);

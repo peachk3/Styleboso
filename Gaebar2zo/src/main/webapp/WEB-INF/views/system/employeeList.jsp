@@ -7,7 +7,6 @@
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-
 <body>
 	<div>
 		<div class="container-fluid mt-5">
@@ -22,14 +21,11 @@
 									<option value=""
 										<c:if test="${empty searchType}">selected</c:if>>전체</option>
 									<option value="code"
-										<c:if test="${searchType eq 'code'}">selected</c:if>>재고
-										번호</option>
+										<c:if test="${searchType eq 'username'}">selected</c:if>>사용자ID</option>
 									<option value="name"
-										<c:if test="${searchType eq 'name'}">selected</c:if>>품목명</option>
+										<c:if test="${searchType eq 'user_per_name'}">selected</c:if>>사용자명</option>
 									<option value="warehouse"
-										<c:if test="${searchType eq 'warehouse'}">selected</c:if>>창고명</option>
-									<option value="color"
-										<c:if test="${searchType eq 'color'}">selected</c:if>>색상</option>
+										<c:if test="${searchType eq 'user_pos'}">selected</c:if>>직책</option>
 								</select>
 							</div>
 							<input type="text" class="form-control" placeholder="검색어를 입력하세요"
@@ -70,7 +66,7 @@
 				<tr>
 					<td>
 				  		<div class="form-check">
-                  			<input class="form-check-input" type="checkbox" value="" id="checkAll"> 
+                  			<input class="form-check-input itemCheckbox" type="checkbox"> 
                			</div>
                		</td>
                		<td>${emptbl.username }</td>
@@ -148,11 +144,62 @@
             </div>
           </div>
     </div>  
-  
-    
+    <!-- 상세&수정모달 -->
+    <div class="modal fade" id="updateEmpModal" tabindex="-1" role="dialog" aria-labelledby="updateEmpModalLabel">
+	  <div class="modal-dialog modal-fullscreen-sm-down" role="document">
+        <form class="needs-validation" id="updateEmpForm" novalidate>
+            <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100 text-center" id="updateEmpModalLabel">사용자 정보 수정</h5>
+                    <button type="button" class="close" id="updateEmpModalCloseBtn" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- 사용자ID -->
+                    <div class="form-group mb-3">
+                        <label for="edit_username" style="margin-bottom: 5px;"><strong>사용자ID</strong></label>
+                        <input type="text" id="edit_username" class="form-control" readonly>
+                    </div>
+                    <!-- 사용자명 -->
+                    <div class="form-group mb-3">
+                        <label for="edit_user_per_name" style="margin-bottom: 5px;">사용자명</label>
+                        <input type="text" id="edit_user_per_name" class="form-control" readonly>
+                    </div>
+                    <!-- 사용자 이메일 -->
+                    <div class="form-group mb-3">
+                        <label for="edit_user_email" style="margin-bottom: 5px;">사용자 이메일</label>
+                        <input type="text" id="edit_user_email" class="form-control">
+                    </div>
+                    <!-- 사용자 전화번호 -->
+                    <div class="form-group mb-3">
+                        <label for="edit_user_phone" style="margin-bottom: 5px;">사용자 전화번호</label>
+                        <input type="text" id="edit_user_phone" class="form-control">
+                    </div>
+                    <!-- 사용자 직책 -->
+                    <div class="form-group mb-3" >
+                        <label for="edit_user_pos" style="margin-bottom: 5px;">사용자 직책</label>
+                        <select id="edit_user_pos" class="form-control">
+                            <option value="관리자">관리자</option>
+                            <option value="팀장">팀장</option>
+                            <option value="사원">사원</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelEditEmp">취소</button>
+                    <button type="button" class="btn btn-primary" id="saveEditedEmp">저장</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+	
+	
+	
     <!-- addEmp.js 연결 -->   
     <script src="../resources/js/addEmp.js"></script>
-<!--     <script src="../resources/js/addEmp2.js"></script> -->
     
 <%@ include file="../include/footer.jsp" %>
 </body>

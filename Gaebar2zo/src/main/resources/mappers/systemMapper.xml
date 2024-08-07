@@ -50,7 +50,7 @@
     </insert>
 
 <!--  사용자 업데이트 -->
-<update id="">
+<update id="updateEmp">
 	update users
 	set 
 		user_phone = #{user_phone},

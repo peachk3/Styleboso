@@ -75,8 +75,8 @@
     <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
         <button id="statusChangeBtn" class="btn btn-outline-info">상태 변경</button>
         <div class="status-buttons mt-2">
-            <button class="btn btn-outline-info" id="preReceiveBtn">출고 준비</button>
-            <button class="btn btn-outline-info" id="completedReceiveBtn">출고 완료</button>
+            <button class="btn btn-outline-info" id="preReceiveBtn">입고 예정</button>
+            <button class="btn btn-outline-info" id="completedReceiveBtn">입고 완료</button>
         </div>
    </sec:authorize>
     </div>

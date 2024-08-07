@@ -36,7 +36,7 @@ public class SystemController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SystemController.class);
 
-	// http://localhost:8088/system/login
+	// http://localhost:8088/logout/login
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public void login() throws Exception {

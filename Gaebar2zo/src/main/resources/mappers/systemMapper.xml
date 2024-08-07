@@ -49,6 +49,18 @@
     	where username REGEXP '^US[0-9]+$'
     </insert>
 
+<!--  사용자 업데이트 -->
+<update id="">
+	update users
+	set 
+		user_phone = #{user_phone},
+		user_email = #{user_email},
+		user_pos = #{user_pos}
+	where username = #{username}
+</update>
+
+
+
 <!-- 사용자 삭제 -->
 <delete id="deleteEmp" parameterType="UsersVO">
     delete from users

@@ -9,26 +9,46 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <body>
-<div>
-	<div class="search_box">
-        <form name="searchForm" method="post" action="/employeeList.do">
-            <div class="sch_group fl">
-                <select id="searchType" name="searchType" title="검색 유형 선택">
-                    <option value="">전체 검색</option>
-                    <option value="username">사용자 ID</option>
-                    <option value="user_per_name">사용자명</option>
-                </select>
-                <input type="text" id="keyword" name="keyword" placeholder="키워드를 입력해 주세요." title="키워드 입력" />
-                <button type="submit" class="bt_search"><i class="fas fa-search"></i><span class="skip_info">검색</span></button>
-            </div>
-        </form>
-    </div>
-	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
-		<button class="btn btn-primary" type="button" onclick="showRegisterModal()">등록</button>
-		<button class="btn btn-primary" type="button" id="updateEmp">수정</button>
-		<button class="btn btn-primary" type="button" id="deleteEmp">삭제</button>
+	<div>
+		<div class="container-fluid mt-5">
+			<div class="row">
+				<div class="col-md-3 mb-3">
+					<form action="/stock/status" method="get" class="form-inline mt-3">
+						<div class="input-group w-500">
+							<div class="input-group-prepend">
+								<select
+									class="form-select custom-select-radius custom-select-width"
+									id="searchType" name="searchType">
+									<option value=""
+										<c:if test="${empty searchType}">selected</c:if>>전체</option>
+									<option value="code"
+										<c:if test="${searchType eq 'code'}">selected</c:if>>재고
+										번호</option>
+									<option value="name"
+										<c:if test="${searchType eq 'name'}">selected</c:if>>품목명</option>
+									<option value="warehouse"
+										<c:if test="${searchType eq 'warehouse'}">selected</c:if>>창고명</option>
+									<option value="color"
+										<c:if test="${searchType eq 'color'}">selected</c:if>>색상</option>
+								</select>
+							</div>
+							<input type="text" class="form-control" placeholder="검색어를 입력하세요"
+								name="keyword" value="${keyword}">
+							<button class="btn btn-outline-secondary" type="submit">검색</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<div class="d-grid gap-2 d-md-flex justify-content-md-end"
+			style="margin-right: 10px; padding: 10px;">
+			<button class="btn btn-primary" type="button"
+				onclick="showRegisterModal()">등록</button>
+			<button class="btn btn-primary" type="button" id="updateEmp">수정</button>
+			<button class="btn btn-primary" type="button" id="deleteEmp">삭제</button>
+		</div>
 	</div>
-</div>
 	<table class="table table-hover">
       <thead>
       	<tr>

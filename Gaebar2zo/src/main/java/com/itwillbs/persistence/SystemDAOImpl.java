@@ -61,6 +61,14 @@ public class SystemDAOImpl implements SystemDAO{
 		return sqlSession.insert(NAMESPACE+"addEmp", usersVo);
 	}
 
+	//사용자 수정
+	@Override
+	public void updateEmp(UsersVO usersVo) throws Exception {
+		logger.info("dao --> 사용자 업데이트");
+		
+		sqlSession.update(NAMESPACE +"updateEmp",usersVo);
+	}
+	
 	//사용자 삭제
 	@Override
 	public void deleteEmp(List<String> users) throws Exception {
@@ -68,6 +76,8 @@ public class SystemDAOImpl implements SystemDAO{
 		
 		sqlSession.delete(NAMESPACE+"deleteEmp", users);
 	}
+
+	
 
 	//==============================================================
 	//공통코드 전체 리스트 출력

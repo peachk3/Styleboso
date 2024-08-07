@@ -263,17 +263,21 @@ $(document).ready(function() {
     });
 
     $(".status-buttons .btn").click(function() {
-        const pro_status = $(this).text().trim(); // "입고 예정" 혹은 "입고 완료" 버튼의 텍스트를 상태로 사용
+    		const pro_status = $(this).text().trim();
+	   	    const checkedCheckboxes = $('input[type="checkbox"].form-check-input:checked');
+	   	    const tran_nums = [];
+	   	    const top_tran_nums = [];
 
-        const checkedCheckboxes = $('input[type="checkbox"].form-check-input:checked');
-        const tran_nums = [];
+	   	    checkedCheckboxes.each(function() {
+	   	        const row = $(this).closest('tr');
+	   	        const tran_num = row.find('td:eq(1)').text();
+	   	        const top_tran_num = row.find('td:eq(6)').text(); // top_tran_num이 7번째 열에 있다고 가정
 
-        checkedCheckboxes.each(function() {
-            const tran_num = $(this).closest('tr').find('td:eq(1)').text(); // Assuming tran_num is in the first column
-            if (tran_num) {
-                tran_nums.push(tran_num);
-            }
-        });
+	   	        if (tran_num) {
+	   	            tran_nums.push(tran_num);
+	   	            top_tran_nums.push(top_tran_num);
+	   	        }
+	   	    });
 
         if (tran_nums.length === 0) {
             alert('변경할 항목을 선택해주세요.');
@@ -281,10 +285,14 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: '/common/updateRecevingStatus',
+            url: '/stock/updateRecevingStatus',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({ tran_nums: tran_nums, pro_status: pro_status }),
+            data: JSON.stringify({ 
+                tran_nums: tran_nums, 
+                top_tran_nums: top_tran_nums, 
+                pro_status: pro_status 
+            }),
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
             },

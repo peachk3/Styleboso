@@ -1,5 +1,7 @@
 package com.itwillbs.controller;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.ClientVO;
 import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.PageVO;
 import com.itwillbs.domain.WarehouseCodeVO;
@@ -145,12 +150,21 @@ public class BasicInfoController {
 	// ----------------------------------거래처 관리------------------------------------------------
 	//http://localhost:8088/basicInfo/clientList
 	@RequestMapping(value="/clientList",method=RequestMethod.GET)
-	public void clientList_GET(Model model) throws Exception{
+	public void clientList_GET(Criteria cri, Model model) throws Exception{
 		logger.debug(" clientList_GET() 실행 ");
+		logger.debug(" cri " + cri);
 		
-		List<ClientVO> clientList = bService.cliListAll();
+		List<ClientVO> clientList = bService.cliListAll(cri);
+	    logger.debug(" size : " + clientList.size());
 		
-		model.addAttribute("clientList", clientList);	
+	    PageVO pageVO = new PageVO();
+	    pageVO.setCri(cri);
+	    pageVO.setTotalCount(bService.getTotalClientCount());
+	    logger.debug(" cri " + pageVO.getCri());
+
+	    model.addAttribute("clientList", clientList);	
+	    model.addAttribute("pageVO", pageVO);
+		
 	}
 
 	// 거래처 추가 - 등록 페이지로 이동
@@ -324,7 +338,128 @@ public class BasicInfoController {
 		        logger.error("Error updating", e);
 		        return new ResponseEntity<>("Error updating", HttpStatus.INTERNAL_SERVER_ERROR);
 		    }
-		
 	}
 	
+	// 창고 -> 재고 출력 페이지
+    @RequestMapping(value = "/warehouse", method = RequestMethod.GET)
+    public void getWarehouse(Model model) throws Exception {
+    	logger.debug("getWarehouse() 실행 ");
+    		
+		List<WarehouseCodeVO> whCodeList = bService.listAll();
+		
+		model.addAttribute("whCodeList",whCodeList);
+    }
+    
+    // 창고 zone 불러오기
+    @ResponseBody
+    @RequestMapping(value = "/getZones", method = RequestMethod.POST)
+    public List<String> getZones(@RequestParam String wh_code)throws Exception {
+    	logger.debug(" getZones() 실행");
+    	logger.debug(" wh_code : " + wh_code);
+    	
+    	List<String> zones = bService.getZones(wh_code);
+    	logger.debug(" zones : " + zones);
+    	return zones;
+    	
+    }
+    
+    // 창고 rack 불러오기
+    @ResponseBody
+    @RequestMapping(value = "/getRacks", method = RequestMethod.POST)
+    public List<String> getRacks(@RequestParam String wh_code, @RequestParam String wh_zone) throws Exception{
+    	
+    	logger.debug(" getRacks() 실행 ");
+    	logger.debug(" wh_zone : "+ wh_zone);
+    	return bService.getRacks(wh_code, wh_zone);
+    }
+    
+    // 창고 열/행 불러오기
+    @ResponseBody
+    @RequestMapping(value = "/getColumnRows", method = RequestMethod.POST)
+    public Map<String, Object> getColumnRows(@RequestParam String wh_code, @RequestParam String wh_zone, @RequestParam String wh_rack) throws Exception{
+    	logger.debug(" getColumnRows() 실행 ");
+    	
+    	Map<String, Object> response = new HashMap<>();
+    	
+    	List<String> columns = bService.getColumns(wh_code, wh_zone, wh_rack);
+        List<String> rows = bService.getRows(wh_code, wh_zone, wh_rack);
+
+        response.put("columns", columns);
+        response.put("rows", rows);
+        return response;
+    }
+    
+    // 창고 -> 재고 불러오기
+    @ResponseBody
+    @RequestMapping(value="/getInventory", method = RequestMethod.POST)
+	public List<InventoryVO> getInventory(
+			@RequestParam String wh_num) throws Exception{
+    	logger.debug(" getInventory() 실행  ");
+    	logger.debug("wh_num : " + wh_num );
+    	
+		return bService.getInventory(wh_num);
+    }
+    
+    // 창고 -> zone 추가
+    @ResponseBody
+    @RequestMapping(value = "/addZone", method = RequestMethod.POST)
+    public ResponseEntity<?> addZone(@RequestParam String wh_code, @RequestParam String wh_name) throws Exception{
+    	
+    	logger.debug(" addZone() 실행 ");
+    	
+    	logger.debug(" wh_code :"+ wh_code);
+    	logger.debug(" wh_name :" +wh_name);
+    	
+    	// 새로운 렉 코드 생성 및 반환
+        String newZone = bService.addZone(wh_code, wh_name); // 실제 추가된 렉 코드를 반환받음
+        logger.debug("newZone: " + newZone);
+
+        if (newZone != null) {
+            // 새로 추가된 렉 코드가 성공적으로 생성된 경우
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("newZone", newZone);
+            return ResponseEntity.ok().body(response);
+
+        } else {
+            // 렉 추가에 실패한 경우
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "렉 추가 실패");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+    
+   // 창고 -> rack 추가
+    @ResponseBody
+    @RequestMapping(value = "/addRack", method = RequestMethod.POST)
+    public ResponseEntity<?> addRack(@RequestParam String wh_code, @RequestParam String wh_zone, @RequestParam String wh_name ) throws Exception{
+    	
+    	logger.debug(" addRack() 실행 ");
+    	
+    	logger.debug(" wh_cdode :"+ wh_code);
+    	logger.debug(" wh_zone:" +wh_zone);
+    	logger.debug(" wh_ name :" +wh_name);
+    	
+    	// 새로운 렉 코드 생성 및 반환
+        String newRack = bService.addRack(wh_code, wh_zone, wh_name); // 실제 추가된 렉 코드를 반환받음
+        logger.debug("newRack: " + newRack);
+
+        if (newRack != null) {
+            // 새로 추가된 렉 코드가 성공적으로 생성된 경우
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("newRack", newRack);
+            return ResponseEntity.ok().body(response);
+
+        } else {
+            // 렉 추가에 실패한 경우
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "렉 추가 실패");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+        
+    }
+    
 }

@@ -30,6 +30,7 @@ import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryChangeVO;
 import com.itwillbs.domain.InventoryVO;
 import com.itwillbs.domain.PageVO;
+import com.itwillbs.domain.StatusUpdateRequest;
 import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.service.StockService;
@@ -207,6 +208,7 @@ public class StockController {
 		// 입고 리스트 호출
 	    List<TransactionVO> rc = sService.rcList();
 		logger.debug("size : "+ rc.size());
+		logger.debug("rc : "+ rc);
 	    model.addAttribute("rc", rc);
 		
 	    
@@ -289,10 +291,23 @@ public class StockController {
 	
 	// 입고 등록 - get
 	@RequestMapping(value="/receivingAdd",method=RequestMethod.GET)
-	public void receivingAdd_GET() throws Exception{
+	public void receivingAdd_GET(Model model) throws Exception{
 		logger.debug(" receivingAdd_GET() 실행 ");
-
-
+		
+		List<TransactionVO> po = sService.PurchaseOrderList();
+		logger.debug("size : "+ po.size());
+		logger.debug("po : "+ po);
+	    model.addAttribute("po", po);
+	    
+	    List<TransactionVO> ex = sService.ExchangeList();
+		logger.debug("size : "+ ex.size());
+		logger.debug("ex : "+ ex);
+	    model.addAttribute("ex", ex);
+	    
+	    List<TransactionVO> re = sService.ReturnList();
+		logger.debug("size : "+ re.size());
+		logger.debug("re : "+ re);
+	    model.addAttribute("re", re);
 	}
 
 	
@@ -446,6 +461,38 @@ public class StockController {
 
 		
 
+	  
+
+		// 입고 상태 업데이트 
+		@RequestMapping(value="/updateRecevingStatus",method=RequestMethod.POST)
+		@ResponseBody
+	    public ResponseEntity<String> updateRecevingStatus(@RequestBody StatusUpdateRequest request) {
+		        try {
+		            sService.updateRecevingStatus(request.getTran_nums(), request.getPro_status(),request.getTop_tran_nums());
+		            return ResponseEntity.ok("Status updated successfully");
+		        } catch (Exception e) {
+		            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating status");
+		        }
+		    }
+
+		// 출고 상태 업데이트 
+		@RequestMapping(value="/updateReleaseStatus",method=RequestMethod.POST)
+		@ResponseBody
+	    public ResponseEntity<String> updateReleaseStatus(@RequestBody StatusUpdateRequest request) {
+		        try {
+		            sService.updateReleaseStatus(request.getTran_nums(), request.getPro_status(),request.getTop_tran_nums());
+		            return ResponseEntity.ok("Status updated successfully");
+		        } catch (Exception e) {
+		            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating status");
+		        }
+		    }
+
+
+	  
+	  
+	  
+	  
+	  
 
 
 }

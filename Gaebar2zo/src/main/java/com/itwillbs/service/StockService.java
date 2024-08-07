@@ -75,10 +75,22 @@ public interface StockService {
 	public int updateDetails(TransactionVO changetrvo) throws Exception;
 
 
+	
+	// 입고 상태 업데이트
+	public void updateRecevingStatus(List<String> tran_nums, String pro_status, List<String> top_tran_nums) throws Exception;
+	
+	// 출고 상태 업데이트
+	public void updateReleaseStatus(List<String> tran_nums, String pro_status, List<String> top_tran_nums) throws Exception;
 
 
+	// 발주 리스트
+	public List<TransactionVO> PurchaseOrderList() throws Exception;
 
+	// 교환 리스트
+	public List<TransactionVO> ExchangeList() throws Exception;
 
+	// 반품 리스트
+	public List<TransactionVO> ReturnList() throws Exception;
 
 
 

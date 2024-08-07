@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.ClientVO;
@@ -74,25 +75,23 @@ public class CommonServiceImpl implements CommonService{
 	}
 
 	@Override
-	public void updateRecevingStatus(List<String> tran_nums, String pro_status) throws Exception {
-		logger.debug(" 입고 상태 업데이트");
+	public void updateStatus(List<String> tran_nums, String pro_status) throws Exception {
+		logger.debug(" 상태 업데이트");
 		
-		cdao.updateRecevingStatus(tran_nums, pro_status);
+		cdao.updateStatus(tran_nums, pro_status);
 	}
-
+	
 	@Override
-	public void updateReleaseStatus(List<String> tran_nums, String pro_status) throws Exception {
-		logger.debug(" 출고 상태 업데이트");
-		
-		cdao.updateReleaseStatus(tran_nums, pro_status);		
+	public void deleteTran(List<String> tran_num) throws Exception {
+		logger.debug("거래 리스트 삭제");
+		 try {
+            cdao.deleteTran(tran_num);
+        } catch (DataIntegrityViolationException e) {
+            // 외래 키 제약 조건 오류를 감지하여 커스텀 예외를 발생
+            throw new RuntimeException("다음 단계가 진행되어 삭제할 수 없습니다.");
+        }
 	}
-
-
-	
-	
-	
-	
-	
 	
 	
 }
+

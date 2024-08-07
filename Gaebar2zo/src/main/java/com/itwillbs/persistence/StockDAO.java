@@ -62,8 +62,6 @@ public interface StockDAO {
 	List<Map<String, Object>> getTransactionItems2(String top_tran_num) throws Exception;
 
 	
-	
-	
 	// GetTranNum 추출
 	public String GetTranNum(TransactionVO tvo);
 
@@ -72,7 +70,6 @@ public interface StockDAO {
 
 	// 입고 등록_InventoryChangeVO
 	public void stockReceivingAdd_InventoryChangeVO(InventoryChangeVO newIvcb);
-	
 	
 	
 	// 재고 데이터 로드 
@@ -87,16 +84,35 @@ public interface StockDAO {
 
 	// 입고/출고 수정
 	public int updateDetails(TransactionVO changetrvo) throws Exception;
+  
+	
+	// 입고 시 상위 거래번호 상태 변경
+	public void updateReceivingTopTranstatus(TransactionVO tvo) throws Exception;
+
+	// 출고 시 상위 거래번호 상태 변경
+	public void updateReleaseTopTranstatus(TransactionVO tvo) throws Exception;
 
 
+	// 입고 상태 업데이트
+	public void updateRecevingStatus(List<String> tran_nums, String pro_status) throws Exception;
+	// 입고 상태 업데이트 -> 상위거래번호 상태 업데이트
+	public void updateRecevingTopTranStatus(List<String> top_tran_nums, String pro_status) throws Exception;
+	
+	
+	// 출고 상태 업데이트
+	public void updateReleaseStatus(List<String> tran_nums, String pro_status) throws Exception;
+	// 출고 상태 업데이트 -> 상위거래번호 상태 업데이트
+	public void updateReleaseTopTranStatus(List<String> top_tran_nums, String pro_status) throws Exception;
+	
+	
+	// 발주 리스트
+	public List<TransactionVO> purchaseOrderList() throws Exception;
 
-	
-	// 상태변경
-//	void updateStatus(String tranNum, String status) throws Exception;
-	
-	
-	
-	
+	// 교환 리스트
+	public List<TransactionVO> exchangeList() throws Exception;
+		
+	// 반품 리스트
+	public List<TransactionVO> returnList() throws Exception;
 	
 	
 	

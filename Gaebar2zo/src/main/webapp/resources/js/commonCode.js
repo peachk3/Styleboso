@@ -108,7 +108,8 @@
         // CSRF 토큰 설정
         const token = $("meta[name='_csrf']").attr("content");
         const header = $("meta[name='_csrf_header']").attr("content");
-
+        const name = $("#userName").val();
+        
         var groupCode = document.getElementById('edit_group_code').value;
         var groupName = document.getElementById('edit_group_name').value;
 
@@ -147,17 +148,17 @@
     
     //aria-hidden 속성이 부모 요소에 남아 있으면 문제를 일으킬 수 있기 때문에 -> 모달 외부 요소에 적용 
     // 모달이 열리고 닫힐 때 aria-hidden 속성 관리
-    $('#insertCodeModal').on('show.bs.modal', function () {
-        // 모달이 열릴 때
-        $('body > *').not('#insertCodeModal').attr('aria-hidden', 'true');
-        $('#insertCodeModal').removeAttr('aria-hidden');
-    });
-
-    $('#insertCodeModal').on('hidden.bs.modal', function () {
-        // 모달이 닫힐 때
-        $('body > *').removeAttr('aria-hidden');
-    });
-    
+//    $('#insertCodeModal').on('show.bs.modal', function () {
+//        // 모달이 열릴 때
+//        $('body > *').not('#insertCodeModal').attr('aria-hidden', 'true');
+//        $('#insertCodeModal').removeAttr('aria-hidden');
+//    });
+//
+//    $('#insertCodeModal').on('hidden.bs.modal', function () {
+//        // 모달이 닫힐 때
+//        $('body > *').removeAttr('aria-hidden');
+//    });
+//    
     
  //===================================================================
   //삭제기능 - onclick=deleteCode()()
@@ -219,3 +220,13 @@
    	        checkboxes[i].checked = source.checked; // '전체 선택' 체크박스의 상태에 따라 개별 체크박스의 체크 상태를 변경
    	    }
    	}
+   	
+  
+  //모달 닫기
+   	$('#insertModalCloseBtn').on('click', function() {
+	    $('#"insertCodeModal"').modal('hide');
+	});
+	$('#commonModalCloseBtn').on('click', function() {
+	    $('#commonModal').modal('hide');
+	});
+	

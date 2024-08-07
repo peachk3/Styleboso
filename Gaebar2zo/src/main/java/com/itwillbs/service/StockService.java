@@ -13,11 +13,15 @@ import com.itwillbs.domain.TransactionVO;
 public interface StockService {
 
 	// 입고 리스트 호출
-	List<TransactionVO> rcList() throws Exception;
+	List<TransactionVO> rcList(Criteria cri) throws Exception;
+	// 입고 리스트 개수 세기
+	public int getTotalReceivingCount() throws Exception;
 
 	// 출고 리스트 호출
-	List<TransactionVO> rsList() throws Exception;
-
+	List<TransactionVO> rsList(Criteria cri) throws Exception;
+	// 출고 리스트 개수 세기
+	public int getTotalReleaseCount() throws Exception;
+	
 	// 재고 리스트 호출
 	List<InventoryVO> getStockList(Criteria cri) throws Exception;
 	int getTotalCount() throws Exception;
@@ -78,6 +82,9 @@ public interface StockService {
 	
 	// 출고 상태 업데이트
 	public void updateReleaseStatus(List<String> tran_nums, String pro_status, List<String> top_tran_nums) throws Exception;
+
+	
+
 
 
 

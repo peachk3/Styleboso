@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../include/header.jsp" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
     <style>
         .status-buttons { display: none; }
@@ -16,8 +17,10 @@
 <body>
 	<h1>/sales/purchaseOrderList.jsp</h1>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
+	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
         <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/sales/purchaseOrderAdd'">
         <input type="button" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
+    </sec:authorize>
     </div>
     
     <table class="table table-hover">
@@ -62,11 +65,13 @@
     </table>
 
     <div class="container mt-3">
+    <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
         <button id="statusChangeBtn" class="btn btn-outline-info">상태 변경</button>
         <div class="status-buttons mt-2">
             <button class="btn btn-outline-info" id="preReceiveBtn">발주 예정</button>
             <button class="btn btn-outline-info" id="completedReceiveBtn">발주 승인</button>
         </div>
+        </sec:authorize>
     </div>
 
     <!-- poInfoModal -->
@@ -150,8 +155,10 @@
 					</div>
                 </div>
                 <div class="modal-footer">
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                     <button type="button" class="btn btn-primary" id="updateFormBtn"
                     	data-coreui-toggle="modal" data-coreui-target="#poUpdateModal">수정</button>
+                </sec:authorize>
                     <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
                 </div>
             </div>
@@ -232,8 +239,10 @@
 					</div>
                 </div>
                 <div class="modal-footer">
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                     <button type="button" class="btn btn-primary" id="submitFormBtn">등록</button>
                     <button type="button" class="btn btn-secondary" data-coreui-toggle="modal" data-coreui-target="#poInfoModal">닫기</button>
+                </sec:authorize>
                 </div>
             </div>
         </div>

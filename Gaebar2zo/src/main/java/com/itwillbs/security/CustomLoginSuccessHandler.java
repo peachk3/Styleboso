@@ -15,70 +15,86 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 
-		 
-		private static final Logger logger = LoggerFactory.getLogger(CustomLoginSuccessHandler.class);
-	
-	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) throws IOException, ServletException {
-
-			logger.info(" onAuthenticationSuccess() 실행 - 로그인 성공");
-			
-			// 로그인한 사용자의 인증정보 확인
-			// 사용자의 권한 정보를 저장하는 리스트
-			
-			List<String> roleNames = new ArrayList<String>();
-			
-			// 익명 클래스를 블럭 잡아 ctrl + 1 사용해서 람다표현식 <-> 익명클래스(함수)
-//			authentication.getAuthorities().forEach(new Consumer<GrantedAuthority>() {
-//				@Override
-//				public void accept(GrantedAuthority authority) {
-//					roleNames.add(authority.getAuthority());
-//					
-//				}
-//			});
-			
-			authentication.getAuthorities().forEach(
-					authority -> roleNames.add(authority.getAuthority())
-					);
-			
-			
-			logger.info(" 사용자 권한 정보 : "+roleNames);
-			
-			// 사용자 권한에 따른 페이지 이동
-			
-			// 관리자 - ROLE_ADMIN
-			if(roleNames.contains("ROLE_ADMIN")) {
-				logger.info("ROLE_ADMIN 권한 -> admin페이지로 이동 ");
-//				response.sendRedirect("/Styleboso/system/main");
-				response.sendRedirect("/system/main");
-				return;
-			}
-			
-//			// 사용자 - ROLE_MEMBER
-//			if(roleNames.contains("ROLE_MEMBER")) {
-//				logger.info("ROLE_MEMBER 권한 -> member페이지로 이동 ");
-//				response.sendRedirect("/Styleboso/system/main");
-//				return;
-//			}
-//			
-			// 전체 - ALL
-			
-			
-			
-			// 재커밋
-	
-			
-			
-			
-			
-			
-			
-		
-		
-	}
-
-	
-	
-	
+       
+      private static final Logger logger = LoggerFactory.getLogger(CustomLoginSuccessHandler.class);
+   
+//   @Override
+//   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+//         Authentication authentication) throws IOException, ServletException {
+//
+//         logger.info(" onAuthenticationSuccess() 실행 - 로그인 성공");
+//         
+//         // 로그인한 사용자의 인증정보 확인
+//         // 사용자의 권한 정보를 저장하는 리스트
+//         
+//         List<String> roleNames = new ArrayList<String>();
+//         
+//         // 익명 클래스를 블럭 잡아 ctrl + 1 사용해서 람다표현식 <-> 익명클래스(함수)
+////         authentication.getAuthorities().forEach(new Consumer<GrantedAuthority>() {
+////            @Override
+////            public void accept(GrantedAuthority authority) {
+////               roleNames.add(authority.getAuthority());
+////               
+////            }
+////         });
+//         
+//         authentication.getAuthorities().forEach(
+//               authority -> roleNames.add(authority.getAuthority())
+//               );
+//         
+//         
+//         logger.info(" 사용자 권한 정보 : "+roleNames);
+//         
+//         // 사용자 권한에 따른 페이지 이동
+//         
+//         // 관리자 - ROLE_ADMIN
+//         if(roleNames.contains("ROLE_ADMIN")) {
+//            logger.info("ROLE_ADMIN 권한 -> admin페이지로 이동 ");
+////            response.sendRedirect("/Styleboso/system/main");
+//            response.sendRedirect("/main");
+//            return;
+//         }
+//         if(roleNames.contains("ROLE_MANAGER")) {
+//            logger.info("ROLE_ADMIN 권한 -> admin페이지로 이동 ");
+////            response.sendRedirect("/Styleboso/system/main");
+//            response.sendRedirect("/main");
+//            return;
+//         }
+//         if(roleNames.contains("ROLE_MEMBER")) {
+//            logger.info("ROLE_MEMBER 권한 -> admin페이지로 이동 ");
+////            response.sendRedirect("/Styleboso/system/main");
+//            response.sendRedirect("/main");
+//            return;
+//         }         
+////         // 사용자 - ROLE_MEMBER
+////         if(roleNames.contains("ROLE_MEMBER")) {
+////            logger.info("ROLE_MEMBER 권한 -> member페이지로 이동 ");
+////            response.sendRedirect("/Styleboso/system/main");
+////            return;
+////         }
+////         
+//         // 전체 - ALL
+//         
+//         
+//         
+//         // 재커밋
+//   
+//      
+//      
+//   }
+      @Override
+      public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+              Authentication authentication) throws IOException, ServletException {
+          logger.info("onAuthenticationSuccess() 실행 - 로그인 성공");
+          
+          // 사용자 권한 로깅 (선택사항)
+          authentication.getAuthorities().forEach(
+              authority -> logger.info("사용자 권한 정보 : " + authority.getAuthority())
+          );
+          
+          // 모든 사용자를 main.jsp 페이지로 리다이렉트
+          response.sendRedirect(request.getContextPath() + "/loginout/main");
+      }
+   
+   
 }

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../include/header.jsp"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
     <style>
         .status-buttons { display: none; }
         .modal-dialog { max-width: 80%; }
@@ -16,8 +16,10 @@
 <body>
 	<h1>/Styleboso/stock/releaseList.jsp</h1>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
-		<input type="button" class="btn btn-primary" value="등록" onclick="location.href='/stock/releaseAdd'">
-		<input type="button" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
+		<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
+           <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/stock/releaseAdd'">
+           <input type="button" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
+       </sec:authorize>
 	</div>
 
 <table class="table table-hover">
@@ -66,11 +68,13 @@
 </table>
 
     <div class="container mt-3">
+    <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
         <button id="statusChangeBtn" class="btn btn-outline-info">상태 변경</button>
         <div class="status-buttons mt-2">
             <button class="btn btn-outline-info" id="preReceiveBtn">출고 준비</button>
             <button class="btn btn-outline-info" id="completedReceiveBtn">출고 완료</button>
         </div>
+   </sec:authorize>
     </div>
 
 <!-- Modal -->
@@ -132,16 +136,41 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                     <button type="button" class="btn btn-secondary" id="editButton">수정</button>
                     <button type="submit" class="btn btn-success" id="saveButton" style="display: none;">저장</button>
                     <button type="button" class="btn btn-success" id="saveCancelButton" style="display: none;">취소</button>
+                    </sec:authorize>
                     <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+<!-- 페이징 처리 -->
+   <nav aria-label="Page navigation" class="pagination-container">
+      <ul class="pagination justify-content-center">
+         <c:if test="${pageVO.prev}">
+            <li class="page-item">
+               <a class="page-link" href="/stock/releaseList?page=${pageVO.startPage - 1}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+               </a>
+            </li>
+         </c:if>
+         <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+            <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
+               <a class="page-link" href="/stock/releaseList?page=${i}">${i}</a>
+            </li>
+         </c:forEach>
+         <c:if test="${pageVO.next && pageVO.endPage > 0}">
+            <li class="page-item">
+               <a class="page-link" href="/stock/releaseList?page=${pageVO.endPage + 1}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+               </a>
+            </li>
+         </c:if>
+      </ul>
+   </nav>
 
 
 	<!-- Modal2 -->

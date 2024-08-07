@@ -1,22 +1,28 @@
 package com.itwillbs.persistence;
 
 import java.util.List;
+
 import java.util.Map;
 
 import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryChangeVO;
 import com.itwillbs.domain.InventoryVO;
-import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 
 public interface StockDAO {
 
 	// 입고 리스트 호출
-	List<TransactionVO> rcList() throws Exception;
+	List<TransactionVO> rcList(Criteria cri) throws Exception;
+
+	// 입고 리스트 개수 세기
+	public int getTotalReceivingCount() throws Exception;
 
 	// 출고 리스트 호출
-	List<TransactionVO> rsList() throws Exception;
+	List<TransactionVO> rsList(Criteria cri) throws Exception;
 
+	// 출고 리스트 개수 세기
+	public int getTotalReleaseCount() throws Exception;
+	
 	// 재고 리스트 호출
 	List<InventoryVO> getStockList(Criteria cri) throws Exception;
 	int getTotalCount() throws Exception;
@@ -62,13 +68,13 @@ public interface StockDAO {
 	
 	
 	// GetTranNum 추출
-	public String GetTranNum(TransactionVO tvo);
+	public String GetTranNum(TransactionVO tvo) throws Exception;
 
 	// 입고 등록_TransactionVO
-	public void stockReceivingAdd_TransactionVO(TransactionVO tvo);
+	public void stockReceivingAdd_TransactionVO(TransactionVO tvo) throws Exception;
 
 	// 입고 등록_InventoryChangeVO
-	public void stockReceivingAdd_InventoryChangeVO(InventoryChangeVO newIvcb);
+	public void stockReceivingAdd_InventoryChangeVO(InventoryChangeVO newIvcb) throws Exception;
 	
 	
 	
@@ -103,6 +109,8 @@ public interface StockDAO {
 	public void updateReleaseStatus(List<String> tran_nums, String pro_status) throws Exception;
 	// 출고 상태 업데이트 -> 상위거래번호 상태 업데이트
 	public void updateReleaseTopTranStatus(List<String> top_tran_nums, String pro_status) throws Exception;
+
+
 	
 
 

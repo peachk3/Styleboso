@@ -197,7 +197,7 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 
 	// 창고 열 불러오기
 	@Override
-	public List<String> getColumns(String wh_code, String wh_zone, String wh_rack) {
+	public List<String> getColumns(String wh_code, String wh_zone, String wh_rack) throws Exception{
 		logger.debug(" getColumns() 실행");
 		
 		return sqlSession.selectList(NAMESPACE + "getColumns", Map.of("wh_code", wh_code, "wh_zone", wh_zone, "wh_rack", wh_rack));
@@ -205,7 +205,7 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 
 	// 창고 행 불러오기
 	@Override
-	public List<String> getRows(String wh_code, String wh_zone, String wh_rack) {
+	public List<String> getRows(String wh_code, String wh_zone, String wh_rack) throws Exception{
 		logger.debug(" getRows() 실행");
 		
 		return sqlSession.selectList(NAMESPACE + "getRows", Map.of("wh_code", wh_code, "wh_zone", wh_zone, "wh_rack", wh_rack));

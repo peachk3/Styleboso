@@ -168,7 +168,7 @@ public class StockController {
 		logger.debug(" icvoList : " + icvoList);
 		
 		Timestamp regdate = Timestamp.from(Instant.now());
-	    tvo.setRegdate(regdate);
+	    // tvo.setRegdate(regdate);
 		
 		sService.adjustReturnAdd(tvo);
 		

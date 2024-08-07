@@ -41,10 +41,10 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 	}
  
 	@Override
-	public int getTotalClientCount() throws Exception {
+	public int getTotalClientCount(Criteria cri) throws Exception {
 		logger.debug(" getTotalClientCount() 실행 ");
 		
-		return bidao.getTotalClientCount();
+		return bidao.getTotalClientCount(cri);
 	}
 
 	// 품목 리스트 출력
@@ -55,9 +55,10 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 	}
 	
 	@Override
-	public int getTotalItemCount() throws Exception {
+	public int getTotalItemCount(Criteria cri) throws Exception {
 		logger.debug(" getTotalItemCount() 실행 ");
-		return bidao.getTotalItemCount();
+		
+		return bidao.getTotalItemCount(cri);
 	}
 
 	// 사업자 번호 중복 조회

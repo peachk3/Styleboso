@@ -82,7 +82,7 @@
    <c:url var="pageUrl" value="/basicInfo/itemList">
             <c:param name="searchType" value="${searchType}"/>
             <c:param name="keyword" value="${keyword}"/>
-        </c:url>
+   </c:url>
 
         <nav aria-label="Page navigation" class="pagination-container">
             <ul class="pagination justify-content-center">
@@ -109,33 +109,6 @@
         </nav>
     </div>
    
-   
-<!-- 페이징 처리 -->
-<!--    <nav aria-label="Page navigation" class="pagination-container"> -->
-<!--       <ul class="pagination justify-content-center"> -->
-<%--          <c:if test="${pageVO.prev}"> --%>
-<!--             <li class="page-item"> -->
-<%--                <a class="page-link" href="/basicInfo/itemList?page=${pageVO.startPage - 1}" aria-label="Previous"> --%>
-<!--                   <span aria-hidden="true">&laquo;</span> -->
-<!--                </a> -->
-<!--             </li> -->
-<%--          </c:if> --%>
-<%--          <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1"> --%>
-<%--             <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}"> --%>
-<%--                <a class="page-link" href="/basicInfo/itemList?page=${i}">${i}</a> --%>
-<!--             </li> -->
-<%--          </c:forEach> --%>
-<%--          <c:if test="${pageVO.next && pageVO.endPage > 0}"> --%>
-<!--             <li class="page-item"> -->
-<%--                <a class="page-link" href="/basicInfo/itemList?page=${pageVO.endPage + 1}" aria-label="Next"> --%>
-<!--                   <span aria-hidden="true">&raquo;</span> -->
-<!--                </a> -->
-<!--             </li> -->
-<%--          </c:if> --%>
-<!--       </ul> -->
-<!--    </nav> -->
-
-
 
 <!-- 상세보기 모달창-->
 <div class="modal fade" id="exampleModalToggle" data-coreui-backdrop="static" data-coreui-keyboard="false" tabindex="-1" aria-labelledby="exampleModalToggleLabel" aria-hidden="true">
@@ -171,28 +144,6 @@
                                 <td><label for="validationCustom03" class="form-label">제품 그룹명 </label></td>
                         <td><input type="text" class="form-control" id="s_cate_item_name" name="s_cate_item_name" readonly></td>
                             </tr>
-<!--                               <tr> -->
-<!--                                 <td><label for="validationCustom03" class="form-label"> 대분류 제품 유형 </label></td> -->
-<!--                                 <td> -->
-<!--                         <select class="form-select" id="m_cate_item_code" name="m_cate_item_code" aria-label="Default select example" required disabled> -->
-<!--                            <option value="0"> 제품 유형을 선택하세요 </option> -->
-<!--                            <option value="IT" id="m_cate_item_code"> 상의 </option> -->
-<!--                            <option value="IB" id="m_cate_item_code"> 하의 </option> -->
-<!--                            <option value="IO" id="m_cate_item_code"> 아우터 </option> -->
-<!--                            <option value="IS" id="m_cate_item_code"> 원피스/스커트 </option> -->
-<!--                         </select> -->
-<!--                         </td> -->
-<!--                         <td><input type="text" class="form-control" id="group_name" name="group_name" readonly></td> -->
-<!--                             </tr> -->
-<!--                             <tr> -->
-<!--                                <td><label for="validationCustom03" class="form-label"> 소분류 제품 유형 </label></td> -->
-<!--                                <td> -->
-<!--                                <select class="form-select" id="s_cate_item_code" name="s_cate_item_code" aria-label="Default select example" required disabled> -->
-<!--                            <option value="0"> 소분류 제품 유형을 선택하세요 </option> -->
-<!--                         </select> -->
-<!--                         </td> -->
-<!--                         <td><input type="text" class="form-control" id="s_cate_item_code" name="s_cate_item_code" readonly></td> -->
-<!--                             </tr> -->
                             <tr>
                                 <td><label for="validationCustom03" class="form-label">재질</label></td>
                                 <td><input type="text" class="form-control" id="item_mat" name="item_mat" readonly></td>

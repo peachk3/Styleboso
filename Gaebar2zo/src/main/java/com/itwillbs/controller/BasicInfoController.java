@@ -64,8 +64,12 @@ public class BasicInfoController {
 	    // 하단 페이징처리 정보객체 생성
 	    PageVO pageVO = new PageVO();
 	    pageVO.setCri(cri);
-	    pageVO.setTotalCount(bService.getTotalItemCount());
+	    int totalCount = bService.getTotalItemCount(cri);
+	    pageVO.setTotalCount(totalCount);
+	    
 	    logger.debug(" cri " + pageVO.getCri());
+	    logger.debug(" page : " + pageVO.getTotalCount());
+	    logger.debug(" pageVO " + pageVO);
 
 	    // 연결된 뷰페이지로 정보 전달
 	    model.addAttribute("itemList", itemList);
@@ -163,10 +167,13 @@ public class BasicInfoController {
 		
 		List<ClientVO> clientList = bService.cliListAll(cri);
 	    logger.debug(" size : " + clientList.size());
-		
+	    
 	    PageVO pageVO = new PageVO();
 	    pageVO.setCri(cri);
-	    pageVO.setTotalCount(bService.getTotalClientCount());
+	    
+	    int totalCount = bService.getTotalClientCount(cri);
+	    pageVO.setTotalCount(totalCount);
+	    
 	    logger.debug(" cri " + pageVO.getCri());
 
 	    model.addAttribute("clientList", clientList);	

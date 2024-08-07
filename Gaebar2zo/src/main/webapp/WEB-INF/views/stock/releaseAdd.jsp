@@ -2,112 +2,172 @@
 <%@ include file="../include/header.jsp" %>
 
 <body>
-<div class="container-lg px-4">
-      <div class="row">
-         <div class="col-12">
-            <div class="card mb-4">
-               <div class="card-body">
-                  <form class="row g-3 needs-validation" action="/stock/receivingAdd" method="post" novalidate>
-                     <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">         
-                  
-                     <div class="col-md-6">
-                        <label for="validationCustom01" class="form-label">거래 리스트</label>
-                           <input type="text" class="form-control" id="validationCustom01" name="top_tran_num"
-                                 data-coreui-toggle="modal" data-coreui-target="#exampleModal0" required>
-                        <div class="invalid-feedback">거래 리스트를 입력해주세요</div>
-                     </div>
+	<div class="container-lg px-4">
+		<div class="row">
+			<div class="col-12">
+				<div class="card mb-4">
+					<div class="card-body">
+						<form class="row g-3 needs-validation"
+							action="/stock/receivingAdd" method="post" novalidate>
+							<input type="hidden" name="${_csrf.parameterName }"
+								value="${_csrf.token }">
 
-                     <div class="col-md-3">
-                        <label for="validationCustom03" class="form-label">거래처 번호</label>
-                           <input type="text" class="form-control" id ="validationCustom03" name="cli_num" required>
-                        <div class="invalid-feedback">거래처를 입력해주세요</div>
-                     </div>
-                     <div class="col-md-3">
-                        <label for="validationCustom04" class="form-label">거래처명</label>
-                           <input type="text" class="form-control" id="validationCustom04" required>
-                     </div>
-                     <div class="col-md-6">
-                        <label for="validationCustom02" class="form-label">거래일</label> 
-                           <input type="date" class="form-control" name="tran_date"
-                           id="validationCustom02" required>
-                        <div class="invalid-feedback">거래일 </div>
-                     </div>
-                     
-                     <div class="col-md-3">
-                        <label for="validationCustom05" class="form-label">담당자 아이디</label>
-                           <input type="text" class="form-control" id="validationCustom05" name="pic_username" required>
-                        <div class="invalid-feedback">담당자를 입력해주세요</div>
-                     </div>
-                     <div class="col-md-3">
-                        <label for="validationCustom06" class="form-label">담당자명</label>
-                           <input type="text" class="form-control" id="validationCustom06" required>
-                     </div>
-                     <div class="col-12">
-                        <label for="validationCustom07" class="form-label">비고</label>
-                           <input type="text" class="form-control" id="validationCustom07" name="comm">
-                     </div>
-                     
-                  <div class="example">
-                     <div class="tab-content rounded-bottom">
+							<div class="col-md-6">
+								<label for="validationCustom01" class="form-label">거래
+									리스트</label> <input type="text" class="form-control"
+									id="validationCustom01" name="top_tran_num"
+									data-coreui-toggle="modal" data-coreui-target="#exampleModal0"
+									required>
+								<div class="invalid-feedback">거래 리스트를 입력해주세요</div>
+							</div>
 
-                     <ul class="nav nav-underline-border" role="tablist">
-                     </ul>
-                        <table class="table item-table text-left">
-                            <thead class="table-light">
-                                <tr>
-                                    <th scope="col" style="width:25%">제품번호</th>
-                                    <th scope="col" style="width:25%">제품명</th>
-                                    <th scope="col" style="width:12%">재고번호</th>
-<!--                                     <th scope="col" style="width:12%"></th> -->
-                                    <th scope="col" style="width:25%">수량</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableBody">
-                                <!-- 행이 동적으로 추가됩니다 -->
-                            </tbody>
-                        </table>
-                     </div>
-                  </div>
-                     <div class="col-12">
-                        <button class="btn btn-primary" type="submit" id="submitFormBtn">등록</button>
-                     </div>
-                  </form>
-                  
-                  
-                  <!-- Modal0 -->
-                  <div class="modal fade" id="exampleModal0" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                     <div class="modal-dialog modal-dialog-scrollable">
-                        <div class="modal-content">
-                           <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">거래 리스트</h5>
-                              <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
-                           </div>
-                           <div class="modal-body">
-                              <table class="table table-hover text-center" id="modal0-table">
-                                 <thead class="table-light">
-                                    <tr>
-                                       <th scope="col"></th>
-                                       <th scope="col">거래 번호</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
+							<div class="col-md-3">
+								<label for="validationCustom03" class="form-label">거래처
+									번호</label> <input type="text" class="form-control"
+									id="validationCustom03" name="cli_num" required>
+								<div class="invalid-feedback">거래처를 입력해주세요</div>
+							</div>
+							<div class="col-md-3">
+								<label for="validationCustom04" class="form-label">거래처명</label>
+								<input type="text" class="form-control" id="validationCustom04"
+									required>
+							</div>
+							<div class="col-md-6">
+								<label for="validationCustom02" class="form-label">거래일</label> <input
+									type="date" class="form-control" name="tran_date"
+									id="validationCustom02" required>
+								<div class="invalid-feedback">거래일</div>
+							</div>
 
-                                 </tbody>
-                              </table>
-                           </div>
-                           <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                           </div>
-                        </div>
-                     </div>
-               </div>
-            </div>
-            
-      <!-- 재고 모달 -->
+							<div class="col-md-3">
+								<label for="validationCustom05" class="form-label">담당자
+									아이디</label> <input type="text" class="form-control"
+									id="validationCustom05" name="pic_username" required>
+								<div class="invalid-feedback">담당자를 입력해주세요</div>
+							</div>
+							<div class="col-md-3">
+								<label for="validationCustom06" class="form-label">담당자명</label>
+								<input type="text" class="form-control" id="validationCustom06"
+									required>
+							</div>
+							<div class="col-12">
+								<label for="validationCustom07" class="form-label">비고</label> <input
+									type="text" class="form-control" id="validationCustom07"
+									name="comm">
+							</div>
+
+							<div class="example">
+								<div class="tab-content rounded-bottom">
+
+									<ul class="nav nav-underline-border" role="tablist">
+									</ul>
+									<table class="table item-table text-left">
+										<thead class="table-light">
+											<tr>
+												<th scope="col" style="width: 25%">제품번호</th>
+												<th scope="col" style="width: 25%">제품명</th>
+												<th scope="col" style="width: 12%">재고번호</th>
+												<th scope="col" style="width: 25%">수량</th>
+											</tr>
+										</thead>
+										<tbody id="tableBody">
+											<!-- 행이 동적으로 추가됩니다 -->
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="col-12">
+								<button class="btn btn-primary" type="submit" id="submitFormBtn">등록</button>
+							</div>
+						</form>
+
+
+						<!-- Modal0 -->
+						<div class="modal fade" id="exampleModal0" tabindex="-1"
+							aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-scrollable">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">거래 리스트</h5>
+										<button type="button" class="btn-close"
+											data-coreui-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<nav>
+											<div class="nav nav-tabs" id="nav-tab" role="tablist">
+												<button class="nav-link active" id="nav-po-tab"
+													data-coreui-toggle="tab" data-coreui-target="#nav-po"
+													type="button" role="tab" aria-controls="nav-po"
+													aria-selected="true">수주</button>
+												<button class="nav-link" id="nav-ex-tab"
+													data-coreui-toggle="tab" data-coreui-target="#nav-ex"
+													type="button" role="tab" aria-controls="nav-ex"
+													aria-selected="false">교환</button>
+											</div>
+										</nav>
+										<div class="tab-content" id="nav-tabContent">
+											<div class="tab-pane fade show active" id="nav-po"
+												role="tabpanel" aria-labelledby="nav-po-tab" tabindex="0">
+												<table class="table table-hover text-center" id="modal-po">
+													<thead class="table-light">
+														<tr>
+															<th scope="col"></th>
+															<th scope="col">수주 번호</th>
+															<th scope="col">거래처 명</th>
+														</tr>
+													</thead>
+													<tbody>
+														<c:forEach var="po" items="${po}" varStatus="status">
+															<tr data-tran-num="${po.tran_num}">
+																<th scope='row'>${status.index+1}</th>
+																<td>${po.tran_num}</td>
+																<c:forEach var="cli" items="${po.clientList}">
+																	<td>${cli.cli_name}</td>
+																</c:forEach>
+															</tr>
+														</c:forEach>
+													</tbody>
+												</table>
+											</div>
+											<div class="tab-pane fade" id="nav-ex" role="tabpanel"
+												aria-labelledby="nav-ex-tab" tabindex="0">
+												<table class="table table-hover text-center" id="modal-ex">
+													<thead class="table-light">
+														<tr>
+															<th scope="col"></th>
+															<th scope="col">교환 번호</th>
+															<th scope="col">거래처 명</th>
+														</tr>
+													</thead>
+													<tbody>
+														<c:forEach var="ex" items="${ex}" varStatus="status">
+															<tr data-tran-num="${ex.tran_num}">
+																<th scope='row'>${status.index+1}</th>
+																<td>${ex.tran_num}</td>
+																<c:forEach var="cli" items="${ex.clientList}">
+																	<td>${cli.cli_name}</td>
+																</c:forEach>
+															</tr>
+														</c:forEach>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-coreui-dismiss="modal">닫기</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 재고 모달 -->
 <div class="modal fade" id="inventoryModal" tabindex="-1" aria-labelledby="inventoryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
@@ -140,15 +200,15 @@
 </body>
 
 <style>
-   .custom-btn {
-      text-align: left; /* 텍스트를 왼쪽으로 정렬합니다 */
-      padding-left: 10px; /* 왼쪽 여백을 추가합니다 */
-      width: 100%; /* 버튼이 부모 요소에 맞게 전체 너비를 가지도록 설정합니다 */
-   }
-   
-   .hidden {
-      isplay: none;
-   }
+	.custom-btn {
+		text-align: left; /* 텍스트를 왼쪽으로 정렬합니다 */
+		padding-left: 10px; /* 왼쪽 여백을 추가합니다 */
+		width: 100%; /* 버튼이 부모 요소에 맞게 전체 너비를 가지도록 설정합니다 */
+	}
+	
+	.hidden {
+		isplay: none;
+	}
 </style>
 
 <!-- <script src="path/to/bootstrap.bundle.min.js"></script> -->

@@ -84,14 +84,20 @@ public interface StockService {
 
 
 	// 발주 리스트
-	public List<TransactionVO> PurchaseOrderList() throws Exception;
+	public List<TransactionVO> receivingPurchaseOrderList() throws Exception;
 
 	// 교환 리스트
-	public List<TransactionVO> ExchangeList() throws Exception;
+	public List<TransactionVO> receivingExchangeList() throws Exception;
 
 	// 반품 리스트
-	public List<TransactionVO> ReturnList() throws Exception;
+	public List<TransactionVO> receivingReturnList() throws Exception;
 
+	
+	// 수주 리스트
+	public List<TransactionVO> releaseSalesOrderList() throws Exception;
+	
+	// 교환 리스트
+	public List<TransactionVO> releaseExchangeList() throws Exception;
 
 
 

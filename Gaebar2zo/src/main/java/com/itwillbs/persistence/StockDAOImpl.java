@@ -306,26 +306,40 @@ public class StockDAOImpl implements StockDAO{
 
 	
 	@Override
-	public List<TransactionVO> purchaseOrderList() throws Exception {
-		logger.debug("DAO : purchaseOrderList() 호출");
+	public List<TransactionVO> receivingPurchaseOrderList() throws Exception {
+		logger.debug("DAO : receivingPurchaseOrderList() 호출");
 		
-		return sqlSession.selectList(NAMESPACE + "purchaseOrderTranList");
+		return sqlSession.selectList(NAMESPACE + "receivingPurchaseOrderList");
 	}
 
 	@Override
-	public List<TransactionVO> exchangeList() throws Exception {
-		logger.debug("DAO : exchangeList() 호출");
+	public List<TransactionVO> receivingExchangeList() throws Exception {
+		logger.debug("DAO : receivingExchangeList() 호출");
 		
-		return sqlSession.selectList(NAMESPACE + "exchangeTranList");
+		return sqlSession.selectList(NAMESPACE + "receivingExchangeList");
 	}
 	
 	@Override
-	public List<TransactionVO> returnList() throws Exception {
-		logger.debug("DAO : returnList() 호출");
+	public List<TransactionVO> receivingReturnList() throws Exception {
+		logger.debug("DAO : receivingReturnList() 호출");
 		
-		return sqlSession.selectList(NAMESPACE + "returnTranList");
+		return sqlSession.selectList(NAMESPACE + "receivingReturnList");
 	}
 	
+	
+	@Override
+	public List<TransactionVO> releaseSalesOrderList() throws Exception {
+		logger.debug("DAO : releaseSalesOrderList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "releaseSalesOrderList");
+	}
+	
+	@Override
+	public List<TransactionVO> releaseExchangeList() throws Exception {
+		logger.debug("DAO : releaseExchangeList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "releaseExchangeList");
+	}
 	
 	
 	

@@ -37,6 +37,9 @@ public interface StockService {
 	// 반품 등록
 	void adjustReturnAdd(TransactionVO tvo) throws Exception;
 	
+	// 반품 삭제
+	void deleteReturnList(List<String> trannums) throws Exception;
+	
 	// 입고 모달창 정보 호출
 	Map<String, Object> getTransactionDetails(String tran_num) throws Exception;
 
@@ -88,6 +91,7 @@ public interface StockService {
 
 	// 반품 리스트
 	public List<TransactionVO> ReturnList() throws Exception;
+
 
 
 

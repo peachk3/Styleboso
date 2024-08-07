@@ -72,14 +72,14 @@ public class StockServiceImpl implements StockService{
 	
 	// 반품 모달창 정보
 	@Override
-	public Map<String, Object> getReturnDetails(String tran_num) {
+	public Map<String, Object> getReturnDetails(String tran_num) throws Exception {
 		logger.debug(" 반품 모달창 정보 확인 ");
 		return sdao.getReturnDetails(tran_num);
 	}
 	
 	// 반품 모달창 품목 정보
 	@Override
-	public List<Map<String, Object>> getReturnItems(String top_tran_num) {
+	public List<Map<String, Object>> getReturnItems(String top_tran_num) throws Exception {
 		logger.debug(" 반품 모달창 품목 정보 ");
 		return sdao.getReturnItems(top_tran_num);
 	}
@@ -107,8 +107,18 @@ public class StockServiceImpl implements StockService{
 		}
 	}
 	
+	// 반품 삭제
 	@Override
-	public Map<String, Object> getTransactionDetails(String tran_num) throws Exception{
+	public void deleteReturnList(List<String> trannums) throws Exception {
+		logger.debug(" 반품 삭제 ");
+		
+		sdao.deleteInventoryChange(trannums);
+		sdao.deleteReturnList(trannums);
+	}
+
+
+	@Override
+	public Map<String, Object> getTransactionDetails(String tran_num) throws Exception {
 
 		logger.debug("입고 모달창 정보 확인");
 		

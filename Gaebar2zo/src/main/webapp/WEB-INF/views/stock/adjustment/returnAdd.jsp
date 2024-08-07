@@ -43,9 +43,15 @@
                            <input type="text" class="form-control" id="validationCustom06" required>
                      </div>
                      <div class="col-12">
-                        <label for="validationCustom07" class="form-label">비고</label>
-                           <input type="text" class="form-control" id="validationCustom07" name="comm">
-                     </div>
+                        <label for="validationCustom07" class="form-label">반품 사유</label>
+                            <select class="form-control" id="validationCustom07" name="comm" required>
+                                <option value="" selected disabled>반품 사유를 선택해주세요</option>
+                                <option value="불량 제품">불량 제품</option>
+                                <option value="고객 요청">고객 요청</option>
+                                <option value="기타">기타</option>
+                            </select>
+                      </div>
+
                      
                   <div class="example">
                      <div class="tab-content rounded-bottom">
@@ -57,8 +63,6 @@
                                 <tr>
                                     <th scope="col" style="width:25%">제품번호</th>
                                     <th scope="col" style="width:25%">제품명</th>
-                                    <th scope="col" style="width:12%">재고번호</th>
-<!--                                     <th scope="col" style="width:12%"></th> -->
                                     <th scope="col" style="width:25%">수량</th>
                                 </tr>
                             </thead>
@@ -106,37 +110,6 @@
                      </div>
                </div>
             </div>
-            
-      <!-- 재고 모달 -->
-<div class="modal fade" id="inventoryModal" tabindex="-1" aria-labelledby="inventoryModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="inventoryModalLabel">재고 리스트</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>재고번호</th>
-                            <th>창고명</th>
-                        </tr>
-                    </thead>
-                    <tbody id="inventoryModalBody">
-                        <!-- 여기에 재고 데이터가 동적으로 추가됩니다 -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>      
-            
-
-
-
-
-    <h1>/Styleboso/stock/receivingAdd.jsp</h1>
 </body>
 
 <style>
@@ -179,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tran_date: String(document.getElementById('validationCustom02').value),
             cli_num: document.getElementById('validationCustom03').value,
             pic_username: document.getElementById('validationCustom05').value,
-            tran_cate_code: "RL",
+            tran_cate_code: "RE",
             comm: document.getElementById('validationCustom07').value
         };
         
@@ -199,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (allFormsValid) {
             $.ajax({
                 type: 'POST',
-                url: '/stock/releaseAdd',
+                url: '/stock/adjustment/returnAdd',
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
                 },
@@ -210,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }),
                 success: function(response) {
                     console.log('서버 응답:', response);
-                    window.location.href = 'http://localhost:8088/stock/releaseList';
+                    window.location.href = 'http://localhost:8088/stock/adjustment/returnAdd';
                 },
                 error: function(error) {
                     console.error('에러 발생:', error);
@@ -231,7 +204,6 @@ $('#modal1-table tbody').on('click', 'tr', function() {
         var newRow = '<tr>' +
             '<td>' + productNum + '</td>' +
             '<td>' + productName + '</td>' +
-            '<td><input type="text" class="form-control form-control-sm inventory-input" value="' + inventoryNum + '" readonly></td>' +
             '<td>' + quantity + '</td>' +
             '</tr>';
         $('#tableBody').append(newRow);
@@ -282,18 +254,11 @@ $('#modal1-table tbody').on('click', 'tr', function() {
                    var row = '<tr>' +
                     '<td>' + item.goods_num + '</td>' +
                     '<td>' + item.itemList[0].item_name + '</td>' +
-                    '<td><input type="text" class="form-control form-control-sm inventory-input" data-row="' + index + '" data-goods-num="' + item.goods_num + '" readonly></td>' +
                     '<td>' + item.goods_qty + '</td>' +
                     '</tr>';
                     tableBody.append(row);
                 });
 
-                // 재고번호와 창고명 입력 필드에 클릭 이벤트 추가
-                $('.inventory-input, .warehouse-input').on('click', function() {
-                    var rowIndex = $(this).data('row');
-                    var inputType = $(this).data('type');
-                    openInventoryModal(rowIndex, inputType);
-                });
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
@@ -307,17 +272,28 @@ $('#modal1-table tbody').on('click', 'tr', function() {
         $('#modal0-table tbody tr').remove();
         
         $.ajax({
-            url: "/common/transactionList",
-            type: "get",
-            contentType: 'application/json; charset=utf-8',
-            dataType: "json",
-            success: function(data) {
-                console.log(data);
-                data.forEach(function(item, idx) {
-                    var row = "<tr><th scope='row'>" + (parseInt(idx) + 1) + "</th><td>" + item.tran_num + "</td></tr>";
-                    $('#modal0-table tbody').append(row);
-                });
-            },
+        	 url: "/common/transactionList",
+             type: "get",
+             contentType: 'application/json; charset=utf-8',
+             dataType: "json",
+             success: function(data) {
+                 console.log("Received data:", data);  // 전체 데이터 로깅
+                 if (Array.isArray(data)) {
+                     data.forEach(function(item, idx) {
+                         console.log("Processing item:", item);  // 각 항목 로깅
+                         if (item.pro_status === '출고 완료' && item.tran_num.substring(0, 2) === 'SO') {
+                             var row = "<tr><th scope='row'>" + (parseInt(idx) + 1) + "</th><td>" + item.tran_num + "</td></tr>";
+                             $('#modal0-table tbody').append(row);
+                         }
+                     });
+                 } else {
+                     console.log("Data is not an array:", data);
+                 }
+                 
+                 if ($('#modal0-table tbody tr').length === 0) {
+                     $('#modal0-table tbody').append("<tr><td colspan='2'>No data available</td></tr>");
+                 }
+             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
                 alert("AJAX 요청 실패!");
@@ -398,14 +374,6 @@ $('#modal1-table tbody').on('click', 'tr', function() {
 
     // 초기화
     getTransactionList();
-
-    // 재고번호 클릭 이벤트 추가
-    $(document).on('click', '.inventory-input', function() {
-        var rowIndex = $(this).data('row');
-        var goods_num = $(this).data('goods-num');
-        console.log("Opening modal for goods_num:", goods_num);  // 로깅 추가
-        openInventoryModal(rowIndex, goods_num);
-    });
 
 });
 </script>

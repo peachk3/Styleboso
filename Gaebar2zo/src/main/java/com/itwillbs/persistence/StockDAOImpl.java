@@ -76,42 +76,47 @@ public class StockDAOImpl implements StockDAO{
 	
 	// 반품 모달창 정보 호출
     @Override
-	public Map<String, Object> getReturnDetails(String tran_num) {
+	public Map<String, Object> getReturnDetails(String tran_num) throws Exception {
 		logger.debug(" DAOImpl : 반품 모달창 정보 호출 ");
 		return sqlSession.selectOne(NAMESPACE + "getReturnDetails", tran_num);
 	}
 
     // 반품 모달창 품목 정보 호출
 	@Override
-	public List<Map<String, Object>> getReturnItems(String top_tran_num) {
+	public List<Map<String, Object>> getReturnItems(String top_tran_num) throws Exception {
 		logger.debug(" DAOImpl : 반품 모달창 품목 정보 호출 ");
-		return sqlSession.selectOne(NAMESPACE + "getReturnItems", top_tran_num);
+		return sqlSession.selectOne(NAMESPACE + "getTransactionItems", top_tran_num);
 	}
 	
 	// 반품 등록 - TransactionVO
 	@Override
-	public void adjustReturnAdd_TransactionVO(TransactionVO tvo) {
+	public void adjustReturnAdd_TransactionVO(TransactionVO tvo) throws Exception {
 		logger.debug(" DAOImpl : 반품 등록 - TransactionVO ");
 		sqlSession.insert(NAMESPACE + "adjustReturnAdd_TransactionVO", tvo);
-		
 	}
 
 	// 반품 등록 - InventoryChangeVO
 	@Override
-	public void adjustReturnAdd_InventoryChangeVO(InventoryChangeVO newIvcb) {
+	public void adjustReturnAdd_InventoryChangeVO(InventoryChangeVO newIvcb) throws Exception {
 		logger.debug(" DAOImpl : 반품 등록 - InventoryChangeVO ");
 		sqlSession.insert(NAMESPACE + "adjustReturnAdd_InventoryChangeVO", newIvcb);
-		
-		
+	}
+	
+	// 반품 삭제
+	@Override
+	public void deleteReturnList(List<String> trannums) throws Exception {
+		logger.debug(" deleteReturnList(List<String> trannums) 실행 ");
+		sqlSession.delete(NAMESPACE + "deleteTransactionList", trannums);
 	}
 
 	// 거래 상세 정보 호출
     @Override
-    public Map<String, Object> getTransactionDetails(String tran_num) {
+    public Map<String, Object> getTransactionDetails(String tran_num) throws Exception {
         logger.debug("DAOImpl : 입고 상세 정보 호출");
         // 쿼리 파라미터로 tran_num을 전달하여 결과를 반환합니다.
         return sqlSession.selectOne(NAMESPACE + "getTransactionDetails", tran_num);
     }
+
 
 	@Override
 	public void deleteRecevingList(List<String> trannums) throws Exception {

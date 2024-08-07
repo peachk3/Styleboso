@@ -131,8 +131,8 @@
   
     
     <!-- addEmp.js 연결 -->   
-<!--     <script src="../resources/js/addEmp.js"></script> -->
-    <script src="../resources/js/addEmp2.js"></script>
+    <script src="../resources/js/addEmp.js"></script>
+<!--     <script src="../resources/js/addEmp2.js"></script> -->
     
 <%@ include file="../include/footer.jsp" %>
 </body>

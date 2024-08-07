@@ -279,8 +279,6 @@ public class StockDAOImpl implements StockDAO{
 	    sqlSession.update(NAMESPACE+"updateRecevingTopTranStatus", params);
 	}
 	
-	
-	
 	@Override
 	public void updateReleaseStatus(List<String> tran_nums, String pro_status) throws Exception {
 		logger.debug("DAO : updateReleaseStatus(List<String> tran_nums, String pro_status) 호출 ");
@@ -289,8 +287,6 @@ public class StockDAOImpl implements StockDAO{
         params.put("tran_nums", tran_nums);
         params.put("pro_status", pro_status);
         sqlSession.update(NAMESPACE+"updateReleaseStatus", params);
-		
-		
 	}
 
 	@Override
@@ -301,12 +297,29 @@ public class StockDAOImpl implements StockDAO{
 		    params.put("top_tran_nums", top_tran_nums);
 		    params.put("pro_status", pro_status);
 		    sqlSession.update(NAMESPACE+"updateReleaseTopTranStatus", params);
-		
 	}
 
-
-
 	
+	@Override
+	public List<TransactionVO> purchaseOrderList() throws Exception {
+		logger.debug("DAO : purchaseOrderList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "purchaseOrderTranList");
+	}
+
+	@Override
+	public List<TransactionVO> exchangeList() throws Exception {
+		logger.debug("DAO : exchangeList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "exchangeTranList");
+	}
+	
+	@Override
+	public List<TransactionVO> returnList() throws Exception {
+		logger.debug("DAO : returnList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + "returnTranList");
+	}
 	
 	
 	

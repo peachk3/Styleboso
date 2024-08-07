@@ -259,13 +259,6 @@ select distinct
 		<result property="m_cate_wh_code" column="m_cate_wh_code" />
 	</resultMap>
 
-
-
-
-
-
-
-
 	<!-- WarehouseVO resultMap -->
 	<resultMap type="com.itwillbs.domain.WarehouseVO"
 		id="wareMap">
@@ -487,10 +480,6 @@ select distinct
         WHERE inven.goods_num = #{goods_num}
     </select>
 
-	
-
-
-
 
 	<!-- 상태업데이트_입고 -->
     <update id="updateRecevingStatus">
@@ -553,5 +542,37 @@ select distinct
 	        #{top_tran_num}
 	    </foreach>
 	</update>
+	
+	
+	<!-- 발주 리스트 -->
+	<select id="purchaseOrderTranList" resultMap="transMap">
+		select tran_num, cli_name 
+		from transaction t
+		join client c on t.cli_num = c.cli_num
+		where tran_cate_code = "PO"
+	</select>
+	
+	<!-- 교환 리스트 -->
+	<select id="exchangeTranList" resultMap="transMap">
+		select tran_num, cli_name 
+		from transaction t
+		join client c on t.cli_num = c.cli_num
+		where tran_cate_code = "EX"
+	</select>
+	
+	<!-- 반품 리스트 -->
+	<select id="returnTranList" resultMap="transMap">
+		select tran_num, cli_name 
+		from transaction t
+		join client c on t.cli_num = c.cli_num
+		where tran_cate_code = "RE"
+	</select>
+	
+	
+	
+	
+	
+	
+	
 
 </mapper>

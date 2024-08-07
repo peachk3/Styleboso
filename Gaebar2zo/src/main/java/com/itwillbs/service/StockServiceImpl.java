@@ -42,8 +42,6 @@ public class StockServiceImpl implements StockService{
 	}
 
 
-		return sdao.rcList();
-	}
 
 	// 출고 리스트 호출
 	@Override

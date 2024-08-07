@@ -35,7 +35,6 @@
         <h1>창고별 재고 출력</h1>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
-      <button class="btn btn-primary" type="button" onclick="">검색</button>
       <button class="btn btn-primary" id="registWhZoneBtn" name="registWhZoneBtn" type="button" >Zone 등록</button>
       <button class="btn btn-primary" id="registWhBtn" name="registWhBtn" type="button" >Rack 등록</button>
       <button class="btn btn-primary" id="deleteClientBtn" name="deleteClientBtn" type="button">삭제</button>
@@ -247,7 +246,7 @@ $(document).ready(function() {
             	 var columns = data.columns;
                  var rows = data.rows;
                  
-                 var tableHtml = '<table class="table"><thead><tr><th></th>';
+                 var tableHtml = '<table class="table table-hover"><thead><tr><th></th>';
                  
               // Add column headers
                  $.each(columns, function(index, column) {

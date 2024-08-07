@@ -45,10 +45,10 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 	
 
 	@Override
-	public int getTotalClientCount() throws Exception {
+	public int getTotalClientCount(Criteria cri) throws Exception {
 		logger.debug(" getTotalClientCount() 실행 ");
 		
-		return sqlSession.selectOne(NAMESPACE+"totalClientCount");
+		return sqlSession.selectOne(NAMESPACE+"totalClientCount", cri);
 	}
 
 	// 품목 리스트 출력
@@ -60,9 +60,10 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 	}
 
 	@Override
-	public int getTotalItemCount() throws Exception {
+	public int getTotalItemCount(Criteria cri) throws Exception {
 		logger.debug(" getTotalItemCount() 실행 ");
-		return sqlSession.selectOne(NAMESPACE+"totalItemCount");
+		
+		return sqlSession.selectOne(NAMESPACE+"totalItemCount", cri);
 	}
 
 	// 거래처 사업자 번호 중복 확인

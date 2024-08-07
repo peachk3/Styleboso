@@ -117,11 +117,11 @@
 														</tr>
 													</thead>
 													<tbody>
-														<c:forEach var="po" items="${po}" varStatus="status">
-															<tr data-tran-num="${po.tran_num}">
+														<c:forEach var="so" items="${so}" varStatus="status">
+															<tr data-tran-num="${so.tran_num}">
 																<th scope='row'>${status.index+1}</th>
-																<td>${po.tran_num}</td>
-																<c:forEach var="cli" items="${po.clientList}">
+																<td>${so.tran_num}</td>
+																<c:forEach var="cli" items="${so.clientList}">
 																	<td>${cli.cli_name}</td>
 																</c:forEach>
 															</tr>
@@ -362,28 +362,28 @@ $('#modal1-table tbody').on('click', 'tr', function() {
         });
     });
 
-    // 거래 리스트 가져오기
-    function getTransactionList() {
-        $('#modal0-table tbody tr').remove();
+//     // 거래 리스트 가져오기
+//     function getTransactionList() {
+//         $('#modal0-table tbody tr').remove();
         
-        $.ajax({
-            url: "/common/transactionList",
-            type: "get",
-            contentType: 'application/json; charset=utf-8',
-            dataType: "json",
-            success: function(data) {
-                console.log(data);
-                data.forEach(function(item, idx) {
-                    var row = "<tr><th scope='row'>" + (parseInt(idx) + 1) + "</th><td>" + item.tran_num + "</td></tr>";
-                    $('#modal0-table tbody').append(row);
-                });
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
-                alert("AJAX 요청 실패!");
-            }
-        });
-    }
+//         $.ajax({
+//             url: "/common/transactionList",
+//             type: "get",
+//             contentType: 'application/json; charset=utf-8',
+//             dataType: "json",
+//             success: function(data) {
+//                 console.log(data);
+//                 data.forEach(function(item, idx) {
+//                     var row = "<tr><th scope='row'>" + (parseInt(idx) + 1) + "</th><td>" + item.tran_num + "</td></tr>";
+//                     $('#modal0-table tbody').append(row);
+//                 });
+//             },
+//             error: function(jqXHR, textStatus, errorThrown) {
+//                 console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
+//                 alert("AJAX 요청 실패!");
+//             }
+//         });
+//     }
 
  // 재고번호와 창고명 입력 필드에 클릭 이벤트 추가
     $('.inventory-input, .warehouse-input').on('click', function() {
@@ -457,7 +457,7 @@ $('#modal1-table tbody').on('click', 'tr', function() {
 
 
     // 초기화
-    getTransactionList();
+//     getTransactionList();
 
     // 재고번호 클릭 이벤트 추가
     $(document).on('click', '.inventory-input', function() {

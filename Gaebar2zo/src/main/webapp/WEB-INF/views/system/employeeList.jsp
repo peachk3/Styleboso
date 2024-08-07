@@ -79,35 +79,35 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="row g-3 needs-validation" id="fm1" novalidate>
+                    <form class="row g-3 needs-validation" id="registerForm" novalidate>
                     <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"> <!-- 시큐리티 토큰!! -->
 						<div class="form-floating">
 						  <input type="text" class="form-control" id="user_per_name" name="user_per_name" placeholder="이름" required>
-						  <label for="floatingInput" style="margin-left: 10px">이름</label>
+						  <label for="user_per_name" style="margin-left: 10px">이름</label>
 						   	<span id="nameError" class="text-danger" style="display: none;">유효하지 않은 이름입니다.</span>
                             <span id="nameSuccess" class="text-success" style="display: none;">사용 가능한 이름입니다.</span>
 						</div>
 						<div class="form-floating">
 						  <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-						  <label for="floatingPassword" style="margin-left: 10px">비밀번호</label>
+						  <label for="password" style="margin-left: 10px">비밀번호</label>
 						 	<span id="pwError" class="text-danger" style="display: none;">비밀번호는 8~16자의 영문, 숫자, 특수기호를 포함해야 합니다.</span>
 						</div>
 						<div class="form-floating">
 						  <input type="password" class="form-control" id="passwordCheck" placeholder="passwordCheck" required>
-						  <label for="floatingPassword" style="margin-left: 10px">비밀번호 재확인</label>
+						  <label for="passwordCheck" style="margin-left: 10px">비밀번호 재확인</label>
 						 	<span id="pwMatchError" class="text-danger" style="display: none;">비밀번호가 일치하지 않습니다</span>
                             <span id="pwMatchSuccess" class="text-success" style="display: none;">비밀번호가 일치합니다</span>
 						</div>
 						<div class="form-floating">
 						  <input type="email" class="form-control" id="user_email" name="user_email" placeholder="name@example.com" >
-							<label for="floatingInput" style="margin-left: 10px">이메일</label>
+							<label for="user_email" style="margin-left: 10px">이메일</label>
 							<span id="emailError" class="text-danger" style="display: none;">유효한 이메일을 입력해주세요.</span>
                             <span id="emailExists" class="text-danger" style="display: none;">사용중인 이메일입니다.</span>
                             <span id="emailAvailable" class="text-success" style="display: none;">사용 가능한 이메일입니다.</span>
 						</div>
 						<div class="form-floating">
 						  <input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="010-1111-2222" required>
-						  <label for="floatingInput" style="margin-left: 10px">전화번호</label>
+						  <label for="user_phone" style="margin-left: 10px">전화번호</label>
 						    <span id="telError" class="text-danger" style="display: none;">유효하지 않은 전화번호입니다.</span>
                             <span id="telSuccess" class="text-success" style="display: none;">사용 가능한 전화번호입니다.</span>
 							 <span id="telExists" class="text-danger" style="display: none;">이미 사용 중인 전화번호입니다.</span>

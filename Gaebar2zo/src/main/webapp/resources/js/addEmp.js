@@ -1,6 +1,7 @@
 /**
  * 시스템 등록 - 등록, 수정,삭제
  */
+    
 function showRegisterModal() {
     $('#registerModal').modal('show');
 }
@@ -117,8 +118,13 @@ $(document).ready(function() {
         if (!validateForm()) {
             return; // 유효성 검사 실패시 제출 중단
         }
-        var formData = $(this).serialize(); // 폼 데이터 직렬화
-//        console.log(formData); // 직렬화된 폼 데이터를 콘솔에 출력하여 확인
+        var formDataArray = $(this).serializeArray(); // 폼 데이터 직렬화
+        var formData = {};
+        formDataArray.forEach(function(item) {
+            formData[item.name] = item.value;
+        });
+        
+        console.log("Collected formData:", formData); // 직렬화된 폼 데이터를 콘솔에 출력하여 확인
         
         $.ajax({
             url: '/system/addEmp',
@@ -126,8 +132,8 @@ $(document).ready(function() {
                 xhr.setRequestHeader(header, token);
             },
             type: 'POST',
-            dataType: 'json',
-            data: formData, // 직렬화된 폼 데이터 전송
+            contentType: 'application/json',
+            data: JSON.stringify(formData), // 직렬화된 폼 데이터 전송
             success: function(response){
                 console.log(response);
                 if(response.status === "success"){
@@ -244,7 +250,7 @@ $(document).ready(function() {
     }
 
     function validateCheckPhone() {
-        var user_phone = $('#inputTel').val();
+        var user_phone = $('#user_phone').val();
         var telError = $('#telError');
         var telSuccess = $('#telSuccess');
         var telExists = $('#telExists');

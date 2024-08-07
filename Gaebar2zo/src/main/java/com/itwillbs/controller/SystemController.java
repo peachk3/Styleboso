@@ -2,6 +2,7 @@ package com.itwillbs.controller;
 
 
 import java.lang.ProcessBuilder.Redirect;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -121,20 +123,22 @@ public class SystemController {
 	}
 	
 	//사용자 등록
-	@RequestMapping(value = "/addEmp", method = RequestMethod.POST)
-	public String addEmp(UsersVO usersVo) throws Exception {
+	@ResponseBody
+	@RequestMapping(value = "/addEmp", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<?> addEmp(@RequestBody UsersVO usersVo) throws Exception {
 		logger.info("controller ->(사용자 등록 실행)");
-		sService.addEmp(usersVo);
+		logger.info(""+usersVo);
+		
 		
 		int result = sService.addEmp(usersVo);
-		
-		 if (result > 0) {
-		       logger.info("사용자 등록 성공!!!!!!");
-		    } else {
-		        logger.info("사용자 등록 실패~~~`");
-		    }
-		 
-		 return "redirect:/system/employeeList";
+
+	    if (result > 0) {
+	        logger.info("사용자 등록 성공!!!!!!");
+	        return ResponseEntity.ok().body(Collections.singletonMap("status", "success"));
+	    } else {
+	        logger.info("사용자 등록 실패~~~");
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("status", "failure"));
+	    }
 	}
 	
 	

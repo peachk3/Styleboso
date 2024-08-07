@@ -23,6 +23,9 @@ public interface SystemService {
 	//사용자 등록
 	int addEmp(UsersVO usersVo) throws Exception;
 	
+	//사용자 수정
+	void updateEmp(UsersVO usersVo) throws Exception;
+	
 	//사용자 삭제
 	void deleteEmp(List<String> users) throws Exception;
 	//================================================
@@ -53,6 +56,8 @@ public interface SystemService {
 	
 	//공통 품목 중복체크&유효성
 	boolean checkItemCode(String s_cate_item_code) throws Exception;
+
+	
 
 	
 

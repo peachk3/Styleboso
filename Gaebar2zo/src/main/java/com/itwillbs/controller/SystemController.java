@@ -1,10 +1,8 @@
 package com.itwillbs.controller;
 
 
-import java.lang.ProcessBuilder.Redirect;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -17,9 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -140,6 +135,21 @@ public class SystemController {
 	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("status", "failure"));
 	    }
 	}
+	
+	//사용자 수정 
+	@ResponseBody
+	@RequestMapping(value = "/updateEmp", method = RequestMethod.POST)
+	public ResponseEntity<String>updateEmp(@RequestBody UsersVO usersVo) throws Exception{
+		 logger.debug(" @@@ updateEmp() 실행");
+		 sService.updateEmp(usersVo);
+		 
+		logger.debug("controller => 사용자 업데이트 출력 성공: {}" + usersVo);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	
+	
 	
 	
 	//사용자 삭제

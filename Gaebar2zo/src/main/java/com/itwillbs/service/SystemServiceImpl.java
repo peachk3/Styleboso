@@ -63,6 +63,17 @@ public class SystemServiceImpl implements SystemService{
 		return sdao.addEmp(usersVo);
 	}
 	
+	//사용자 수정
+	@Override
+	public void updateEmp(UsersVO usersVo) throws Exception {
+		logger.info("service--> 사용자 업데이트");
+		
+		sdao.updateEmp(usersVo);
+	}
+	
+	
+	
+	
 	//사용자 삭제
 	@Override
 	public void deleteEmp(List<String> users) throws Exception {

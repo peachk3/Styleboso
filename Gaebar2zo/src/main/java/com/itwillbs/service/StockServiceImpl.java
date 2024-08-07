@@ -1,6 +1,7 @@
 package com.itwillbs.service;
 
 import java.util.List;
+
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -13,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryChangeVO;
 import com.itwillbs.domain.InventoryVO;
-import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.persistence.StockDAO;
 
@@ -26,19 +26,43 @@ public class StockServiceImpl implements StockService{
 	
 	// 입고 리스트 호출
 	@Override
-	public List<TransactionVO> rcList() throws Exception {
+	public List<TransactionVO> rcList(Criteria cri) throws Exception {
 		logger.debug("ServiceImpl + 입고 리스트 호출");
 		
+		
+		return sdao.rcList(cri);
+	}
+
+	
+	@Override
+	public int getTotalReceivingCount() throws Exception {
+
+		
+		return sdao.getTotalReceivingCount();
+	}
+
+
 		return sdao.rcList();
 	}
 
 	// 출고 리스트 호출
 	@Override
-	public List<TransactionVO> rsList() throws Exception {
+	public List<TransactionVO> rsList(Criteria cri) throws Exception {
 		logger.debug("ServiceImpl + 출고 리스트 호출");
 		
-		return sdao.rsList();
+
+		
+		return sdao.rsList(cri);
+
 	}
+
+	@Override
+	public int getTotalReleaseCount() throws Exception {
+
+		
+		return sdao.getTotalReleaseCount();
+	}
+
 
 	// 재고 리스트 호출
 	@Override
@@ -193,7 +217,9 @@ public class StockServiceImpl implements StockService{
 		logger.debug("입고 등록 성공");
 	}
 
-	private String GetTranNum(TransactionVO tvo) {
+	
+
+	private String GetTranNum(TransactionVO tvo) throws Exception{
 		logger.debug("GetTranNum() 실행");
 		
 		String tran_num = sdao.GetTranNum(tvo);

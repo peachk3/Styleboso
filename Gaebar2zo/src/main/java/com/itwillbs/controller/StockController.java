@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryChangeVO;
 import com.itwillbs.domain.InventoryVO;
+import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.PageVO;
 import com.itwillbs.domain.StatusUpdateRequest;
 import com.itwillbs.domain.TransactionGoodsVO;
@@ -201,15 +202,23 @@ public class StockController {
 
 	// 입고 관리
 	@RequestMapping(value="/receivingList",method=RequestMethod.GET)
-	public void receivingList_GET(Model model) throws Exception{
+	public void receivingList_GET(Criteria cri,Model model) throws Exception{
 		logger.debug(" receivingList_GET() 실행 ");
 
 		
 		// 입고 리스트 호출
-	    List<TransactionVO> rc = sService.rcList();
-		logger.debug("size : "+ rc.size());
-		logger.debug("rc : "+ rc);
+	    List<TransactionVO> rc = sService.rcList(cri);
+	    
+	    // 하단 페이징처리 정보객체 생성
+	    PageVO pageVO = new PageVO();
+	    pageVO.setCri(cri);
+	    pageVO.setTotalCount(sService.getTotalReceivingCount());
+	    logger.debug(" cri " + pageVO.getCri());
+	    
+
 	    model.addAttribute("rc", rc);
+	    model.addAttribute("pageVO", pageVO);
+		logger.debug("size : "+ rc.size());
 		
 	    
 	}
@@ -350,16 +359,25 @@ public class StockController {
 	
 	// 출고 관리
 	@RequestMapping(value="/releaseList",method=RequestMethod.GET)
-	public void releaseList_GET(Model model) throws Exception{
+	public void releaseList_GET(Criteria cri ,Model model) throws Exception{
 		logger.debug(" releaseList_GET() 실행 ");
 
 		
 		// 출고 리스트 호출
-	    List<TransactionVO> rs = sService.rsList();
+	    List<TransactionVO> rs = sService.rsList(cri);
+	    
+	    
+	    // 하단 페이징처리 정보객체 생성
+	    PageVO pageVO = new PageVO();
+	    pageVO.setCri(cri);
+	    pageVO.setTotalCount(sService.getTotalReleaseCount());
+	    logger.debug(" cri " + pageVO.getCri());
+	    
+
 		logger.debug("size : "+ rs.size());
 	    model.addAttribute("rs", rs);
+	    model.addAttribute("pageVO", pageVO);
 		
-
 	}
 
 	// 출고 모달 정보

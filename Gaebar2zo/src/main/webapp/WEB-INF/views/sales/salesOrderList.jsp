@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../include/header.jsp" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
     <style>
         .status-buttons { display: none; }
@@ -15,8 +16,10 @@
 
 <body>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
+	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
         <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/sales/salesOrderAdd'">
         <input type="button" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
+    </sec:authorize>
     </div>
     
     <table class="table table-hover">
@@ -59,6 +62,18 @@
 	        </c:forEach>
         </tbody>
     </table>
+
+
+    <div class="container mt-3">
+    <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
+        <button id="statusChangeBtn" class="btn btn-outline-info">상태 변경</button>
+        <div class="status-buttons mt-2">
+            <button class="btn btn-outline-info" id="preReceiveBtn">수주 접수</button>
+            <button class="btn btn-outline-info" id="completedReceiveBtn">입고 완료</button>
+        </div>
+        </sec:authorize>
+    </div>
+
 
     <!-- soInfoModal -->
     <div class="modal fade" id="soInfoModal" tabindex="-1">
@@ -143,8 +158,10 @@
 					</div>
                 </div>
                 <div class="modal-footer">
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                     <button type="button" class="btn btn-primary" id="updateFormBtn"
                     	data-coreui-toggle="modal" data-coreui-target="#soUpdateModal">수정</button>
+                    </sec:authorize>
                     <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
                 </div>
             </div>
@@ -225,8 +242,10 @@
 					</div>
                 </div>
                 <div class="modal-footer">
+              	  <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                     <button type="button" class="btn btn-primary" id="submitFormBtn">등록</button>
                     <button type="button" class="btn btn-secondary" data-coreui-toggle="modal" data-coreui-target="#soInfoModal">닫기</button>
+                   </sec:authorize>
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -53,6 +54,7 @@
       </div>
       <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
         <li class="nav-title">MENU</li>
+          <sec:authorize access="hasRole('ROLE_ADMIN')">
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
             <svg class="nav-icon">
               <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-puzzle"></use>
@@ -62,6 +64,7 @@
             <li class="nav-item"><a class="nav-link" href="/system/code/common"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 공통 코드 관리</a></li>
           </ul>
         </li>
+        </sec:authorize>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
             <svg class="nav-icon">
               <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-cursor"></use>

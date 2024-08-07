@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../include/header.jsp" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
     <style>
       /* 두 번째 모달이 첫 번째 모달 오른쪽에 위치하도록 설정 */
         .modal.right-modal .modal-dialog {
@@ -14,8 +15,10 @@
    <h1>/Styleboso/basicInfo/itemList.jsp</h1>
    
    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
+   	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
       <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/basicInfo/itemAdd'">
       <input type="button" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
+      </sec:authorize>
    </div>
    
     <div class="container">
@@ -214,9 +217,11 @@
                 </form>
             </div>
             <div class="modal-footer">
+            <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                 <button type="button" class="btn btn-secondary" id="editButton">수정</button>
                 <button type="submit" class="btn btn-success" id="saveButton" style="display: none;">저장</button>
                 <button type="button" class="btn btn-success" id="saveCancelButton" style="display: none;">취소</button>
+            </sec:authorize>
                 <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
             </div>
         </div>

@@ -1,6 +1,7 @@
 package com.itwillbs.persistence;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryChangeVO;
 import com.itwillbs.domain.InventoryVO;
-import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 
 @Repository
@@ -31,19 +31,33 @@ public class StockDAOImpl implements StockDAO{
 
 	// 입고 리스트 호출
 	@Override
-	public List<TransactionVO> rcList() throws Exception {
+	public List<TransactionVO> rcList(Criteria cri) throws Exception {
 		logger.debug("DAOImpl : 입고 리스트 호출");
 		
-		return sqlSession.selectList(NAMESPACE+"receivingList");
+		return sqlSession.selectList(NAMESPACE+"receivingList",cri);
 	}
 	
+	// 입고 리스트 개수 세기
+	@Override
+	public int getTotalReceivingCount() throws Exception {
+
+		return sqlSession.selectOne(NAMESPACE+"totalreceivingCount");
+	}
+
 	// 출고 리스트 호출
 	@Override
-	public List<TransactionVO> rsList() throws Exception {
+	public List<TransactionVO> rsList(Criteria cri) throws Exception {
 		logger.debug("DAOImpl : 출고 리스트 호출");
 
 		
-		return sqlSession.selectList(NAMESPACE+"releaseList");
+		return sqlSession.selectList(NAMESPACE+"releaseList",cri);
+	}
+
+	// 출고 리스트 개수 세기
+	@Override
+	public int getTotalReleaseCount() throws Exception {
+
+		return sqlSession.selectOne(NAMESPACE+"totalreleaseCount");
 	}
 
 	// 재고 리스트 호출
@@ -163,7 +177,7 @@ public class StockDAOImpl implements StockDAO{
 	}
 
 	@Override
-	public String GetTranNum(TransactionVO tvo) {
+	public String GetTranNum(TransactionVO tvo) throws Exception{
 		logger.debug("DAO : GetTranNum() 호출");
 		logger.debug("tvo : "+ tvo);
 		
@@ -175,7 +189,7 @@ public class StockDAOImpl implements StockDAO{
 	}
 
 	@Override
-	public void stockReceivingAdd_TransactionVO(TransactionVO tvo) {
+	public void stockReceivingAdd_TransactionVO(TransactionVO tvo) throws Exception{
 	logger.debug("DAO : stockReceivingAdd_TransactionVO() 호출");
 		
 		logger.debug("tvo : "+ tvo);
@@ -187,7 +201,7 @@ public class StockDAOImpl implements StockDAO{
 	}
 	
 	@Override
-	public void stockReceivingAdd_InventoryChangeVO(InventoryChangeVO newIvcb) {
+	public void stockReceivingAdd_InventoryChangeVO(InventoryChangeVO newIvcb) throws Exception {
 
 		logger.debug("DAO : stockReceivingAdd_InventoryChangeVO() 호출");
 		

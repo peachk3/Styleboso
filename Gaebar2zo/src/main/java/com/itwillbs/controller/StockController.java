@@ -176,6 +176,7 @@ public class StockController {
 		// 입고 리스트 호출
 	    List<TransactionVO> rc = sService.rcList();
 		logger.debug("size : "+ rc.size());
+		logger.debug("rc : "+ rc);
 	    model.addAttribute("rc", rc);
 		
 	    

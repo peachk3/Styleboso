@@ -311,7 +311,7 @@ $('#modal1-table tbody').on('click', 'tr', function() {
 	});
     
 
-    $('#modal0-table tbody').on('click', 'tr', function() {
+    $('#exampleModal0 #nav-tabContent tbody').on('click', 'tr', function() {
         var targetInput1 = document.getElementById('validationCustom01');
         var tranList = $(this).find('td:nth-child(2)').text();
         targetInput1.value = tranList;

@@ -541,7 +541,7 @@ select distinct
 	
 	
 	<!-- 발주 리스트 -->
-	<select id="purchaseOrderTranList" resultMap="transMap">
+	<select id="receivingPurchaseOrderList" resultMap="transMap">
 		select tran_num, cli_name 
 		from transaction t
 		join client c on t.cli_num = c.cli_num
@@ -550,7 +550,7 @@ select distinct
 	</select>
 	
 	<!-- 교환 리스트 -->
-	<select id="exchangeTranList" resultMap="transMap">
+	<select id="receivingExchangeList" resultMap="transMap">
 		select tran_num, cli_name 
 		from transaction t
 		join client c on t.cli_num = c.cli_num
@@ -559,7 +559,7 @@ select distinct
 	</select>
 	
 	<!-- 반품 리스트 -->
-	<select id="returnTranList" resultMap="transMap">
+	<select id="receivingReturnList" resultMap="transMap">
 		select tran_num, cli_name 
 		from transaction t
 		join client c on t.cli_num = c.cli_num
@@ -567,6 +567,24 @@ select distinct
 		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC")
 	</select>
 	
+	
+	<!-- 수주 리스트 -->
+	<select id="releaseSalesOrderList" resultMap="transMap">
+		select tran_num, cli_name 
+		from transaction t
+		join client c on t.cli_num = c.cli_num
+		where tran_cate_code = "SO" and pro_status = "수주 접수"
+		and  tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RL")
+	</select>
+	
+	<!-- 교환 리스트 -->
+	<select id="releaseExchangeList" resultMap="transMap">
+		select tran_num, cli_name 
+		from transaction t
+		join client c on t.cli_num = c.cli_num
+		where tran_cate_code = "EX"
+		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RL")
+	</select>
 	
 	
 	

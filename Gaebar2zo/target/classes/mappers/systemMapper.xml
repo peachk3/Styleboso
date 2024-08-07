@@ -27,7 +27,7 @@
 
 <!-- 이메일 중복체크 -->
 <select id="emailCheck" parameterType="String" resultType="int" > 
-	 select count(*) from users where user_email = #{user_email}
+	select count(*) from users where user_email = #{user_email}
 </select>
 
 <!-- 전화번호 중복체크 -->

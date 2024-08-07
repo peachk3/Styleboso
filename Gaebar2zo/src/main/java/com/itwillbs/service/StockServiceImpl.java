@@ -286,27 +286,43 @@ public class StockServiceImpl implements StockService{
 	}
 
 	@Override
-	public List<TransactionVO> PurchaseOrderList() throws Exception {
+	public List<TransactionVO> receivingPurchaseOrderList() throws Exception {
 		
-		logger.debug("PurchaseOrderList() 실행");
+		logger.debug("receivingPurchaseOrderList() 실행");
 		
-		return sdao.purchaseOrderList();
+		return sdao.receivingPurchaseOrderList();
 	}
 	
 	@Override
-	public List<TransactionVO> ExchangeList() throws Exception {
+	public List<TransactionVO> receivingExchangeList() throws Exception {
 		
-		logger.debug("PurchaseOrderList() 실행");
+		logger.debug("receivingPurchaseOrderList() 실행");
 		
-		return sdao.exchangeList();
+		return sdao.receivingExchangeList();
 	}
 	
 	@Override
-	public List<TransactionVO> ReturnList() throws Exception {
+	public List<TransactionVO> receivingReturnList() throws Exception {
 		
-		logger.debug("PurchaseOrderList() 실행");
+		logger.debug("receivingPurchaseOrderList() 실행");
 		
-		return sdao.returnList();
+		return sdao.receivingReturnList();
+	}
+	
+	@Override
+	public List<TransactionVO> releaseSalesOrderList() throws Exception {
+		
+		logger.debug("releaseSalesOrderList() 실행");
+		
+		return sdao.releaseSalesOrderList();
+	}
+	
+	@Override
+	public List<TransactionVO> releaseExchangeList() throws Exception {
+		
+		logger.debug("releaseExchangeList() 실행");
+		
+		return sdao.releaseExchangeList();
 	}
 
 }

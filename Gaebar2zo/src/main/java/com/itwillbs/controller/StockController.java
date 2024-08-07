@@ -294,17 +294,17 @@ public class StockController {
 	public void receivingAdd_GET(Model model) throws Exception{
 		logger.debug(" receivingAdd_GET() 실행 ");
 		
-		List<TransactionVO> po = sService.PurchaseOrderList();
+		List<TransactionVO> po = sService.receivingPurchaseOrderList();
 		logger.debug("size : "+ po.size());
 		logger.debug("po : "+ po);
 	    model.addAttribute("po", po);
 	    
-	    List<TransactionVO> ex = sService.ExchangeList();
+	    List<TransactionVO> ex = sService.receivingExchangeList();
 		logger.debug("size : "+ ex.size());
 		logger.debug("ex : "+ ex);
 	    model.addAttribute("ex", ex);
 	    
-	    List<TransactionVO> re = sService.ReturnList();
+	    List<TransactionVO> re = sService.receivingReturnList();
 		logger.debug("size : "+ re.size());
 		logger.debug("re : "+ re);
 	    model.addAttribute("re", re);
@@ -397,8 +397,18 @@ public class StockController {
 	
 	// 출고 등록
 	@RequestMapping(value="/releaseAdd",method=RequestMethod.GET)
-	public void releaseAdd_GET() throws Exception{
+	public void releaseAdd_GET(Model model) throws Exception{
 		logger.debug(" releaseAdd_GET() 실행 ");
+		
+		List<TransactionVO> so = sService.releaseSalesOrderList();
+		logger.debug("size : "+ so.size());
+		logger.debug("so : "+ so);
+	    model.addAttribute("so", so);
+	    
+	    List<TransactionVO> ex = sService.releaseExchangeList();
+		logger.debug("size : "+ ex.size());
+		logger.debug("ex : "+ ex);
+	    model.addAttribute("ex", ex);
 
 
 	}

@@ -106,15 +106,20 @@ public interface StockDAO {
 	
 	
 	// 발주 리스트
-	public List<TransactionVO> purchaseOrderList() throws Exception;
+	public List<TransactionVO> receivingPurchaseOrderList() throws Exception;
 
 	// 교환 리스트
-	public List<TransactionVO> exchangeList() throws Exception;
+	public List<TransactionVO> receivingExchangeList() throws Exception;
 		
 	// 반품 리스트
-	public List<TransactionVO> returnList() throws Exception;
+	public List<TransactionVO> receivingReturnList() throws Exception;
 	
 	
+	// 수주 리스트
+	public List<TransactionVO> releaseSalesOrderList() throws Exception;
+	
+	// 교환 리스트
+	public List<TransactionVO> releaseExchangeList() throws Exception;
 	
 	
 	

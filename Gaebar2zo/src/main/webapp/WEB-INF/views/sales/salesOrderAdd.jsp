@@ -218,8 +218,15 @@
 			        comm: document.getElementById('validationCustom07').value
 		    };
 			
-			const tableData = dataChangeJSON();
+			var tableData = [];
 			
+			if (dataChangeJSON() == null) {
+				  event.stopPropagation(); // 상위 요소로 이벤트 전파 방지
+				  allFormsValid = false; // 하나라도 유효성 검사를 통과하지 못한 경우
+				  alert("제품을 추가해주세요");
+			} else {
+				tableData = dataChangeJSON();
+			}
 			
 			// 필요한 유효성 검사를 적용할 모든 폼을 가져오기
 			const forms = document.querySelectorAll('.needs-validation');
@@ -408,26 +415,30 @@
 		var tableRows = $('.item-table tbody tr'); // 체크된 input의 부모 tr을 선택
 	    var tableData = [];
 	    
-	    tableRows.each(function() {
-	        var row = $(this); // 현재 처리 중인 행을 jQuery 객체로 가져옴
-	        var goods_num = row.find('td:eq(0)').text().trim(); // 상품 번호 가져오기
-	        var goods_qty = row.find('td:eq(4) input').val(); // 상품 이름 가져오기
-	        
-	        // JSON 객체로 데이터 구성
-	        var rowData = {
-	            goods_num: goods_num,
-	            goods_qty: goods_qty,
-	        };
-	        
-	        tableData.push(rowData); // 배열에 JSON 객체 추가
-	    });
-	    
-	    var tableDataJSON = JSON.stringify(tableData);
-		
-	    // 배열을 JSON 문자열로 변환하여 출력
-	    console.log(tableDataJSON);
-	    
-	    return tableData;
+	    if (tableRows.length == 0){
+	    	return null;
+	    } else{
+		    tableRows.each(function() {
+		        var row = $(this); // 현재 처리 중인 행을 jQuery 객체로 가져옴
+		        var goods_num = row.find('td:eq(0)').text().trim(); // 상품 번호 가져오기
+		        var goods_qty = row.find('td:eq(4) input').val(); // 상품 이름 가져오기
+		        
+		        // JSON 객체로 데이터 구성
+		        var rowData = {
+		            goods_num: goods_num,
+		            goods_qty: goods_qty,
+		        };
+		        
+		        tableData.push(rowData); // 배열에 JSON 객체 추가
+		    });
+		    
+		    var tableDataJSON = JSON.stringify(tableData);
+			
+		    // 배열을 JSON 문자열로 변환하여 출력
+		    console.log(tableDataJSON);
+		    
+		    return tableData;
+	    }
 	}
 	
 	function checkedData() {

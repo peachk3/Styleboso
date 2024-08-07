@@ -549,7 +549,8 @@ select distinct
 		select tran_num, cli_name 
 		from transaction t
 		join client c on t.cli_num = c.cli_num
-		where tran_cate_code = "PO"
+		where tran_cate_code = "PO" and pro_status = "발주 승인"
+		and  tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC")
 	</select>
 	
 	<!-- 교환 리스트 -->
@@ -558,6 +559,7 @@ select distinct
 		from transaction t
 		join client c on t.cli_num = c.cli_num
 		where tran_cate_code = "EX"
+		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC")
 	</select>
 	
 	<!-- 반품 리스트 -->
@@ -566,6 +568,7 @@ select distinct
 		from transaction t
 		join client c on t.cli_num = c.cli_num
 		where tran_cate_code = "RE"
+		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC")
 	</select>
 	
 	

@@ -18,6 +18,7 @@ public class TransactionVO {
 	private	Timestamp	rel_date;
 	private	Timestamp	due_date;
 	private	Timestamp	ex_due_date;
+	private	Timestamp	regdate;
 	private	String	pro_status;
 	private	String	tran_cate_code;
 	private	String	comm;

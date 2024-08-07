@@ -1,5 +1,7 @@
  package com.itwillbs.controller;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -143,7 +145,8 @@ public class StockController {
 
 		return result;
 	}
-
+	
+	//http://localhost:8088/stock/adjustment/returnAdd
 	// 반품 등록 - GET
 	@RequestMapping(value = "/adjustment/returnAdd", method = RequestMethod.GET)
 	public void returnAdd_GET() throws Exception {
@@ -151,7 +154,7 @@ public class StockController {
 	}
 	
 	// 반품 등록 - POST
-	@RequestMapping(value = "/returnAdd",method = RequestMethod.POST)
+	@RequestMapping(value = "/adjustment/returnAdd",method = RequestMethod.POST)
 	@ResponseBody
 	public void returnAdd_POST(@RequestBody Map<String, String> requestData) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
@@ -163,8 +166,37 @@ public class StockController {
 		logger.debug(" tvo : " + tvo);
 		logger.debug(" icvoList : " + icvoList);
 		
+		Timestamp regdate = Timestamp.from(Instant.now());
+	    tvo.setRegdate(regdate);
+		
 		sService.adjustReturnAdd(tvo);
+		
 	}
+	
+	// 반품 삭제
+		@ResponseBody
+		@RequestMapping(value = "/deleteRE", method = RequestMethod.POST)
+		public ResponseEntity<Map<String, Object>> deleteReturnList_POST(@RequestBody Map<String, Object> payload) throws Exception {
+			logger.debug(" deleteRE_POST() 실행 ");
+			
+			@SuppressWarnings("unchecked")
+	        List<String> trannums = (List<String>) payload.get("tran_nums");
+
+	        if (trannums == null || trannums.isEmpty()) {
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+	                                 .body(Map.of("status", "error", "message", "No clients selected"));
+	        }
+	        logger.debug("@@@@tran_nums  " + trannums);
+
+	        try {
+	            sService.deleteReturnList(trannums);
+	            return ResponseEntity.ok(Map.of("status", "success"));
+	        } catch (Exception e) {
+	            logger.error(" @@@@@@@@Error deleting clients", e);
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("status", "error", "message", e.getMessage()));
+	        }
+			
+		}
 
 	// 입고 관리
 	@RequestMapping(value="/receivingList",method=RequestMethod.GET)
@@ -324,7 +356,7 @@ public class StockController {
 
 		Map<String, Object> details = sService.getTransactionDetails2(tran_num);
 	    
-		// 품목 정보 가져오기
+		// 품목 정보 가져오기 
 		List<Map<String, Object>> items = sService.getTransactionItems2(top_tran_num);
 		
 		// LocalDateTime을 String으로 변환

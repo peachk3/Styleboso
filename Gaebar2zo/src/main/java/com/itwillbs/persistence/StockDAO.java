@@ -28,16 +28,19 @@ public interface StockDAO {
 	List<TransactionVO> reList() throws Exception;
 	
 	// 반품 모달창 정보 호출
-	Map<String, Object> getReturnDetails(String tran_num);
+	Map<String, Object> getReturnDetails(String tran_num) throws Exception;
 
 	// 반품 모달창 품목 정보 호출
-	List<Map<String, Object>> getReturnItems(String top_tran_num);
+	List<Map<String, Object>> getReturnItems(String top_tran_num) throws Exception;
 	
 	// 반품 등록
-	void adjustReturnAdd_TransactionVO(TransactionVO tvo);
+	void adjustReturnAdd_TransactionVO(TransactionVO tvo) throws Exception;
 	
 	// 반품 등록 - InventoryChangeVO
-	void adjustReturnAdd_InventoryChangeVO(InventoryChangeVO newIvcb);
+	void adjustReturnAdd_InventoryChangeVO(InventoryChangeVO newIvcb) throws Exception;
+	
+	// 반품 삭제
+	void deleteReturnList(List<String> trannums) throws Exception;
 	
 	// 입고 모달창 정보 화출
 	Map<String, Object> getTransactionDetails(String tran_num) throws Exception;
@@ -84,6 +87,7 @@ public interface StockDAO {
 
 	// 입고/출고 수정
 	public int updateDetails(TransactionVO changetrvo) throws Exception;
+
 
 
 	

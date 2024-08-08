@@ -41,9 +41,10 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 	}
  
 	@Override
-	public int getTotalClientCount() throws Exception {
+	public int getTotalClientCount(Criteria cri) throws Exception {
 		logger.debug(" getTotalClientCount() 실행 ");
-		return bidao.getTotalClientCount();
+		
+		return bidao.getTotalClientCount(cri);
 	}
 
 	// 품목 리스트 출력
@@ -54,9 +55,10 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 	}
 	
 	@Override
-	public int getTotalItemCount() throws Exception {
+	public int getTotalItemCount(Criteria cri) throws Exception {
 		logger.debug(" getTotalItemCount() 실행 ");
-		return bidao.getTotalItemCount();
+		
+		return bidao.getTotalItemCount(cri);
 	}
 
 	// 사업자 번호 중복 조회
@@ -197,6 +199,22 @@ public class BasicInfoServiceImpl implements BasicInfoService{
 		return bidao.getInventory(wh_num);
 	}
 
+	// 창고 -> zone 추가
+	@Override
+	public String addZone(String wh_code, String wh_name) throws Exception {
+		logger.debug(" addZone() 실행 ");
+		
+		return bidao.addZone(wh_code, wh_name);
+	}
 	
+	// 창고 -> rack 추가
+	@Override
+	public String addRack(String wh_code, String wh_zone, String wh_name) throws Exception {
+		logger.debug(" addRack() 실행 ");
+		
+		
+		return bidao.addRack(wh_code, wh_zone, wh_name);
+	}
+
 	
 }

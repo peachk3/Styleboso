@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../include/header.jsp" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
     <style>
         .status-buttons { display: none; }
         .modal-dialog { max-width: 80%; }
@@ -19,8 +20,10 @@
     <h1>/Styleboso/stock/receivingList.jsp</h1>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
-        <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/stock/receivingAdd'">
-        <input type="button" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
+      <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
+           <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/stock/receivingAdd'">
+           <input type="button" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
+       </sec:authorize>
     </div>
     
     <table class="table table-hover">
@@ -69,13 +72,14 @@
     </table>
 
     <div class="container mt-3">
+    <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
         <button id="statusChangeBtn" class="btn btn-outline-info">상태 변경</button>
         <div class="status-buttons mt-2">
             <button class="btn btn-outline-info" id="preReceiveBtn">입고 예정</button>
             <button class="btn btn-outline-info" id="completedReceiveBtn">입고 완료</button>
         </div>
+   </sec:authorize>
     </div>
-
     <!-- Modal -->
     <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -135,9 +139,11 @@
                         </div>
                     </div>
                <div class="modal-footer">
+               <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                     <button type="button" class="btn btn-secondary" id="editButton">수정</button>
                     <button type="submit" class="btn btn-success" id="saveButton" style="display: none;">저장</button>
                     <button type="button" class="btn btn-success" id="saveCancelButton" style="display: none;">취소</button>
+                    </sec:authorize>
                     <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
                 </div>
             </div>
@@ -176,6 +182,30 @@
 				</div>
 			</div>
 			
+			<!-- 페이징 처리 -->
+   <nav aria-label="Page navigation" class="pagination-container">
+      <ul class="pagination justify-content-center">
+         <c:if test="${pageVO.prev}">
+            <li class="page-item">
+               <a class="page-link" href="/stock/receivingList?page=${pageVO.startPage - 1}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+               </a>
+            </li>
+         </c:if>
+         <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+            <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
+               <a class="page-link" href="/stock/receivingList?page=${i}">${i}</a>
+            </li>
+         </c:forEach>
+         <c:if test="${pageVO.next && pageVO.endPage > 0}">
+            <li class="page-item">
+               <a class="page-link" href="/stock/receivingList?page=${pageVO.endPage + 1}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+               </a>
+            </li>
+         </c:if>
+      </ul>
+   </nav>
 			
 			
     <%@ include file="../include/footer.jsp" %>
@@ -263,17 +293,21 @@ $(document).ready(function() {
     });
 
     $(".status-buttons .btn").click(function() {
-        const pro_status = $(this).text().trim(); // "입고 예정" 혹은 "입고 완료" 버튼의 텍스트를 상태로 사용
+    		const pro_status = $(this).text().trim();
+	   	    const checkedCheckboxes = $('input[type="checkbox"].form-check-input:checked');
+	   	    const tran_nums = [];
+	   	    const top_tran_nums = [];
 
-        const checkedCheckboxes = $('input[type="checkbox"].form-check-input:checked');
-        const tran_nums = [];
+	   	    checkedCheckboxes.each(function() {
+	   	        const row = $(this).closest('tr');
+	   	        const tran_num = row.find('td:eq(1)').text();
+	   	        const top_tran_num = row.find('td:eq(6)').text(); // top_tran_num이 7번째 열에 있다고 가정
 
-        checkedCheckboxes.each(function() {
-            const tran_num = $(this).closest('tr').find('td:eq(1)').text(); // Assuming tran_num is in the first column
-            if (tran_num) {
-                tran_nums.push(tran_num);
-            }
-        });
+	   	        if (tran_num) {
+	   	            tran_nums.push(tran_num);
+	   	            top_tran_nums.push(top_tran_num);
+	   	        }
+	   	    });
 
         if (tran_nums.length === 0) {
             alert('변경할 항목을 선택해주세요.');
@@ -281,10 +315,14 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: '/common/updateRecevingStatus',
+            url: '/stock/updateRecevingStatus',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({ tran_nums: tran_nums, pro_status: pro_status }),
+            data: JSON.stringify({ 
+                tran_nums: tran_nums, 
+                top_tran_nums: top_tran_nums, 
+                pro_status: pro_status 
+            }),
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
             },

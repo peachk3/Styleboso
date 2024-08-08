@@ -1,5 +1,7 @@
  package com.itwillbs.controller;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -27,7 +29,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryChangeVO;
 import com.itwillbs.domain.InventoryVO;
+import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.PageVO;
+import com.itwillbs.domain.StatusUpdateRequest;
 import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.service.StockService;
@@ -143,7 +147,8 @@ public class StockController {
 
 		return result;
 	}
-
+	
+	//http://localhost:8088/stock/adjustment/returnAdd
 	// 반품 등록 - GET
 	@RequestMapping(value = "/adjustment/returnAdd", method = RequestMethod.GET)
 	public void returnAdd_GET() throws Exception {
@@ -151,7 +156,7 @@ public class StockController {
 	}
 	
 	// 반품 등록 - POST
-	@RequestMapping(value = "/returnAdd",method = RequestMethod.POST)
+	@RequestMapping(value = "/adjustment/returnAdd",method = RequestMethod.POST)
 	@ResponseBody
 	public void returnAdd_POST(@RequestBody Map<String, String> requestData) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
@@ -163,19 +168,57 @@ public class StockController {
 		logger.debug(" tvo : " + tvo);
 		logger.debug(" icvoList : " + icvoList);
 		
+		Timestamp regdate = Timestamp.from(Instant.now());
+	    // tvo.setRegdate(regdate);
+		
 		sService.adjustReturnAdd(tvo);
+		
 	}
+	
+	// 반품 삭제
+		@ResponseBody
+		@RequestMapping(value = "/deleteRE", method = RequestMethod.POST)
+		public ResponseEntity<Map<String, Object>> deleteReturnList_POST(@RequestBody Map<String, Object> payload) throws Exception {
+			logger.debug(" deleteRE_POST() 실행 ");
+			
+			@SuppressWarnings("unchecked")
+	        List<String> trannums = (List<String>) payload.get("tran_nums");
+
+	        if (trannums == null || trannums.isEmpty()) {
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+	                                 .body(Map.of("status", "error", "message", "No clients selected"));
+	        }
+	        logger.debug("@@@@tran_nums  " + trannums);
+
+	        try {
+	            sService.deleteReturnList(trannums);
+	            return ResponseEntity.ok(Map.of("status", "success"));
+	        } catch (Exception e) {
+	            logger.error(" @@@@@@@@Error deleting clients", e);
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("status", "error", "message", e.getMessage()));
+	        }
+			
+		}
 
 	// 입고 관리
 	@RequestMapping(value="/receivingList",method=RequestMethod.GET)
-	public void receivingList_GET(Model model) throws Exception{
+	public void receivingList_GET(Criteria cri,Model model) throws Exception{
 		logger.debug(" receivingList_GET() 실행 ");
 
 		
 		// 입고 리스트 호출
-	    List<TransactionVO> rc = sService.rcList();
-		logger.debug("size : "+ rc.size());
+	    List<TransactionVO> rc = sService.rcList(cri);
+	    
+	    // 하단 페이징처리 정보객체 생성
+	    PageVO pageVO = new PageVO();
+	    pageVO.setCri(cri);
+	    pageVO.setTotalCount(sService.getTotalReceivingCount());
+	    logger.debug(" cri " + pageVO.getCri());
+	    
+
 	    model.addAttribute("rc", rc);
+	    model.addAttribute("pageVO", pageVO);
+		logger.debug("size : "+ rc.size());
 		
 	    
 	}
@@ -257,10 +300,23 @@ public class StockController {
 	
 	// 입고 등록 - get
 	@RequestMapping(value="/receivingAdd",method=RequestMethod.GET)
-	public void receivingAdd_GET() throws Exception{
+	public void receivingAdd_GET(Model model) throws Exception{
 		logger.debug(" receivingAdd_GET() 실행 ");
-
-
+		
+		List<TransactionVO> po = sService.receivingPurchaseOrderList();
+		logger.debug("size : "+ po.size());
+		logger.debug("po : "+ po);
+	    model.addAttribute("po", po);
+	    
+	    List<TransactionVO> ex = sService.receivingExchangeList();
+		logger.debug("size : "+ ex.size());
+		logger.debug("ex : "+ ex);
+	    model.addAttribute("ex", ex);
+	    
+	    List<TransactionVO> re = sService.receivingReturnList();
+		logger.debug("size : "+ re.size());
+		logger.debug("re : "+ re);
+	    model.addAttribute("re", re);
 	}
 
 	
@@ -303,16 +359,25 @@ public class StockController {
 	
 	// 출고 관리
 	@RequestMapping(value="/releaseList",method=RequestMethod.GET)
-	public void releaseList_GET(Model model) throws Exception{
+	public void releaseList_GET(Criteria cri ,Model model) throws Exception{
 		logger.debug(" releaseList_GET() 실행 ");
 
 		
 		// 출고 리스트 호출
-	    List<TransactionVO> rs = sService.rsList();
+	    List<TransactionVO> rs = sService.rsList(cri);
+	    
+	    
+	    // 하단 페이징처리 정보객체 생성
+	    PageVO pageVO = new PageVO();
+	    pageVO.setCri(cri);
+	    pageVO.setTotalCount(sService.getTotalReleaseCount());
+	    logger.debug(" cri " + pageVO.getCri());
+	    
+
 		logger.debug("size : "+ rs.size());
 	    model.addAttribute("rs", rs);
+	    model.addAttribute("pageVO", pageVO);
 		
-
 	}
 
 	// 출고 모달 정보
@@ -324,7 +389,7 @@ public class StockController {
 
 		Map<String, Object> details = sService.getTransactionDetails2(tran_num);
 	    
-		// 품목 정보 가져오기
+		// 품목 정보 가져오기 
 		List<Map<String, Object>> items = sService.getTransactionItems2(top_tran_num);
 		
 		// LocalDateTime을 String으로 변환
@@ -350,8 +415,18 @@ public class StockController {
 	
 	// 출고 등록
 	@RequestMapping(value="/releaseAdd",method=RequestMethod.GET)
-	public void releaseAdd_GET() throws Exception{
+	public void releaseAdd_GET(Model model) throws Exception{
 		logger.debug(" releaseAdd_GET() 실행 ");
+		
+		List<TransactionVO> so = sService.releaseSalesOrderList();
+		logger.debug("size : "+ so.size());
+		logger.debug("so : "+ so);
+	    model.addAttribute("so", so);
+	    
+	    List<TransactionVO> ex = sService.releaseExchangeList();
+		logger.debug("size : "+ ex.size());
+		logger.debug("ex : "+ ex);
+	    model.addAttribute("ex", ex);
 
 
 	}
@@ -414,6 +489,38 @@ public class StockController {
 
 		
 
+	  
+
+		// 입고 상태 업데이트 
+		@RequestMapping(value="/updateRecevingStatus",method=RequestMethod.POST)
+		@ResponseBody
+	    public ResponseEntity<String> updateRecevingStatus(@RequestBody StatusUpdateRequest request) {
+		        try {
+		            sService.updateRecevingStatus(request.getTran_nums(), request.getPro_status(),request.getTop_tran_nums());
+		            return ResponseEntity.ok("Status updated successfully");
+		        } catch (Exception e) {
+		            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating status");
+		        }
+		    }
+
+		// 출고 상태 업데이트 
+		@RequestMapping(value="/updateReleaseStatus",method=RequestMethod.POST)
+		@ResponseBody
+	    public ResponseEntity<String> updateReleaseStatus(@RequestBody StatusUpdateRequest request) {
+		        try {
+		            sService.updateReleaseStatus(request.getTran_nums(), request.getPro_status(),request.getTop_tran_nums());
+		            return ResponseEntity.ok("Status updated successfully");
+		        } catch (Exception e) {
+		            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating status");
+		        }
+		    }
+
+
+	  
+	  
+	  
+	  
+	  
 
 
 }

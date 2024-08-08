@@ -1,8 +1,8 @@
 package com.itwillbs.controller;
 
 
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -11,10 +11,10 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.CodeVO;
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.ItemCodeVO;
+import com.itwillbs.domain.PageVO;
 import com.itwillbs.domain.UsersVO;
 import com.itwillbs.service.SystemService;
 
@@ -36,7 +38,7 @@ public class SystemController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SystemController.class);
 
-	// http://localhost:8088/system/login
+	// http://localhost:8088/logout/login
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public void login() throws Exception {
@@ -66,7 +68,7 @@ public class SystemController {
 	}
 	// -------------------------------------------------------------------------------------------
 	//이메일 중복 체크 
-	@GetMapping("/emailCheck")
+	@RequestMapping(value = "/emailCheck", method = RequestMethod.GET)
 	@ResponseBody
 	public int emailCheck(@RequestParam("user_email")String user_email ) throws Exception {
 		
@@ -78,15 +80,19 @@ public class SystemController {
 	}
 	
 	
-	
-	
 	// -------------------------------------------------------------------------------------------
 	//전화번호 중복 
-	
-	
-	
-	
-	
+	@RequestMapping(value = "/phoneCheck", method = RequestMethod.GET)
+	@ResponseBody
+	public int phoneCheck(@RequestParam("user_phone")String user_phone) throws Exception {
+		logger.debug("user_phone"+ user_phone); // 0: 사용 가능, 1: 중복됨
+		
+		int result = sService.phoneCheck(user_phone);
+		
+		logger.debug("결과값 : " + result);
+		
+		return result;
+	}
 	
 	// -------------------------------------------------------------------------------------------
 	// http://localhost:8088/system/main
@@ -101,17 +107,92 @@ public class SystemController {
 
 	// -------------------------------------------------------------------------------------------
 	// http://localhost:8088/system/employeeList
-	// 사용자 관리(추가,삭제,조회)
+	// 사용자 관리 - 사용자 전체 리스트 출력
 	@RequestMapping(value = "/employeeList", method = RequestMethod.GET)
-	public void employeeList_GET(Model model) throws Exception {
+	public void employeeList_GET(Criteria cri,Model model, 
+			@RequestParam(value="searchType", required = false) String searchType,
+            @RequestParam(value="keyword", required = false) String keyword) throws Exception {
 		logger.debug(" employeeList_GET() 실행 ");
+		logger.debug(" cri : " + cri);
+		
+	    // 검색 기능
+	    if(searchType != null && keyword != null && !keyword.trim().isEmpty()) {
+	        cri.setSearchType(searchType);
+	        cri.setKeyword(keyword);
+	    }
 
 		// 전체리스트
-		List<UsersVO> employeeList = sService.employeeListAll();
+		List<UsersVO> employeeList = sService.employeeListAll(cri);
+	    logger.debug(" size : " + employeeList.size());
+	    logger.debug(" itemList : " + employeeList);
 
+	    // 하단 페이징처리 정보객체 생성
+	    PageVO pageVO = new PageVO();
+	    pageVO.setCri(cri);
+	    int totalCount = sService.getTotalUserCount(cri);
+	    pageVO.setTotalCount(totalCount);
+	    
+	    logger.debug(" cri " + pageVO.getCri());
+	    logger.debug(" page : " + pageVO.getTotalCount());
+	    logger.debug(" pageVO " + pageVO);
+	    
 		model.addAttribute("employeeList", employeeList);
+	    model.addAttribute("pageVO", pageVO);
+	    model.addAttribute("searchType", searchType);
+	    model.addAttribute("keyword", keyword);
 
 	}
+
+	
+	//사용자 등록
+	@ResponseBody
+	@RequestMapping(value = "/addEmp", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<?> addEmp(@RequestBody UsersVO usersVo) throws Exception {
+		logger.info("controller ->(사용자 등록 실행)");
+		logger.info(""+usersVo);
+		
+		
+		int result = sService.addEmp(usersVo);
+
+	    if (result > 0) {
+	        logger.info("사용자 등록 성공!!!!!!");
+	        return ResponseEntity.ok().body(Collections.singletonMap("status", "success"));
+	    } else {
+	        logger.info("사용자 등록 실패~~~");
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("status", "failure"));
+	    }
+	}
+	
+	//사용자 수정 
+	@ResponseBody
+	@RequestMapping(value = "/updateEmp", method = RequestMethod.POST)
+	public ResponseEntity<String>updateEmp(@RequestBody UsersVO usersVo) throws Exception{
+		 logger.debug(" @@@ updateEmp() 실행");
+		 sService.updateEmp(usersVo);
+		 
+		logger.debug("controller => 사용자 업데이트 출력 성공: {}" + usersVo);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
+	//사용자 삭제
+	@ResponseBody
+	@RequestMapping(value = "/deleteEmp", method = RequestMethod.POST)
+	public ResponseEntity<String> deleteEmp(@RequestBody List<String> users) {
+			try {
+	            sService.deleteEmp(users);
+	            return ResponseEntity.ok("사용자 리스트 삭제되었습니다.");
+	        } catch (Exception e) {
+	        	 e.printStackTrace(); // 콘솔에 예외 로그를 출력
+	            return ResponseEntity.status(500).body("사용자 리스트 삭제 중 오류가 발생했습니다.");
+	        }
+	    }
+	   
+	
 	// ==========================================================================
 	// 공통 코드 관리
 	@RequestMapping(value = "/code/common", method = RequestMethod.GET)

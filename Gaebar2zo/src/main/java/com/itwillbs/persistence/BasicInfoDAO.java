@@ -18,11 +18,11 @@ public interface BasicInfoDAO {
 
 	// 거래처 리스트 출력
 	List<ClientVO> cliListAll(Criteria cri) throws Exception;
-	int getTotalClientCount() throws Exception;
+	int getTotalClientCount(Criteria cri) throws Exception;
 
 	// 품목 리스트 출력
 	List<ItemVO> itemListAll(Criteria cri) throws Exception;
-	int getTotalItemCount() throws Exception;
+	int getTotalItemCount(Criteria cri) throws Exception;
 
 	// 거래처 번호 중복 확인
 	public int cliCrnDup(String cli_crn) throws Exception;
@@ -80,4 +80,12 @@ public interface BasicInfoDAO {
 	
 	// 창고 -> 재고 불러오기
 	public List<InventoryVO> getInventory(String wh_num) throws Exception;
+
+	// 창고 -> zone 추가
+	public String addZone(String wh_code, String wh_name) throws Exception;
+
+	// 창고 -> rack 추가 
+	public String addRack(String wh_code, String wh_zone, String wh_name) throws Exception;
+
+	
 }

@@ -20,12 +20,12 @@ public interface BasicInfoService {
 	// 거래처 리스트 출력
 	public List<ClientVO> cliListAll(Criteria cri) throws Exception;
 	
-	public int getTotalClientCount() throws Exception;
+	public int getTotalClientCount(Criteria cri) throws Exception;
 
 	// 품목 리스트 출력
 	public List<ItemVO> itemListAll(Criteria cri) throws Exception;
 	
-	public int getTotalItemCount() throws Exception;
+	public int getTotalItemCount(Criteria cri) throws Exception;
 	
 	// 거래처 사업자 번호 중복 확인
 	public boolean isCliCrnDuplicate(String cli_crn) throws Exception;
@@ -82,5 +82,12 @@ public interface BasicInfoService {
 
 	// 창고 -> 재고 불러오기
 	public List<InventoryVO> getInventory(String wh_num) throws Exception;
+
+	// 창고 -> zone 추가
+	public String addZone(String wh_code, String wh_name) throws Exception;
+
+	// 창고 -> rack 추가
+	public String addRack(String wh_code, String wh_zone, String wh_name) throws Exception;
+
 
 }

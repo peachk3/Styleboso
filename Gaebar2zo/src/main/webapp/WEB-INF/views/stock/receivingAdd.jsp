@@ -83,17 +83,81 @@
                               <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
                            </div>
                            <div class="modal-body">
-                              <table class="table table-hover text-center" id="modal0-table">
-                                 <thead class="table-light">
-                                    <tr>
-                                       <th scope="col"></th>
-                                       <th scope="col">거래 번호</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-
-                                 </tbody>
-                              </table>
+                              	<nav>
+									<div class="nav nav-tabs" id="nav-tab" role="tablist">
+										<button class="nav-link active" id="nav-po-tab" data-coreui-toggle="tab" data-coreui-target="#nav-po" type="button" role="tab" aria-controls="nav-po" aria-selected="true">발주</button>
+										<button class="nav-link" id="nav-ex-tab" data-coreui-toggle="tab" data-coreui-target="#nav-ex" type="button" role="tab" aria-controls="nav-ex" aria-selected="false">교환</button>
+										<button class="nav-link" id="nav-re-tab" data-coreui-toggle="tab" data-coreui-target="#nav-re" type="button" role="tab" aria-controls="nav-re" aria-selected="false">반품</button>
+									</div>
+								</nav>
+								<div class="tab-content" id="nav-tabContent">
+									<div class="tab-pane fade show active" id="nav-po" role="tabpanel" aria-labelledby="nav-po-tab" tabindex="0">
+										<table class="table table-hover text-center" id="modal-po">
+											<thead class="table-light">
+												<tr>
+													<th scope="col"></th>
+													<th scope="col">발주 번호</th>
+													<th scope="col">거래처 명</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="po" items="${po}" varStatus="status">
+										            <tr data-tran-num="${po.tran_num}">
+										            	<th scope='row'>${status.index+1}</th>
+										                <td>${po.tran_num}</td>
+									            <c:forEach var="cli" items="${po.clientList}">
+										                <td>${cli.cli_name}</td>
+										        </c:forEach>
+										        	</tr>
+										        </c:forEach>
+											</tbody>
+										</table>
+									</div>
+									<div class="tab-pane fade" id="nav-ex" role="tabpanel" aria-labelledby="nav-ex-tab" tabindex="0">
+										<table class="table table-hover text-center" id="modal-ex">
+											<thead class="table-light">
+												<tr>
+													<th scope="col"></th>
+													<th scope="col">교환 번호</th>
+													<th scope="col">거래처 명</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="ex" items="${ex}" varStatus="status">
+										            <tr data-tran-num="${ex.tran_num}">
+										            	<th scope='row'>${status.index+1}</th>
+										                <td>${ex.tran_num}</td>
+									            <c:forEach var="cli" items="${ex.clientList}">
+										                <td>${cli.cli_name}</td>
+										        </c:forEach>
+										        	</tr>
+										        </c:forEach>
+											</tbody>
+										</table>
+									</div>
+									<div class="tab-pane fade" id="nav-re" role="tabpanel" aria-labelledby="nav-re-tab" tabindex="0">
+										<table class="table table-hover text-center" id="modal-re">
+											<thead class="table-light">
+												<tr>
+													<th scope="col"></th>
+													<th scope="col">반품 번호</th>
+													<th scope="col">거래처 명</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="re" items="${re}" varStatus="status">
+										            <tr data-tran-num="${re.tran_num}">
+										            	<th scope='row'>${status.index+1}</th>
+										                <td>${re.tran_num}</td>
+									            <c:forEach var="cli" items="${re.clientList}">
+										                <td>${cli.cli_name}</td>
+										        </c:forEach>
+										        	</tr>
+										        </c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</div>
                            </div>
                            <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
@@ -251,7 +315,7 @@ $('#modal1-table tbody').on('click', 'tr', function() {
 	});
     
 
-    $('#modal0-table tbody').on('click', 'tr', function() {
+    $('#exampleModal0 #nav-tabContent tbody').on('click', 'tr', function() {
         var targetInput1 = document.getElementById('validationCustom01');
         var tranList = $(this).find('td:nth-child(2)').text();
         targetInput1.value = tranList;
@@ -302,28 +366,28 @@ $('#modal1-table tbody').on('click', 'tr', function() {
         });
     });
 
-    // 거래 리스트 가져오기
-    function getTransactionList() {
-        $('#modal0-table tbody tr').remove();
+//     // 거래 리스트 가져오기
+//     function getTransactionList() {
+//         $('#modal0-table tbody tr').remove();
         
-        $.ajax({
-            url: "/common/transactionList",
-            type: "get",
-            contentType: 'application/json; charset=utf-8',
-            dataType: "json",
-            success: function(data) {
-                console.log(data);
-                data.forEach(function(item, idx) {
-                    var row = "<tr><th scope='row'>" + (parseInt(idx) + 1) + "</th><td>" + item.tran_num + "</td></tr>";
-                    $('#modal0-table tbody').append(row);
-                });
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
-                alert("AJAX 요청 실패!");
-            }
-        });
-    }
+//         $.ajax({
+//             url: "/common/transactionList",
+//             type: "get",
+//             contentType: 'application/json; charset=utf-8',
+//             dataType: "json",
+//             success: function(data) {
+//                 console.log(data);
+//                 data.forEach(function(item, idx) {
+//                     var row = "<tr><th scope='row'>" + (parseInt(idx) + 1) + "</th><td>" + item.tran_num + "</td></tr>";
+//                     $('#modal0-table tbody').append(row);
+//                 });
+//             },
+//             error: function(jqXHR, textStatus, errorThrown) {
+//                 console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
+//                 alert("AJAX 요청 실패!");
+//             }
+//         });
+//     }
 
  // 재고번호와 창고명 입력 필드에 클릭 이벤트 추가
     $('.inventory-input, .warehouse-input').on('click', function() {
@@ -397,7 +461,7 @@ $('#modal1-table tbody').on('click', 'tr', function() {
 
 
     // 초기화
-    getTransactionList();
+//     getTransactionList();
 
     // 재고번호 클릭 이벤트 추가
     $(document).on('click', '.inventory-input', function() {

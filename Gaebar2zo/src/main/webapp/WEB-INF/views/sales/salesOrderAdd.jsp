@@ -3,12 +3,11 @@
 
 <body>
   
-	<h1>/sales/salesOrderAdd.jsp</h1>
+<!-- 	<h1>/sales/salesOrderAdd.jsp</h1> -->
 
 	<div class="container-lg px-4">
 		<div class="row">
 			<div class="col-12">
-				<div class="card mb-4">
 					<div class="card-body">
 						<form class="row g-3 needs-validation" action="/sales/salesOrderAdd" method="post" novalidate>
 							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">			
@@ -172,13 +171,13 @@
 									</div>
 								</div>
 							</div>
-							
+						</div>
 					</div>
 				</div>
 			</div>
    
 
-   <h1>/sales/salesOrderAdd.jsp</h1>
+<!--    <h1>/sales/salesOrderAdd.jsp</h1> -->
 </body>
 
 <style>
@@ -210,8 +209,8 @@
 		submitFormBtn.addEventListener('click', function(event) {
 			event.preventDefault(); // 기본 제출 동작 방지
 			
-			console.log(document.getElementById('validationCustom01').value);
-			console.log(document.getElementById('validationCustom02').value);
+			// 모든 폼이 유효성 검사를 통과했는지 여부를 저장하는 변수
+			let allFormsValid = true; 
 			
 			const formData = {
 					ex_due_date: String(document.getElementById('validationCustom01').value),
@@ -222,14 +221,18 @@
 			        comm: document.getElementById('validationCustom07').value
 		    };
 			
-			const tableData = dataChangeJSON();
+			var tableData = [];
 			
+			if (dataChangeJSON() == null) {
+				  event.stopPropagation(); // 상위 요소로 이벤트 전파 방지
+				  allFormsValid = false; // 하나라도 유효성 검사를 통과하지 못한 경우
+				  alert("제품을 추가해주세요");
+			} else {
+				tableData = dataChangeJSON();
+			}
 			
 			// 필요한 유효성 검사를 적용할 모든 폼을 가져오기
 			const forms = document.querySelectorAll('.needs-validation');
-			
-			// 모든 폼이 유효성 검사를 통과했는지 여부를 저장하는 변수
-			let allFormsValid = true; 
 			
 			// NodeList를 배열로 변환하고 각각의 폼에 대해 처리
 			Array.from(forms).forEach(form => {
@@ -412,26 +415,30 @@
 		var tableRows = $('.item-table tbody tr'); // 체크된 input의 부모 tr을 선택
 	    var tableData = [];
 	    
-	    tableRows.each(function() {
-	        var row = $(this); // 현재 처리 중인 행을 jQuery 객체로 가져옴
-	        var goods_num = row.find('td:eq(0)').text().trim(); // 상품 번호 가져오기
-	        var goods_qty = row.find('td:eq(4) input').val(); // 상품 이름 가져오기
-	        
-	        // JSON 객체로 데이터 구성
-	        var rowData = {
-	            goods_num: goods_num,
-	            goods_qty: goods_qty,
-	        };
-	        
-	        tableData.push(rowData); // 배열에 JSON 객체 추가
-	    });
-	    
-	    var tableDataJSON = JSON.stringify(tableData);
-		
-	    // 배열을 JSON 문자열로 변환하여 출력
-	    console.log(tableDataJSON);
-	    
-	    return tableData;
+	    if (tableRows.length == 0){
+	    	return null;
+	    } else{
+		    tableRows.each(function() {
+		        var row = $(this); // 현재 처리 중인 행을 jQuery 객체로 가져옴
+		        var goods_num = row.find('td:eq(0)').text().trim(); // 상품 번호 가져오기
+		        var goods_qty = row.find('td:eq(4) input').val(); // 상품 이름 가져오기
+		        
+		        // JSON 객체로 데이터 구성
+		        var rowData = {
+		            goods_num: goods_num,
+		            goods_qty: goods_qty,
+		        };
+		        
+		        tableData.push(rowData); // 배열에 JSON 객체 추가
+		    });
+		    
+		    var tableDataJSON = JSON.stringify(tableData);
+			
+		    // 배열을 JSON 문자열로 변환하여 출력
+		    console.log(tableDataJSON);
+		    
+		    return tableData;
+	    }
 	}
 	
 	function checkedData() {

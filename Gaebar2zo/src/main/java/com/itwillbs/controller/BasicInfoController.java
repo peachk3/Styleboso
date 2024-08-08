@@ -1,5 +1,6 @@
 package com.itwillbs.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,22 +59,25 @@ public class BasicInfoController {
 
 	    List<ItemVO> itemList = bService.itemListAll(cri);
 	    logger.debug(" size : " + itemList.size());
+	    logger.debug(" itemList : " + itemList);
 
 	    // 하단 페이징처리 정보객체 생성
 	    PageVO pageVO = new PageVO();
 	    pageVO.setCri(cri);
-	    pageVO.setTotalCount(bService.getTotalItemCount());
+	    int totalCount = bService.getTotalItemCount(cri);
+	    pageVO.setTotalCount(totalCount);
+	    
 	    logger.debug(" cri " + pageVO.getCri());
+	    logger.debug(" page : " + pageVO.getTotalCount());
+	    logger.debug(" pageVO " + pageVO);
 
 	    // 연결된 뷰페이지로 정보 전달
 	    model.addAttribute("itemList", itemList);
 	    model.addAttribute("pageVO", pageVO);
-//	    model.addAttribute("searchType", searchType);
-//	    model.addAttribute("keyword", keyword);
+	    model.addAttribute("searchType", searchType);
+	    model.addAttribute("keyword", keyword);
 
-	    logger.debug("@@@@@@@ itemList : " + itemList);
-
-	    return "basicInfo/itemList";
+	    return "/basicInfo/itemList";
 	}
 	
 
@@ -149,21 +153,35 @@ public class BasicInfoController {
 	// ----------------------------------거래처 관리------------------------------------------------
 	//http://localhost:8088/basicInfo/clientList
 	@RequestMapping(value="/clientList",method=RequestMethod.GET)
-	public void clientList_GET(Criteria cri, Model model) throws Exception{
+	public String clientList_GET(Criteria cri, Model model,
+            @RequestParam(value="searchType", required = false) String searchType,
+            @RequestParam(value="keyword", required = false) String keyword) throws Exception{
 		logger.debug(" clientList_GET() 실행 ");
 		logger.debug(" cri " + cri);
 		
+	    // 검색 기능
+	    if(searchType != null && keyword != null && !keyword.trim().isEmpty()) {
+	        cri.setSearchType(searchType);
+	        cri.setKeyword(keyword);
+	    }
+		
 		List<ClientVO> clientList = bService.cliListAll(cri);
 	    logger.debug(" size : " + clientList.size());
-		
+	    
 	    PageVO pageVO = new PageVO();
 	    pageVO.setCri(cri);
-	    pageVO.setTotalCount(bService.getTotalClientCount());
+	    
+	    int totalCount = bService.getTotalClientCount(cri);
+	    pageVO.setTotalCount(totalCount);
+	    
 	    logger.debug(" cri " + pageVO.getCri());
 
 	    model.addAttribute("clientList", clientList);	
-	    model.addAttribute("pageVO", pageVO);
-		
+	    model.addAttribute("pageVO", pageVO);    
+	    model.addAttribute("searchType", searchType);
+	    model.addAttribute("keyword", keyword);
+	    
+	    return "/basicInfo/clientList";
 	}
 
 	// 거래처 추가 - 등록 페이지로 이동
@@ -398,4 +416,67 @@ public class BasicInfoController {
     	
 		return bService.getInventory(wh_num);
     }
+    
+    // 창고 -> zone 추가
+    @ResponseBody
+    @RequestMapping(value = "/addZone", method = RequestMethod.POST)
+    public ResponseEntity<?> addZone(@RequestParam String wh_code, @RequestParam String wh_name) throws Exception{
+    	
+    	logger.debug(" addZone() 실행 ");
+    	
+    	logger.debug(" wh_code :"+ wh_code);
+    	logger.debug(" wh_name :" +wh_name);
+    	
+    	// 새로운 렉 코드 생성 및 반환
+        String newZone = bService.addZone(wh_code, wh_name); // 실제 추가된 렉 코드를 반환받음
+        logger.debug("newZone: " + newZone);
+
+        if (newZone != null) {
+            // 새로 추가된 렉 코드가 성공적으로 생성된 경우
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("newZone", newZone);
+            return ResponseEntity.ok().body(response);
+
+        } else {
+            // 렉 추가에 실패한 경우
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "렉 추가 실패");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+    
+   // 창고 -> rack 추가
+    @ResponseBody
+    @RequestMapping(value = "/addRack", method = RequestMethod.POST)
+    public ResponseEntity<?> addRack(@RequestParam String wh_code, @RequestParam String wh_zone, @RequestParam String wh_name ) throws Exception{
+    	
+    	logger.debug(" addRack() 실행 ");
+    	
+    	logger.debug(" wh_cdode :"+ wh_code);
+    	logger.debug(" wh_zone:" +wh_zone);
+    	logger.debug(" wh_ name :" +wh_name);
+    	
+    	// 새로운 렉 코드 생성 및 반환
+        String newRack = bService.addRack(wh_code, wh_zone, wh_name); // 실제 추가된 렉 코드를 반환받음
+        logger.debug("newRack: " + newRack);
+
+        if (newRack != null) {
+            // 새로 추가된 렉 코드가 성공적으로 생성된 경우
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("newRack", newRack);
+            return ResponseEntity.ok().body(response);
+
+        } else {
+            // 렉 추가에 실패한 경우
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "렉 추가 실패");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+        
+    }
+    
 }

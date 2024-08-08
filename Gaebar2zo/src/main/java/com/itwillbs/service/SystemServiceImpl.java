@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.CodeVO;
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.ItemCodeVO;
 import com.itwillbs.domain.UsersVO;
 import com.itwillbs.persistence.SystemDAO;
@@ -27,7 +28,19 @@ public class SystemServiceImpl implements SystemService{
 	public int emailCheck(String user_email) throws Exception {
 
 		 int result = sdao.emailCheck(user_email);
-		logger.info("result " + result);
+		logger.info("이메일 result " + result);
+		
+		return result;
+	}
+	
+	//전화번호 중복 체크
+
+	@Override
+	public int phoneCheck(String user_phone) throws Exception {
+		
+		int result = sdao.phoneCheck(user_phone);
+		
+		logger.debug("전화번호 result :" + result);
 		
 		return result;
 	}
@@ -36,10 +49,47 @@ public class SystemServiceImpl implements SystemService{
 
 	//운영자,관리자,사원 전체 리스트 출력
 	@Override
-	public List<UsersVO> employeeListAll() throws Exception {
+	public List<UsersVO> employeeListAll(Criteria cri) throws Exception {
 		logger.info("운영자/관리자/사원 전체 리스트 출력");
 	
-		return sdao.employeeListAll();
+		return sdao.employeeListAll(cri);
+	}
+	
+	
+	@Override
+	public int getTotalUserCount(Criteria cri) throws Exception {
+		logger.debug(" getTotalItemCount() 실행");
+		
+		return sdao.getTotalUserCount(cri);
+	}
+
+	
+	
+	//사용자 등록
+	@Override
+	public int addEmp(UsersVO usersVo) throws Exception {
+		logger.info("service -> 사용자 등록");
+		
+		return sdao.addEmp(usersVo);
+	}
+	
+	//사용자 수정
+	@Override
+	public void updateEmp(UsersVO usersVo) throws Exception {
+		logger.info("service--> 사용자 업데이트");
+		
+		sdao.updateEmp(usersVo);
+	}
+	
+	
+	
+	
+	//사용자 삭제
+	@Override
+	public void deleteEmp(List<String> users) throws Exception {
+		logger.info("service --> 사용자 삭제");
+		
+		sdao.deleteEmp(users);
 	}
 	//=============================================================================
 
@@ -50,6 +100,8 @@ public class SystemServiceImpl implements SystemService{
 	
 		return sdao.codeListAll();
 	}
+
+
 
 	// 공통 코드 등록
 	@Override

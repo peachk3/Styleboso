@@ -45,10 +45,10 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 	
 
 	@Override
-	public int getTotalClientCount() throws Exception {
+	public int getTotalClientCount(Criteria cri) throws Exception {
 		logger.debug(" getTotalClientCount() 실행 ");
 		
-		return sqlSession.selectOne(NAMESPACE+"totalClientCount");
+		return sqlSession.selectOne(NAMESPACE+"totalClientCount", cri);
 	}
 
 	// 품목 리스트 출력
@@ -60,9 +60,10 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 	}
 
 	@Override
-	public int getTotalItemCount() throws Exception {
+	public int getTotalItemCount(Criteria cri) throws Exception {
 		logger.debug(" getTotalItemCount() 실행 ");
-		return sqlSession.selectOne(NAMESPACE+"totalItemCount");
+		
+		return sqlSession.selectOne(NAMESPACE+"totalItemCount", cri);
 	}
 
 	// 거래처 사업자 번호 중복 확인
@@ -197,7 +198,7 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 
 	// 창고 열 불러오기
 	@Override
-	public List<String> getColumns(String wh_code, String wh_zone, String wh_rack) {
+	public List<String> getColumns(String wh_code, String wh_zone, String wh_rack) throws Exception{
 		logger.debug(" getColumns() 실행");
 		
 		return sqlSession.selectList(NAMESPACE + "getColumns", Map.of("wh_code", wh_code, "wh_zone", wh_zone, "wh_rack", wh_rack));
@@ -205,7 +206,7 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 
 	// 창고 행 불러오기
 	@Override
-	public List<String> getRows(String wh_code, String wh_zone, String wh_rack) {
+	public List<String> getRows(String wh_code, String wh_zone, String wh_rack) throws Exception{
 		logger.debug(" getRows() 실행");
 		
 		return sqlSession.selectList(NAMESPACE + "getRows", Map.of("wh_code", wh_code, "wh_zone", wh_zone, "wh_rack", wh_rack));
@@ -218,6 +219,62 @@ public class BasicInfoDAOImpl implements BasicInfoDAO {
 		
 		return sqlSession.selectList(NAMESPACE + "getInventory", wh_num) ;
 	}
+
+	// 창고 -> zone 추가
+	@Override
+	public String addZone(String wh_code, String wh_name) throws Exception {
+		logger.debug(" addZone() 실행 ");
+		// 현재 최대 렉 번호 가져오기
+		
+		Integer maxZoneNumber = sqlSession.selectOne(NAMESPACE + "getMaxZoneNumber", Map.of("wh_code", wh_code));
+		int newZoneNumber = (maxZoneNumber != null ? maxZoneNumber : 0) + 1;
+		logger.debug("@@ new zone : " + newZoneNumber);
+		
+		// 새로운 렉 추가
+		Map<String, Object> params = Map.of(
+				"wh_code", wh_code,
+				"wh_name", wh_name,
+				"newZone", newZoneNumber
+				);
+		
+		int result = sqlSession.insert(NAMESPACE + "addZone", params);
+		
+		if (result > 0) {
+			return String.valueOf(newZoneNumber);
+		} else {
+			return null; // 실패 시 null 반환
+		}
+		
+	}
 	
+	// 창고 -> rack 추가
+	@Override
+	public String addRack(String wh_code, String wh_zone, String wh_name) throws Exception {
+		logger.debug(" addRack() 실행");
+		
+		// 현재 최대 렉 번호 가져오기
+	    Integer maxRackNumber = sqlSession.selectOne(NAMESPACE + "getMaxRackNumber", Map.of("wh_code", wh_code, "wh_zone", wh_zone));
+	    int newRackNumber = (maxRackNumber != null ? maxRackNumber : 0) + 1;
+	    logger.debug("@@ newRack : " + newRackNumber);
+
+	    // 새로운 렉 추가
+	    Map<String, Object> params = Map.of(
+	        "wh_code", wh_code,
+	        "wh_zone", wh_zone,
+	        "wh_name", wh_name,
+	        "newRack", newRackNumber
+	    );
+	    
+	    int result = sqlSession.insert(NAMESPACE + "addRack", params);
+
+	    // 추가 성공 여부에 따라 반환 값 설정
+	    if (result > 0) {
+	        return String.valueOf(newRackNumber); // 새로 추가된 렉의 번호를 문자열로 반환
+	    } else {
+	        return null; // 실패 시 null 반환
+	    }
+		
+	}
+
 
 }

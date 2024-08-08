@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -53,6 +54,7 @@
       </div>
       <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
         <li class="nav-title">MENU</li>
+          <sec:authorize access="hasRole('ROLE_ADMIN')">
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
             <svg class="nav-icon">
               <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-puzzle"></use>
@@ -62,6 +64,7 @@
             <li class="nav-item"><a class="nav-link" href="/system/code/common"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 공통 코드 관리</a></li>
           </ul>
         </li>
+        </sec:authorize>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
             <svg class="nav-icon">
               <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-cursor"></use>
@@ -69,14 +72,7 @@
           <ul class="nav-group-items compact">
             <li class="nav-item"><a class="nav-link" href="/basicInfo/itemList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 품목 관리</a></li>
             <li class="nav-item"><a class="nav-link" href="/basicInfo/clientList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 거래처 관리</a></li>
-            <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
-                 <span class="nav-icon"><span class="nav-icon-bullet"></span></span><span data-coreui-i18n="창고 관리" onclick="location.href='/basicInfo/warehouseList'">창고 관리</span></a>
-             <ul class="nav-group-items compact">
-               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/warehouseList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 김포 창고</a></li>
-               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 대구 창고</a></li>
-               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 양산 창고</a></li>
-             </ul>
-           </li>
+            <li class="nav-item"><a class="nav-link" href="/basicInfo/warehouseList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 창고 관리</a></li>
           </ul>
         </li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#"> 
@@ -597,4 +593,5 @@
         </div>
       </header>
       
+<!--         </div> -->
     </head>

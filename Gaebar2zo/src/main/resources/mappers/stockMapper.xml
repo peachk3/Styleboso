@@ -16,6 +16,7 @@
 		<result property="rel_date" column="rel_date" />
 		<result property="due_date" column="due_date" />
 		<result property="pro_status" column="pro_status" />
+		<result property="regdate" column="regdate" />
 		<result property="tran_cate_code" column="tran_cate_code" />
 		<result property="comm" column="comm" />
 		<!-- <collection property="goodsList" resultMap="goodsMap"></collection> -->
@@ -87,10 +88,9 @@
 	</resultMap>
 
 
-
-
 	<!-- 입고 리스트 호출 -->
 	<select id="receivingList" resultMap="transMap">
+		<![CDATA[
 		select distinct
 		tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
 		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
@@ -118,11 +118,46 @@
 		on inv.inven_num = ic.inven_num) ic
 		on tr.tran_num = ic.tran_num and tr.goods_num = ic.goods_num
 		WHERE tr.tran_num like 'RC%' and pro_status in ("입고 예정","입고 완료")
+		LIMIT #{pageStart}, #{pageSize}
+		]]>
 	</select>
+
+	<!-- 입고 리스트 총개수 세기 -->
+	<select id="totalreceivingCount" resultType="int">
+	<![CDATA[	
+		SELECT COUNT(*)
+		from (select
+		tr.tran_num,top_tran_num,cli_num,pic_username,
+		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm, goods_num,
+		goods_qty,rec_date
+		from transaction tr
+		join transaction_goods trg
+		on tr.top_tran_num = trg.tran_num) tr
+		join (select item.item_num,
+		goods_num, item_name
+		from item join goods
+		on item.item_num = goods.item_num
+		where goods.item_num in (select item_num
+		from goods go
+		where goods_num in (select distinct trg.goods_num
+		from transaction tr
+		join transaction_goods trg
+		on tr.top_tran_num = trg.tran_num))) go
+		on tr.goods_num = go.goods_num
+		join (select tran_num, ic.inven_num, goods_num
+		from inventory inv join inventory_change ic
+		on inv.inven_num = ic.inven_num) ic
+		on tr.tran_num = ic.tran_num and tr.goods_num = ic.goods_num
+		WHERE tr.tran_num like 'RC%' and pro_status in ("입고 예정","입고 완료")
+		]]>
+	</select>
+
+
 
 	<!-- 출고 리스트 호출 -->
 	<select id="releaseList" resultMap="transMap">
-select distinct
+		<![CDATA[	
+		select distinct
 		tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
 		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
 		go.item_num,go.item_name,inven_num
@@ -149,10 +184,50 @@ select distinct
 		on inv.inven_num = ic.inven_num) ic
 		on tr.tran_num = ic.tran_num and tr.goods_num = ic.goods_num
 		WHERE tr.tran_num like 'RL%' and pro_status in ("출고 준비","출고 완료")
+		LIMIT #{pageStart}, #{pageSize}
+		]]>
 	</select>
+	
+		<!-- 출고 리스트 호출 -->
+	<select id="totalreleaseCount" resultType="int">
+		<![CDATA[	
+		select COUNT(*)
+		from (select
+		tr.tran_num,top_tran_num,cli_num,pic_username,
+		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm, goods_num,
+		goods_qty,rec_date
+		from transaction tr
+		join transaction_goods trg
+		on tr.top_tran_num = trg.tran_num) tr
+		join (select item.item_num,
+		goods_num, item_name
+		from item join goods
+		on item.item_num = goods.item_num
+		where goods.item_num in (select item_num
+		from goods go
+		where goods_num in (select distinct trg.goods_num
+		from transaction tr
+		join transaction_goods trg
+		on tr.top_tran_num = trg.tran_num))) go
+		on tr.goods_num = go.goods_num
+		join (select tran_num, ic.inven_num, goods_num
+		from inventory inv join inventory_change ic
+		on inv.inven_num = ic.inven_num) ic
+		on tr.tran_num = ic.tran_num and tr.goods_num = ic.goods_num
+		WHERE tr.tran_num like 'RL%' and pro_status in ("출고 준비","출고 완료")
+		]]>
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
  
 
-<!-- 입고/출고 transaction 삭제 -->
+<!-- 입고/출고/반품 transaction 삭제 -->
    	<delete id="deleteTransactionList">
    		delete from transaction
    		where tran_num in
@@ -209,11 +284,23 @@ select distinct
 	<!-- 입고 / 출고 수정 -->
 	<update id="updateDetails">
 		UPDATE transaction
-		SET tran_date=#{tran_date},pic_username=#{pic_username}
+		SET tran_date=#{tran_date},pic_username=#{pic_username},comm=#{comm}
 		WHERE tran_num=#{tran_num}
 	</update>
+	
+	<!-- 입고 등록시 상위거래번호 상태 변경 -->
+		<update id="updateReceivingTopTranstatus">
+			UPDATE transaction
+			set pro_status = "입고 예정"
+			where tran_num=#{top_tran_num}		
+		</update>
 
-
+	<!-- 출고 등록시 상위거래번호 상태 변경 -->
+		<update id="updateReleaseTopTranstatus">
+			UPDATE transaction
+			set pro_status = "출고 준비"
+			where tran_num=#{top_tran_num}		
+		</update>
 
 
 	<!-- InventoryVO resultMap -->
@@ -246,13 +333,6 @@ select distinct
 		<result property="wh_status" column="wh_status" />
 		<result property="m_cate_wh_code" column="m_cate_wh_code" />
 	</resultMap>
-
-
-
-
-
-
-
 
 	<!-- WarehouseVO resultMap -->
 	<resultMap type="com.itwillbs.domain.WarehouseVO"
@@ -390,45 +470,40 @@ select distinct
 	
 	<!-- 반품 리스트 호출 -->
 	<select id="returnList" resultMap="transMap">
-		SELECT
-		    tr.tran_num, tr.top_tran_num, tr.cli_num, c.cli_name, tr.pic_username, tr.rec_date,
-		    tr.tran_date, tr.rel_date, tr.due_date, tr.pro_status, tr.tran_cate_code, tr.comm, 
-		    go.goods_num, tr.goods_qty, go.item_num, go.item_name, ic.inven_num
-		FROM (
-		    SELECT
-		        tr.tran_num, tr.top_tran_num, tr.cli_num, tr.pic_username,
-		        tr.tran_date, tr.rel_date, tr.due_date, tr.pro_status, tr.tran_cate_code, tr.comm, 
-		        trg.goods_num, trg.goods_qty, tr.rec_date
-		    FROM transaction tr
-		    JOIN transaction_goods trg ON tr.top_tran_num = trg.tran_num
-		) tr
-		JOIN client c ON tr.cli_num = c.cli_num
-		JOIN (
-		    SELECT item.item_num, goods.goods_num, item.item_name
-		    FROM item 
-		    JOIN goods ON item.item_num = goods.item_num
-		    WHERE goods.item_num IN (
-		        SELECT item_num
-		        FROM goods
-		        WHERE goods_num IN (
-		            SELECT trg.goods_num
-		            FROM transaction tr
-		            JOIN transaction_goods trg ON tr.top_tran_num = trg.tran_num
-		        )
-		    )
-		) go ON tr.goods_num = go.goods_num
-		JOIN inventory_change ic ON tr.tran_num = ic.tran_num 
-		WHERE tr.tran_num LIKE 'RE%'
+	   SELECT
+	    tr.tran_num, tr.top_tran_num, tr.cli_num, c.cli_name, tr.pic_username, tr.rec_date, tr.regdate,
+	    tr.tran_date, tr.rel_date, tr.due_date, tr.pro_status, tr.tran_cate_code, tr.comm, 
+	    trg.goods_num, trg.goods_qty, i.item_num, i.item_name
+	FROM 
+	    transaction tr
+	JOIN 
+	    client c ON tr.cli_num = c.cli_num
+	JOIN 
+	    transaction_goods trg ON tr.top_tran_num = trg.tran_num
+	JOIN 
+	    goods g ON trg.goods_num = g.goods_num
+	JOIN 
+	    item i ON g.item_num = i.item_num
+	WHERE 
+	    tr.tran_num LIKE 'RE%'
 	</select>
 
 	<!-- 반품 등록 -->
-	<insert id="returnAdd" useGeneratedKeys="true" keyProperty="tran_num">
-		insert into transaction(tran_num, cli_num, pic_username, tran_date, ex_due_date, pro_status, tran_cate_code, comm)
-		values(#{tran_num}, #{cli_num}, #{pic_username}, #{tran_date}, #{ex_due_date}, "반품 접수" , #{tran_cate_code}, #{comm})
+	<insert id="adjustReturnAdd_TransactionVO">
+		insert into transaction(tran_num, top_tran_num, cli_num, pic_username, tran_date, regdate, pro_status, tran_cate_code, comm)
+		values(#{tran_num}, #{top_tran_num},#{cli_num}, #{pic_username}, #{tran_date}, #{regdate}, "반품 접수" , #{tran_cate_code}, #{comm})
 	</insert>
 
-
-
+	<!-- 반품 모달창 - 발주리스트,거래처,담당자,입고예정일 출력 -->
+	<select id="getReturnDetails" resultType="map">
+		select top_tran_num,tra.cli_num,cl.cli_name,tra.pic_username,user.user_per_name,tra.tran_date
+		from transaction tra
+		join client cl
+		on tra.cli_num = cl.cli_num
+		join users user
+		on tra.pic_username = user.username
+		WHERE tra.tran_num like 'RE%'  and tra.tran_num = #{tran_num}
+	</select>
 
 	<!-- 출고 모달창 - 발주리스트,거래처,담당자,입고예정일 출력 -->
 	<select id="getTransactionDetails2" resultType="map">
@@ -475,12 +550,120 @@ select distinct
         WHERE inven.goods_num = #{goods_num}
     </select>
 
+
+	<!-- 상태업데이트_입고 -->
+    <update id="updateRecevingStatus">
+		    UPDATE transaction
+		    SET pro_status = #{pro_status},
+		        rec_date = CASE 
+		                     WHEN #{pro_status} = '입고 완료' THEN NOW()
+		                     WHEN #{pro_status} = '입고 예정' THEN NULL
+		                     ELSE rec_date
+		                   END
+		    WHERE tran_num IN
+		    <foreach item="tran_num" index="index" collection="tran_nums" open="(" separator="," close=")">
+		        #{tran_num}
+		    </foreach>
+    </update>
+	
+	<!-- 상태 업데이트시_상위거래번호 상태도 변경 -->
+	<update id="updateRecevingTopTranStatus">
+	    UPDATE transaction
+	    SET pro_status = #{pro_status},
+	        rec_date = CASE 
+	                      WHEN #{pro_status} = '입고 완료' THEN NOW()
+	                      WHEN #{pro_status} = '입고 예정' THEN NULL
+	                      ELSE rec_date
+	                    END
+	    WHERE tran_num IN
+	    <foreach item="top_tran_num" index="index" collection="top_tran_nums" open="(" separator="," close=")">
+	        #{top_tran_num}
+	    </foreach>
+	</update>
 	
 
+	<!-- 상태업데이트_출고 -->
+    <update id="updateReleaseStatus">
+		    UPDATE transaction
+		    SET pro_status = #{pro_status},
+		        rel_date = CASE 
+		                     WHEN #{pro_status} = '출고 완료' THEN NOW()
+		                     WHEN #{pro_status} = '출고 준비' THEN NULL
+		                     ELSE rel_date
+		                   END
+		    WHERE tran_num IN
+		    <foreach item="tran_num" index="index" collection="tran_nums" open="(" separator="," close=")">
+		        #{tran_num}
+		    </foreach>
+    </update>
 
-
-
-
-
+	
+	<!-- 상태 업데이트시_상위거래번호 상태도 변경 -->
+	<update id="updateReleaseTopTranStatus">
+	    UPDATE transaction
+	    SET pro_status = #{pro_status},
+	        rel_date = CASE 
+	                      WHEN #{pro_status} = '출고 완료' THEN NOW()
+	                      WHEN #{pro_status} = '출고 준비' THEN NULL
+	                      ELSE rel_date
+	                    END
+	    WHERE tran_num IN
+	    <foreach item="top_tran_num" index="index" collection="top_tran_nums" open="(" separator="," close=")">
+	        #{top_tran_num}
+	    </foreach>
+	</update>
+	
+	
+	<!-- 발주 리스트 -->
+	<select id="receivingPurchaseOrderList" resultMap="transMap">
+		select tran_num, cli_name 
+		from transaction t
+		join client c on t.cli_num = c.cli_num
+		where tran_cate_code = "PO" and pro_status = "발주 승인"
+		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC" AND top_tran_num IS NOT NULL)
+	</select>
+	
+	<!-- 교환 리스트 -->
+	<select id="receivingExchangeList" resultMap="transMap">
+		select tran_num, cli_name 
+		from transaction t
+		join client c on t.cli_num = c.cli_num
+		where tran_cate_code = "EX"
+		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC" AND top_tran_num IS NOT NULL)
+	</select>
+	
+	<!-- 반품 리스트 -->
+	<select id="receivingReturnList" resultMap="transMap">
+		select tran_num, cli_name 
+		from transaction t
+		join client c on t.cli_num = c.cli_num
+		where tran_cate_code = "RE"
+		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC" AND top_tran_num IS NOT NULL)
+	</select>
+	
+	
+	<!-- 수주 리스트 -->
+	<select id="releaseSalesOrderList" resultMap="transMap">
+		select tran_num, cli_name 
+		from transaction t
+		join client c on t.cli_num = c.cli_num
+		where tran_cate_code = "SO" and pro_status = "수주 접수"
+		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RL" AND top_tran_num IS NOT NULL)
+	</select>
+	
+	<!-- 교환 리스트 -->
+	<select id="releaseExchangeList" resultMap="transMap">
+		select tran_num, cli_name 
+		from transaction t
+		join client c on t.cli_num = c.cli_num
+		where tran_cate_code = "EX"
+		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RL" AND top_tran_num IS NOT NULL)
+	</select>
+	
+	
+	
+	
+	
+	
 
 </mapper>

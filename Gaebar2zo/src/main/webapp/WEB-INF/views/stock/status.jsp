@@ -19,7 +19,7 @@
         width: 200%;
     }
 </style>
-${pageVO }
+
 <body>
     <div class="container">
         <div class="container-fluid mt-5">

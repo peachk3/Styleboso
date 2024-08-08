@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.itwillbs.domain.AuthoritiesVO;
 import com.itwillbs.domain.CodeVO;
 import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.ItemCodeVO;
@@ -68,7 +69,19 @@ public class SystemDAOImpl implements SystemDAO{
 	public int addEmp(UsersVO usersVo) throws Exception {
 		logger.info("dao -> 사용자 등록");
 		
-		return sqlSession.insert(NAMESPACE+"addEmp", usersVo);
+		String userName = sqlSession.selectOne(NAMESPACE+"addEmpUsername");
+		logger.info("userName" + userName);
+		
+		AuthoritiesVO authVo = usersVo.getAuthList();
+		
+		usersVo.setUsername(userName);
+		authVo.setUsername(userName);
+		
+		sqlSession.insert(NAMESPACE+"addEmp", usersVo);
+		sqlSession.insert(NAMESPACE+"addEmpAuth", authVo);
+		
+		logger.info("dao -> 사용자 등록");
+		return 1;
 	}
 
 	//사용자 수정

@@ -4,6 +4,8 @@ import java.util.List;
 
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryChangeVO;
 import com.itwillbs.domain.InventoryVO;
@@ -52,8 +54,11 @@ public interface StockDAO {
 	Map<String, Object> getTransactionDetails(String tran_num) throws Exception;
 
 	// 입고/출고 삭제
-	void deleteRecevingList(List<String> trannums) throws Exception;
+	void deleteRecevingList(List<String> tran_nums) throws Exception;
 
+	// 입고삭제 - 상위 거래번호 상태 되돌리기
+	void updateTopTranNum(@Param("top_tran_nums") List<String> topTranNums) throws Exception;
+	
 	// 입고/츨고 inventory change 삭제
 	void deleteInventoryChange(List<String> trannums) throws Exception;
 
@@ -128,6 +133,7 @@ public interface StockDAO {
 	
 	// 교환 리스트
 	public List<TransactionVO> releaseExchangeList() throws Exception;
+
 	
 	
 	

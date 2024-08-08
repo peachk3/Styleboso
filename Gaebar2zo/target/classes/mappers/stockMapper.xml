@@ -219,14 +219,6 @@
 	</select>
 	
 	
-	
-	
-	
-	
-	
-	
- 
-
 <!-- 입고/출고/반품 transaction 삭제 -->
    	<delete id="deleteTransactionList">
    		delete from transaction
@@ -246,6 +238,20 @@
    	</delete>
 
 
+<!-- 입고 삭제시 상위 거래번호 상태 업데이트 -->
+<update id="updateTopTranNum">
+    UPDATE transaction
+    SET pro_status = CASE 
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'PO' THEN '발주 승인'
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'RE' THEN '반품 접수'
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'EX' THEN '교환 접수'
+                        ELSE pro_status
+                     END
+    WHERE tran_num IN
+    <foreach collection="list" item="top_tran_num" open="(" separator="," close=")">
+        #{top_tran_num}
+    </foreach>
+</update>
 
 
 	<!-- 입고 등록_TransactionVO -->

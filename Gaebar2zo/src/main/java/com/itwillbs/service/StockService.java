@@ -48,8 +48,12 @@ public interface StockService {
 	Map<String, Object> getTransactionDetails(String tran_num) throws Exception;
 
 	// 입고 목록 삭제
-	void deleteRecevingList(List<String> trannums) throws Exception;
+	void deleteRecevingList(List<String> tran_nums, List<String> top_tran_nums) throws Exception;
 
+//	 입고 목록 삭제시 상위거래번호 이전 상태로
+//	void updateTopTranNum(List<String> topTranNums) throws Exception;
+
+	
 	// 출고 모달창 정보 호출
 	Map<String, Object> getTransactionDetails2(String tran_num) throws Exception;
 

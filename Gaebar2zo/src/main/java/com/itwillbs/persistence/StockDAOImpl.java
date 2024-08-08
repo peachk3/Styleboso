@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,19 +134,27 @@ public class StockDAOImpl implements StockDAO{
 
 
 	@Override
-	public void deleteRecevingList(List<String> trannums) throws Exception {
+	public void deleteRecevingList(List<String> tran_nums) throws Exception {
 
 		logger.debug(" deleteRecevingList(List<String> trannums) 실행");
 
 		
 		
-		sqlSession.delete(NAMESPACE + "deleteTransactionList", trannums);
+		sqlSession.delete(NAMESPACE + "deleteTransactionList", tran_nums);
 	}
 	
 	@Override
-	public void deleteInventoryChange(List<String> trannums) throws Exception {
+	public void updateTopTranNum(@Param("top_tran_nums") List<String> top_tran_nums) throws Exception {
+	    logger.debug(" updateTopTranNum(List<String> top_tran_nums) 실행");
+	    
+	    logger.debug("top_tran_nums : "+top_tran_nums);
+	    sqlSession.update(NAMESPACE + "updateTopTranNum", top_tran_nums);
+	}
+
+	@Override
+	public void deleteInventoryChange(List<String> tran_nums) throws Exception {
 	    logger.debug("deleteInventoryChange(List<String> trannums) 실행");
-	    sqlSession.delete(NAMESPACE + "deleteInventoryChange", trannums);
+	    sqlSession.delete(NAMESPACE + "deleteInventoryChange", tran_nums);
 	}
 	
 	

@@ -147,14 +147,33 @@ public class StockServiceImpl implements StockService{
 		return sdao.getTransactionDetails(tran_num);
 	}
 
+	@Transactional
 	@Override
-	public void deleteRecevingList(List<String> trannums) throws Exception {
-		logger.debug(" 입고 삭제 ");
-		// 먼저 inventory_change 테이블에서 삭제
-	    sdao.deleteInventoryChange(trannums);
+	public void deleteRecevingList(List<String> tran_nums, List<String> top_tran_nums) throws Exception {
+	    logger.debug("입고 삭제 시작: trannums=" + tran_nums + ", top_tran_nums=" + top_tran_nums);
 	    
-		sdao.deleteRecevingList(trannums);
+	    logger.debug("inventory_change 테이블에서 삭제 시작");
+	    sdao.deleteInventoryChange(tran_nums);
+	    logger.debug("inventory_change 테이블에서 삭제 완료");
+	    
+	    logger.debug("transaction 테이블에서 삭제 시작");
+	    sdao.deleteRecevingList(tran_nums);
+	    logger.debug("transaction 테이블에서 삭제 완료");
+	    
+	    logger.debug("상위 거래번호 상태 업데이트 시작");
+	    sdao.updateTopTranNum(top_tran_nums);
+	    logger.debug("상위 거래번호 상태 업데이트 완료");
+	    
+	    logger.debug("입고 삭제 완료");
 	}
+
+//	@Override
+//	public void updateTopTranNum(List<String> topTranNums) throws Exception {
+//		logger.debug(" 입고 삭제 - 상위거래 상태 되돌리기 ");
+//
+//		
+//	}
+
 
 	@Override
 	public Map<String, Object> getTransactionDetails2(String tran_num) throws Exception {

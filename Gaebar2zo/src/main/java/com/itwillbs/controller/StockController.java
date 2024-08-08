@@ -274,21 +274,30 @@ public class StockController {
 		logger.debug(" deleteRC_POST() 실행 ");
 		
 		@SuppressWarnings("unchecked")
-        List<String> trannums = (List<String>) payload.get("tran_nums");
+        List<String> tran_nums = (List<String>) payload.get("tran_nums");
 
-        if (trannums == null || trannums.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                 .body(Map.of("status", "error", "message", "No clients selected"));
-        }
-        logger.debug("@@@@tran_nums  " + trannums);
-
-        try {
-            sService.deleteRecevingList(trannums);
-            return ResponseEntity.ok(Map.of("status", "success"));
-        } catch (Exception e) {
-            logger.error(" @@@@@@@@Error deleting clients", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("status", "error", "message", e.getMessage()));
-        }
+	    @SuppressWarnings("unchecked")
+	    List<String> top_tran_nums = (List<String>) payload.get("top_tran_nums");
+	    
+		
+	    if (tran_nums == null || tran_nums.isEmpty() || tran_nums == null || top_tran_nums.isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+	                             .body(Map.of("status", "error", "message", "No items selected or missing data"));
+	    }
+	    
+	    logger.debug("@@@@tran_nums  " + tran_nums);
+	    logger.debug("@@@@top_tran_nums  " + top_tran_nums);
+	    
+	    
+	    
+	    try {
+	        sService.deleteRecevingList(tran_nums,top_tran_nums);
+	        return ResponseEntity.ok(Map.of("status", "success"));
+	    } catch (Exception e) {
+	        logger.error("Error processing delete and update", e);
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                             .body(Map.of("status", "error", "message", e.getMessage(), "details", e.toString()));
+	    }
 		
 	}
 //	

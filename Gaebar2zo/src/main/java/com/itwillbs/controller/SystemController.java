@@ -29,7 +29,7 @@ import com.itwillbs.domain.UsersVO;
 import com.itwillbs.service.SystemService;
 
 
-@RequestMapping(value = "/system/*")
+@RequestMapping(value = "/Styleboso/system/*")
 @Controller
 public class SystemController {
 

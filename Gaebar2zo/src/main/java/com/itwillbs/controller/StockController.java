@@ -1,10 +1,7 @@
  package com.itwillbs.controller;
 
-import java.sql.Date;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,10 +26,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryChangeVO;
 import com.itwillbs.domain.InventoryVO;
-import com.itwillbs.domain.ItemVO;
 import com.itwillbs.domain.PageVO;
 import com.itwillbs.domain.StatusUpdateRequest;
-import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.service.StockService;
 
@@ -106,13 +101,23 @@ public class StockController {
 	
 	// 재고 반품
 	@RequestMapping(value="/adjustment/return",method=RequestMethod.GET)
-	public void adjustment_return_GET(Model model) throws Exception{
+	public void adjustment_return_GET(Criteria cri, Model model) throws Exception{
 		logger.debug(" adjustment_return_GET() 실행");
 		
 		// 반품 리스트 호출
-		List<TransactionVO> re = sService.reList();
+		List<TransactionVO> re = sService.reList(cri);
 		logger.debug("size : "+ re.size());
+		
+		// 하단 페이징처리 정보객체 생성
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(sService.getReturnTotalCount());
+		logger.debug(" cri " + pageVO.getCri());
+		
+		// 연결된 뷰페이지로 정보 전달
 		model.addAttribute("re", re);
+		model.addAttribute("pageVO", pageVO);
+		
 	}
 	
 	// 반품 모달 정보
@@ -181,7 +186,14 @@ public class StockController {
 			
 			@SuppressWarnings("unchecked")
 	        List<String> trannums = (List<String>) payload.get("tran_nums");
-
+			
+		    @SuppressWarnings("unchecked")
+		    List<String> top_tran_nums = (List<String>) payload.get("top_tran_nums");
+		    
+		    logger.debug("trannums : " + trannums);
+		    logger.debug("top_tran_nums : " + top_tran_nums);
+		    
+		    
 	        if (trannums == null || trannums.isEmpty()) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 	                                 .body(Map.of("status", "error", "message", "No clients selected"));
@@ -189,7 +201,7 @@ public class StockController {
 	        logger.debug("@@@@tran_nums  " + trannums);
 
 	        try {
-	            sService.deleteReturnList(trannums);
+	            sService.deleteReturnList(trannums, top_tran_nums);
 	            return ResponseEntity.ok(Map.of("status", "success"));
 	        } catch (Exception e) {
 	            logger.error(" @@@@@@@@Error deleting clients", e);

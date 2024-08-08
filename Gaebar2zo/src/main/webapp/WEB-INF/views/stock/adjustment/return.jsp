@@ -282,6 +282,7 @@
 					</div>
 				</div>
 			</div>
+
     <%@ include file="../../include/footer.jsp" %>
 
 
@@ -378,7 +379,8 @@ $(document).ready(function() {
         checkedCheckboxes.each(function() {
         	const row = $(this).closest('tr');        	
         	const tran_num = $(this).closest('tr').find('td:eq(1)').text().trim();
-        	var top_tran_num = $(this).closest("tr").find(".top-tran-num").val();            if (tran_num) {
+        	var top_tran_num = $(this).closest("tr").find(".top-tran-num").val();
+        	if (tran_num) {
                 tran_nums.push(tran_num);
                 top_tran_nums.push(top_tran_num);
             }
@@ -416,14 +418,18 @@ $(document).ready(function() {
         const checkedCheckboxes = $('input[type="checkbox"].rowCheckbox:checked');
         console.log("선택된 체크박스 수:", checkedCheckboxes.length);
         const tran_nums = [];
+        const top_tran_nums = [];
 
         checkedCheckboxes.each(function() {
-            const tran_num = $(this).closest('tr').find('td:eq(1)').text().trim();
-            if (tran_num) {
-                console.log("추출된 tran_num:", tran_num);
+        	const row = $(this).closest('tr');        	
+        	const tran_num = $(this).closest('tr').find('td:eq(1)').text().trim();
+        	var top_tran_num = $(this).closest("tr").find(".top-tran-num").val();
+        	if (tran_num) {
                 tran_nums.push(tran_num);
+                top_tran_nums.push(top_tran_num);
             }
         });
+
         
         console.log("최종 tran_nums 배열:", tran_nums);
         
@@ -440,7 +446,10 @@ $(document).ready(function() {
                 },
                 type: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify({ tran_nums: tran_nums }),
+                data: JSON.stringify({ 
+                    tran_nums: tran_nums, 
+                    top_tran_nums: top_tran_nums
+                }),
                 success: function(response) {
                     location.reload();
                     alert("삭제 완료 되었습니다");

@@ -266,6 +266,19 @@
     </foreach>
 </update>
 
+<!-- 반품 삭제시 상위 거래번호 상태 업데이트 -->
+<update id="updateRETopTranNum">
+    UPDATE transaction
+    SET pro_status = CASE 
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'SO' THEN '출고 완료'
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'EX' THEN '교환 접수'
+                        ELSE pro_status
+                     END
+    WHERE tran_num IN
+    <foreach collection="list" item="top_tran_num" open="(" separator="," close=")">
+        #{top_tran_num}
+    </foreach>
+</update>
 
 	<!-- 입고 등록_TransactionVO -->
 	<insert id="stockReceivingAdd_TransactionVO">
@@ -321,6 +334,12 @@
 			where tran_num=#{top_tran_num}		
 		</update>
 
+	<!-- 반품 등록시 상위거래번호 상태 변경 -->
+		<update id="adjustReturnAdd_TopTranstatus">
+			UPDATE transaction
+			set pro_status = "반품 접수"
+			where tran_num=#{top_tran_num}		
+		</update>
 
 	<!-- InventoryVO resultMap -->
 	<resultMap type="com.itwillbs.domain.InventoryVO"
@@ -489,6 +508,7 @@
 	
 	<!-- 반품 리스트 호출 -->
 	<select id="returnList" resultMap="transMap">
+	<![CDATA[
 	   SELECT
 	    tr.tran_num, tr.top_tran_num, tr.cli_num, c.cli_name, tr.pic_username, tr.rec_date, tr.regdate,
 	    tr.tran_date, tr.rel_date, tr.due_date, tr.pro_status, tr.tran_cate_code, tr.comm, 
@@ -505,6 +525,26 @@
 	    item i ON g.item_num = i.item_num
 	WHERE 
 	    tr.tran_num LIKE 'RE%'
+	LIMIT #{pageStart}, #{pageSize}
+	]]>
+	</select>
+	
+	<select id="returnTotalCount" resultType="int">
+	<![CDATA[
+	SELECT COUNT(tr.tran_num) as total_count
+		FROM 
+		    transaction tr
+		JOIN 
+		    client c ON tr.cli_num = c.cli_num
+		JOIN 
+		    transaction_goods trg ON tr.top_tran_num = trg.tran_num
+		JOIN 
+		    goods g ON trg.goods_num = g.goods_num
+		JOIN 
+		    item i ON g.item_num = i.item_num
+		WHERE 
+		    tr.tran_num LIKE 'RE%'
+	]]>
 	</select>
 
 	<!-- 반품 등록 -->

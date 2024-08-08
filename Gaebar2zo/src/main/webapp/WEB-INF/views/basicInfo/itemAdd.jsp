@@ -302,9 +302,13 @@ document.addEventListener('DOMContentLoaded', function() {
           
            $('#modal1-table tbody tr').remove();
            
+           // 품목 등록시에는 협력사만 출력되도록 해야 함
+           const cli_cate = "CLPT"; 
+           
            $.ajax({
-               url: "/common/clientList",
+               url: "/common/clientList2",
                type: "get",
+               data: {cli_cate: cli_cate},
                contentType: 'application/json; charset=utf-8',
                dataType: "json",
                success: function(data) {

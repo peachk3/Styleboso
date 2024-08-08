@@ -4,11 +4,15 @@
  */
 //===================================================================
 //공통 그룹코드 - 등록
-    function insertGroupCode() { //버튼 onclick=insertGroupCode()
+	function insertGroupCode() { //버튼 onclick=insertGroupCode()
     	$('#insertCodeModal').modal('show');
     }
     
-    
+ // 등록 모달 닫기와 폼 초기화
+    $('#insertModalCloseBtn').on('click', function() {
+        $('#insertCodeModal').modal('hide');
+        $('#insertCodeForm')[0].reset(); // 폼 초기화
+    });
     //등록기능 - 저장 onclick=saveNewGroupCode()
     function saveGroupCode(){ 
     	const token = $("meta[name='_csrf']").attr("content");
@@ -101,7 +105,7 @@
         // 모달 열기
         $('#commonModal').modal('show');
     }
-
+    
 
     // 수정된 코드 저장
     function saveEditedCode() {
@@ -145,20 +149,7 @@
     }   
     
     
-    
-    //aria-hidden 속성이 부모 요소에 남아 있으면 문제를 일으킬 수 있기 때문에 -> 모달 외부 요소에 적용 
-    // 모달이 열리고 닫힐 때 aria-hidden 속성 관리
-//    $('#insertCodeModal').on('show.bs.modal', function () {
-//        // 모달이 열릴 때
-//        $('body > *').not('#insertCodeModal').attr('aria-hidden', 'true');
-//        $('#insertCodeModal').removeAttr('aria-hidden');
-//    });
-//
-//    $('#insertCodeModal').on('hidden.bs.modal', function () {
-//        // 모달이 닫힐 때
-//        $('body > *').removeAttr('aria-hidden');
-//    });
-//    
+   
     
  //===================================================================
   //삭제기능 - onclick=deleteCode()()
@@ -221,12 +212,13 @@
    	    }
    	}
    	
-  
-  //모달 닫기
-   	$('#insertModalCloseBtn').on('click', function() {
-	    $('#"insertCodeModal"').modal('hide');
-	});
-	$('#commonModalCloseBtn').on('click', function() {
-	    $('#commonModal').modal('hide');
-	});
-	
+    // 등록 모달 닫기와 폼 초기화
+//    $('#insertModalCloseBtn').on('click', function() {
+//        $('#insertCodeModal').modal('hide');
+//        $('#insertCodeForm')[0].reset(); // 폼 초기화
+//    });
+// // 상세 모달 닫기와 폼 초기화
+//    $('#commonModalCloseBtn').on('click', function() {
+//        $('#commonModal').modal('hide');
+//        $('#updateCommonForm')[0].reset(); // 폼 초기화
+//    });

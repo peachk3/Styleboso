@@ -154,8 +154,8 @@
 						</div>
 						<div class="mb-3">
 							<select class="form-select" id="user_pos" name="user_pos" required aria-label="select example">
+								<option value="운영자">운영자</option>
 								<option value="관리자">관리자</option>
-								<option value="팀장">팀장</option>
 								<option value="사원">사원</option>
 							</select>
 							<div class="invalid-feedback" style="margin-left: 10px">직책을 선택해 주세요</div>
@@ -205,8 +205,8 @@
                     <div class="form-group mb-3" >
                         <label for="edit_user_pos" style="margin-bottom: 5px;">사용자 직책</label>
                         <select id="edit_user_pos" class="form-control">
+                            <option value="운영자">운영자</option>
                             <option value="관리자">관리자</option>
-                            <option value="팀장">팀장</option>
                             <option value="사원">사원</option>
                         </select>
                     </div>

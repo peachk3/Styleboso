@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.itwillbs.domain.AuthoritiesVO;
 import com.itwillbs.domain.CodeVO;
 import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.ItemCodeVO;
@@ -68,7 +69,19 @@ public class SystemDAOImpl implements SystemDAO{
 	public int addEmp(UsersVO usersVo) throws Exception {
 		logger.info("dao -> 사용자 등록");
 		
-		return sqlSession.insert(NAMESPACE+"addEmp", usersVo);
+		String userName = sqlSession.selectOne(NAMESPACE+"addEmpUsername");
+		logger.info("userName" + userName);
+		
+		AuthoritiesVO authVo = usersVo.getAuthList();
+		
+		usersVo.setUsername(userName);
+		authVo.setUsername(userName);
+		
+		sqlSession.insert(NAMESPACE+"addEmp", usersVo);
+		sqlSession.insert(NAMESPACE+"addEmpAuth", authVo);
+		
+		logger.info("dao -> 사용자 등록");
+		return 1;
 	}
 
 	//사용자 수정
@@ -76,14 +89,27 @@ public class SystemDAOImpl implements SystemDAO{
 	public void updateEmp(UsersVO usersVo) throws Exception {
 		logger.info("dao --> 사용자 업데이트");
 		
+		String userPos = sqlSession.selectOne(NAMESPACE+"updateEmpAuth");
+		logger.info("userPos" + userPos);
+	
+		AuthoritiesVO authVo = usersVo.getAuthList();
+		
+		authVo.setUsername(userPos);
+		usersVo.setUsername(userPos);
+		
+		sqlSession.update(NAMESPACE+"updateEmpAuth", authVo);
 		sqlSession.update(NAMESPACE +"updateEmp",usersVo);
+		logger.info("dao -> 사용자 등록");
+		
+		
 	}
 	
 	//사용자 삭제
 	@Override
 	public void deleteEmp(List<String> users) throws Exception {
 		logger.info("dao -> 사용자 삭제");
-		
+
+		sqlSession.update(NAMESPACE+"deleteEmpAuth", users);
 		sqlSession.delete(NAMESPACE+"deleteEmp", users);
 	}
 

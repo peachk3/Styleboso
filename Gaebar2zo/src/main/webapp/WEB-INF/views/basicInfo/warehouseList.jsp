@@ -2,6 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../include/header.jsp" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<head>
+<!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+</head>
 <style>
 	.modal.right-modal .modal-dialog {
 		position: absolute;
@@ -41,249 +48,320 @@
 </style>
 
 
-<body>
 	<h1>/Styleboso/basicInfo/warehouseList.jsp</h1>
 
-<!-- 	<div class="container-fluid px-4"> -->
-<!-- 		<nav aria-label="breadcrumb"> -->
-<!-- 			<ol class="breadcrumb my-0"> -->
-<!-- 				<li class="breadcrumb-item"><a href="#" data-coreui-i18n="home">김포창고</a> -->
-<!-- 				</li> -->
-<!-- 				<li class="breadcrumb-item"><span data-coreui-i18n="plugins">구역</span> -->
-<!-- 				</li> -->
-<!-- 				<li class="breadcrumb-item active"><span>열</span></li> -->
-<!-- 			</ol> -->
-<!-- 		</nav> -->
-<!-- 	</div> -->
 
-<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
+<!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;"> -->
 
-	    <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-	<input class="btn btn-primary" type="button" value="등록" onclick="location.href='/basicInfo/warehouseAdd'" class="btn btn-primary">
-	<input class="btn btn-primary" id="deleteWarehouseBtn" type="button" value="삭제">
-	</sec:authorize>
+<%-- 	    <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"> --%>
+<!-- 	<input class="btn btn-primary" type="button" value="등록" onclick="location.href='/basicInfo/warehouseAdd'" class="btn btn-primary"> -->
+<!-- 	<input class="btn btn-primary" id="deleteWarehouseBtn" type="button" value="삭제"> -->
+<%-- 	</sec:authorize> --%>
 
-</div>
-	
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th scope="col">
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value="" id="selectAll" onclick = "toggleCheckboxes(this)"> 
-					</div>
-				</th>
-				<th scope="col">창고 코드</th>
-				<th scope="col">창고 이름</th>
-				<th scope="col">연락처</th>
-				<th scope="col">주소</th>
-				<th scope="col">관리자</th>
-				<th scope="col">현재상태</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="whc" items="${whCodeList }">
-				<tr>
-					<td>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault${whc.m_cate_wh_code }"> 
+<!-- </div> -->
+<body class="bg-gray-100 font-sans">
+	<div class="container mx-auto px-4 py-8">
+		<div class="bg-white rounded-lg shadow-lg p-6">
+			<h1 class="text-2xl font-semibold text-gray-800 mb-6"> 창고 리스트</h1>
+
+			<div class="flex flex-wrap -mx-3 mb-4 md:flex-nowrap">
+				<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+					<div class="input-group w-500">
+						<div class="input-group-prepend">
+							<div class="w-full md:w-1/2 px-3 flex justify-end items-center">
+								<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
+									<input class="btn btn-primary" type="button" value="등록" onclick="location.href='/basicInfo/warehouseAdd'">
+									<input class="btn btn-primary" id="deleteWarehouseBtn" type="button" value="삭제">
+								</sec:authorize>
+							</div>
 						</div>
-					</td>
-					<td class="clickable-cell">${whc.m_cate_wh_code }${whc.s_cate_wh_code }</td>
-					<td class="clickable-cell">${whc.s_cate_wh_name }</td>
-					<td class="clickable-cell">${whc.wh_tel }</td>
-					<td class="clickable-cell">${whc.wh_add1 } ${whc.wh_add2 } ${whc.wh_add3 }</td>
-					<td class="clickable-cell">${whc.wh_man }</td>
-					<td class="clickable-cell">
-						<c:choose>
-							<c:when test="${whc.wh_status == 1 }">사용중</c:when>
-				    		<c:otherwise> 사용 중지</c:otherwise>
-						</c:choose>
-				    </td> 
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+					</div>
+				</div>
+								<div id="tableContainer"class="transition-all duration-300 ease-in-out">
+									<div
+										class="overflow-x-auto bg-white border 1px solid overflow-y-auto relative"
+										style="height: 405px;">
+										<table class="table table-hover border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
+											<thead>
+												<tr>
+													<th scope="col">
+														<div class="form-check">
+															<input class="form-check-input" type="checkbox" value=""
+																id="selectAll" onclick="toggleCheckboxes(this)">
+														</div>
+													</th>
+													<th scope="col">창고 코드</th>
+													<th scope="col">창고 이름</th>
+													<th scope="col">연락처</th>
+													<th scope="col">주소</th>
+													<th scope="col">관리자</th>
+													<th scope="col">현재상태</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="whc" items="${whCodeList }">
+													<tr>
+														<td>
+															<div class="form-check">
+																<input class="form-check-input" type="checkbox" value=""
+																	id="flexCheckDefault${whc.m_cate_wh_code }">
+															</div>
+														</td>
+														<td class="clickable-cell">${whc.m_cate_wh_code }${whc.s_cate_wh_code }</td>
+														<td class="clickable-cell">${whc.s_cate_wh_name }</td>
+														<td class="clickable-cell">${whc.wh_tel }</td>
+														<td class="clickable-cell">${whc.wh_add1 }${whc.wh_add2 }
+															${whc.wh_add3 }</td>
+														<td class="clickable-cell">${whc.wh_man }</td>
+														<td class="clickable-cell"><c:choose>
+																<c:when test="${whc.wh_status == 1 }">사용중</c:when>
+																<c:otherwise> 사용 중지</c:otherwise>
+															</c:choose></td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
 
-	<div class="modal fade" id="exampleModalToggle" data-coreui-backdrop="static" data-coreui-keyboard="false" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
-		tabindex="-1">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalToggleLabel">창고 상세 보기</h5>
-					<button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<form class="needs-validation" id="fm1" novalidate>
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-						<table class="table table-bordered">
-							<tbody>
-								<tr>
-									<td><label for="validationCustom01" class="form-label">창고 코드 </label></td>
-									<td><input type="text" class="form-control" id="s_cate_wh_code" readonly></td>
-								</tr>
-								<tr>
-									<td><label for="validationCustom01" class="form-label">창고명 </label></td>
-									<td><input type="text" class="form-control" id="s_cate_wh_name" name="s_cate_wh_name" readonly></td>
-								</tr>
-								<tr>
-									<td><label for="validationCustom01" class="form-label"> 연락처 </label></td>
-									<td><input type="text" class="form-control" id="wh_tel" name="wh_tel" maxlength="11" placeholder="ex) 01012341234" readonly></td>
-								</tr>
-<!-- 								<tr> -->
-<!-- 									<td><label for="validationCustom05" class="form-label"> 창고 담당자 아이디 </label></td> -->
-<!-- 									<td><input type="text" class="form-control" id="validationCustom05" data-coreui-toggle="modal" data-coreui-target="#exampleModalToggle2" required disabled></td> -->
-<!-- 								</tr> -->
-								<tr>
-									<td><label for="validationCustom06" class="form-label">창고 담당자 이름 </label></td>
-									<td><input type="text" class="form-control" id="validationCustom06" data-coreui-toggle="modal" name="wh_man" data-coreui-target="#exampleModalToggle2" required disabled></td>
-								</tr>
-								<tr>
-									<td><label for="validationCustom03" class="form-label">우편번호</label></td>
-									<td>
-										<div class="d-flex">
-											<input type="text" class="form-control" id="sample6_postcode" name="wh_postCode" readonly> 
-											<button type="button" id="postCodeButton" onclick="sample6_execDaumPostcode()" disabled>찾기</button>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><label for="validationCustom03" class="form-label">주소</label></td>
-									<td><input type="text" class="form-control" id="sample6_address" name="wh_add1" readonly></td>
-								</tr>
-								<tr>
-									<td><label for="validationCustom03" class="form-label">상세 주소</label></td>
-									<td><input type="text" class="form-control" id="sample6_detailAddress" name="wh_add2" readonly></td>
-								</tr>
-								<tr>
-									<td><label for="validationCustom03" class="form-label">참고 항목</label></td>
-									<td><input type="text" class="form-control" id="sample6_extraAddress" name="wh_add3" readonly></td>
-								</tr>
-								<tr>
-									<td><label for="validationCustom03" class="form-label"> 현재 상태 </label></td>
-									<td>
-										<input type="radio" id="wh_statusOk" name="wh_status" value="1" required disabled>
-                                        <label for="wh_statusOk">사용중</label>
-                                        <input type="radio" id="wh_statusNo" name="wh_status" value="0" required disabled>
-                                        <label for="wh_statusNo">사용 중지</label>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-				<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-					<button type="button" class="btn btn-secondary" id="editButton">수정</button>
-					<button type="submit" class="btn btn-success" id="saveButton" style="display: none;">저장</button>
-					<button type="button" class="btn btn-success" id="saveCancelButton" style="display: none;">취소</button>
+									</div>
+							</div>
+							</div>
+							</div>
+
+<div class="container mx-auto px-4 py-8">
+		<div class="bg-white rounded-lg shadow-lg p-6">
+			<h1 class="text-2xl font-semibold text-gray-800 mb-6">창고별 재고 출력</h1>
+			
+				<div class="d-grid gap-2 d-md-flex justify-content-md-end"
+					style="margin-right: 10px; padding: 10px;">
+					<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
+						<button class="btn btn-primary" id="registWhZoneBtn"
+							name="registWhZoneBtn" type="button">Zone 등록</button>
+						<button class="btn btn-primary" id="registWhBtn"
+							name="registWhBtn" type="button">Rack 등록</button>
+						<button class="btn btn-primary" id="deleteClientBtn"
+							name="deleteClientBtn" type="button">삭제</button>
 					</sec:authorize>
-					<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
 				</div>
-			</div>
-		</div>
-	</div>
+				
+				<div id="tableContainer" class="transition-all duration-300 ease-in-out">
+				<div class="overflow-x-auto bg-white border 1px solid overflow-y-auto relative" style="height: 405px;">
+				<div class="row">
+					<div class="col">
+						<select id="warehouseSelect" class="form-select"
+							aria-label="Default select example">
+							<option value="">Select Warehouse</option>
+							<c:forEach items="${whCodeList}" var="whCodeList">
+								<option value="${whCodeList.s_cate_wh_code}"
+									data-wh-name="${whCodeList.s_cate_wh_name}">${whCodeList.s_cate_wh_name}</option>
+							</c:forEach>
+						</select> <br>
+					</div>
 
-	
-	        <h1>창고별 재고 출력</h1>
-
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
-     <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-      <button class="btn btn-primary" id="registWhZoneBtn" name="registWhZoneBtn" type="button" >Zone 등록</button>
-      <button class="btn btn-primary" id="registWhBtn" name="registWhBtn" type="button" >Rack 등록</button>
-      <button class="btn btn-primary" id="deleteClientBtn" name="deleteClientBtn" type="button">삭제</button>
-      </sec:authorize>
-   </div>
-
-	<div class="row">
-		<div class="col">
-			<select id="warehouseSelect" class="form-select" aria-label="Default select example">
-				<option value="">Select Warehouse</option>
-				<c:forEach items="${whCodeList}" var="whCodeList">
-					<option value="${whCodeList.s_cate_wh_code}" data-wh-name="${whCodeList.s_cate_wh_name}">${whCodeList.s_cate_wh_name}</option>
-				</c:forEach>
-			</select> <br>
-		</div>
-
-		<div class="col">
-			<select id="zoneSelect" class="form-select"
-				aria-label="Default select example">
-				<option value="">Select Zone</option>
-			</select>
-		</div>
-		<div class="col">
-			<select id="rackSelect" class="form-select"
-				aria-label="Default select example">
-				<option value="">Select Rack</option>
-			</select> <br>
-		</div>
-	</div>
-	
-	<div id="gridContainer" class="grid-container"></div>
-	
-<!-- 	<ul id="inventoryList"></ul> -->
-
-
-	<div id="exampleModalToggle3" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalToggleLabel">재고 리스트</h5>
+					<div class="col">
+						<select id="zoneSelect" class="form-select"
+							aria-label="Default select example">
+							<option value="">Select Zone</option>
+						</select>
+					</div>
+					<div class="col">
+						<select id="rackSelect" class="form-select"
+							aria-label="Default select example">
+							<option value="">Select Rack</option>
+						</select> <br>
+					</div>
 				</div>
-				<div class="modal-body">
-					<ul id="inventoryList"></ul>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>				
-				</div>
-			</div>
-		</div>
-	</div>
-	
-<!-- 담당자 선택 모달창 -->
-<div class="modal fade" id="exampleModalToggle2" data-coreui-backdrop="static" data-coreui-keyboard="false" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalToggleLabel2">담당자</h5>
-					<button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<table class="table table-hover" id="modal2-table">
-						<thead class="table-light">
-							<tr>
-								<th scope="col"></th>
-								<th scope="col"></th>
-								<th scope="col">담당자 아이디</th>
-								<th scope="col">담당자 명</th>
-							</tr>
-						</thead>
-						<tbody>
 
-						</tbody>
-					</table>
-				</div>
-				<div class="modal-footer">
-<!-- 					<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button> -->
-				<button class="btn btn-primary" data-coreui-target="#exampleModalToggle" data-coreui-toggle="modal">확인</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-<!-- 주소 api -->
-	<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
-		<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
-	</div>
-	
-	<!-- <script src="path/to/bootstrap.bundle.min.js"></script> -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@3.2.2/dist/js/coreui.min.js"></script>
+				<div id="gridContainer" class="grid-container"></div>
+</div>
+		</div>		<!-- 	<ul id="inventoryList"></ul> -->
+</div>
+</div>
+</body>
 
-<!-- 주소 api -->
-	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	
-<script>
+				<div id="exampleModalToggle3" class="modal fade" tabindex="-1"
+					aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalToggleLabel">재고 리스트</h5>
+							</div>
+							<div class="modal-body">
+								<ul id="inventoryList"></ul>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-coreui-dismiss="modal">닫기</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+	<!-- 모달창 -->
+				<div class="modal fade" id="exampleModalToggle"
+					data-coreui-backdrop="static" data-coreui-keyboard="false"
+					aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+					tabindex="-1">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalToggleLabel">창고 상세
+									보기</h5>
+								<button type="button" class="btn-close"
+									data-coreui-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<form class="needs-validation" id="fm1" novalidate>
+									<input type="hidden" name="${_csrf.parameterName}"
+										value="${_csrf.token}">
+									<table class="table table-bordered">
+										<tbody>
+											<tr>
+												<td><label for="validationCustom01" class="form-label">창고
+														코드 </label></td>
+												<td><input type="text" class="form-control"
+													id="s_cate_wh_code" readonly></td>
+											</tr>
+											<tr>
+												<td><label for="validationCustom01" class="form-label">창고명
+												</label></td>
+												<td><input type="text" class="form-control"
+													id="s_cate_wh_name" name="s_cate_wh_name" readonly></td>
+											</tr>
+											<tr>
+												<td><label for="validationCustom01" class="form-label">
+														연락처 </label></td>
+												<td><input type="text" class="form-control" id="wh_tel"
+													name="wh_tel" maxlength="11" placeholder="ex) 01012341234"
+													readonly></td>
+											</tr>
+											<!-- 								<tr> -->
+											<!-- 									<td><label for="validationCustom05" class="form-label"> 창고 담당자 아이디 </label></td> -->
+											<!-- 									<td><input type="text" class="form-control" id="validationCustom05" data-coreui-toggle="modal" data-coreui-target="#exampleModalToggle2" required disabled></td> -->
+											<!-- 								</tr> -->
+											<tr>
+												<td><label for="validationCustom06" class="form-label">창고
+														담당자 이름 </label></td>
+												<td><input type="text" class="form-control"
+													id="validationCustom06" data-coreui-toggle="modal"
+													name="wh_man" data-coreui-target="#exampleModalToggle2"
+													required disabled></td>
+											</tr>
+											<tr>
+												<td><label for="validationCustom03" class="form-label">우편번호</label></td>
+												<td>
+													<div class="d-flex">
+														<input type="text" class="form-control"
+															id="sample6_postcode" name="wh_postCode" readonly>
+														<button type="button" id="postCodeButton"
+															onclick="sample6_execDaumPostcode()" disabled>찾기</button>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td><label for="validationCustom03" class="form-label">주소</label></td>
+												<td><input type="text" class="form-control"
+													id="sample6_address" name="wh_add1" readonly></td>
+											</tr>
+											<tr>
+												<td><label for="validationCustom03" class="form-label">상세
+														주소</label></td>
+												<td><input type="text" class="form-control"
+													id="sample6_detailAddress" name="wh_add2" readonly></td>
+											</tr>
+											<tr>
+												<td><label for="validationCustom03" class="form-label">참고
+														항목</label></td>
+												<td><input type="text" class="form-control"
+													id="sample6_extraAddress" name="wh_add3" readonly></td>
+											</tr>
+											<tr>
+												<td><label for="validationCustom03" class="form-label">
+														현재 상태 </label></td>
+												<td><input type="radio" id="wh_statusOk"
+													name="wh_status" value="1" required disabled> <label
+													for="wh_statusOk">사용중</label> <input type="radio"
+													id="wh_statusNo" name="wh_status" value="0" required
+													disabled> <label for="wh_statusNo">사용 중지</label></td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
+									<button type="button" class="btn btn-secondary" id="editButton">수정</button>
+									<button type="submit" class="btn btn-success" id="saveButton"
+										style="display: none;">저장</button>
+									<button type="button" class="btn btn-success"
+										id="saveCancelButton" style="display: none;">취소</button>
+								</sec:authorize>
+								<button type="button" class="btn btn-secondary"
+									data-coreui-dismiss="modal">닫기</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				
+
+				<!-- 담당자 선택 모달창 -->
+				<div class="modal fade" id="exampleModalToggle2"
+					data-coreui-backdrop="static" data-coreui-keyboard="false"
+					aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+					tabindex="-1">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalToggleLabel2">담당자</h5>
+								<button type="button" class="btn-close"
+									data-coreui-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<table class="table table-hover" id="modal2-table">
+									<thead class="table-light">
+										<tr>
+											<th scope="col"></th>
+											<th scope="col"></th>
+											<th scope="col">담당자 아이디</th>
+											<th scope="col">담당자 명</th>
+										</tr>
+									</thead>
+									<tbody>
+
+									</tbody>
+								</table>
+							</div>
+							<div class="modal-footer">
+								<!-- 					<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button> -->
+								<button class="btn btn-primary"
+									data-coreui-target="#exampleModalToggle"
+									data-coreui-toggle="modal">확인</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 주소 api -->
+				<div id="layer"
+					style="display: none; position: fixed; overflow: hidden; z-index: 1; -webkit-overflow-scrolling: touch;">
+					<img src="//t1.daumcdn.net/postcode/resource/images/close.png"
+						id="btnCloseLayer"
+						style="cursor: pointer; position: absolute; right: -3px; top: -3px; z-index: 1"
+						onclick="closeDaumPostcode()" alt="닫기 버튼">
+				</div>
+				
+				<!-- <script src="path/to/bootstrap.bundle.min.js"></script> -->
+				<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+				<script
+					src="https://cdn.jsdelivr.net/npm/@coreui/coreui@3.2.2/dist/js/coreui.min.js"></script>
+
+				<!-- 주소 api -->
+				<script
+					src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+				<script>
 const token = $("meta[name='_csrf']").attr("content")
 const header = $("meta[name='_csrf_header']").attr("content");
 const name = $("#userName").val();
@@ -887,6 +965,6 @@ $(document).ready(function(){
 
 </script>
 
-<%@ include file="../include/footer.jsp"%>
+				<%@ include file="../include/footer.jsp"%>
 </body>
 </html>

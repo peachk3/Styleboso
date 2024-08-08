@@ -568,10 +568,19 @@
                 <div class="dropdown-divider"></div><a class="dropdown-item" href="#">
                   <svg class="icon me-2">
                     <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
-                  </svg><span data-coreui-i18n="lockAccount">Lock Account</span></a><a class="dropdown-item" href="#">
-                  <svg class="icon me-2">
-                    <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
-                  </svg><span data-coreui-i18n="logout">Logout</span></a>
+                  </svg><span data-coreui-i18n="lockAccount">Lock Account</span></a>
+                  <!-- 로그아웃 -->
+                <a class="dropdown-item" href="#">
+				  <form action="./logout" method="post" id="logout">
+				    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+				    <svg class="icon me-2">
+				      <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
+				    </svg>
+				    <button type="button"  style="background:none; border:none; padding:0; margin:0;">
+				      <span data-coreui-i18n="logout">Logout</span>
+				    </button>
+				  </form>
+				</a>
               </div>
             </li>
           </ul>
@@ -593,5 +602,29 @@
         </div>
       </header>
       
-<!--         </div> -->
+<!-- </div> -->
     </head>
+    
+    <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<!-- sweet alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- 로그아웃  -->
+    
+    <script>
+    $(document).on("click", "#logout", function() {
+        Swal.fire({
+            title: "로그아웃 하시겠습니까?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "네",
+            cancelButtonText: "취소"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('logout').submit(); // 폼을 제출합니다.
+            }
+        });
+    });
+</script> 

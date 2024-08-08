@@ -340,16 +340,23 @@ $(document).ready(function() {
         const checkedCheckboxes = $('input[type="checkbox"].form-check-input:checked');
         console.log("선택된 체크박스 수:", checkedCheckboxes.length);
         const tran_nums = []; // 여기서 tran_nums를 배열로 선언
+        const top_tran_nums = []; // top_tran_nums 배열 추가
 
         checkedCheckboxes.each(function() {
+            const row = $(this).closest('tr'); // 여기에 row 정의 추가
             const tran_num = $(this).closest('tr').find('td:eq(1)').text();
-            if (tran_num) {  // 빈 문자열이 아닌 경우에만 추가
+            const top_tran_num = row.find('td:eq(6)').text(); // top_tran_num이 7번째 열에 있다고 가정
+
+            if (tran_num) {
                 console.log("추출된 tran_num:", tran_num);
-                tran_nums.push(tran_num); // tran_nums 배열에 추가
+                console.log("추출된 top_tran_num:", top_tran_num);
+                tran_nums.push(tran_num);
+                top_tran_nums.push(top_tran_num);
             }
         });
         
         console.log("최종 tran_nums 배열:", tran_nums);
+        console.log("최종 top_tran_nums 배열:", top_tran_nums);
         
         if (tran_nums.length === 0) {
             alert('삭제할 항목을 선택해주세요.');
@@ -358,13 +365,16 @@ $(document).ready(function() {
 
         if (confirm('선택한 ' + tran_nums.length + '개의 항목을 삭제하시겠습니까?')) {
             $.ajax({
-                url: '/stock/deleteRL',
+                url: '/stock/deleteRC',
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
                 },
                 type: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify({ tran_nums: tran_nums }),
+                data: JSON.stringify({ 
+                    tran_nums: tran_nums,
+                    top_tran_nums: top_tran_nums
+                }),
                 success: function(response) {
                     location.reload();
                     alert("삭제 완료 되었습니다");

@@ -219,14 +219,6 @@
 	</select>
 	
 	
-	
-	
-	
-	
-	
-	
- 
-
 <!-- 입고/출고/반품 transaction 삭제 -->
    	<delete id="deleteTransactionList">
    		delete from transaction
@@ -245,8 +237,48 @@
    		 </foreach>
    	</delete>
 
+<!-- 입고 삭제시 상위 거래번호 상태 업데이트 -->
+<update id="updateTopTranNum">
+    UPDATE transaction
+    SET pro_status = CASE 
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'PO' THEN '발주 승인'
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'RE' THEN '반품 접수'
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'EX' THEN '교환 접수'
+                        ELSE pro_status
+                     END
+    WHERE tran_num IN
+    <foreach collection="list" item="top_tran_num" open="(" separator="," close=")">
+        #{top_tran_num}
+    </foreach>
+</update>
 
+<!-- 출고 삭제시 상위 거래번호 상태 업데이트 -->
+<update id="updateRLTopTranNum">
+    UPDATE transaction
+    SET pro_status = CASE 
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'SO' THEN '수주 접수'
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'EX' THEN '교환 접수'
+                        ELSE pro_status
+                     END
+    WHERE tran_num IN
+    <foreach collection="list" item="top_tran_num" open="(" separator="," close=")">
+        #{top_tran_num}
+    </foreach>
+</update>
 
+<!-- 반품 삭제시 상위 거래번호 상태 업데이트 -->
+<update id="updateRETopTranNum">
+    UPDATE transaction
+    SET pro_status = CASE 
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'SO' THEN '출고 완료'
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'EX' THEN '교환 접수'
+                        ELSE pro_status
+                     END
+    WHERE tran_num IN
+    <foreach collection="list" item="top_tran_num" open="(" separator="," close=")">
+        #{top_tran_num}
+    </foreach>
+</update>
 
 	<!-- 입고 등록_TransactionVO -->
 	<insert id="stockReceivingAdd_TransactionVO">
@@ -302,6 +334,12 @@
 			where tran_num=#{top_tran_num}		
 		</update>
 
+	<!-- 반품 등록시 상위거래번호 상태 변경 -->
+		<update id="adjustReturnAdd_TopTranstatus">
+			UPDATE transaction
+			set pro_status = "반품 접수"
+			where tran_num=#{top_tran_num}		
+		</update>
 
 	<!-- InventoryVO resultMap -->
 	<resultMap type="com.itwillbs.domain.InventoryVO"
@@ -470,6 +508,7 @@
 	
 	<!-- 반품 리스트 호출 -->
 	<select id="returnList" resultMap="transMap">
+	<![CDATA[
 	   SELECT
 	    tr.tran_num, tr.top_tran_num, tr.cli_num, c.cli_name, tr.pic_username, tr.rec_date, tr.regdate,
 	    tr.tran_date, tr.rel_date, tr.due_date, tr.pro_status, tr.tran_cate_code, tr.comm, 
@@ -486,12 +525,32 @@
 	    item i ON g.item_num = i.item_num
 	WHERE 
 	    tr.tran_num LIKE 'RE%'
+	LIMIT #{pageStart}, #{pageSize}
+	]]>
+	</select>
+	
+	<select id="returnTotalCount" resultType="int">
+	<![CDATA[
+	SELECT COUNT(tr.tran_num) as total_count
+		FROM 
+		    transaction tr
+		JOIN 
+		    client c ON tr.cli_num = c.cli_num
+		JOIN 
+		    transaction_goods trg ON tr.top_tran_num = trg.tran_num
+		JOIN 
+		    goods g ON trg.goods_num = g.goods_num
+		JOIN 
+		    item i ON g.item_num = i.item_num
+		WHERE 
+		    tr.tran_num LIKE 'RE%'
+	]]>
 	</select>
 
 	<!-- 반품 등록 -->
 	<insert id="adjustReturnAdd_TransactionVO">
 		insert into transaction(tran_num, top_tran_num, cli_num, pic_username, tran_date, regdate, pro_status, tran_cate_code, comm)
-		values(#{tran_num}, #{top_tran_num},#{cli_num}, #{pic_username}, #{tran_date}, #{regdate}, "반품 접수" , #{tran_cate_code}, #{comm})
+		values(#{tran_num}, #{top_tran_num},#{cli_num}, #{pic_username}, #{tran_date}, NOW(), "반품 접수" , #{tran_cate_code}, #{comm})
 	</insert>
 
 	<!-- 반품 모달창 - 발주리스트,거래처,담당자,입고예정일 출력 -->
@@ -613,6 +672,34 @@
 	    </foreach>
 	</update>
 	
+	<!-- 상태업데이트_반품 -->
+    <update id="updateReturnStatus">
+		    UPDATE transaction
+		    SET pro_status = #{pro_status},
+		        tran_date = CASE 
+		                     WHEN #{pro_status} = '반품 완료' THEN NOW()
+		                     ELSE tran_date
+		                   END
+		    WHERE tran_num IN
+		    <foreach item="tran_num" index="index" collection="tran_nums" open="(" separator="," close=")">
+		        #{tran_num}
+		    </foreach>
+    </update>
+
+	
+	<!-- 상태 업데이트시_상위거래번호 상태도 변경 -->
+	<update id="updateReturnTopTranStatus">
+	    UPDATE transaction
+	    SET pro_status = #{pro_status},
+	        tran_date = CASE 
+	                      WHEN #{pro_status} = '반품 완료' THEN NOW()
+	                      ELSE tran_date
+	                    END
+	    WHERE tran_num IN
+	    <foreach item="top_tran_num" index="index" collection="top_tran_nums" open="(" separator="," close=")">
+	        #{top_tran_num}
+	    </foreach>
+	</update>
 	
 	<!-- 발주 리스트 -->
 	<select id="receivingPurchaseOrderList" resultMap="transMap">

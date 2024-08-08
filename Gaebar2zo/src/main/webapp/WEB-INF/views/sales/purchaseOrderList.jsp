@@ -278,6 +278,31 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 페이징 처리 -->
+	<nav aria-label="Page navigation" class="pagination-container">
+	   <ul class="pagination justify-content-center">
+	      <c:if test="${pageVO.prev}">
+	         <li class="page-item">
+	            <a class="page-link" href="/sales/purchaseOrderList?page=${pageVO.startPage - 1}" aria-label="Previous">
+	               <span aria-hidden="true">&laquo;</span>
+	            </a>
+	         </li>
+	      </c:if>
+	      <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+	         <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
+	            <a class="page-link" href="/sales/purchaseOrderList?page=${i}">${i}</a>
+	         </li>
+	      </c:forEach>
+	      <c:if test="${pageVO.next && pageVO.endPage > 0}">
+	         <li class="page-item">
+	            <a class="page-link" href="/sales/purchaseOrderList?page=${pageVO.endPage + 1}" aria-label="Next">
+	               <span aria-hidden="true">&raquo;</span>
+	            </a>
+	         </li>
+	      </c:if>
+	   </ul>
+	</nav>
     
     <%@ include file="../include/footer.jsp" %>
 </body>

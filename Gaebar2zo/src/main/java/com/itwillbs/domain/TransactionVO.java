@@ -22,7 +22,7 @@ public class TransactionVO {
 	private	Date	rel_date;
 	private	Date	due_date;
 	private	Date	ex_due_date;
-  private Date  regdate;
+	private Date  regdate;
   
 	private	String	pro_status;
 	private	String	tran_cate_code;

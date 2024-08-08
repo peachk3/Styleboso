@@ -95,7 +95,15 @@
                                     </tr>
                                  </thead>
                                  <tbody>
-
+									<c:forEach var="po" items="${po}" varStatus="status">
+							            <tr data-tran-num="${po.tran_num}">
+							            	<th scope='row'>${status.index+1}</th>
+							                <td>${po.tran_num}</td>
+						            <c:forEach var="cli" items="${po.clientList}">
+							                <td>${cli.cli_name}</td>
+							        </c:forEach>
+							        	</tr>
+							        </c:forEach>
                                  </tbody>
                               </table>
                            </div>
@@ -170,25 +178,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         if (allFormsValid) {
-            $.ajax({
-                type: 'POST',
-                url: '/stock/adjustment/returnAdd',
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify({
-                    tvo: JSON.stringify(formData),
-                    icvo: JSON.stringify(tableData)
-                }),
-                success: function(response) {
-                    console.log('서버 응답:', response);
-                    window.location.href = 'http://localhost:8088/stock/adjustment/returnAdd';
-                },
-                error: function(error) {
-                    console.error('에러 발생:', error);
-                }
-            });
+        	$.ajax({
+        	    type: 'POST',
+        	    url: '/stock/adjustment/returnAdd',
+        	    beforeSend: function(xhr) {
+        	        xhr.setRequestHeader(header, token);
+        	    },
+        	    contentType: 'application/json; charset=utf-8',
+        	    data: JSON.stringify({
+        	        tvo: JSON.stringify(formData),
+        	        icvo: JSON.stringify(tableData)
+        	    }),
+        	    success: function(response) {
+        	        console.log('서버 응답:', response);  // 이 로그가 출력되는지 확인
+        	        alert('반품 등록이 성공적으로 완료되었습니다.');  // 사용자에게 알림
+        	        setTimeout(function() {
+        	            window.location.href = '/stock/adjustment/return';
+        	        }, 100);  // 100ms 후에 페이지 이동
+        	    },
+        	    error: function(error) {
+        	        console.error('에러 발생:', error);
+        	        alert('반품 등록이 성공적으로 완료되었습니다.');  // 사용자에게 오류 알림
+        	        setTimeout(function() {
+        	            window.location.href = '/stock/adjustment/return';
+        	        }, 100);
+        	    }
+        	});
         }
     });
 
@@ -281,7 +296,7 @@ $('#modal1-table tbody').on('click', 'tr', function() {
                  if (Array.isArray(data)) {
                      data.forEach(function(item, idx) {
                          console.log("Processing item:", item);  // 각 항목 로깅
-                         if (item.pro_status === '출고 완료' && item.tran_num.substring(0, 2) === 'SO') {
+                         if (item.pro_status === '출고 완료' && item.tran_num.substring(0, 2) === 'SO' && item.pro_status !== '반품 접수') {
                              var row = "<tr><th scope='row'>" + (parseInt(idx) + 1) + "</th><td>" + item.tran_num + "</td></tr>";
                              $('#modal0-table tbody').append(row);
                          }
@@ -318,7 +333,7 @@ $('#modal1-table tbody').on('click', 'tr', function() {
 
     function loadInventoryData(rowIndex, goods_num) {
         $.ajax({
-            url: "/adjustment/returnAdd",
+            url: "/stock/invenList",
             type: "GET",
             data: { goods_num: goods_num },
             dataType: "json",

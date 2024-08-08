@@ -6,7 +6,9 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.itwillbs.domain.CodeVO;
 import com.itwillbs.domain.Criteria;
@@ -22,6 +24,8 @@ public class SystemServiceImpl implements SystemService{
 	@Inject
 	private SystemDAO sdao;
 
+	@Inject
+	PasswordEncoder passwordEncoder;
 	
 	//이메일 중복 체크
 	@Override
@@ -55,7 +59,7 @@ public class SystemServiceImpl implements SystemService{
 		return sdao.employeeListAll(cri);
 	}
 	
-	
+	//사용자 등록 --> 검색 --> 조회되는 리스트 수
 	@Override
 	public int getTotalUserCount(Criteria cri) throws Exception {
 		logger.debug(" getTotalItemCount() 실행");
@@ -67,8 +71,14 @@ public class SystemServiceImpl implements SystemService{
 	
 	//사용자 등록
 	@Override
-	public int addEmp(UsersVO usersVo) throws Exception {
+	@Transactional
+	public int addEmp(UsersVO usersVo ) throws Exception {
 		logger.info("service -> 사용자 등록");
+		
+		String pw = usersVo.getPassword();
+		String epw =passwordEncoder.encode(pw);
+		usersVo.setPassword(epw);
+		
 		
 		return sdao.addEmp(usersVo);
 	}
@@ -86,6 +96,7 @@ public class SystemServiceImpl implements SystemService{
 	
 	//사용자 삭제
 	@Override
+	@Transactional
 	public void deleteEmp(List<String> users) throws Exception {
 		logger.info("service --> 사용자 삭제");
 		

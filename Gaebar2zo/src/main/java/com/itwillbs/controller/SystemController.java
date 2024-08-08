@@ -1,6 +1,7 @@
 package com.itwillbs.controller;
 
 
+import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itwillbs.domain.AuthoritiesVO;
 import com.itwillbs.domain.CodeVO;
 import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.ItemCodeVO;
@@ -49,12 +51,16 @@ public class SystemController {
 	// -------------------------------------------------------------------------------------------
 	// 로그인 - 1) 입력받은 아이디, 비밀번호 확인 2) 권한 - 운영자, 관리자, 사원
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login_POST(HttpSession session, UsersVO uvo, @RequestParam(required = false) String redirect)
-			throws Exception {
-		// 파라미터에 전달할 정보 저장(아이디, 비밀번호)
-
+	public String login_POST(HttpSession session, UsersVO uvo, @RequestParam(required = false) String redirect) throws Exception {
+		
+		logger.info("/loginPage -> loginPOST() 호출");
+		logger.info("로그인 정보"+ uvo );
+		
 		return "redirect:/system/main";
+		
 	}
+	
+
 
 	// -------------------------------------------------------------------------------------------
 	// 로그아웃
@@ -64,7 +70,7 @@ public class SystemController {
 		logger.debug("/logout -> logoutPOST() 호출");
 		session.invalidate(); // 세션 무효화
 
-		return "redirect:/system/main";
+		return "redirect:/loginout/login";
 	}
 	// -------------------------------------------------------------------------------------------
 	//이메일 중복 체크 
@@ -149,8 +155,25 @@ public class SystemController {
 	@RequestMapping(value = "/addEmp", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<?> addEmp(@RequestBody UsersVO usersVo) throws Exception {
 		logger.info("controller ->(사용자 등록 실행)");
-		logger.info(""+usersVo);
+		logger.info("usersVo : "+usersVo);
 		
+		AuthoritiesVO authVo = new AuthoritiesVO();
+		authVo.setUsername(usersVo.getUsername());
+		
+		if(usersVo.getUser_pos().equals("운영자")) {
+			authVo.setAuthority("ROLE_ADMIN");
+			logger.info("운영자");
+		}else if(usersVo.getUser_pos().equals("관리자")) {
+			authVo.setAuthority("ROLE_MANAGER");
+			logger.info("관리자");
+		}else if(usersVo.getUser_pos().equals("사원")) {
+			authVo.setAuthority("ROLE_MEMBER");
+			logger.info("사원");
+		}
+		
+		logger.info("usersVo : "+usersVo);
+		
+		usersVo.setAuthList(authVo);
 		
 		int result = sService.addEmp(usersVo);
 
@@ -168,9 +191,29 @@ public class SystemController {
 	@RequestMapping(value = "/updateEmp", method = RequestMethod.POST)
 	public ResponseEntity<String>updateEmp(@RequestBody UsersVO usersVo) throws Exception{
 		 logger.debug(" @@@ updateEmp() 실행");
-		 sService.updateEmp(usersVo);
 		 
-		logger.debug("controller => 사용자 업데이트 출력 성공: {}" + usersVo);
+		 //권한
+		 AuthoritiesVO authVo = new AuthoritiesVO();
+		authVo.setUsername(usersVo.getUsername());
+		
+		if(usersVo.getUser_pos().equals("운영자")) {
+			authVo.setAuthority("ROLE_ADMIN");
+			logger.info("운영자");
+		}else if(usersVo.getUser_pos().equals("관리자")) {
+			authVo.setAuthority("ROLE_MANAGER");
+			logger.info("관리자");
+		}else if(usersVo.getUser_pos().equals("사원")) {
+			authVo.setAuthority("ROLE_MEMBER");
+			logger.info("사원");
+		}
+		
+		logger.info("usersVo : "+usersVo);
+		
+		usersVo.setAuthList(authVo);
+		
+		sService.updateEmp(usersVo);
+		
+		 logger.debug("controller => 사용자 업데이트 출력 성공: {}" + usersVo);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -230,8 +273,6 @@ public class SystemController {
 			
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
-	
-	
 	
 	
 	

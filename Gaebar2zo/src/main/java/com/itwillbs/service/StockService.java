@@ -30,7 +30,8 @@ public interface StockService {
 	List<TransactionVO> exList() throws Exception;
 		
 	// 반품 리스트 호출
-	List<TransactionVO> reList() throws Exception;
+	List<TransactionVO> reList(Criteria cri) throws Exception;
+	int getReturnTotalCount() throws Exception;
 	
 	// 반품 모달창 정보 호출
 	Map<String, Object> getReturnDetails(String tran_num) throws Exception;
@@ -42,14 +43,18 @@ public interface StockService {
 	void adjustReturnAdd(TransactionVO tvo) throws Exception;
 	
 	// 반품 삭제
-	void deleteReturnList(List<String> trannums) throws Exception;
+	void deleteReturnList(List<String> trannums, List<String> top_tran_nums) throws Exception;
 	
 	// 입고 모달창 정보 호출
 	Map<String, Object> getTransactionDetails(String tran_num) throws Exception;
 
 	// 입고 목록 삭제
-	void deleteRecevingList(List<String> trannums) throws Exception;
+	void deleteRecevingList(List<String> tran_nums, List<String> top_tran_nums) throws Exception;
 
+//	 입고 목록 삭제시 상위거래번호 이전 상태로
+//	void updateTopTranNum(List<String> topTranNums) throws Exception;
+
+	
 	// 출고 모달창 정보 호출
 	Map<String, Object> getTransactionDetails2(String tran_num) throws Exception;
 
@@ -72,7 +77,7 @@ public interface StockService {
 	public void stockReleaseAdd(TransactionVO tvo) throws Exception;
 
 	// 출고 삭제
-	public void deleteReleaseList(List<String> trannums) throws Exception;
+	public void deleteReleaseList(List<String> trannums, List<String> top_tran_nums) throws Exception;
 
 
 	// 입고 / 출고 수정
@@ -86,10 +91,11 @@ public interface StockService {
 	// 출고 상태 업데이트
 	public void updateReleaseStatus(List<String> tran_nums, String pro_status, List<String> top_tran_nums) throws Exception;
 
+	// 반품 상태 업데이트
+	public void updateReturnStatus(List<String> tran_nums, String pro_status, List<String> top_tran_nums) throws Exception;
+
+
 	
-
-
-
 	// 발주 리스트
 	public List<TransactionVO> receivingPurchaseOrderList() throws Exception;
 

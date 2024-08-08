@@ -2,6 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../include/header.jsp" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<head>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script></head>
     <style>
 		/* 두 번째 모달이 첫 번째 모달 오른쪽에 위치하도록 설정 */
         .modal.right-modal .modal-dialog {
@@ -10,33 +15,101 @@
             top: 50%;
             transform: translateY(-50%);
         }
-    </style>
-    <style>
         .status-buttons { display: none; }
         .modal-dialog { max-width: 60%; padding: 50px;}
         .search-container { display: flex; margin-bottom: 20px; }
         .search-group { display: flex; align-items: center; }
         .table-container { margin-top: 20px; }
-    </style>
-    
-<body>
+		  .custom-btn {
+		    text-align: left; /* 텍스트를 왼쪽으로 정렬합니다 */
+		    padding-left: 10px; /* 왼쪽 여백을 추가합니다 */
+		    width: 100%; /* 버튼이 부모 요소에 맞게 전체 너비를 가지도록 설정합니다 */
+		  }
+	</style> 
+	<style>
+		[x-cloak] {
+			display: none;
+		}
+		
+		.transition {
+			transition: all 0.3s ease-out;
+		}
+		
+		.status-buttons {
+			display: none;
+		}
+		
+		.modal-dialog {
+			max-width: 80%;
+		}
+		
+		.search-container {
+			display: flex;
+			margin-bottom: 20px;
+		}
+		
+		.search-group {
+			display: flex;
+			align-items: center;
+		}
+		
+		.table-container {
+			margin-top: 20px;
+		}
+		
+		.clickable-row {
+			cursor: pointer;
+		}
+		
+		.selected {
+			background-color: #e0e0e0;
+		}
+		
+		.menu-open #tableContainer {
+			margin-top: 76px; /* 하위 메뉴의 높이에 맞춰 조정하세요 */
+		}
+		
+		#statusMenu {
+			transition: all 0.3s ease-in-out;
+			opacity: 0;
+			transform: translateY(-10px);
+		}
+		
+		#statusMenu.active {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		/* 두 번째 모달이 첫 번째 모달 오른쪽에 위치하도록 설정 */
+		.modal.right-modal .modal-dialog {
+			position: absolute;
+			right: -500px; /* 첫 번째 모달의 오른쪽에 위치하도록 설정 */
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	</style>
+ 
+</head>  
    <h1>/Styleboso/basicInfo/clientList.jsp</h1>
    
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
-      <button class="btn btn-primary" type="button" onclick="">검색</button>
-    <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-      <button class="btn btn-primary" type="button" onclick="location.href='/basicInfo/clientAdd'">등록</button>
-      <button class="btn btn-primary" id="deleteClientBtn" name="deleteClientBtn" type="button">삭제</button>
-      </sec:authorize>
-   </div>
+<!--     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;"> -->
+<!--       <button class="btn btn-primary" type="button" onclick="">검색</button> -->
+<%--     <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"> --%>
+<!--       <button class="btn btn-primary" type="button" onclick="location.href='/basicInfo/clientAdd'">등록</button> -->
+<!--       <button class="btn btn-primary" id="deleteClientBtn" name="deleteClientBtn" type="button">삭제</button> -->
+<%--       </sec:authorize> --%>
+<!--    </div> -->
    
-   <div class="container">
-        <div class="container-fluid mt-5">
-            <div class="row">
-                <div class="col-md-3 mb-3">
+<body class="bg-gray-100 font-sans">
+	<div class="container mx-auto px-4 py-8">
+		<div class="bg-white rounded-lg shadow-lg p-6">
+			<h1 class="text-2xl font-semibold text-gray-800 mb-6">거래처 리스트</h1>
+			
+				<!-- Search Form -->
                     <form action="/basicInfo/clientList" method="get" class="form-inline mt-3">
-                        <div class="input-group w-500">
-                            <div class="input-group-prepend">
+  				<div class="flex flex-wrap -mx-3 mb-4 md:flex-nowrap">
+					<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+						<div class="input-group w-500">
+							<div class="input-group-prepend">
                                 <select class="form-select custom-select-radius custom-select-width" id="searchType" name="searchType">
                                     <option value="" <c:if test="${empty searchType}">selected</c:if>>전체</option>
                                     <option value="code" <c:if test="${searchType eq 'code'}">selected</c:if>>거래처 코드</option>
@@ -49,12 +122,21 @@
                             <input type="text" class="form-control" placeholder="검색어를 입력하세요" name="keyword" value="${keyword}">
                             <button class="btn btn-outline-secondary" type="submit">검색</button>
                         </div>
-                    </form>
+                       </div>
+                       <div class="w-full md:w-1/2 px-3 flex justify-end items-center" >
+							<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
+								<button class="btn btn-primary" type="button"
+									onclick="location.href='/basicInfo/clientAdd'">등록</button>
+								<button class="btn btn-primary" id="deleteClientBtn"
+									name="deleteClientBtn" type="button">삭제</button>
+							</sec:authorize>
+                   </div>
                 </div>
-            </div>
-        </div>
+		  </form>
 
-   <table class="table table-hover">
+	<div id="tableContainer" class="transition-all duration-300 ease-in-out">
+	<div class="overflow-x-auto bg-white border 1px solid overflow-y-auto relative" style="height: 405px;">
+   <table class="table table-hover border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
       <thead>
          <tr>
             <th scope="col">
@@ -112,13 +194,19 @@
          </c:forEach>
       </tbody>
    </table>
+</div>
+</div>
+</div>
 
-<c:url var="pageUrl" value="/basicInfo/clientList">
+
+	<div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
+		<c:url var="pageUrl" value="/basicInfo/clientList">
             <c:param name="searchType" value="${searchType}"/>
             <c:param name="keyword" value="${keyword}"/>
         </c:url>
 
-        <nav aria-label="Page navigation" class="pagination-container">
+<!--         <nav aria-label="Page navigation" class="pagination-container"> -->
+	<nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
             <ul class="pagination justify-content-center">
                 <c:if test="${pageVO.prev}">
                     <li class="page-item">
@@ -142,31 +230,8 @@
             </ul>
         </nav>
     </div>
+</div>
     
-<!-- 페이징 처리 -->
-  <%--  <nav aria-label="Page navigation" class="pagination-container">
-      <ul class="pagination justify-content-center">
-         <c:if test="${pageVO.prev}">
-            <li class="page-item">
-               <a class="page-link" href="/basicInfo/clientList?page=${pageVO.startPage - 1 }" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-               </a>
-            </li>
-         </c:if>
-         <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
-            <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
-               <a class="page-link" href="/basicInfo/clientList?page=${i}">${i}</a>
-            </li>
-         </c:forEach>
-         <c:if test="${pageVO.next && pageVO.endPage > 0}">
-            <li class="page-item">
-               <a class="page-link" href="/basicInfo/clientList?page=${pageVO.endPage + 1}" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-               </a>
-            </li>
-         </c:if>
-      </ul>
-   </nav> --%>
 
 <!-- Modal -->
 <!-- <div class="modal fade" id="exampleModalToggle" data-coreui-backdrop="static" data-coreui-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"> -->
@@ -312,14 +377,6 @@
 	</div>
 
 </body>  
-
-<style>
-  .custom-btn {
-    text-align: left; /* 텍스트를 왼쪽으로 정렬합니다 */
-    padding-left: 10px; /* 왼쪽 여백을 추가합니다 */
-    width: 100%; /* 버튼이 부모 요소에 맞게 전체 너비를 가지도록 설정합니다 */
-  }
-</style> 
 
    <!-- <script src="path/to/bootstrap.bundle.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

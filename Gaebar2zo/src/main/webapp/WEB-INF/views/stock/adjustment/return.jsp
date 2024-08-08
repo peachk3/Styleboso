@@ -77,11 +77,11 @@
                     </svg>
                 </button>
                 <div id="statusMenu" class="hidden absolute right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100 hover:text-gray-900" role="menuitem">반품 예정</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100 hover:text-gray-900" role="menuitem">반품 완료</a>
-                    </div>
-                </div>
+				    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+				        <a href="#" id="preReceiveBtn" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100 hover:text-gray-900" role="menuitem">반품 예정</a>
+				        <a href="#" id="completedReceiveBtn" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100 hover:text-gray-900" role="menuitem">반품 완료</a>
+				    </div>
+				</div>
             </div>
         </div>
     </div>
@@ -146,6 +146,7 @@
                                                     </span>
                                                 </span>
                                             </td>
+                                       <input type="hidden" class="top-tran-num" value="${re.top_tran_num}">
                                         </tr>
                                     </c:forEach>
                                 </c:forEach>
@@ -193,7 +194,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">주문 리스트</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">반품 리스트</h5>
                     <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -236,27 +237,6 @@
 					        </select>
 					    </div>
 					</div>
-                  <input type="hidden" id="modal-tran_num">
-                   <div class="modal-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>제품코드</th>
-                                        <th>품목명</th>
-                                        <th>수량</th>
-                                        <th>상위거래번호</th>
-                                        <th>비고</th>
-                                        <th>재고 번호</th>
-                                        <th>거래 번호</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="modal-table-body">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
                <div class="modal-footer">
                     <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center" id="editButton">수정</button>
                     <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2" id="saveButton" style="display: none;">
@@ -302,6 +282,7 @@
 					</div>
 				</div>
 			</div>
+
     <%@ include file="../../include/footer.jsp" %>
 
 
@@ -389,15 +370,19 @@ $(document).ready(function() {
 //         const pro_status = $(this).text().trim();
 
 		$("#preReceiveBtn, #completedReceiveBtn").click(function() {
-        const pro_status = $(this).text().trim();
+		const pro_status = $(this).text().trim();
 
         const checkedCheckboxes = $('input[type="checkbox"].rowCheckbox:checked');
         const tran_nums = [];
+        const top_tran_nums = [];
 
         checkedCheckboxes.each(function() {
-            const tran_num = $(this).closest('tr').find('td:eq(1)').text().trim();
-            if (tran_num) {
+        	const row = $(this).closest('tr');        	
+        	const tran_num = $(this).closest('tr').find('td:eq(1)').text().trim();
+        	var top_tran_num = $(this).closest("tr").find(".top-tran-num").val();
+        	if (tran_num) {
                 tran_nums.push(tran_num);
+                top_tran_nums.push(top_tran_num);
             }
         });
 
@@ -407,10 +392,14 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: '/common/updateRecevingStatus',
+            url: '/stock/updateReturnStatus',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({ tran_nums: tran_nums, pro_status: pro_status }),
+            data: JSON.stringify({ 
+                tran_nums: tran_nums, 
+                top_tran_nums: top_tran_nums, 
+                pro_status: pro_status 
+            }),
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
             },
@@ -419,7 +408,8 @@ $(document).ready(function() {
                 alert("상태가 성공적으로 변경되었습니다.");
             },
             error: function(xhr, status, error) {
-                alert("An error occurred: " + error);
+                console.error("Error details:", xhr.responseText);
+                alert("상태 변경 중 오류가 발생했습니다: " + xhr.responseText);
             }
         });
     });
@@ -428,14 +418,18 @@ $(document).ready(function() {
         const checkedCheckboxes = $('input[type="checkbox"].rowCheckbox:checked');
         console.log("선택된 체크박스 수:", checkedCheckboxes.length);
         const tran_nums = [];
+        const top_tran_nums = [];
 
         checkedCheckboxes.each(function() {
-            const tran_num = $(this).closest('tr').find('td:eq(1)').text().trim();
-            if (tran_num) {
-                console.log("추출된 tran_num:", tran_num);
+        	const row = $(this).closest('tr');        	
+        	const tran_num = $(this).closest('tr').find('td:eq(1)').text().trim();
+        	var top_tran_num = $(this).closest("tr").find(".top-tran-num").val();
+        	if (tran_num) {
                 tran_nums.push(tran_num);
+                top_tran_nums.push(top_tran_num);
             }
         });
+
         
         console.log("최종 tran_nums 배열:", tran_nums);
         
@@ -452,7 +446,10 @@ $(document).ready(function() {
                 },
                 type: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify({ tran_nums: tran_nums }),
+                data: JSON.stringify({ 
+                    tran_nums: tran_nums, 
+                    top_tran_nums: top_tran_nums
+                }),
                 success: function(response) {
                     location.reload();
                     alert("삭제 완료 되었습니다");

@@ -1,6 +1,6 @@
  package com.itwillbs.controller;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -166,9 +166,6 @@ public class StockController {
 		tvo.setInchangeList(icvoList);
 		logger.debug(" tvo : " + tvo);
 		logger.debug(" icvoList : " + icvoList);
-		
-		Timestamp regdate = Timestamp.from(Instant.now());
-	    tvo.setRegdate(regdate);
 		
 		sService.adjustReturnAdd(tvo);
 		
@@ -497,6 +494,21 @@ public class StockController {
 		        }
 		    }
 
+		// 반품 상태 업데이트 
+		@RequestMapping(value="/updateReturnStatus",method=RequestMethod.POST)
+		@ResponseBody
+		public ResponseEntity<String> updateReturnStatus(@RequestBody StatusUpdateRequest request) {
+			try {
+				sService.updateReturnStatus(request.getTran_nums(), request.getPro_status(),request.getTop_tran_nums());
+				logger.debug("tran_num : "+request.getTran_nums());
+				logger.debug("top_tran_num : "+request.getTop_tran_nums());
+				
+				
+				return ResponseEntity.ok("Status updated successfully");
+			} catch (Exception e) {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating status");
+			}
+		}
 
 	  
 	  

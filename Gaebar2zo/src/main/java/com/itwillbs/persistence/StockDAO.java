@@ -104,6 +104,10 @@ public interface StockDAO {
 	// 출고 상태 업데이트 -> 상위거래번호 상태 업데이트
 	public void updateReleaseTopTranStatus(List<String> top_tran_nums, String pro_status) throws Exception;
 	
+	// 반품 상태 업데이트
+	public void updateReturnStatus(List<String> tran_nums, String pro_status) throws Exception;
+	// 반품 상태 업데이트 -> 상위거래번호 상태 업데이트
+	public void updateReturnTopTranStatus(List<String> top_tran_nums, String pro_status) throws Exception;
 	
 	// 발주 리스트
 	public List<TransactionVO> receivingPurchaseOrderList() throws Exception;
@@ -120,6 +124,7 @@ public interface StockDAO {
 	
 	// 교환 리스트
 	public List<TransactionVO> releaseExchangeList() throws Exception;
+
 	
 	
 	

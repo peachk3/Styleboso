@@ -170,10 +170,7 @@ select distinct
       				  #{tran_num}
    		 </foreach>
    	</delete>
-
-
-
-
+   	
 	<!-- 입고 등록_TransactionVO -->
 	<insert id="stockReceivingAdd_TransactionVO">
 	    insert into transaction(tran_num,top_tran_num, cli_num, pic_username, tran_date, pro_status, tran_cate_code, comm)
@@ -417,7 +414,7 @@ select distinct
 	<!-- 반품 등록 -->
 	<insert id="adjustReturnAdd_TransactionVO">
 		insert into transaction(tran_num, top_tran_num, cli_num, pic_username, tran_date, regdate, pro_status, tran_cate_code, comm)
-		values(#{tran_num}, #{top_tran_num},#{cli_num}, #{pic_username}, #{tran_date}, #{regdate}, "반품 접수" , #{tran_cate_code}, #{comm})
+		values(#{tran_num}, #{top_tran_num},#{cli_num}, #{pic_username}, #{tran_date}, NOW(), "반품 접수" , #{tran_cate_code}, #{comm})
 	</insert>
 
 	<!-- 반품 모달창 - 발주리스트,거래처,담당자,입고예정일 출력 -->
@@ -539,6 +536,34 @@ select distinct
 	    </foreach>
 	</update>
 	
+	<!-- 상태업데이트_반품 -->
+    <update id="updateReturnStatus">
+		    UPDATE transaction
+		    SET pro_status = #{pro_status},
+		        tran_date = CASE 
+		                     WHEN #{pro_status} = '반품 완료' THEN NOW()
+		                     ELSE tran_date
+		                   END
+		    WHERE tran_num IN
+		    <foreach item="tran_num" index="index" collection="tran_nums" open="(" separator="," close=")">
+		        #{tran_num}
+		    </foreach>
+    </update>
+
+	
+	<!-- 상태 업데이트시_상위거래번호 상태도 변경 -->
+	<update id="updateReturnTopTranStatus">
+	    UPDATE transaction
+	    SET pro_status = #{pro_status},
+	        tran_date = CASE 
+	                      WHEN #{pro_status} = '반품 완료' THEN NOW()
+	                      ELSE tran_date
+	                    END
+	    WHERE tran_num IN
+	    <foreach item="top_tran_num" index="index" collection="top_tran_nums" open="(" separator="," close=")">
+	        #{top_tran_num}
+	    </foreach>
+	</update>
 	
 	<!-- 발주 리스트 -->
 	<select id="receivingPurchaseOrderList" resultMap="transMap">

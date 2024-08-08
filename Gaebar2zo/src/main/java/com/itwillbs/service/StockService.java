@@ -30,7 +30,8 @@ public interface StockService {
 	List<TransactionVO> exList() throws Exception;
 		
 	// 반품 리스트 호출
-	List<TransactionVO> reList() throws Exception;
+	List<TransactionVO> reList(Criteria cri) throws Exception;
+	int getReturnTotalCount() throws Exception;
 	
 	// 반품 모달창 정보 호출
 	Map<String, Object> getReturnDetails(String tran_num) throws Exception;
@@ -42,7 +43,7 @@ public interface StockService {
 	void adjustReturnAdd(TransactionVO tvo) throws Exception;
 	
 	// 반품 삭제
-	void deleteReturnList(List<String> trannums) throws Exception;
+	void deleteReturnList(List<String> trannums, List<String> top_tran_nums) throws Exception;
 	
 	// 입고 모달창 정보 호출
 	Map<String, Object> getTransactionDetails(String tran_num) throws Exception;

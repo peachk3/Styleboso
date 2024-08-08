@@ -33,7 +33,8 @@ public interface StockDAO {
 	List<TransactionVO> exList() throws Exception;
 
 	// 반품 리스트 호출
-	List<TransactionVO> reList() throws Exception;
+	List<TransactionVO> reList(Criteria cri) throws Exception;
+	int getReturnTotalCount() throws Exception;
 	
 	// 반품 모달창 정보 호출
 	Map<String, Object> getReturnDetails(String tran_num) throws Exception;
@@ -62,6 +63,8 @@ public interface StockDAO {
 	// 출고 삭제 - 상위 거래번호 상태 되돌리기
 	void updateRLTopTranNum(List<String> top_tran_nums) throws Exception;
 	
+	// 반품 삭제 - 상위 거래번호 상태 되돌리기
+	void updateRETopTranNum(List<String> top_tran_nums) throws Exception;
 	
 	// 입고/츨고 inventory change 삭제
 	void deleteInventoryChange(List<String> trannums) throws Exception;
@@ -141,6 +144,12 @@ public interface StockDAO {
 	
 	// 교환 리스트
 	public List<TransactionVO> releaseExchangeList() throws Exception;
+
+	
+	// 반품등록시 상위거래번호 상태 업데이트
+	void adjustReturnAdd_TopTranstatus(TransactionVO tvo) throws Exception;
+
+
 
 
 	

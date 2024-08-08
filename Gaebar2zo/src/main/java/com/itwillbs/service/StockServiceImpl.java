@@ -87,11 +87,18 @@ public class StockServiceImpl implements StockService{
 
 	// 반품 리스트 호출
 	@Override
-	public List<TransactionVO> reList() throws Exception {
+	public List<TransactionVO> reList(Criteria cri) throws Exception {
 		logger.debug(" ServiceImpl + 반품 리스트 호출 ");
-		return sdao.reList();
+		return sdao.reList(cri);
 	}
 	
+	@Override
+	public int getReturnTotalCount() throws Exception {
+		logger.debug(" getReturnTotalCount() 실행 ");
+		return sdao.getReturnTotalCount();
+	}
+
+
 	// 반품 모달창 정보
 	@Override
 	public Map<String, Object> getReturnDetails(String tran_num) throws Exception {
@@ -115,7 +122,8 @@ public class StockServiceImpl implements StockService{
 		tvo.setTran_num(tran_num);
 		
 		sdao.adjustReturnAdd_TransactionVO(tvo);
-		
+	    sdao.adjustReturnAdd_TopTranstatus(tvo);
+
 		List<InventoryChangeVO> icvoList = tvo.getInchangeList();
 		
 		for(InventoryChangeVO icvo : icvoList) {
@@ -131,11 +139,12 @@ public class StockServiceImpl implements StockService{
 	
 	// 반품 삭제
 	@Override
-	public void deleteReturnList(List<String> trannums) throws Exception {
+	public void deleteReturnList(List<String> trannums, List<String> top_tran_nums) throws Exception {
 		logger.debug(" 반품 삭제 ");
 		
 		sdao.deleteInventoryChange(trannums);
 		sdao.deleteReturnList(trannums);
+		sdao.updateTopTranNum(top_tran_nums);
 	}
 
 

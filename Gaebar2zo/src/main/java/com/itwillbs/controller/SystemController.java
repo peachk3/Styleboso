@@ -97,7 +97,7 @@ public class SystemController {
 	// -------------------------------------------------------------------------------------------
 	// http://localhost:8088/system/main
 	// 대시보드 ( 메인 페이지 )
-	@RequestMapping(value="/main",method=RequestMethod.GET)
+	@RequestMapping(value="/Styleboso/main",method=RequestMethod.GET)
 
 	public void main_GET() throws Exception {
 		logger.debug(" main_GET() 실행 ");

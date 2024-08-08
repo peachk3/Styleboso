@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 
        @GetMapping("/loginout/login")
        public String loginPage() {
-           return "loginout/login";
+           return "/Styleboso/loginout/login";
        }
 
        @GetMapping("/loginout/main")
        public String mainPage() {
-           return "loginout/main";
+           return "/Styleboso/loginout/main";
        }
        
         @GetMapping("/loginout/accessErr")

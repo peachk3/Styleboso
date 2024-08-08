@@ -152,6 +152,16 @@ public class StockDAOImpl implements StockDAO{
 	}
 
 	@Override
+	public void updateRLTopTranNum(List<String> top_tran_nums) throws Exception {
+
+	    logger.debug(" updateTopTranNum(List<String> top_tran_nums) 실행");
+	    
+	    logger.debug("top_tran_nums : "+top_tran_nums);
+	    sqlSession.update(NAMESPACE + "updateRLTopTranNum", top_tran_nums);
+		
+	}
+
+	@Override
 	public void deleteInventoryChange(List<String> tran_nums) throws Exception {
 	    logger.debug("deleteInventoryChange(List<String> trannums) 실행");
 	    sqlSession.delete(NAMESPACE + "deleteInventoryChange", tran_nums);

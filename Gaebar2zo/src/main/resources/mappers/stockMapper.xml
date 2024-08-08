@@ -253,6 +253,20 @@
     </foreach>
 </update>
 
+<!-- 출고 삭제시 상위 거래번호 상태 업데이트 -->
+<update id="updateRLTopTranNum">
+    UPDATE transaction
+    SET pro_status = CASE 
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'SO' THEN '수주 접수'
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'EX' THEN '교환 접수'
+                        ELSE pro_status
+                     END
+    WHERE tran_num IN
+    <foreach collection="list" item="top_tran_num" open="(" separator="," close=")">
+        #{top_tran_num}
+    </foreach>
+</update>
+
 
 	<!-- 입고 등록_TransactionVO -->
 	<insert id="stockReceivingAdd_TransactionVO">

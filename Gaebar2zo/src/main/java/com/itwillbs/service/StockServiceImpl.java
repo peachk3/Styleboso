@@ -292,12 +292,16 @@ public class StockServiceImpl implements StockService{
 	}
 
 	@Override
-	public void deleteReleaseList(List<String> trannums) throws Exception {
-		logger.debug(" 입고 삭제 ");
+	public void deleteReleaseList(List<String> trannums, List<String> top_tran_nums) throws Exception {
+		logger.debug("입고 삭제 시작: trannums=" + trannums + ", top_tran_nums=" + top_tran_nums);
 		// 먼저 inventory_change 테이블에서 삭제
 	    sdao.deleteInventoryChange(trannums);
 	    
 		sdao.deleteRecevingList(trannums);
+		
+		logger.debug("상위 거래번호 상태 업데이트 시작");
+		sdao.updateRLTopTranNum(top_tran_nums);
+		logger.debug("상위 거래번호 상태 업데이트 완료");
 	}
 
 

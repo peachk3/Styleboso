@@ -29,7 +29,7 @@ import com.itwillbs.domain.UsersVO;
 import com.itwillbs.service.SystemService;
 
 
-@RequestMapping(value = "/Styleboso/system/*")
+@RequestMapping(value = "/system/*")
 @Controller
 public class SystemController {
 
@@ -53,7 +53,7 @@ public class SystemController {
 			throws Exception {
 		// 파라미터에 전달할 정보 저장(아이디, 비밀번호)
 
-		return "redirect:/Styleboso/system/main";
+		return "redirect:/system/main";
 	}
 
 	// -------------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ public class SystemController {
 		logger.debug("/logout -> logoutPOST() 호출");
 		session.invalidate(); // 세션 무효화
 
-		return "redirect:/Styleboso/system/main";
+		return "redirect:/system/main";
 	}
 	// -------------------------------------------------------------------------------------------
 	//이메일 중복 체크 

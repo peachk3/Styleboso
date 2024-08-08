@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 
        @GetMapping("/loginout/login")
        public String loginPage() {
-           return "/Styleboso/loginout/login";
+           return "/loginout/login";
        }
 
        @GetMapping("/loginout/main")
        public String mainPage() {
-           return "/Styleboso/loginout/main";
+           return "/loginout/main";
        }
        
-        @GetMapping("/Styleboso/loginout/accessErr")
+        @GetMapping("/loginout/accessErr")
            public String accessDenied() {
                return "/loginout/accessErr";
            }

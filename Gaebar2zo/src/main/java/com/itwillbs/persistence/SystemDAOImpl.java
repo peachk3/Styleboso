@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.CodeVO;
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.ItemCodeVO;
 import com.itwillbs.domain.UsersVO;
 
@@ -47,11 +48,20 @@ public class SystemDAOImpl implements SystemDAO{
 
 	//운영자,관리자,사원 전체 리스트 출력
 	@Override
-	public List<UsersVO> employeeListAll() throws Exception {
+	public List<UsersVO> employeeListAll(Criteria cri) throws Exception {
 		logger.info("employeeListAll() 실행");
 		
-		return sqlSession.selectList(NAMESPACE+"employeeListAll");
+		return sqlSession.selectList(NAMESPACE+"employeeListAll", cri);
 	}
+	
+
+	@Override
+	public int getTotalUserCount(Criteria cri) throws Exception {
+		logger.debug("getTotalUserCount() 실행 ");
+		
+		return sqlSession.selectOne(NAMESPACE + "totalUserCount", cri);
+	}
+
 
 	//사용자등록
 	@Override

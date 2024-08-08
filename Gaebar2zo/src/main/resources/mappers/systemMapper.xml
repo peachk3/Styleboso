@@ -22,8 +22,75 @@
 
 <!-- 시스템관리 (사용자 등록 - 전체리스트) -->
 <select id="employeeListAll" resultType="UsersVO">
+	<![CDATA[
 	select * from users
+	]]>
+	<where>
+	        <if test="searchType != null and keyword != null and keyword != ''">
+	            <choose>
+	                <when test="searchType == 'code'">
+	                    AND username LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'name'">
+	                    AND user_per_name LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'position'">
+	                    AND user_pos LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'email'">
+	                    AND user_email LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'phone'">
+	                    AND user_phone LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <otherwise>
+	                    AND (username LIKE CONCAT('%', #{keyword}, '%')
+	                    OR user_per_name LIKE CONCAT('%', #{keyword}, '%')
+	                    OR user_pos LIKE CONCAT('%', #{keyword}, '%')
+	                    OR user_email LIKE CONCAT('%', #{keyword}, '%'))
+	                    OR user_phone LIKE CONCAT('%', #{keyword}, '%'))
+	                </otherwise>
+	            </choose>
+	        </if>
+	    </where>
+	    <![CDATA[
+	ORDER BY username
+	LIMIT #{pageStart}, #{pageSize}
+	]]>
 </select>
+
+<select id="totalUserCount" resultType="int">
+	select count(*) from users
+	<where>
+	        <if test="searchType != null and keyword != null and keyword != ''">
+	            <choose>
+	                <when test="searchType == 'code'">
+	                    AND username LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'name'">
+	                    AND user_per_name LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'position'">
+	                    AND user_pos LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'email'">
+	                    AND user_email LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'phone'">
+	                    AND user_phone LIKE CONCAT('%', #{keyword}, '%')
+	                </when>
+	                <otherwise>
+	                    AND (username LIKE CONCAT('%', #{keyword}, '%')
+	                    OR user_per_name LIKE CONCAT('%', #{keyword}, '%')
+	                    OR user_pos LIKE CONCAT('%', #{keyword}, '%')
+	                    OR user_email LIKE CONCAT('%', #{keyword}, '%'))
+	                    OR user_phone LIKE CONCAT('%', #{keyword}, '%'))
+	                </otherwise>
+	            </choose>
+	        </if>
+	    </where>
+</select>
+
 
 <!-- 이메일 중복체크 -->
 <select id="emailCheck" parameterType="String" resultType="int" > 

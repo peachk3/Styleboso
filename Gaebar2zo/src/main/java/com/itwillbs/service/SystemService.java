@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.CodeVO;
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.ItemCodeVO;
 import com.itwillbs.domain.UsersVO;
 
@@ -18,7 +19,8 @@ public interface SystemService {
 	
 	//================================================
 	//운영자,관리자,사원 전체 리스트 출력
-	List<UsersVO> employeeListAll() throws Exception;
+	List<UsersVO> employeeListAll(Criteria cri) throws Exception;
+	int getTotalUserCount(Criteria cri) throws Exception;
 	
 	//사용자 등록
 	int addEmp(UsersVO usersVo) throws Exception;

@@ -373,7 +373,7 @@ $(document).ready(function() {
                 contentType: 'application/json',
                 data: JSON.stringify({ 
                     tran_nums: tran_nums,
-                    top_tran_nums: top_tran_nums // top_tran_nums 추가
+                    top_tran_nums: top_tran_nums
                 }),
                 success: function(response) {
                     location.reload();

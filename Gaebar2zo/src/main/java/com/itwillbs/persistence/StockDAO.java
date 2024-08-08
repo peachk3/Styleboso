@@ -58,6 +58,10 @@ public interface StockDAO {
 
 	// 입고삭제 - 상위 거래번호 상태 되돌리기
 	void updateTopTranNum(@Param("top_tran_nums") List<String> topTranNums) throws Exception;
+
+	// 출고 삭제 - 상위 거래번호 상태 되돌리기
+	void updateRLTopTranNum(List<String> top_tran_nums) throws Exception;
+	
 	
 	// 입고/츨고 inventory change 삭제
 	void deleteInventoryChange(List<String> trannums) throws Exception;
@@ -133,6 +137,7 @@ public interface StockDAO {
 	
 	// 교환 리스트
 	public List<TransactionVO> releaseExchangeList() throws Exception;
+
 
 	
 	

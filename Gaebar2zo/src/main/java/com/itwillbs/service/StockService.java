@@ -76,7 +76,7 @@ public interface StockService {
 	public void stockReleaseAdd(TransactionVO tvo) throws Exception;
 
 	// 출고 삭제
-	public void deleteReleaseList(List<String> trannums) throws Exception;
+	public void deleteReleaseList(List<String> trannums, List<String> top_tran_nums) throws Exception;
 
 
 	// 입고 / 출고 수정

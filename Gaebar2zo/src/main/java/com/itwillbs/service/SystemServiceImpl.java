@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.CodeVO;
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.ItemCodeVO;
 import com.itwillbs.domain.UsersVO;
 import com.itwillbs.persistence.SystemDAO;
@@ -48,11 +49,20 @@ public class SystemServiceImpl implements SystemService{
 
 	//운영자,관리자,사원 전체 리스트 출력
 	@Override
-	public List<UsersVO> employeeListAll() throws Exception {
+	public List<UsersVO> employeeListAll(Criteria cri) throws Exception {
 		logger.info("운영자/관리자/사원 전체 리스트 출력");
 	
-		return sdao.employeeListAll();
+		return sdao.employeeListAll(cri);
 	}
+	
+	
+	@Override
+	public int getTotalUserCount(Criteria cri) throws Exception {
+		logger.debug(" getTotalItemCount() 실행");
+		
+		return sdao.getTotalUserCount(cri);
+	}
+
 	
 	
 	//사용자 등록

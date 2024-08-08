@@ -9,33 +9,28 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <body>
 	<div>
-		<div class="container-fluid mt-5">
-			<div class="row">
-				<div class="col-md-3 mb-3">
-					<form action="/stock/status" method="get" class="form-inline mt-3">
-						<div class="input-group w-500">
-							<div class="input-group-prepend">
-								<select
-									class="form-select custom-select-radius custom-select-width"
-									id="searchType" name="searchType">
-									<option value=""
-										<c:if test="${empty searchType}">selected</c:if>>전체</option>
-									<option value="code"
-										<c:if test="${searchType eq 'username'}">selected</c:if>>사용자ID</option>
-									<option value="name"
-										<c:if test="${searchType eq 'user_per_name'}">selected</c:if>>사용자명</option>
-									<option value="warehouse"
-										<c:if test="${searchType eq 'user_pos'}">selected</c:if>>직책</option>
-								</select>
-							</div>
-							<input type="text" class="form-control" placeholder="검색어를 입력하세요"
-								name="keyword" value="${keyword}">
-							<button class="btn btn-outline-secondary" type="submit">검색</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
+		  <div class="container-fluid mt-5">
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <form action="/system/employeeList" method="get" class="form-inline mt-3">
+                        <div class="input-group w-500">
+                            <div class="input-group-prepend">
+                                <select class="form-select custom-select-radius custom-select-width" id="searchType" name="searchType">
+                                    <option value="" <c:if test="${empty searchType}">selected</c:if>>전체</option>
+                                    <option value="code" <c:if test="${searchType eq 'code'}">selected</c:if>>사용자 ID</option>
+                                    <option value="name" <c:if test="${searchType eq 'name'}">selected</c:if>>사용자 이름</option>
+                                    <option value="position" <c:if test="${searchType eq 'position'}">selected</c:if>>직책</option>
+                                    <option value="email" <c:if test="${searchType eq 'email'}">selected</c:if>>이메일</option>
+                                    <option value="phone" <c:if test="${searchType eq 'phone'}">selected</c:if>>전화번호</option>
+                                </select>
+                            </div>
+                            <input type="text" class="form-control" placeholder="검색어를 입력하세요" name="keyword" value="${keyword}">
+                            <button class="btn btn-outline-secondary" type="submit">검색</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 		
 		<div class="d-grid gap-2 d-md-flex justify-content-md-end"
 			style="margin-right: 10px; padding: 10px;">
@@ -83,6 +78,35 @@
 		
    </table>
 	
+	   <c:url var="pageUrl" value="/system/employeeList">
+            <c:param name="searchType" value="${searchType}"/>
+            <c:param name="keyword" value="${keyword}"/>
+   	</c:url>
+	
+	 <nav aria-label="Page navigation" class="pagination-container">
+            <ul class="pagination justify-content-center">
+                <c:if test="${pageVO.prev}">
+                    <li class="page-item">
+                        <a class="page-link" href="${pageUrl}&page=${pageVO.startPage - 1}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                </c:if>
+                <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+                    <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
+                        <a class="page-link" href="${pageUrl}&page=${i}">${i}</a>
+                    </li>
+                </c:forEach>
+                <c:if test="${pageVO.next && pageVO.endPage > 0}">
+                    <li class="page-item">
+                        <a class="page-link" href="${pageUrl}&page=${pageVO.endPage + 1}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </c:if>
+            </ul>
+        </nav>
+    
 	<!-- 추가 버튼 모달창 -->
 	 <!-- Modal -->
 	 <div class="modal fade" id="registerModal" role="dialog" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">

@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 
@@ -23,10 +24,15 @@ public class SalesDAOImpl implements SalesDAO{
 	public SqlSession sqlSession;
 
 	@Override
-	public List<TransactionVO> salesOrderList() throws Exception {
+	public List<TransactionVO> salesOrderList(Criteria cri) throws Exception {
 		logger.debug("DAO : salesOrderList() 호출");
 		
-		return sqlSession.selectList(NAMESPACE + "salesOrderList");
+		return sqlSession.selectList(NAMESPACE + "salesOrderList", cri);
+	}
+
+	@Override
+	public int getTotalSalesOrderCount() throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"totalSalesOrderCount");
 	}
 
 	@Override
@@ -84,10 +90,15 @@ public class SalesDAOImpl implements SalesDAO{
 	}
 	
 	@Override
-	public List<TransactionVO> purchaseOrderList() throws Exception {
+	public List<TransactionVO> purchaseOrderList(Criteria cri) throws Exception {
 		logger.debug("DAO : purchaseOrderList() 호출");
 		
-		return sqlSession.selectList(NAMESPACE + "purchaseOrderList");
+		return sqlSession.selectList(NAMESPACE + "purchaseOrderList", cri);
+	}
+	
+	@Override
+	public int getTotalPurchaseOrderCount() throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"totalPurchaseOrderCount");
 	}
 
 	@Override

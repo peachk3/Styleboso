@@ -2,13 +2,17 @@ package com.itwillbs.persistence;
 
 import java.util.List;
 
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 
 public interface SalesDAO {
 
 	// 수주 리스트
-	public List<TransactionVO> salesOrderList() throws Exception;
+	public List<TransactionVO> salesOrderList(Criteria cri) throws Exception;
+	
+	// 수주 리스트 개수 세기
+	public int getTotalSalesOrderCount() throws Exception;
 
 	// 수주 등록_TransactionVO
 	public void salesOrderAdd_TransactionVO(TransactionVO tvo) throws Exception;
@@ -25,8 +29,12 @@ public interface SalesDAO {
 	// 수주 정보 수정_TransactionGoodsVO
 	public void salesOrderUpdate_TransactionGoodsVO(TransactionGoodsVO newTgvo) throws Exception;
 
+	
 	// 발주 리스트
-	public List<TransactionVO> purchaseOrderList() throws Exception;
+	public List<TransactionVO> purchaseOrderList(Criteria cri) throws Exception;
+
+	// 발주 리스트 개수 세기
+	public int getTotalPurchaseOrderCount() throws Exception;
 	
 	// 발주 등록_TransactionVO
 	public void purchaseOrderAdd_TransactionVO(TransactionVO tvo) throws Exception;

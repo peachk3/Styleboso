@@ -90,10 +90,11 @@ public interface StockService {
 	// 출고 상태 업데이트
 	public void updateReleaseStatus(List<String> tran_nums, String pro_status, List<String> top_tran_nums) throws Exception;
 
+	// 반품 상태 업데이트
+	public void updateReturnStatus(List<String> tran_nums, String pro_status, List<String> top_tran_nums) throws Exception;
+
+
 	
-
-
-
 	// 발주 리스트
 	public List<TransactionVO> receivingPurchaseOrderList() throws Exception;
 

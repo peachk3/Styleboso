@@ -331,6 +331,16 @@ public class StockServiceImpl implements StockService{
 
 		sdao.updateReleaseStatus(tran_nums, pro_status);		
 	}
+	
+	// 반품 상태 업데이트
+	@Override
+	public void updateReturnStatus(List<String> tran_nums, String pro_status, List<String> top_tran_nums) throws Exception {
+		logger.debug(" 반품 상태 업데이트");
+		
+	    sdao.updateReleaseTopTranStatus(top_tran_nums, pro_status);
+
+		sdao.updateReleaseStatus(tran_nums, pro_status);	
+	}
 
 	@Override
 	public List<TransactionVO> receivingPurchaseOrderList() throws Exception {

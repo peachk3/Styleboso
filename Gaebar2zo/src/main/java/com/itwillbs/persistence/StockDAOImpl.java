@@ -336,8 +336,28 @@ public class StockDAOImpl implements StockDAO{
 		    params.put("pro_status", pro_status);
 		    sqlSession.update(NAMESPACE+"updateReleaseTopTranStatus", params);
 	}
-
 	
+	// 반품 상태 업데이트
+	@Override
+	public void updateReturnStatus(List<String> tran_nums, String pro_status) throws Exception {
+		logger.debug("DAO : updateReturnStatus(List<String> tran_nums, String pro_status) 호출 ");
+		
+		Map<String, Object> params = new HashMap<>();
+        params.put("tran_nums", tran_nums);
+        params.put("pro_status", pro_status);
+        sqlSession.update(NAMESPACE+"updateReturnStatus", params);
+	}
+
+	@Override
+	public void updateReturnTopTranStatus(List<String> top_tran_nums, String pro_status) throws Exception {
+		logger.debug("DAO : updateReturnTopTranStatus(List<String> top_tran_nums, String pro_status) 호출 ");
+	    
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("top_tran_nums", top_tran_nums);
+	    params.put("pro_status", pro_status);
+	    sqlSession.update(NAMESPACE+"updateReturnTopTranStatus", params);
+	}
+
 	@Override
 	public List<TransactionVO> receivingPurchaseOrderList() throws Exception {
 		logger.debug("DAO : receivingPurchaseOrderList() 호출");

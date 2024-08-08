@@ -82,19 +82,60 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 //      
 //      
 //   }
-      @Override
-      public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-              Authentication authentication) throws IOException, ServletException {
-          logger.info("onAuthenticationSuccess() 실행 - 로그인 성공");
-          
-          // 사용자 권한 로깅 (선택사항)
-          authentication.getAuthorities().forEach(
-              authority -> logger.info("사용자 권한 정보 : " + authority.getAuthority())
-          );
-          
-          // 모든 사용자를 main.jsp 페이지로 리다이렉트
-          response.sendRedirect(request.getContextPath() + "/loginout/main");
-      }
-   
-   
+	
+	 @Override public void onAuthenticationSuccess(HttpServletRequest request,
+	 HttpServletResponse response, Authentication authentication) throws
+	 IOException, ServletException {
+	 logger.info("onAuthenticationSuccess() 실행 - 로그인 성공");
+	 
+	 // 사용자 권한 로깅 (선택사항)
+	 authentication.getAuthorities().forEach( authority ->
+	 logger.info("사용자 권한 정보 : " + authority.getAuthority()) );
+	 
+	 // 모든 사용자를 main.jsp 페이지로 리다이렉트
+	 response.sendRedirect(request.getContextPath()+ "/loginout/main"); }
+	 
+	/*
+	 * @Override public void onAuthenticationSuccess(HttpServletRequest request,
+	 * HttpServletResponse response, Authentication authentication) throws
+	 * IOException, ServletException {
+	 * logger.info("onAuthenticationSuccess() 실행 - 로그인 성공");
+	 * 
+	 * //로그인한 사용자의 인증 정보를 확인 List<String> roleNames = new ArrayList<String>();
+	 * 
+	 * //->인증번호를 사용해서 반복문(람다식) authentication.getAuthorities().forEach(authority ->
+	 * { //ctl + 1 => annoymous roleNames.add(authority.getAuthority()); });
+	 * 
+	 * logger.info("사용자 권한 정보 : " + roleNames);
+	 * 
+	 * 
+	 * //사용자 권한에 따른 페이지 이동 //1. 관리자 권한 - ROLE_ADMIN
+	 * 
+	 * if(roleNames.contains("ROLE_ADMIN")) {
+	 * logger.info("ROLE_ADMIN 권한 -> admin 페이지로 이동");
+	 * 
+	 * response.sendRedirect("/admin");
+	 * 
+	 * return; }
+	 * 
+	 * //2. 사용자 권한 - ROLE_MANAGER
+	 * 
+	 * if(roleNames.contains("ROLE_MANAGER")) {
+	 * logger.info("ROLE_MANAGER 권한 -> member 페이지로 이동");
+	 * 
+	 * response.sendRedirect("/manager");
+	 * 
+	 * return; }
+	 * 
+	 * //3. 사용자 권한 - ROLE_MEMBER if(roleNames.contains("ROLE_MEMBER")) {
+	 * logger.info("ROLE_MEMBER 권한 -> member 페이지로 이동");
+	 * 
+	 * response.sendRedirect("/member");
+	 * 
+	 * return; }
+	 * 
+	 * response.sendRedirect("/all");
+	 * 
+	 * }
+	 */
 }

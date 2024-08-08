@@ -22,7 +22,10 @@ public class UsersVO {
 
 	// 조인을 수행하는 테이블의 정보를 저장
 //	private AuthVO authVO; 1:1 구조
-	private List<AuthoritiesVO> authList; // 1:N구조
+
+	private AuthoritiesVO authList; // 1:N구조
+	
+	
 	
 
 	

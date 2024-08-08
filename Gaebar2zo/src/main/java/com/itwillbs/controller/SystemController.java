@@ -64,7 +64,7 @@ public class SystemController {
 		logger.debug("/logout -> logoutPOST() 호출");
 		session.invalidate(); // 세션 무효화
 
-		return "redirect:/system/main";
+		return "redirect:/Styleboso/system/main";
 	}
 	// -------------------------------------------------------------------------------------------
 	//이메일 중복 체크 

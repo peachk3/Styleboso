@@ -96,6 +96,7 @@ public class SystemServiceImpl implements SystemService{
 	
 	//사용자 삭제
 	@Override
+	@Transactional
 	public void deleteEmp(List<String> users) throws Exception {
 		logger.info("service --> 사용자 삭제");
 		

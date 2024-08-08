@@ -89,6 +89,19 @@ public class SystemDAOImpl implements SystemDAO{
 	public void updateEmp(UsersVO usersVo) throws Exception {
 		logger.info("dao --> 사용자 업데이트");
 		
+		String userPos = sqlSession.selectOne(NAMESPACE+"updateEmpAuth");
+		logger.info("userName" + userPos);
+		
+		AuthoritiesVO authVo = usersVo.getAuthList();
+		
+		authVo.setUsername(userPos);
+		usersVo.setUsername(userPos);
+		
+		sqlSession.update(NAMESPACE+"updateEmpAuth", authVo);
+		sqlSession.update(NAMESPACE+"addEmp", usersVo);
+		
+		logger.info("dao -> 사용자 등록");
+		
 		sqlSession.update(NAMESPACE +"updateEmp",usersVo);
 	}
 	

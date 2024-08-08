@@ -93,7 +93,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
           );
           
           // 모든 사용자를 main.jsp 페이지로 리다이렉트
-          response.sendRedirect(request.getContextPath() + "/Styleboso/loginout/main");
+          response.sendRedirect(request.getContextPath() + "/loginout/main");
       }
    
    

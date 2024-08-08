@@ -53,7 +53,7 @@ public class SystemController {
 			throws Exception {
 		// 파라미터에 전달할 정보 저장(아이디, 비밀번호)
 
-		return "redirect:/system/main";
+		return "redirect:/Styleboso/system/main";
 	}
 
 	// -------------------------------------------------------------------------------------------

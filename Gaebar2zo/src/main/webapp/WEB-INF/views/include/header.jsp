@@ -72,14 +72,7 @@
           <ul class="nav-group-items compact">
             <li class="nav-item"><a class="nav-link" href="/basicInfo/itemList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 품목 관리</a></li>
             <li class="nav-item"><a class="nav-link" href="/basicInfo/clientList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 거래처 관리</a></li>
-            <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
-                 <span class="nav-icon"><span class="nav-icon-bullet"></span></span><span data-coreui-i18n="창고 관리" onclick="location.href='/basicInfo/warehouseList'">창고 관리</span></a>
-             <ul class="nav-group-items compact">
-               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/warehouseList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 김포 창고</a></li>
-               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 대구 창고</a></li>
-               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 양산 창고</a></li>
-             </ul>
-           </li>
+            <li class="nav-item"><a class="nav-link" href="/basicInfo/warehouseList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 창고 관리</a></li>
           </ul>
         </li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#"> 

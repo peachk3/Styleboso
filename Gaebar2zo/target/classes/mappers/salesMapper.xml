@@ -90,6 +90,16 @@
 		join client c on t.cli_num = c.cli_num
 		join users u on t.pic_username = u.username
 		where tran_cate_code = "SO"
+		LIMIT #{pageStart}, #{pageSize}
+	</select>
+
+	<!-- 수주 리스트 총개수 세기 -->
+	<select id="totalSalesOrderCount" resultType="int">
+		select count(*) 
+		from transaction t
+		join client c on t.cli_num = c.cli_num
+		join users u on t.pic_username = u.username
+		where tran_cate_code = "SO"
 	</select>
 	
 	<!-- 수주 등록_TransactionVO -->
@@ -139,6 +149,16 @@
 	<!-- 발주 리스트 -->
 	<select id="purchaseOrderList" resultMap="transMap">
 		select tran_num, cli_name, date(tran_date) "tran_date", date(rel_date) "rel_date", date(due_date) "due_date", income, user_per_name, pro_status
+		from transaction t
+		join client c on t.cli_num = c.cli_num
+		join users u on t.pic_username = u.username
+		where tran_cate_code = "PO"
+		LIMIT #{pageStart}, #{pageSize}
+	</select>
+
+	<!-- 발주 리스트 총개수 세기 -->
+	<select id="totalPurchaseOrderCount" resultType="int">
+		select count(*) 
 		from transaction t
 		join client c on t.cli_num = c.cli_num
 		join users u on t.pic_username = u.username

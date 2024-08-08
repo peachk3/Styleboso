@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.persistence.SalesDAO;
@@ -22,11 +23,16 @@ public class SalesServiceImpl implements SalesService{
 	private SalesDAO sdao;
 	
 	@Override
-	public List<TransactionVO> SalesOrderList() throws Exception {
+	public List<TransactionVO> SalesOrderList(Criteria cri) throws Exception {
 		
 		logger.debug("SalesOrderList() 실행");
 		
-		return sdao.salesOrderList();
+		return sdao.salesOrderList(cri);
+	}
+
+	@Override
+	public int getTotalSalesOrderCount() throws Exception {
+		return sdao.getTotalSalesOrderCount();
 	}
 
 	@Override
@@ -98,11 +104,16 @@ public class SalesServiceImpl implements SalesService{
 	}
 	
 	@Override
-	public List<TransactionVO> PurchaseOrderList() throws Exception {
+	public List<TransactionVO> PurchaseOrderList(Criteria cri) throws Exception {
 		
 		logger.debug("PurchaseOrderList() 실행");
 		
-		return sdao.purchaseOrderList();
+		return sdao.purchaseOrderList(cri);
+	}
+	
+	@Override
+	public int getTotalPurchaseOrderCount() throws Exception {
+		return sdao.getTotalPurchaseOrderCount();
 	}
 
 	@Override

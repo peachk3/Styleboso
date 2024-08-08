@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itwillbs.domain.ClientVO;
+import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.PageVO;
 import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.service.SalesService;
@@ -37,10 +39,17 @@ public class SalesController {
 
 	// 수주 관리
 	@RequestMapping(value="/salesOrderList",method=RequestMethod.GET)
-	public void salesOrderList_GET(Model model) throws Exception{
+	public void salesOrderList_GET(Criteria cri ,Model model) throws Exception{
 		logger.debug(" salesOrderList_GET() 실행 ");
 		
-		List<TransactionVO> so = sService.SalesOrderList();
+		// 하단 페이징처리 정보객체 생성
+	    PageVO pageVO = new PageVO();
+	    pageVO.setCri(cri);
+	    pageVO.setTotalCount(sService.getTotalSalesOrderCount());
+	    logger.debug(" cri " + pageVO.getCri());
+	    model.addAttribute("pageVO", pageVO);
+		
+		List<TransactionVO> so = sService.SalesOrderList(cri);
 		logger.debug("size : "+ so.size());
 		logger.debug("so : "+ so);
 	    model.addAttribute("so", so);
@@ -107,10 +116,17 @@ public class SalesController {
 
 	// 발주 관리
 	@RequestMapping(value="/purchaseOrderList",method=RequestMethod.GET)
-	public void puchaseOrderList_GET(Model model) throws Exception{
+	public void puchaseOrderList_GET(Criteria cri ,Model model) throws Exception{
 		logger.debug(" puchaseOrderList_GET() 실행 ");
+		
+		// 하단 페이징처리 정보객체 생성
+	    PageVO pageVO = new PageVO();
+	    pageVO.setCri(cri);
+	    pageVO.setTotalCount(sService.getTotalPurchaseOrderCount());
+	    logger.debug(" cri " + pageVO.getCri());
+	    model.addAttribute("pageVO", pageVO);
 
-		List<TransactionVO> po = sService.PurchaseOrderList();
+		List<TransactionVO> po = sService.PurchaseOrderList(cri);
 		logger.debug("size : "+ po.size());
 		logger.debug("po : "+ po);
 	    model.addAttribute("po", po);

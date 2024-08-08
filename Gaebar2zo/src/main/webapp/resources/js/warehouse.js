@@ -1,98 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../include/header.jsp" %>
-<style>
-       table { 
-             width: 100%; 
-            border-collapse: collapse; 
-         } 
-         th, td { 
-             padding: 10px; 
-             text-align: center; 
-        } 
-        .cell {
-            cursor: pointer;
-        }
-        .selected {
-            background-color: #f0f0f0;
-        }
- 		.grid-container {
-            display: grid;
-            gap: 1px;
-            background-color: #ccc;
-        }
-        .grid-item {
-            padding: 10px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            text-align: center;
-            cursor: pointer;
-        }
-        .grid-item.selected {
-            background-color: #f0f0f0;
-        }
-    </style>
-<body>
-        <h1>창고별 재고 출력</h1>
-
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
-      <button class="btn btn-primary" id="registWhZoneBtn" name="registWhZoneBtn" type="button" >Zone 등록</button>
-      <button class="btn btn-primary" id="registWhBtn" name="registWhBtn" type="button" >Rack 등록</button>
-      <button class="btn btn-primary" id="deleteClientBtn" name="deleteClientBtn" type="button">삭제</button>
-   </div>
-
-	<div class="row">
-		<div class="col">
-			<select id="warehouseSelect" class="form-select"
-				aria-label="Default select example">
-				<option value="">Select Warehouse</option>
-				<c:forEach items="${whCodeList}" var="whCodeList">
-					<option value="${whCodeList.s_cate_wh_code}" data-wh-name="${whCodeList.s_cate_wh_name}">${whCodeList.s_cate_wh_name}</option>
-				</c:forEach>
-			</select> <br>
-		</div>
-
-		<div class="col">
-			<select id="zoneSelect" class="form-select"
-				aria-label="Default select example">
-				<option value="">Select Zone</option>
-			</select>
-		</div>
-		<div class="col">
-			<select id="rackSelect" class="form-select"
-				aria-label="Default select example">
-				<option value="">Select Rack</option>
-			</select> <br>
-		</div>
-	</div>
-	
-	<div id="gridContainer" class="grid-container"></div>
-	
-<!-- 	<ul id="inventoryList"></ul> -->
-
-
-	<div id="exampleModalToggle" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalToggleLabel">재고 리스트</h5>
-				</div>
-				<div class="modal-body">
-					<ul id="inventoryList"></ul>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>				
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	
-</body>
-
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@3.2.2/dist/js/coreui.min.js"></script>
-
-<script>
+/**
+ * 
+ */
 const token = $("meta[name='_csrf']").attr("content")
 const header = $("meta[name='_csrf_header']").attr("content");
 const name = $("#userName").val();
@@ -246,7 +154,7 @@ $(document).ready(function() {
             	 var columns = data.columns;
                  var rows = data.rows;
                  
-                 var tableHtml = '<table class="table table-hover"><thead><tr><th></th>';
+                 var tableHtml = '<table class="table"><thead><tr><th></th>';
                  
               // Add column headers
                  $.each(columns, function(index, column) {
@@ -323,7 +231,3 @@ $(document).ready(function() {
     
     
 });
-
-</script>
-<%@ include file="../include/footer.jsp" %>
-</html>

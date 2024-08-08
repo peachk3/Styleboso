@@ -88,10 +88,9 @@
 	</resultMap>
 
 
-
-
 	<!-- 입고 리스트 호출 -->
 	<select id="receivingList" resultMap="transMap">
+		<![CDATA[
 		select distinct
 		tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
 		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
@@ -119,11 +118,46 @@
 		on inv.inven_num = ic.inven_num) ic
 		on tr.tran_num = ic.tran_num and tr.goods_num = ic.goods_num
 		WHERE tr.tran_num like 'RC%' and pro_status in ("입고 예정","입고 완료")
+		LIMIT #{pageStart}, #{pageSize}
+		]]>
 	</select>
+
+	<!-- 입고 리스트 총개수 세기 -->
+	<select id="totalreceivingCount" resultType="int">
+	<![CDATA[	
+		SELECT COUNT(*)
+		from (select
+		tr.tran_num,top_tran_num,cli_num,pic_username,
+		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm, goods_num,
+		goods_qty,rec_date
+		from transaction tr
+		join transaction_goods trg
+		on tr.top_tran_num = trg.tran_num) tr
+		join (select item.item_num,
+		goods_num, item_name
+		from item join goods
+		on item.item_num = goods.item_num
+		where goods.item_num in (select item_num
+		from goods go
+		where goods_num in (select distinct trg.goods_num
+		from transaction tr
+		join transaction_goods trg
+		on tr.top_tran_num = trg.tran_num))) go
+		on tr.goods_num = go.goods_num
+		join (select tran_num, ic.inven_num, goods_num
+		from inventory inv join inventory_change ic
+		on inv.inven_num = ic.inven_num) ic
+		on tr.tran_num = ic.tran_num and tr.goods_num = ic.goods_num
+		WHERE tr.tran_num like 'RC%' and pro_status in ("입고 예정","입고 완료")
+		]]>
+	</select>
+
+
 
 	<!-- 출고 리스트 호출 -->
 	<select id="releaseList" resultMap="transMap">
-select distinct
+		<![CDATA[	
+		select distinct
 		tr.tran_num,top_tran_num,cli_num,pic_username,rec_date,
 		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm,go.goods_num,goods_qty,
 		go.item_num,go.item_name,inven_num
@@ -150,9 +184,41 @@ select distinct
 		on inv.inven_num = ic.inven_num) ic
 		on tr.tran_num = ic.tran_num and tr.goods_num = ic.goods_num
 		WHERE tr.tran_num like 'RL%' and pro_status in ("출고 준비","출고 완료")
+		LIMIT #{pageStart}, #{pageSize}
+		]]>
 	</select>
- 
-
+	
+		<!-- 출고 리스트 호출 -->
+	<select id="totalreleaseCount" resultType="int">
+		<![CDATA[	
+		select COUNT(*)
+		from (select
+		tr.tran_num,top_tran_num,cli_num,pic_username,
+		tran_date,rel_date,due_date,pro_status,tran_cate_code,comm, goods_num,
+		goods_qty,rec_date
+		from transaction tr
+		join transaction_goods trg
+		on tr.top_tran_num = trg.tran_num) tr
+		join (select item.item_num,
+		goods_num, item_name
+		from item join goods
+		on item.item_num = goods.item_num
+		where goods.item_num in (select item_num
+		from goods go
+		where goods_num in (select distinct trg.goods_num
+		from transaction tr
+		join transaction_goods trg
+		on tr.top_tran_num = trg.tran_num))) go
+		on tr.goods_num = go.goods_num
+		join (select tran_num, ic.inven_num, goods_num
+		from inventory inv join inventory_change ic
+		on inv.inven_num = ic.inven_num) ic
+		on tr.tran_num = ic.tran_num and tr.goods_num = ic.goods_num
+		WHERE tr.tran_num like 'RL%' and pro_status in ("출고 준비","출고 완료")
+		]]>
+	</select>
+	
+	
 <!-- 입고/출고/반품 transaction 삭제 -->
    	<delete id="deleteTransactionList">
    		delete from transaction
@@ -170,7 +236,38 @@ select distinct
       				  #{tran_num}
    		 </foreach>
    	</delete>
-   	
+
+
+<!-- 입고 삭제시 상위 거래번호 상태 업데이트 -->
+<update id="updateTopTranNum">
+    UPDATE transaction
+    SET pro_status = CASE 
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'PO' THEN '발주 승인'
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'RE' THEN '반품 접수'
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'EX' THEN '교환 접수'
+                        ELSE pro_status
+                     END
+    WHERE tran_num IN
+    <foreach collection="list" item="top_tran_num" open="(" separator="," close=")">
+        #{top_tran_num}
+    </foreach>
+</update>
+
+<!-- 출고 삭제시 상위 거래번호 상태 업데이트 -->
+<update id="updateRLTopTranNum">
+    UPDATE transaction
+    SET pro_status = CASE 
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'SO' THEN '수주 접수'
+                        WHEN SUBSTRING(#{top_tran_num}, 1, 2) = 'EX' THEN '교환 접수'
+                        ELSE pro_status
+                     END
+    WHERE tran_num IN
+    <foreach collection="list" item="top_tran_num" open="(" separator="," close=")">
+        #{top_tran_num}
+    </foreach>
+</update>
+
+
 	<!-- 입고 등록_TransactionVO -->
 	<insert id="stockReceivingAdd_TransactionVO">
 	    insert into transaction(tran_num,top_tran_num, cli_num, pic_username, tran_date, pro_status, tran_cate_code, comm)
@@ -571,7 +668,7 @@ select distinct
 		from transaction t
 		join client c on t.cli_num = c.cli_num
 		where tran_cate_code = "PO" and pro_status = "발주 승인"
-		and  tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC")
+		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC" AND top_tran_num IS NOT NULL)
 	</select>
 	
 	<!-- 교환 리스트 -->
@@ -580,7 +677,7 @@ select distinct
 		from transaction t
 		join client c on t.cli_num = c.cli_num
 		where tran_cate_code = "EX"
-		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC")
+		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC" AND top_tran_num IS NOT NULL)
 	</select>
 	
 	<!-- 반품 리스트 -->
@@ -589,7 +686,7 @@ select distinct
 		from transaction t
 		join client c on t.cli_num = c.cli_num
 		where tran_cate_code = "RE"
-		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC")
+		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RC" AND top_tran_num IS NOT NULL)
 	</select>
 	
 	
@@ -599,7 +696,7 @@ select distinct
 		from transaction t
 		join client c on t.cli_num = c.cli_num
 		where tran_cate_code = "SO" and pro_status = "수주 접수"
-		and  tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RL")
+		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RL" AND top_tran_num IS NOT NULL)
 	</select>
 	
 	<!-- 교환 리스트 -->
@@ -608,7 +705,7 @@ select distinct
 		from transaction t
 		join client c on t.cli_num = c.cli_num
 		where tran_cate_code = "EX"
-		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RL")
+		and tran_num not in (select distinct top_tran_num from transaction where tran_cate_code = "RL" AND top_tran_num IS NOT NULL)
 	</select>
 	
 	

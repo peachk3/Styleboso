@@ -18,11 +18,11 @@ public interface BasicInfoDAO {
 
 	// 거래처 리스트 출력
 	List<ClientVO> cliListAll(Criteria cri) throws Exception;
-	int getTotalClientCount() throws Exception;
+	int getTotalClientCount(Criteria cri) throws Exception;
 
 	// 품목 리스트 출력
 	List<ItemVO> itemListAll(Criteria cri) throws Exception;
-	int getTotalItemCount() throws Exception;
+	int getTotalItemCount(Criteria cri) throws Exception;
 
 	// 거래처 번호 중복 확인
 	public int cliCrnDup(String cli_crn) throws Exception;

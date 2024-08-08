@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../include/header.jsp" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
     <style>
       /* 두 번째 모달이 첫 번째 모달 오른쪽에 위치하도록 설정 */
         .modal.right-modal .modal-dialog {
@@ -14,8 +15,10 @@
    <h1>/Styleboso/basicInfo/itemList.jsp</h1>
    
    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
+   	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
       <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/basicInfo/itemAdd'">
       <input type="button" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
+      </sec:authorize>
    </div>
    
     <div class="container">
@@ -82,7 +85,7 @@
    <c:url var="pageUrl" value="/basicInfo/itemList">
             <c:param name="searchType" value="${searchType}"/>
             <c:param name="keyword" value="${keyword}"/>
-        </c:url>
+   </c:url>
 
         <nav aria-label="Page navigation" class="pagination-container">
             <ul class="pagination justify-content-center">
@@ -109,33 +112,6 @@
         </nav>
     </div>
    
-   
-<!-- 페이징 처리 -->
-<!--    <nav aria-label="Page navigation" class="pagination-container"> -->
-<!--       <ul class="pagination justify-content-center"> -->
-<%--          <c:if test="${pageVO.prev}"> --%>
-<!--             <li class="page-item"> -->
-<%--                <a class="page-link" href="/basicInfo/itemList?page=${pageVO.startPage - 1}" aria-label="Previous"> --%>
-<!--                   <span aria-hidden="true">&laquo;</span> -->
-<!--                </a> -->
-<!--             </li> -->
-<%--          </c:if> --%>
-<%--          <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1"> --%>
-<%--             <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}"> --%>
-<%--                <a class="page-link" href="/basicInfo/itemList?page=${i}">${i}</a> --%>
-<!--             </li> -->
-<%--          </c:forEach> --%>
-<%--          <c:if test="${pageVO.next && pageVO.endPage > 0}"> --%>
-<!--             <li class="page-item"> -->
-<%--                <a class="page-link" href="/basicInfo/itemList?page=${pageVO.endPage + 1}" aria-label="Next"> --%>
-<!--                   <span aria-hidden="true">&raquo;</span> -->
-<!--                </a> -->
-<!--             </li> -->
-<%--          </c:if> --%>
-<!--       </ul> -->
-<!--    </nav> -->
-
-
 
 <!-- 상세보기 모달창-->
 <div class="modal fade" id="exampleModalToggle" data-coreui-backdrop="static" data-coreui-keyboard="false" tabindex="-1" aria-labelledby="exampleModalToggleLabel" aria-hidden="true">
@@ -171,28 +147,6 @@
                                 <td><label for="validationCustom03" class="form-label">제품 그룹명 </label></td>
                         <td><input type="text" class="form-control" id="s_cate_item_name" name="s_cate_item_name" readonly></td>
                             </tr>
-<!--                               <tr> -->
-<!--                                 <td><label for="validationCustom03" class="form-label"> 대분류 제품 유형 </label></td> -->
-<!--                                 <td> -->
-<!--                         <select class="form-select" id="m_cate_item_code" name="m_cate_item_code" aria-label="Default select example" required disabled> -->
-<!--                            <option value="0"> 제품 유형을 선택하세요 </option> -->
-<!--                            <option value="IT" id="m_cate_item_code"> 상의 </option> -->
-<!--                            <option value="IB" id="m_cate_item_code"> 하의 </option> -->
-<!--                            <option value="IO" id="m_cate_item_code"> 아우터 </option> -->
-<!--                            <option value="IS" id="m_cate_item_code"> 원피스/스커트 </option> -->
-<!--                         </select> -->
-<!--                         </td> -->
-<!--                         <td><input type="text" class="form-control" id="group_name" name="group_name" readonly></td> -->
-<!--                             </tr> -->
-<!--                             <tr> -->
-<!--                                <td><label for="validationCustom03" class="form-label"> 소분류 제품 유형 </label></td> -->
-<!--                                <td> -->
-<!--                                <select class="form-select" id="s_cate_item_code" name="s_cate_item_code" aria-label="Default select example" required disabled> -->
-<!--                            <option value="0"> 소분류 제품 유형을 선택하세요 </option> -->
-<!--                         </select> -->
-<!--                         </td> -->
-<!--                         <td><input type="text" class="form-control" id="s_cate_item_code" name="s_cate_item_code" readonly></td> -->
-<!--                             </tr> -->
                             <tr>
                                 <td><label for="validationCustom03" class="form-label">재질</label></td>
                                 <td><input type="text" class="form-control" id="item_mat" name="item_mat" readonly></td>
@@ -214,9 +168,11 @@
                 </form>
             </div>
             <div class="modal-footer">
+            <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                 <button type="button" class="btn btn-secondary" id="editButton">수정</button>
                 <button type="submit" class="btn btn-success" id="saveButton" style="display: none;">저장</button>
                 <button type="button" class="btn btn-success" id="saveCancelButton" style="display: none;">취소</button>
+            </sec:authorize>
                 <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
             </div>
         </div>

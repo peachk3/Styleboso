@@ -1,6 +1,7 @@
 package com.itwillbs.service;
 
 import java.util.List;
+
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -13,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.InventoryChangeVO;
 import com.itwillbs.domain.InventoryVO;
-import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.persistence.StockDAO;
 
@@ -26,19 +26,41 @@ public class StockServiceImpl implements StockService{
 	
 	// 입고 리스트 호출
 	@Override
-	public List<TransactionVO> rcList() throws Exception {
+	public List<TransactionVO> rcList(Criteria cri) throws Exception {
 		logger.debug("ServiceImpl + 입고 리스트 호출");
 		
-		return sdao.rcList();
+		
+		return sdao.rcList(cri);
 	}
+
+	
+	@Override
+	public int getTotalReceivingCount() throws Exception {
+
+		
+		return sdao.getTotalReceivingCount();
+	}
+
+
 
 	// 출고 리스트 호출
 	@Override
-	public List<TransactionVO> rsList() throws Exception {
+	public List<TransactionVO> rsList(Criteria cri) throws Exception {
 		logger.debug("ServiceImpl + 출고 리스트 호출");
 		
-		return sdao.rsList();
+
+		
+		return sdao.rsList(cri);
+
 	}
+
+	@Override
+	public int getTotalReleaseCount() throws Exception {
+
+		
+		return sdao.getTotalReleaseCount();
+	}
+
 
 	// 재고 리스트 호출
 	@Override
@@ -125,14 +147,33 @@ public class StockServiceImpl implements StockService{
 		return sdao.getTransactionDetails(tran_num);
 	}
 
+	@Transactional
 	@Override
-	public void deleteRecevingList(List<String> trannums) throws Exception {
-		logger.debug(" 입고 삭제 ");
-		// 먼저 inventory_change 테이블에서 삭제
-	    sdao.deleteInventoryChange(trannums);
+	public void deleteRecevingList(List<String> tran_nums, List<String> top_tran_nums) throws Exception {
+	    logger.debug("입고 삭제 시작: trannums=" + tran_nums + ", top_tran_nums=" + top_tran_nums);
 	    
-		sdao.deleteRecevingList(trannums);
+	    logger.debug("inventory_change 테이블에서 삭제 시작");
+	    sdao.deleteInventoryChange(tran_nums);
+	    logger.debug("inventory_change 테이블에서 삭제 완료");
+	    
+	    logger.debug("transaction 테이블에서 삭제 시작");
+	    sdao.deleteRecevingList(tran_nums);
+	    logger.debug("transaction 테이블에서 삭제 완료");
+	    
+	    logger.debug("상위 거래번호 상태 업데이트 시작");
+	    sdao.updateTopTranNum(top_tran_nums);
+	    logger.debug("상위 거래번호 상태 업데이트 완료");
+	    
+	    logger.debug("입고 삭제 완료");
 	}
+
+//	@Override
+//	public void updateTopTranNum(List<String> topTranNums) throws Exception {
+//		logger.debug(" 입고 삭제 - 상위거래 상태 되돌리기 ");
+//
+//		
+//	}
+
 
 	@Override
 	public Map<String, Object> getTransactionDetails2(String tran_num) throws Exception {
@@ -193,7 +234,9 @@ public class StockServiceImpl implements StockService{
 		logger.debug("입고 등록 성공");
 	}
 
-	private String GetTranNum(TransactionVO tvo) {
+	
+
+	private String GetTranNum(TransactionVO tvo) throws Exception{
 		logger.debug("GetTranNum() 실행");
 		
 		String tran_num = sdao.GetTranNum(tvo);
@@ -249,12 +292,16 @@ public class StockServiceImpl implements StockService{
 	}
 
 	@Override
-	public void deleteReleaseList(List<String> trannums) throws Exception {
-		logger.debug(" 입고 삭제 ");
+	public void deleteReleaseList(List<String> trannums, List<String> top_tran_nums) throws Exception {
+		logger.debug("입고 삭제 시작: trannums=" + trannums + ", top_tran_nums=" + top_tran_nums);
 		// 먼저 inventory_change 테이블에서 삭제
 	    sdao.deleteInventoryChange(trannums);
 	    
 		sdao.deleteRecevingList(trannums);
+		
+		logger.debug("상위 거래번호 상태 업데이트 시작");
+		sdao.updateRLTopTranNum(top_tran_nums);
+		logger.debug("상위 거래번호 상태 업데이트 완료");
 	}
 
 

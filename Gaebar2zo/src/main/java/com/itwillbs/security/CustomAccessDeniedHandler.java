@@ -19,30 +19,29 @@ import org.springframework.security.web.access.AccessDeniedHandler;
  */
 
 public class CustomAccessDeniedHandler implements AccessDeniedHandler{
-	
-	private static final Logger logger = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
+   
+   private static final Logger logger = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
 
-	@Override
-	public void handle(HttpServletRequest request, HttpServletResponse response,
-			AccessDeniedException accessDeniedException) throws IOException, ServletException {
-		
-		logger.info("CustomAccessDeniedHandler()_handle() 실행");
-		
-		// 페이지 이동 - 접근권한 처리하는 에러 페이지로 이동 
-		response.sendRedirect("/accessErr");
-		
-	}
-	
-	
-	
-	// 재커밋
+   @Override
+   public void handle(HttpServletRequest request, HttpServletResponse response,
+         AccessDeniedException accessDeniedException) throws IOException, ServletException {
+      
+      logger.info("CustomAccessDeniedHandler()_handle() 실행");
+      
+      // 페이지 이동 - 접근권한 처리하는 에러 페이지로 이동 
+      response.sendRedirect("/loginout/accessErr");
+   }
+   
+   
+   
+   // 재커밋
 
-	
-	
-	
-	
-	
-	
-	
-	
+   
+   
+   
+   
+   
+   
+   
+   
 }

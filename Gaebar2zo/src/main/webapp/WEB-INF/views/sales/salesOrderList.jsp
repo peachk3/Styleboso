@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../include/header.jsp" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
     <style>
         .status-buttons { display: none; }
@@ -15,8 +16,10 @@
 
 <body>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
+	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
         <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/sales/salesOrderAdd'">
         <input type="button" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
+    </sec:authorize>
     </div>
     
     <table class="table table-hover">
@@ -59,6 +62,8 @@
 	        </c:forEach>
         </tbody>
     </table>
+
+
 
     <!-- soInfoModal -->
     <div class="modal fade" id="soInfoModal" tabindex="-1">
@@ -143,8 +148,10 @@
 					</div>
                 </div>
                 <div class="modal-footer">
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                     <button type="button" class="btn btn-primary" id="updateFormBtn"
                     	data-coreui-toggle="modal" data-coreui-target="#soUpdateModal">수정</button>
+                    </sec:authorize>
                     <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">닫기</button>
                 </div>
             </div>
@@ -225,8 +232,10 @@
 					</div>
                 </div>
                 <div class="modal-footer">
+              	  <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
                     <button type="button" class="btn btn-primary" id="submitFormBtn">등록</button>
                     <button type="button" class="btn btn-secondary" data-coreui-toggle="modal" data-coreui-target="#soInfoModal">닫기</button>
+                   </sec:authorize>
                 </div>
             </div>
         </div>
@@ -262,6 +271,31 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 페이징 처리 -->
+	<nav aria-label="Page navigation" class="pagination-container">
+	   <ul class="pagination justify-content-center">
+	      <c:if test="${pageVO.prev}">
+	         <li class="page-item">
+	            <a class="page-link" href="/sales/salesOrderList?page=${pageVO.startPage - 1}" aria-label="Previous">
+	               <span aria-hidden="true">&laquo;</span>
+	            </a>
+	         </li>
+	      </c:if>
+	      <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+	         <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
+	            <a class="page-link" href="/sales/salesOrderList?page=${i}">${i}</a>
+	         </li>
+	      </c:forEach>
+	      <c:if test="${pageVO.next && pageVO.endPage > 0}">
+	         <li class="page-item">
+	            <a class="page-link" href="/sales/salesOrderList?page=${pageVO.endPage + 1}" aria-label="Next">
+	               <span aria-hidden="true">&raquo;</span>
+	            </a>
+	         </li>
+	      </c:if>
+	   </ul>
+	</nav>
     
     <%@ include file="../include/footer.jsp" %>
 </body>

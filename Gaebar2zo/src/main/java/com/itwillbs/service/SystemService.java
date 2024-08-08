@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.CodeVO;
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.domain.ItemCodeVO;
 import com.itwillbs.domain.UsersVO;
 
@@ -18,10 +19,14 @@ public interface SystemService {
 	
 	//================================================
 	//운영자,관리자,사원 전체 리스트 출력
-	List<UsersVO> employeeListAll() throws Exception;
+	List<UsersVO> employeeListAll(Criteria cri) throws Exception;
+	int getTotalUserCount(Criteria cri) throws Exception;
 	
 	//사용자 등록
 	int addEmp(UsersVO usersVo) throws Exception;
+	
+	//사용자 수정
+	void updateEmp(UsersVO usersVo) throws Exception;
 	
 	//사용자 삭제
 	void deleteEmp(List<String> users) throws Exception;
@@ -53,6 +58,8 @@ public interface SystemService {
 	
 	//공통 품목 중복체크&유효성
 	boolean checkItemCode(String s_cate_item_code) throws Exception;
+
+	
 
 	
 

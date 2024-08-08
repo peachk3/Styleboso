@@ -13,11 +13,15 @@ import com.itwillbs.domain.TransactionVO;
 public interface StockService {
 
 	// 입고 리스트 호출
-	List<TransactionVO> rcList() throws Exception;
+	List<TransactionVO> rcList(Criteria cri) throws Exception;
+	// 입고 리스트 개수 세기
+	public int getTotalReceivingCount() throws Exception;
 
 	// 출고 리스트 호출
-	List<TransactionVO> rsList() throws Exception;
-
+	List<TransactionVO> rsList(Criteria cri) throws Exception;
+	// 출고 리스트 개수 세기
+	public int getTotalReleaseCount() throws Exception;
+	
 	// 재고 리스트 호출
 	List<InventoryVO> getStockList(Criteria cri) throws Exception;
 	int getTotalCount() throws Exception;
@@ -44,8 +48,12 @@ public interface StockService {
 	Map<String, Object> getTransactionDetails(String tran_num) throws Exception;
 
 	// 입고 목록 삭제
-	void deleteRecevingList(List<String> trannums) throws Exception;
+	void deleteRecevingList(List<String> tran_nums, List<String> top_tran_nums) throws Exception;
 
+//	 입고 목록 삭제시 상위거래번호 이전 상태로
+//	void updateTopTranNum(List<String> topTranNums) throws Exception;
+
+	
 	// 출고 모달창 정보 호출
 	Map<String, Object> getTransactionDetails2(String tran_num) throws Exception;
 
@@ -68,7 +76,7 @@ public interface StockService {
 	public void stockReleaseAdd(TransactionVO tvo) throws Exception;
 
 	// 출고 삭제
-	public void deleteReleaseList(List<String> trannums) throws Exception;
+	public void deleteReleaseList(List<String> trannums, List<String> top_tran_nums) throws Exception;
 
 
 	// 입고 / 출고 수정
@@ -84,6 +92,7 @@ public interface StockService {
 
 	// 반품 상태 업데이트
 	public void updateReturnStatus(List<String> tran_nums, String pro_status, List<String> top_tran_nums) throws Exception;
+
 
 	
 	// 발주 리스트

@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
    @Controller
    public class LoginController {
 
-       @GetMapping("/Styleboso/loginout/login")
+       @GetMapping("/loginout/login")
        public String loginPage() {
            return "/Styleboso/loginout/login";
        }
 
-       @GetMapping("/Styleboso/loginout/main")
+       @GetMapping("/loginout/main")
        public String mainPage() {
            return "/Styleboso/loginout/main";
        }

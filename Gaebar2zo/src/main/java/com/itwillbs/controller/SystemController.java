@@ -191,9 +191,29 @@ public class SystemController {
 	@RequestMapping(value = "/updateEmp", method = RequestMethod.POST)
 	public ResponseEntity<String>updateEmp(@RequestBody UsersVO usersVo) throws Exception{
 		 logger.debug(" @@@ updateEmp() 실행");
-		 sService.updateEmp(usersVo);
 		 
-		logger.debug("controller => 사용자 업데이트 출력 성공: {}" + usersVo);
+		 //권한
+		 AuthoritiesVO authVo = new AuthoritiesVO();
+		authVo.setUsername(usersVo.getUsername());
+		
+		if(usersVo.getUser_pos().equals("운영자")) {
+			authVo.setAuthority("ROLE_ADMIN");
+			logger.info("운영자");
+		}else if(usersVo.getUser_pos().equals("관리자")) {
+			authVo.setAuthority("ROLE_MANAGER");
+			logger.info("관리자");
+		}else if(usersVo.getUser_pos().equals("사원")) {
+			authVo.setAuthority("ROLE_MEMBER");
+			logger.info("사원");
+		}
+		
+		logger.info("usersVo : "+usersVo);
+		
+		usersVo.setAuthList(authVo);
+		
+		sService.updateEmp(usersVo);
+		
+		 logger.debug("controller => 사용자 업데이트 출력 성공: {}" + usersVo);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

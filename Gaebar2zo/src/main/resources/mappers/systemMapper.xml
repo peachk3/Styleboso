@@ -104,6 +104,16 @@
 	select count(*)from users where user_phone = #{user_phone}
 </select>
 
+
+
+ <!-- 직책권한 -->
+	<insert id="addEmpAuth" parameterType="AuthoritiesVO">
+	    insert into authorities (username, authority)
+	    values (#{username}, #{authority})
+	    </insert>
+
+
+
 <!--사용자ID (username) 생성 -->
 <select id="addEmpUsername" resultType="String">
 		select CONCAT('US',LPAD(COALESCE(MAX(CAST(SUBSTRING(username, 3) AS UNSIGNED)), 0) + 1, 4, '0'))
@@ -123,12 +133,19 @@
         #{user_phone}
     )
 </insert>
-    
-    <!-- 직책권한 -->
-	<insert id="addEmpAuth" parameterType="AuthoritiesVO">
-	    insert into authorities (username, authority)
-	    values (#{username}, #{authority})
-	    </insert>
+
+<!-- 사용자 권한 업데이트 --> 
+<update id="updateEmpAuth">
+	UPDATE authorities a
+	JOIN users u ON a.username = u.username
+	SET a.authority = CASE
+   		 WHEN #{user_pos} = '운영자' THEN 'ROLE_ADMIN'
+   		 WHEN #{user_pos} = '관리자' THEN 'ROLE_MANAGER'
+    	 WHEN #{user_pos} = '사원' THEN 'ROLE_MEMBER'
+   		 ELSE a.authority
+	END
+	WHERE a.username = #{username}
+</update>
 
 <!--  사용자 업데이트 -->
 <update id="updateEmp">
@@ -140,15 +157,17 @@
 	where username = #{username}
 </update>
 
-<!-- 사용자 삭제(권한 데이터 삭제) -->
-<delete id="deleteEmpAuth"  parameterType="list">
-  delete from authorities
-        where username in
-        <foreach item="username" index="index" collection="list" open="(" separator="," close=")">
-            #{username}
-        </foreach>
-        
+
+<!-- 사용자 권한 삭제 -->
+<delete id="deleteEmpAuth" parameterType="UsersVO">
+ delete from authorities
+    where username in
+    <foreach item="username" index="index" collection="list" open="(" separator="," close=")">
+        #{username}
+    </foreach>
 </delete>
+
+
 <!-- 사용자 삭제 -->
 <delete id="deleteEmp" parameterType="UsersVO">
     delete from users

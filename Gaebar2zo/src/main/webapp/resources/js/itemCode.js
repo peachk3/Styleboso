@@ -318,3 +318,5 @@
         const checkboxes = document.querySelectorAll('.item-checkbox');
         checkboxes.forEach(checkbox => checkbox.checked = source.checked);
     }
+    
+   

@@ -90,26 +90,26 @@ public class SystemDAOImpl implements SystemDAO{
 		logger.info("dao --> 사용자 업데이트");
 		
 		String userPos = sqlSession.selectOne(NAMESPACE+"updateEmpAuth");
-		logger.info("userName" + userPos);
-		
+		logger.info("userPos" + userPos);
+	
 		AuthoritiesVO authVo = usersVo.getAuthList();
 		
 		authVo.setUsername(userPos);
 		usersVo.setUsername(userPos);
 		
 		sqlSession.update(NAMESPACE+"updateEmpAuth", authVo);
-		sqlSession.update(NAMESPACE+"addEmp", usersVo);
-		
+		sqlSession.update(NAMESPACE +"updateEmp",usersVo);
 		logger.info("dao -> 사용자 등록");
 		
-		sqlSession.update(NAMESPACE +"updateEmp",usersVo);
+		
 	}
 	
 	//사용자 삭제
 	@Override
 	public void deleteEmp(List<String> users) throws Exception {
 		logger.info("dao -> 사용자 삭제");
-		
+
+		sqlSession.update(NAMESPACE+"deleteEmpAuth", users);
 		sqlSession.delete(NAMESPACE+"deleteEmp", users);
 	}
 

@@ -139,9 +139,9 @@
 	UPDATE authorities a
 	JOIN users u ON a.username = u.username
 	SET a.authority = CASE
-   		 WHEN u.user_pos = '운영자' THEN 'ROLE_ADMIN'
-   		 WHEN u.user_pos = '관리자' THEN 'ROLE_MANAGER'
-    	 WHEN u.user_pos = '사원' THEN 'ROLE_MEMBER'
+   		 WHEN #{user_pos} = '운영자' THEN 'ROLE_ADMIN'
+   		 WHEN #{user_pos} = '관리자' THEN 'ROLE_MANAGER'
+    	 WHEN #{user_pos} = '사원' THEN 'ROLE_MEMBER'
    		 ELSE a.authority
 	END
 	WHERE a.username = #{username}
@@ -157,14 +157,16 @@
 	where username = #{username}
 </update>
 
-<!-- 사용자 삭제(권한 데이터 삭제) -->
-<delete id="deleteEmpAuth"  parameterType="list">
-  delete from authorities
-        where username in
-        <foreach item="username" index="index" collection="list" open="(" separator="," close=")">
-            #{username}
-        </foreach>
+
+<!-- 사용자 권한 삭제 -->
+<delete id="deleteEmpAuth" parameterType="UsersVO">
+ delete from authorities
+    where username in
+    <foreach item="username" index="index" collection="list" open="(" separator="," close=")">
+        #{username}
+    </foreach>
 </delete>
+
 
 <!-- 사용자 삭제 -->
 <delete id="deleteEmp" parameterType="UsersVO">

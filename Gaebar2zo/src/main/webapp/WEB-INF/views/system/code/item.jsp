@@ -136,12 +136,12 @@
 	<div class="modal fade" id="itemModal" tabindex="-1" role="dialog"
 		aria-labelledby="itemModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<form class="needs-validation" id="fm1" novalidate>
+			<form class="needs-validation" id="itemCodeForm" novalidate>
 				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title w-100 text-center" id="itemModalLabel">품목코드 상세 정보</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<button type="button" class="close" id="itemCodeBtn" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
@@ -169,15 +169,15 @@
 		</div>
 	</div><!-- 수정,삭제 모달 -->
 	
-	<!-- 등록 모달 -->
+	<!-- 등록 상세&수정 모달 -->
 	<div class="modal fade" id="insertItemModal" tabindex="-1" role="dialog" aria-labelledby="insertItemModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <form class="needs-validation" id="fm1" novalidate>
+        <form class="needs-validation" id="insertItemCodeForm" novalidate>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title w-100 text-center" id="insertItemModalLabel">공통 품목코드 등록</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" id="insertItemModalBtn" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -208,7 +208,21 @@
            </form>
        </div>
     </div>
+	 	<script>
+    $(document).ready(function() {
+        // 공통품목코드 (등록) 모달 닫기와 폼 초기화
+        $('#insertItemModalBtn').on('click', function() {
+            $('#insertItemModal').modal('hide');
+            $('#insertItemCodeForm')[0].reset(); // 폼 초기화
+        });
 
+        // 공통품목코드 (상세) 모달 닫기와 폼 초기화
+        $('#itemCodeBtn').on('click', function() {
+            $('#itemModal').modal('hide');
+            $('#itemCodeForm')[0].reset(); // 폼 초기화
+        });
+    });
+    </script>
 	
 	<jsp:include page="../../include/footer.jsp" />
 </body>

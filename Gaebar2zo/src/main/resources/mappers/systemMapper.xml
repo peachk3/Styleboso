@@ -104,6 +104,7 @@
 	select count(*)from users where user_phone = #{user_phone}
 </select>
 
+<!--사용자ID (username) 생성 -->
 <select id="addEmpUsername" resultType="String">
 		select CONCAT('US',LPAD(COALESCE(MAX(CAST(SUBSTRING(username, 3) AS UNSIGNED)), 0) + 1, 4, '0'))
     	from users
@@ -139,8 +140,15 @@
 	where username = #{username}
 </update>
 
-
-
+<!-- 사용자 삭제(권한 데이터 삭제) -->
+<delete id="deleteEmpAuth"  parameterType="list">
+  delete from authorities
+        where username in
+        <foreach item="username" index="index" collection="list" open="(" separator="," close=")">
+            #{username}
+        </foreach>
+        
+</delete>
 <!-- 사용자 삭제 -->
 <delete id="deleteEmp" parameterType="UsersVO">
     delete from users

@@ -72,7 +72,14 @@
           <ul class="nav-group-items compact">
             <li class="nav-item"><a class="nav-link" href="/basicInfo/itemList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 품목 관리</a></li>
             <li class="nav-item"><a class="nav-link" href="/basicInfo/clientList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 거래처 관리</a></li>
-            <li class="nav-item"><a class="nav-link" href="/basicInfo/warehouseList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 창고 관리</a></li>
+            <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+                 <span class="nav-icon"><span class="nav-icon-bullet"></span></span><span data-coreui-i18n="창고 관리" onclick="location.href='/basicInfo/warehouseList'">창고 관리</span></a>
+             <ul class="nav-group-items compact">
+               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/warehouseList"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 김포 창고</a></li>
+               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 대구 창고</a></li>
+               <li class="nav-item" style="padding-left:20px;"><a class="nav-link" href="/basicInfo/"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 양산 창고</a></li>
+             </ul>
+           </li>
           </ul>
         </li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#"> 
@@ -568,10 +575,19 @@
                 <div class="dropdown-divider"></div><a class="dropdown-item" href="#">
                   <svg class="icon me-2">
                     <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
-                  </svg><span data-coreui-i18n="lockAccount">Lock Account</span></a><a class="dropdown-item" href="#">
-                  <svg class="icon me-2">
-                    <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
-                  </svg><span data-coreui-i18n="logout">Logout</span></a>
+                  </svg><span data-coreui-i18n="lockAccount">Lock Account</span></a>
+                  <!-- 로그아웃 -->
+                <a class="dropdown-item" href="#">
+				  <form action="./logout" method="post" id="logout">
+				    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+				    <svg class="icon me-2">
+				      <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
+				    </svg>
+				    <button type="button"  style="background:none; border:none; padding:0; margin:0;">
+				      <span data-coreui-i18n="logout">Logout</span>
+				    </button>
+				  </form>
+				</a>
               </div>
             </li>
           </ul>
@@ -593,5 +609,29 @@
         </div>
       </header>
       
-<!--         </div> -->
+<!-- </div> -->
     </head>
+    
+    <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<!-- sweet alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- 로그아웃  -->
+    
+    <script>
+    $(document).on("click", "#logout", function() {
+        Swal.fire({
+            title: "로그아웃 하시겠습니까?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "네",
+            cancelButtonText: "취소"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('logout').submit(); // 폼을 제출합니다.
+            }
+        });
+    });
+</script> 

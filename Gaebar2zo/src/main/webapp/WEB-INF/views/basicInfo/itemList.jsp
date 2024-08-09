@@ -188,7 +188,7 @@
 									<td><input type="text" class="form-control"
 										id="item_cli_code" data-coreui-toggle="modal"
 										data-coreui-target="#exampleModalToggle2" name="item_cli_code"
-										required disabled></td>
+										disabled></td>
 								</tr>
 								<tr>
 									<td><label for="validationCustom03" class="form-label">제품
@@ -378,6 +378,7 @@ $(document).ready(function(){
                    
                     // 모든 입력 필드를 읽기 전용으로 설정
                        $("#exampleModalToggle input").attr('readonly', true);
+                       $("#exampleModalToggle input").attr('readonly', true);
                        $("#exampleModalToggle select").prop('disabled', true);
 
                         // 수정 버튼 보이기, 저장 및 취소 버튼 숨기기
@@ -553,9 +554,12 @@ $(document).ready(function(){
 
           $('#modal2-table tbody tr').remove();
          
+          const cli_cate = "CLPT";
+          
          $.ajax({
-            url : "/common/clientList",
+            url : "/common/clientList2",
             type : "GET",
+            data: {cli_cate: cli_cate},
             contentType : 'application/json; charset=utf-8',
             dataType : "json",
             success : function(data){

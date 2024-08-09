@@ -32,6 +32,7 @@
                             </div>
 							<div class="w-full md:w-1/2 px-3 flex justify-end items-center space-x-2">
 								<button class="btn btn-primary" type="button" onclick="showRegisterModal()">등록</button>
+
 								<button class="btn btn-primary" type="button" id="updateEmp">수정</button>
 								<button class="btn btn-primary" style="background-color:white; color:black;" type="button" id="deleteEmp">삭제</button>
 							</div>
@@ -80,8 +81,6 @@
     </div>
 </div>
 
-		
-	
 	   <c:url var="pageUrl" value="/system/employeeList">
             <c:param name="searchType" value="${searchType}"/>
             <c:param name="keyword" value="${keyword}"/>
@@ -112,7 +111,6 @@
         </nav>
 	</div>
 </div>  
-
 
 	<!-- 추가 버튼 모달창 -->
 	 <!-- Modal -->
@@ -232,6 +230,6 @@
     <!-- addEmp.js 연결 -->   
     <script src="../resources/js/addEmp.js"></script>
     
-<%@ include file="../include/footer.jsp" %>
 </body>
+<%@ include file="../include/footer.jsp" %>
 </html>

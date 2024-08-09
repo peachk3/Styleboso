@@ -199,9 +199,9 @@
                                 <td><label for="cli_cate" class="form-label">거래처 구분</label></td>
                                 <td>
                                     <div>
-                                        <input type="radio" id="cli_cateCu" name="cli_cate" value="CLCU" required disabled>
+                                        <input type="radio" id="cli_cateCu" name="cli_cate" value="CLCU" disabled>
                                         <label for="cli_cateCu">고객사</label>
-                                        <input type="radio" id="cli_catePt" name="cli_cate" value="CLPT" required disabled>
+                                        <input type="radio" id="cli_catePt" name="cli_cate" value="CLPT" disabled>
                                         <label for="cli_catePt">협력사</label>
                                     </div>
                                     <div class="invalid-feedback">거래처 구분을 선택하세요</div>

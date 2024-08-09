@@ -8,7 +8,6 @@
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <body>
-	<div>
 		  <div class="container mx-auto px-4 py-8">
             <div class="bg-white rounded-lg shadow-lg p-6">
             <h1 class="text-2xl font-semibold text-gray-800 mb-6">직원 리스트</h1>
@@ -30,8 +29,7 @@
                             <button class="btn btn-outline-secondary" type="submit">검색</button>
                             </div>
                             </div>
-							<div class="w-full md:w-1/2 px-3 flex justify-end items-center space-x-2"
-								style="margin-right: 10px; padding: 10px;">
+							<div class="w-full md:w-1/2 px-3 flex justify-end items-center space-x-2">
 								<button class="btn btn-primary" type="button"
 									onclick="showRegisterModal()">등록</button>
 								<button class="btn btn-primary" type="button" id="updateEmp">수정</button>
@@ -80,9 +78,7 @@
    </table>
                 </div>
             </div>
-        </div>
-		
-	
+	<div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
 	   <c:url var="pageUrl" value="/system/employeeList">
             <c:param name="searchType" value="${searchType}"/>
             <c:param name="keyword" value="${keyword}"/>
@@ -111,8 +107,9 @@
                 </c:if>
             </ul>
         </nav>
-	</div>
-</div>  
+        </div>
+</div> 
+</div> 
 	<!-- 추가 버튼 모달창 -->
 	 <!-- Modal -->
 	 <div class="modal fade" id="registerModal" role="dialog" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
@@ -231,6 +228,6 @@
     <!-- addEmp.js 연결 -->   
     <script src="../resources/js/addEmp.js"></script>
     
-<%@ include file="../include/footer.jsp" %>
 </body>
+<%@ include file="../include/footer.jsp" %>
 </html>

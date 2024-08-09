@@ -26,70 +26,8 @@
 		    width: 100%; /* 버튼이 부모 요소에 맞게 전체 너비를 가지도록 설정합니다 */
 		  }
 	</style> 
-	<style>
-		[x-cloak] {
-			display: none;
-		}
-		
-		.transition {
-			transition: all 0.3s ease-out;
-		}
-		
-		.status-buttons {
-			display: none;
-		}
-		
-		.modal-dialog {
-			max-width: 80%;
-		}
-		
-		.search-container {
-			display: flex;
-			margin-bottom: 20px;
-		}
-		
-		.search-group {
-			display: flex;
-			align-items: center;
-		}
-		
-		.table-container {
-			margin-top: 20px;
-		}
-		
-		.clickable-row {
-			cursor: pointer;
-		}
-		
-		.selected {
-			background-color: #e0e0e0;
-		}
-		
-		.menu-open #tableContainer {
-			margin-top: 76px; /* 하위 메뉴의 높이에 맞춰 조정하세요 */
-		}
-		
-		#statusMenu {
-			transition: all 0.3s ease-in-out;
-			opacity: 0;
-			transform: translateY(-10px);
-		}
-		
-		#statusMenu.active {
-			opacity: 1;
-			transform: translateY(0);
-		}
-		/* 두 번째 모달이 첫 번째 모달 오른쪽에 위치하도록 설정 */
-		.modal.right-modal .modal-dialog {
-			position: absolute;
-			right: -500px; /* 첫 번째 모달의 오른쪽에 위치하도록 설정 */
-			top: 50%;
-			transform: translateY(-50%);
-		}
-	</style>
  
 </head>  
-   <h1>/Styleboso/basicInfo/clientList.jsp</h1>
    
 <!--     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;"> -->
 <!--       <button class="btn btn-primary" type="button" onclick="">검색</button> -->
@@ -123,51 +61,51 @@
                             <button class="btn btn-outline-secondary" type="submit">검색</button>
                         </div>
                        </div>
-                       <div class="w-full md:w-1/2 px-3 flex justify-end items-center" >
+                       <div class="w-full md:w-1/2 px-3 flex justify-end items-center space-x-2" >
 							<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
 								<button class="btn btn-primary" type="button"
 									onclick="location.href='/basicInfo/clientAdd'">등록</button>
 								<button class="btn btn-primary" id="deleteClientBtn"
-									name="deleteClientBtn" type="button">삭제</button>
+									name="deleteClientBtn" style="background-color:white; color:black;" type="button">삭제</button>
 							</sec:authorize>
                    </div>
                 </div>
 		  </form>
 
 	<div id="tableContainer" class="transition-all duration-300 ease-in-out">
-	<div class="overflow-x-auto bg-white border 1px solid overflow-y-auto relative" style="height: 405px;">
+	<div class="overflow-x-hidden bg-white border 1px solid overflow-y-auto relative" style="height: 405px;">
    <table class="table table-hover border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
       <thead>
-         <tr>
-            <th scope="col">
-               <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="selectAll" onclick = "toggleCheckboxes(this)"> 
+         <tr class="text-left">
+            <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100">
+				<div class="form-check">
+                  <input class="form-check-input focus:outline-none focus:shadow-outline" type="checkbox" value="" id="selectAll" onclick = "toggleCheckboxes(this)"> 
                      <!-- <label class="form-check-label" for="flexCheckDisabled"> Disabled checkbox </label> -->
-               </div>
+            	</div>
             </th>
-            <th scope="col">거래처 코드</th>
-            <th scope="col">거래처명</th>
-            <th scope="col">거래처 사업자 등록 번호</th>
-            <th scope="col">거래처 구분</th>
-            <th scope="col">거래처 업종</th>
-            <th scope="col">우편번호</th>
-            <th scope="col">거래처 주소</th>
-            <th scope="col">거래처 주소2</th>
-            <th scope="col">거래처 주소3</th>
-            <th scope="col">연락처</th>
-            <th scope="col">대표자</th>
-            <th scope="col">이메일</th>
-            <th scope="col">담당자</th>
+            <th>거래처 코드</th>
+            <th>거래처명</th>
+            <th>사업자 등록 번호</th>
+            <th>거래처 구분</th>
+            <th>거래처 업종</th>
+            <th>우편번호</th>
+            <th>거래처주소</th>
+            <th>상세주소</th>
+            <th>상세주소2</th>
+            <th>연락처</th>
+            <th>대표자</th>
+            <th>이메일</th>
+            <th>담당자</th>
          </tr>
       </thead>
-      <tbody>
+      <tbody class="bg-white divide-y divide-gray-200">
          <c:forEach var="cli" items="${clientList }">
             <tr>
-               <td>
+               <td class="border-dashed border-t border-gray-200 px-3">
                     <div class="form-check">
-                           <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault${cli.cli_num}"> 
+                           <input class="form-check-input rowCheckbox focus:outline-none focus:shadow-outline" type="checkbox" value="" id="flexCheckDefault${cli.cli_num}"> 
                           <!--  <label class="form-check-label" for="flexCheckChecked"> Checked checkbox </label> -->
-                       </div>
+                    </div>
                      </td>
                      <td class="clickable-cell">${cli.cli_num }</td>
                      <td class="clickable-cell">${cli.cli_name }</td>
@@ -196,7 +134,7 @@
    </table>
 </div>
 </div>
-</div>
+
 
 
 	<div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
@@ -206,7 +144,7 @@
         </c:url>
 
 <!--         <nav aria-label="Page navigation" class="pagination-container"> -->
-	<nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+	<nav class="pagination-container" aria-label="Pagination">
             <ul class="pagination justify-content-center">
                 <c:if test="${pageVO.prev}">
                     <li class="page-item">
@@ -231,7 +169,7 @@
         </nav>
     </div>
 </div>
-    
+</div>
 
 <!-- Modal -->
 <!-- <div class="modal fade" id="exampleModalToggle" data-coreui-backdrop="static" data-coreui-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"> -->
@@ -261,9 +199,9 @@
                                 <td><label for="cli_cate" class="form-label">거래처 구분</label></td>
                                 <td>
                                     <div>
-                                        <input type="radio" id="cli_cateCu" name="cli_cate" value="CLCU" required disabled>
+                                        <input type="radio" id="cli_cateCu" name="cli_cate" value="CLCU" disabled>
                                         <label for="cli_cateCu">고객사</label>
-                                        <input type="radio" id="cli_catePt" name="cli_cate" value="CLPT" required disabled>
+                                        <input type="radio" id="cli_catePt" name="cli_cate" value="CLPT" disabled>
                                         <label for="cli_catePt">협력사</label>
                                     </div>
                                     <div class="invalid-feedback">거래처 구분을 선택하세요</div>
@@ -282,7 +220,7 @@
                                 <td>
                                     <div class="d-flex">
                                         <input type="text" class="form-control" id="sample6_postcode" readonly>
-                                        <button type="button" id="postCodeButton" onclick="sample6_execDaumPostcode()" disabled>찾기</button>
+                                        <button type="button" style="border: 1px solid;" id="postCodeButton" onclick="sample6_execDaumPostcode()" disabled>찾기</button>
                                     </div>
                                 </td>
                             </tr>
@@ -747,7 +685,7 @@ $(document).ready(function() {
             // 아무 작업도 하지 않음 (원래의 수정상태로 유지)
             alert("취소 작업이 중단되었습니다.");
         }
-        alert(" 취소하시겠습니까? ");
+        //alert(" 취소하시겠습니까? ");
         
     });
     

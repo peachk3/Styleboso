@@ -2,8 +2,6 @@
 <%@ include file="../include/header.jsp" %>
 
 <body>
-	<h1>/Styleboso/basicInfo/itemAdd.jsp</h1>
-	
 	<div class="container-lg px-4">
 		<div class="row">
 			<div class="col-12">
@@ -71,15 +69,15 @@
 								<div class="invalid-feedback" >매입 단가를 입력하세요 </div>
 							</div>
 							<div class="col-md-1" id="money" >
-								만 원
+								원
 							</div>
 							<div class="col-md-2">
 								<label for="item_sale_price" class="form-label"> 매출 단가 * </label> 
-								<input type="number" class="form-control" id="item_sale_price" name="item_sale_price" placeholder="ex) 1000" required>
+								<input type="number" class="form-control" id="item_sale_price" name="item_sale_price" placeholder="ex) 10000" required>
 								<div class="invalid-feedback" >매출 단가를 입력하세요 </div>
 							</div>
 							<div class="col-md-1" id="money">
-								만 원
+								원
 							</div>
 <!-- 							<div class="col-md-3"> -->
 <!-- 								<label for="item_inven_qty" class="form-label"> 현재고 </label>  -->

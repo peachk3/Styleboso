@@ -3,12 +3,6 @@
 <%@ include file="../include/header.jsp" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<head>
-<!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Alpine.js -->
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-</head>
 <style>
 	.modal.right-modal .modal-dialog {
 		position: absolute;
@@ -48,7 +42,6 @@
 </style>
 
 
-	<h1>/Styleboso/basicInfo/warehouseList.jsp</h1>
 
 
 <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;"> -->
@@ -64,87 +57,100 @@
 		<div class="bg-white rounded-lg shadow-lg p-6">
 			<h1 class="text-2xl font-semibold text-gray-800 mb-6"> 창고 리스트</h1>
 
-			<div class="flex flex-wrap -mx-3 mb-4 md:flex-nowrap">
+
+
+			<div class="flex flex-wrap -mx-3 mb-4">
 				<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 					<div class="input-group w-500">
 						<div class="input-group-prepend">
-							<div class="w-full md:w-1/2 px-3 flex justify-end items-center">
-								<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-									<input class="btn btn-primary" type="button" value="등록" onclick="location.href='/basicInfo/warehouseAdd'">
-									<input class="btn btn-primary" id="deleteWarehouseBtn" type="button" value="삭제">
-								</sec:authorize>
-							</div>
+						
+						
+						
+						
+						
+						
+						
 						</div>
+						
+						
 					</div>
 				</div>
-								<div id="tableContainer"class="transition-all duration-300 ease-in-out">
-									<div
-										class="overflow-x-auto bg-white border 1px solid overflow-y-auto relative"
-										style="height: 405px;">
-										<table class="table table-hover border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
-											<thead>
-												<tr>
-													<th scope="col">
-														<div class="form-check">
-															<input class="form-check-input" type="checkbox" value=""
-																id="selectAll" onclick="toggleCheckboxes(this)">
-														</div>
-													</th>
-													<th scope="col">창고 코드</th>
-													<th scope="col">창고 이름</th>
-													<th scope="col">연락처</th>
-													<th scope="col">주소</th>
-													<th scope="col">관리자</th>
-													<th scope="col">현재상태</th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach var="whc" items="${whCodeList }">
-													<tr>
-														<td>
-															<div class="form-check">
-																<input class="form-check-input" type="checkbox" value=""
-																	id="flexCheckDefault${whc.m_cate_wh_code }">
-															</div>
-														</td>
-														<td class="clickable-cell">${whc.m_cate_wh_code }${whc.s_cate_wh_code }</td>
-														<td class="clickable-cell">${whc.s_cate_wh_name }</td>
-														<td class="clickable-cell">${whc.wh_tel }</td>
-														<td class="clickable-cell">${whc.wh_add1 }${whc.wh_add2 }
-															${whc.wh_add3 }</td>
-														<td class="clickable-cell">${whc.wh_man }</td>
-														<td class="clickable-cell"><c:choose>
-																<c:when test="${whc.wh_status == 1 }">사용중</c:when>
-																<c:otherwise> 사용 중지</c:otherwise>
-															</c:choose></td>
-													</tr>
-												</c:forEach>
-											</tbody>
-										</table>
-
-									</div>
+				<div class="w-full md:w-1/2 px-3 flex justify-end items-center">
+					<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
+						<input class="btn btn-primary" style="margin-right: 10px;"type="button" value="등록" onclick="location.href='/basicInfo/warehouseAdd'">
+						
+						<input class="btn btn-primary" style="background-color:white; color:black;" id="deleteWarehouseBtn" type="button" value="삭제">
+					</sec:authorize>
+				</div>
+			</div>
+<div id="tableContainer"class="transition-all duration-300 ease-in-out">
+		<div class="overflow-x-hidden bg-white border 1px solid overflow-y-hidden relative" style="height: 405px;">
+			<table class="table table-hover border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
+				<thead>
+					<tr class="text-left">
+						<th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100">
+							<div class="form-check">
+								<input class="form-check-input focus:outline-none focus:shadow-outline" type="checkbox" value="" id="selectAll" onclick="toggleCheckboxes(this)">
 							</div>
-							</div>
-							</div>
+						</th>
+						<th>창고 코드</th>
+						<th>창고 이름</th>
+						<th>연락처</th>
+						<th>주소</th>
+						<th>관리자</th>
+						<th>현재상태</th>
+					</tr>
+				</thead>
+				<tbody class="bg-white divide-y divide-gray-200">
+					<c:forEach var="whc" items="${whCodeList }">
+						<tr>
+							<td class="border-dashed border-t border-gray-200 px-3">
+							<div class="form-check">
+                          		<input class="form-check-input rowCheckbox focus:outline-none focus:shadow-outline" type="checkbox" value="" id="flexCheckDefault${whc.m_cate_wh_code }"> 
+                       		</div>
+							</td>
+							<td class="clickable-cell">${whc.m_cate_wh_code }${whc.s_cate_wh_code }</td>
+							<td class="clickable-cell">${whc.s_cate_wh_name }</td>
+							<td class="clickable-cell">${whc.wh_tel }</td>
+							<td class="clickable-cell">${whc.wh_add1 }${whc.wh_add2 }
+								${whc.wh_add3 }</td>
+							<td class="clickable-cell">${whc.wh_man }</td>
+							<td class="clickable-cell"><c:choose>
+									<c:when test="${whc.wh_status == 1 }">사용중</c:when>
+									<c:otherwise> 사용 중지</c:otherwise>
+								</c:choose></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+</div>
+</div>
+</div>
 
 <div class="container mx-auto px-4 py-8">
 		<div class="bg-white rounded-lg shadow-lg p-6">
 			<h1 class="text-2xl font-semibold text-gray-800 mb-6">창고별 재고 출력</h1>
-			
-				<div class="d-grid gap-2 d-md-flex justify-content-md-end"
-					style="margin-right: 10px; padding: 10px;">
+			<div class="flex flex-wrap -mx-3 mb-4 md:flex-nowrap">
+			<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+			<div class="input-group w-500">
+			<div class="input-group-prepend">
+			</div>
+			</div>
+			</div>
+				<div class="w-full md:w-1/2 px-3 flex justify-end items-center space-x-2">
 					<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
 						<button class="btn btn-primary" id="registWhZoneBtn"
 							name="registWhZoneBtn" type="button">Zone 등록</button>
 						<button class="btn btn-primary" id="registWhBtn"
 							name="registWhBtn" type="button">Rack 등록</button>
-						<button class="btn btn-primary" id="deleteClientBtn"
+						<button class="btn btn-primary" id="deleteClientBtn" style="background-color:white; color:black;"
 							name="deleteClientBtn" type="button">삭제</button>
 					</sec:authorize>
 				</div>
-				
+				</div>
 				<div id="tableContainer" class="transition-all duration-300 ease-in-out">
-				<div class="overflow-x-auto bg-white border 1px solid overflow-y-auto relative" style="height: 405px;">
+				<div class="overflow-x-hidden bg-white border 1px solid overflow-y-auto relative" style="height: 405px;">
 				<div class="row">
 					<div class="col">
 						<select id="warehouseSelect" class="form-select"
@@ -253,7 +259,7 @@
 													<div class="d-flex">
 														<input type="text" class="form-control"
 															id="sample6_postcode" name="wh_postCode" readonly>
-														<button type="button" id="postCodeButton"
+														<button type="button" id="postCodeButton" style="border: 1px solid;"
 															onclick="sample6_execDaumPostcode()" disabled>찾기</button>
 													</div>
 												</td>
@@ -703,7 +709,7 @@ $(document).ready(function(){
             // 아무 작업도 하지 않음 (원래의 수정상태로 유지)
             alert("취소 작업이 중단되었습니다.");
         }
-        alert(" 취소하시겠습니까? ");
+        // alert(" 취소하시겠습니까? ");
         
     });
     
@@ -906,7 +912,7 @@ $(document).ready(function(){
                      
                      var tableHtml = '<table class="table"><thead><tr><th>품목 번호</th><th>재고량</th></tr></thead><tbody>';
                      $.each(data, function(index, value) {
-                    	 tableHtml += '<tr><td>' + value.goods_num + '</td><td>' + value.inven_qty + '</td></tr>';
+                    	 tableHtml += '<tr><td>' + value.goods_num + '</td><td>'+ value.inven_qty + '</td></tr>';
 //                          $('#inventoryList').append('<table><thead><tr><th>'+ 품목 번호 + '</th><th>' + 재고량 + '</th></tr></thead><tbody><td>'
 //                         		  + value.goods_num + '</td><td>' + value.inven_qty + '</td></tbody></table>');
                      });

@@ -7,64 +7,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	
 <head>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com"></script>
-<!-- Alpine.js -->
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-
 	<style>
-		[x-cloak] {
-			display: none;
-		}
-		
-		.transition {
-			transition: all 0.3s ease-out;
-		}
-		
-		.status-buttons {
-			display: none;
-		}
-		
-		.modal-dialog {
-			max-width: 80%;
-		}
-		
-		.search-container {
-			display: flex;
-			margin-bottom: 20px;
-		}
-		
-		.search-group {
-			display: flex;
-			align-items: center;
-		}
-		
-		.table-container {
-			margin-top: 20px;
-		}
-		
-		.clickable-row {
-			cursor: pointer;
-		}
-		
-		.selected {
-			background-color: #e0e0e0;
-		}
-		
-		.menu-open #tableContainer {
-			margin-top: 76px; /* 하위 메뉴의 높이에 맞춰 조정하세요 */
-		}
-		
-		#statusMenu {
-			transition: all 0.3s ease-in-out;
-			opacity: 0;
-			transform: translateY(-10px);
-		}
-		
-		#statusMenu.active {
-			opacity: 1;
-			transform: translateY(0);
-		}
 		/* 두 번째 모달이 첫 번째 모달 오른쪽에 위치하도록 설정 */
 		.modal.right-modal .modal-dialog {
 			position: absolute;
@@ -72,12 +15,13 @@
 			top: 50%;
 			transform: translateY(-50%);
 		}
+		nav[aria-label="Pagination"] {
+    list-style: none; /* 마커 제거 */
+}
+		
 	</style>
-
 </head>
 
-
-	<h1>/Styleboso/basicInfo/itemList.jsp</h1>
 
 <!-- 	<div class="d-grid gap-2 d-md-flex justify-content-md-end" -->
 <!-- 		style="margin-right: 10px; padding: 10px;"> -->
@@ -96,7 +40,7 @@
 			<h1 class="text-2xl font-semibold text-gray-800 mb-6">품목 리스트</h1>
 
 			<!-- Search Form -->
-					<form action="/basicInfo/itemList" method="get" class="form-inline mt-3">
+			<form action="/basicInfo/itemList" method="get" class="form-inline mt-3">
 				<div class="flex flex-wrap -mx-3 mb-4 md:flex-nowrap">
 					<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 						<div class="input-group w-500">
@@ -114,48 +58,49 @@
 										유형</option>
 								</select>
 							</div>
-							<input type="text" class="form-control placeholder="검색어를 입력하세요" name="keyword" value="${keyword}">
+							<input type="text" class="form-control" placeholder="검색어를 입력하세요" name="keyword" value="${keyword}">
 							<button class="btn btn-outline-secondary" type="submit">검색</button>
 						</div>
 					</div>
-				<div class="w-full md:w-1/2 px-3 flex justify-end items-center" >
+				<div class="w-full md:w-1/2 px-3 flex justify-end items-center space-x-2" >
 					<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-						<input type="button" class="btn btn-primary" style="margin-right:5px;"value="등록" onclick="location.href='/basicInfo/itemAdd'">
+						<input type="button" class="btn btn-primary" value="등록" onclick="location.href='/basicInfo/itemAdd'">
 						<input type="button" class="btn btn-primary" style="background-color:white; color:black;" id="deleteItemBtn" name="deleteItemBtn" value="삭제">
 					</sec:authorize>
 				</div>
 			</div>
 		</form>
 
-		<div id="tableContainer" class="transition-all duration-300 ease-in-out">
-		<div class="overflow-x-auto bg-white border 1px solid overflow-y-auto relative" style="height: 405px;">
-                <table class="table table-hover border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
+	<div id="tableContainer" class="transition-all duration-300 ease-in-out">
+		<div class="overflow-x-hidden bg-white border 1px solid overflow-y-auto relative" style="height: 405px;">
+             <table class="table table-hover border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
 <!-- 			<table class="table table-hover"> -->
 				<thead>
-					<tr>
-						<th scope="col">
+					<tr class="text-left">
+						<th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100">
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="selectAll" onclick="toggleCheckboxes(this)">
-							</div>
+                  <input class="form-check-input focus:outline-none focus:shadow-outline" type="checkbox" value="" id="selectAll" onclick = "toggleCheckboxes(this)"> 
+                     <!-- <label class="form-check-label" for="flexCheckDisabled"> Disabled checkbox </label> -->
+            	</div>
 						</th>
 						<th scope="col">품목 코드</th>
 						<th scope="col">거래처 코드</th>
 						<th scope="col">품목명</th>
 						<th scope="col">제품 유형</th>
-						<th scope="col">매입 단가 (만 원)</th>
-						<th scope="col">매출 단가 (만 원)</th>
+						<th scope="col">매입 단가 (원)</th>
+						<th scope="col">매출 단가 (원)</th>
 						<th scope="col">재질</th>
 						<th scope="col">비고</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody class="bg-white divide-y divide-gray-200">
 					<c:forEach var="itl" items="${itemList }">
 						<tr>
-							<td>
+							<td class="border-dashed border-t border-gray-200 px-3">
 								<div class="form-check">
-									<input class="form-check-input" type="checkbox" value=""
-										id="flexCheckdefault${itl.item_num }">
-								</div>
+                           <input class="form-check-input rowCheckbox focus:outline-none focus:shadow-outline" type="checkbox" value="" id="flexCheckDefault${cli.cli_num}"> 
+                          <!--  <label class="form-check-label" for="flexCheckChecked"> Checked checkbox </label> -->
+                       </div>
 							</td>
 							<td class="clickable-cell">${itl.item_num }</td>
 							<td class="clickable-cell">${itl.item_cli_code }</td>
@@ -170,7 +115,7 @@
 				</tbody>
 			</table>
 			</div>
-			</div>
+		</div>
 
 		<div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
 			<c:url var="pageUrl" value="/basicInfo/itemList">
@@ -180,23 +125,29 @@
 
 <!-- 			<nav aria-label="Page navigation" class="pagination-container"> -->
 <!-- 				<ul class="pagination justify-content-center"> -->
-				<nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-					<c:if test="${pageVO.prev}">
-						<li class="page-item"><a class="page-link" href="${pageUrl}&page=${pageVO.startPage - 1}" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-						</a></li>
-					</c:if>
-					<c:forEach var="i" begin="${pageVO.startPage}"
-						end="${pageVO.endPage}" step="1">
-						<li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
-							<a class="page-link" href="${pageUrl}&page=${i}">${i}</a>
-						</li>
-					</c:forEach>
-					<c:if test="${pageVO.next && pageVO.endPage > 0}">
-						<li class="page-item"><a class="page-link" href="${pageUrl}&page=${pageVO.endPage + 1}" aria-label="Next">
-							<span aria-hidden="true">&raquo;</span></a>
-						</li>
-					</c:if>
-				</nav>
+				<nav aria-label="Page navigation" class="pagination-container">
+      <ul class="pagination justify-content-center">
+         <c:if test="${pageVO.prev}">
+            <li class="page-item">
+               <a class="page-link" href="/basicInfo/itemList?page=${pageVO.startPage - 1}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+               </a>
+            </li>
+         </c:if>
+         <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+            <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
+               <a class="page-link" href="/basicInfo/itemList?page=${i}">${i}</a>
+            </li>
+         </c:forEach>
+         <c:if test="${pageVO.next && pageVO.endPage > 0}">
+            <li class="page-item">
+               <a class="page-link" href="/basicInfo/itemList?page=${pageVO.endPage + 1}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+               </a>
+            </li>
+         </c:if>
+      </ul>
+   </nav>
 			</div>
 		</div>
 	</div>
@@ -237,7 +188,7 @@
 									<td><input type="text" class="form-control"
 										id="item_cli_code" data-coreui-toggle="modal"
 										data-coreui-target="#exampleModalToggle2" name="item_cli_code"
-										required disabled></td>
+										disabled></td>
 								</tr>
 								<tr>
 									<td><label for="validationCustom03" class="form-label">제품
@@ -341,10 +292,8 @@ const name = $("#userName").val();
 
 // 전체 선택
 function toggleCheckboxes(source) {
-    const checkboxes = document.getElementsByClassName('form-check-input');
-    for (let checkbox of checkboxes) {
-        checkbox.checked = source.checked;
-    }
+    const checkboxes = document.querySelectorAll('input[type="checkbox"].form-check-input');
+    checkboxes.forEach(checkbox => checkbox.checked = source.checked);
 }
 
 $(document).ready(function(){
@@ -428,6 +377,7 @@ $(document).ready(function(){
                    $("#comm").val(item.comm);
                    
                     // 모든 입력 필드를 읽기 전용으로 설정
+                       $("#exampleModalToggle input").attr('readonly', true);
                        $("#exampleModalToggle input").attr('readonly', true);
                        $("#exampleModalToggle select").prop('disabled', true);
 
@@ -593,7 +543,7 @@ $(document).ready(function(){
                // 아무 작업도 하지 않음 (원래의 수정상태로 유지)
                alert("취소 작업이 중단되었습니다.");
            }
-           alert(" 취소하시겠습니까? ");
+           // alert(" 취소하시겠습니까? ");
            
        });
     
@@ -604,9 +554,12 @@ $(document).ready(function(){
 
           $('#modal2-table tbody tr').remove();
          
+          const cli_cate = "CLPT";
+          
          $.ajax({
-            url : "/common/clientList",
+            url : "/common/clientList2",
             type : "GET",
+            data: {cli_cate: cli_cate},
             contentType : 'application/json; charset=utf-8',
             dataType : "json",
             success : function(data){

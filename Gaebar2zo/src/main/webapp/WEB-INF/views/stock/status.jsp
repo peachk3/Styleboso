@@ -20,7 +20,10 @@
     }
 </style>
 
-<body>
+<body class="bg-gray-100 font-sans">
+	<div class="container mx-auto px-4 py-8">
+		<div class="bg-white rounded-lg shadow-lg p-6">
+			<h1 class="text-2xl font-semibold text-gray-800 mb-6">재고 리스트</h1>
     <div class="container">
         <div class="container-fluid mt-5">
             <div class="row">
@@ -44,7 +47,10 @@
             </div>
         </div>
 
-        <table class="table border mb-0 table-hover" id="stockTable">
+<div id="tableContainer" class="transition-all duration-300 ease-in-out">
+		<div class="overflow-x-hidden bg-white border 1px solid overflow-y-auto relative" style="height: 405px;">
+             <table class="table table-hover border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative" id="stockTable">
+<!--         <table class="table border mb-0 table-hover" > -->
             <thead class="table-light">
                 <tr>
                     <td>재고 번호</td>
@@ -78,7 +84,8 @@
                 </c:forEach>
             </tbody>
         </table>
-
+</div>
+</div>
         <c:url var="pageUrl" value="/stock/status">
             <c:param name="searchType" value="${searchType}"/>
             <c:param name="keyword" value="${keyword}"/>
@@ -108,7 +115,8 @@
             </ul>
         </nav>
     </div>
-
+</div>
+</div>
     <!-- Modal -->
     <div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModalLabel" aria-hidden="true">
         <div class="modal-dialog">

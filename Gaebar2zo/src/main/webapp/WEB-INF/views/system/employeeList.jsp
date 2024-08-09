@@ -7,12 +7,14 @@
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<body>
-	<div>
-		  <div class="container-fluid mt-5">
-            <div class="row">
-                <div class="col-md-3 mb-3">
+<body class="bg-gray-100 font-sans">
+		  <div class="container mx-auto px-4 py-8">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+            <h1 class="text-2xl font-semibold text-gray-800 mb-6">직원 리스트</h1>
+            
                     <form action="/system/employeeList" method="get" class="form-inline mt-3">
+             		   <div class="flex flex-wrap -mx-3 mb-4 md:flex-nowrap">
+             		   <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <div class="input-group w-500">
                             <div class="input-group-prepend">
                                 <select class="form-select custom-select-radius custom-select-width" id="searchType" name="searchType">
@@ -26,23 +28,22 @@
                             </div>
                             <input type="text" class="form-control" placeholder="검색어를 입력하세요" name="keyword" value="${keyword}">
                             <button class="btn btn-outline-secondary" type="submit">검색</button>
+                            </div>
+                            </div>
+							<div class="w-full md:w-1/2 px-3 flex justify-end items-center space-x-2">
+								<button class="btn btn-primary" type="button" onclick="showRegisterModal()">등록</button>
+
+								<button class="btn btn-primary" type="button" id="updateEmp">수정</button>
+								<button class="btn btn-primary" style="background-color:white; color:black;" type="button" id="deleteEmp">삭제</button>
+							</div>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-		
-		<div class="d-grid gap-2 d-md-flex justify-content-md-end"
-			style="margin-right: 10px; padding: 10px;">
-			<button class="btn btn-primary" type="button"
-				onclick="showRegisterModal()">등록</button>
-			<button class="btn btn-primary" type="button" id="updateEmp">수정</button>
-			<button class="btn btn-primary" type="button" id="deleteEmp">삭제</button>
-		</div>
-	</div>
-	<table class="table table-hover">
+                    
+    <div id="tableContainer" class="transition-all duration-300 ease-in-out">
+	<div class="overflow-x-hidden bg-white border 1px solid overflow-y-auto relative" style="height: 405px;">
+	<table class="table table-hover border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
       <thead>
-      	<tr>
+      	<tr class="text-left">
          <th scope="col"> 
             <div class="form-check">
            	   <input class="form-check-input" type="checkbox" value="" id="selectAll" onclick = "toggleCheckboxes(this)"> 
@@ -77,7 +78,9 @@
 		</tbody>
 		
    </table>
-	
+    </div>
+</div>
+
 	   <c:url var="pageUrl" value="/system/employeeList">
             <c:param name="searchType" value="${searchType}"/>
             <c:param name="keyword" value="${keyword}"/>
@@ -106,7 +109,9 @@
                 </c:if>
             </ul>
         </nav>
-    
+	</div>
+</div>  
+
 	<!-- 추가 버튼 모달창 -->
 	 <!-- Modal -->
 	 <div class="modal fade" id="registerModal" role="dialog" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
@@ -225,6 +230,6 @@
     <!-- addEmp.js 연결 -->   
     <script src="../resources/js/addEmp.js"></script>
     
-<%@ include file="../include/footer.jsp" %>
 </body>
+<%@ include file="../include/footer.jsp" %>
 </html>

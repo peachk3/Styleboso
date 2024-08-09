@@ -13,16 +13,20 @@
 
     <meta name="_csrf" content="${_csrf.token}">
     <meta name="_csrf_header" content="${_csrf.headerName}">
-<body>
-	<h1>/Styleboso/stock/releaseList.jsp</h1>
+<body class="bg-gray-100 font-sans">
+	<div class="container mx-auto px-4 py-8">
+		<div class="bg-white rounded-lg shadow-lg p-6">
+			<h1 class="text-2xl font-semibold text-gray-800 mb-6">출고 리스트</h1>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
 		<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
            <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/stock/releaseAdd'">
-           <input type="button" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
+           <input type="button" style="background-color:white; color:black;" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
        </sec:authorize>
 	</div>
 
-<table class="table table-hover">
+	<div id="tableContainer" class="transition-all duration-300 ease-in-out">
+		<div class="overflow-x-hidden bg-white border 1px solid overflow-y-auto relative" style="height: 405px;">
+             <table class="table table-hover border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
      	<thead>
     <tr>
         <th scope="col">
@@ -66,6 +70,8 @@
     </c:forEach>
 </tbody>
 </table>
+</div>
+</div>
 
     <div class="container mt-3">
     <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
@@ -76,7 +82,8 @@
         </div>
    </sec:authorize>
     </div>
-
+</div>
+</div>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

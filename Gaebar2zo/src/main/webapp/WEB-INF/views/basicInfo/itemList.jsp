@@ -37,7 +37,7 @@
 <body class="bg-gray-100 font-sans">
 	<div class="container mx-auto px-4 py-8">
 		<div class="bg-white rounded-lg shadow-lg p-6">
-			<h1 class="text-2xl font-semibold text-gray-800 mb-6">품목 리스트</h1>
+			<h1 class="text-2xl font-semibold text-gray-800 mb-6">품목 리스트 AWS</h1>
 
 			<!-- Search Form -->
 			<form action="/basicInfo/itemList" method="get" class="form-inline mt-3">

@@ -75,10 +75,12 @@
 								</table>
 							</div>
 						</div>
+							</form>	
 							<div class="col-12">
 								<button class="btn btn-primary" type="submit" id="submitFormBtn">등록</button>
 							</div>
-						</form>
+<!-- 	</form>					 -->
+						
 							<!-- Modal1 -->
 							<div class="modal fade" id="exampleModal1" tabindex="-1"
 								aria-labelledby="exampleModalLabel" aria-hidden="true">

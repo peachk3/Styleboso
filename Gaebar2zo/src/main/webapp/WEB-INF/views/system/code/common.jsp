@@ -60,7 +60,7 @@
 	<!-- 등록 모달 -->
 	<div class="modal fade" id="insertCodeModal" tabindex="-1" role="dialog" aria-labelledby="insertCodeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <form class="needs-validation" id="fm1" novalidate>
+        <form class="needs-validation" id="insertCodeForm" novalidate>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
             <div class="modal-content">
                 <div class="modal-header">
@@ -101,7 +101,7 @@
 	<div class="modal fade" id="commonModal" tabindex="-1" role="dialog"
 		aria-labelledby="commonModalLabel">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<form class="needs-validation" id="fm1" novalidate>
+			<form class="needs-validation" id="updateCommonForm" novalidate>
 				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -132,7 +132,21 @@
 			</form>
 		</div>
 	</div>
+	 <script>
+    $(document).ready(function() {
+        // 등록 모달 닫기와 폼 초기화
+        $('#insertModalCloseBtn').on('click', function() {
+            $('#insertCodeModal').modal('hide');
+            $('#insertCodeForm')[0].reset(); // 폼 초기화
+        });
 
+        // 상세 모달 닫기와 폼 초기화
+        $('#commonModalCloseBtn').on('click', function() {
+            $('#commonModal').modal('hide');
+            $('#updateCommonForm')[0].reset(); // 폼 초기화
+        });
+    });
+    </script>
 
     <jsp:include page="../../include/footer.jsp" />
 </body>

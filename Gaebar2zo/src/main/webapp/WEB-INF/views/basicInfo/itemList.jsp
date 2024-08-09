@@ -83,14 +83,14 @@
                      <!-- <label class="form-check-label" for="flexCheckDisabled"> Disabled checkbox </label> -->
             	</div>
 						</th>
-						<th>품목 코드</th>
-						<th>거래처 코드</th>
-						<th>품목명</th>
-						<th>제품 유형</th>
-						<th>매입 단가 (만 원)</th>
-						<th>매출 단가 (만 원)</th>
-						<th>재질</th>
-						<th>비고</th>
+						<th scope="col">품목 코드</th>
+						<th scope="col">거래처 코드</th>
+						<th scope="col">품목명</th>
+						<th scope="col">제품 유형</th>
+						<th scope="col">매입 단가 (원)</th>
+						<th scope="col">매출 단가 (원)</th>
+						<th scope="col">재질</th>
+						<th scope="col">비고</th>
 					</tr>
 				</thead>
 				<tbody class="bg-white divide-y divide-gray-200">
@@ -542,7 +542,7 @@ $(document).ready(function(){
                // 아무 작업도 하지 않음 (원래의 수정상태로 유지)
                alert("취소 작업이 중단되었습니다.");
            }
-           alert(" 취소하시겠습니까? ");
+           // alert(" 취소하시겠습니까? ");
            
        });
     

@@ -13,11 +13,15 @@
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-<body>
+<body class="bg-gray-100 font-sans">
+	<div class="container mx-auto px-4 py-8">
+		<div class="bg-white rounded-lg shadow-lg p-6">
+			<h1 class="text-2xl font-semibold text-gray-800 mb-6">공통 코드 리스트</h1>
+			
     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right: 10px; padding: 10px;">
         <button class="btn btn-primary" type="button" onclick="insertGroupCode()">등록</button>
         <button class="btn btn-primary" type="button" onclick="updateCode()">수정</button>
-        <button class="btn btn-primary" type="button" onclick="deleteCode()">삭제</button>
+        <button class="btn btn-primary" style="background-color:white; color:black;" type="button" onclick="deleteCode()">삭제</button>
     </div>
     <table class="table table-hover">
         <thead>
@@ -56,6 +60,8 @@
             </c:forEach>
         </tbody>
     </table>
+    </div>
+    </div>
     
 	<!-- 등록 모달 -->
 	<div class="modal fade" id="insertCodeModal" tabindex="-1" role="dialog" aria-labelledby="insertCodeModalLabel" aria-hidden="true">

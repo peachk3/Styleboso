@@ -7,11 +7,12 @@
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<body>
+<body class="bg-gray-100 font-sans">
 	<div>
 		  <div class="container mx-auto px-4 py-8">
             <div class="bg-white rounded-lg shadow-lg p-6">
             <h1 class="text-2xl font-semibold text-gray-800 mb-6">직원 리스트</h1>
+            
                     <form action="/system/employeeList" method="get" class="form-inline mt-3">
              		   <div class="flex flex-wrap -mx-3 mb-4 md:flex-nowrap">
              		   <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -30,15 +31,14 @@
                             <button class="btn btn-outline-secondary" type="submit">검색</button>
                             </div>
                             </div>
-							<div class="w-full md:w-1/2 px-3 flex justify-end items-center space-x-2"
-								style="margin-right: 10px; padding: 10px;">
-								<button class="btn btn-primary" type="button"
-									onclick="showRegisterModal()">등록</button>
+							<div class="w-full md:w-1/2 px-3 flex justify-end items-center space-x-2">
+								<button class="btn btn-primary" type="button" onclick="showRegisterModal()">등록</button>
 								<button class="btn btn-primary" type="button" id="updateEmp">수정</button>
-								<button class="btn btn-primary" type="button" id="deleteEmp">삭제</button>
+								<button class="btn btn-primary" style="background-color:white; color:black;" type="button" id="deleteEmp">삭제</button>
 							</div>
                         </div>
                     </form>
+                    
     <div id="tableContainer" class="transition-all duration-300 ease-in-out">
 	<div class="overflow-x-hidden bg-white border 1px solid overflow-y-auto relative" style="height: 405px;">
 	<table class="table table-hover border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
@@ -80,7 +80,7 @@
    </table>
                 </div>
             </div>
-        </div>
+
 		
 	
 	   <c:url var="pageUrl" value="/system/employeeList">
@@ -113,6 +113,9 @@
         </nav>
 	</div>
 </div>  
+        </div>
+
+
 	<!-- 추가 버튼 모달창 -->
 	 <!-- Modal -->
 	 <div class="modal fade" id="registerModal" role="dialog" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">

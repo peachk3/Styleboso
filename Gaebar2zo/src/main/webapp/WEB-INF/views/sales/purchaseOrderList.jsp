@@ -14,16 +14,21 @@
     
 </head>
 
-<body>
-	<h1>/sales/purchaseOrderList.jsp</h1>
+<body class="bg-gray-100 font-sans">
+	<div class="container mx-auto px-4 py-8">
+		<div class="bg-white rounded-lg shadow-lg p-6">
+			<h1 class="text-2xl font-semibold text-gray-800 mb-6">발주 리스트</h1>
+			
 	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
 	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
         <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/sales/purchaseOrderAdd'">
-        <input type="button" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
+        <input type="button" id="deleteItemBtn" style="background-color:white; color:black;" name="deleteItemBtn" class="btn btn-primary" value="삭제">
     </sec:authorize>
     </div>
     
-    <table class="table table-hover">
+   <div id="tableContainer" class="transition-all duration-300 ease-in-out">
+		<div class="overflow-x-hidden bg-white border 1px solid overflow-y-auto relative" style="height: 405px;">
+             <table class="table table-hover border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
         <thead>
         <tr>
             <th scope="col">
@@ -63,7 +68,8 @@
 	        </c:forEach>
         </tbody>
     </table>
-
+</div>
+</div>
     <div class="container mt-3">
     <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
         <button id="statusChangeBtn" class="btn btn-outline-info">상태 변경</button>
@@ -73,6 +79,32 @@
         </div>
         </sec:authorize>
     </div>
+    <!-- 페이징 처리 -->
+	<nav aria-label="Page navigation" class="pagination-container">
+	   <ul class="pagination justify-content-center">
+	      <c:if test="${pageVO.prev}">
+	         <li class="page-item">
+	            <a class="page-link" href="/sales/purchaseOrderList?page=${pageVO.startPage - 1}" aria-label="Previous">
+	               <span aria-hidden="true">&laquo;</span>
+	            </a>
+	         </li>
+	      </c:if>
+	      <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+	         <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
+	            <a class="page-link" href="/sales/purchaseOrderList?page=${i}">${i}</a>
+	         </li>
+	      </c:forEach>
+	      <c:if test="${pageVO.next && pageVO.endPage > 0}">
+	         <li class="page-item">
+	            <a class="page-link" href="/sales/purchaseOrderList?page=${pageVO.endPage + 1}" aria-label="Next">
+	               <span aria-hidden="true">&raquo;</span>
+	            </a>
+	         </li>
+	      </c:if>
+	   </ul>
+	</nav>
+</div>
+</div>
 
     <!-- poInfoModal -->
     <div class="modal fade" id="poInfoModal" tabindex="-1">
@@ -279,31 +311,7 @@
 		</div>
 	</div>
 	
-	<!-- 페이징 처리 -->
-	<nav aria-label="Page navigation" class="pagination-container">
-	   <ul class="pagination justify-content-center">
-	      <c:if test="${pageVO.prev}">
-	         <li class="page-item">
-	            <a class="page-link" href="/sales/purchaseOrderList?page=${pageVO.startPage - 1}" aria-label="Previous">
-	               <span aria-hidden="true">&laquo;</span>
-	            </a>
-	         </li>
-	      </c:if>
-	      <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
-	         <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
-	            <a class="page-link" href="/sales/purchaseOrderList?page=${i}">${i}</a>
-	         </li>
-	      </c:forEach>
-	      <c:if test="${pageVO.next && pageVO.endPage > 0}">
-	         <li class="page-item">
-	            <a class="page-link" href="/sales/purchaseOrderList?page=${pageVO.endPage + 1}" aria-label="Next">
-	               <span aria-hidden="true">&raquo;</span>
-	            </a>
-	         </li>
-	      </c:if>
-	   </ul>
-	</nav>
-    
+	
     <%@ include file="../include/footer.jsp" %>
 </body>
 </html>

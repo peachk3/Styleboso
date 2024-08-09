@@ -5,6 +5,36 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+  	<!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <!-- Custom styles -->
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <style>
+        [x-cloak] { display: none; }
+        .transition { transition: all 0.3s ease-out; }
+        .status-buttons { display: none; }
+        .modal-dialog { max-width: 80%; }
+        .search-container { display: flex; margin-bottom: 20px; }
+        .search-group { display: flex; align-items: center; }
+        .table-container { margin-top: 20px; }
+        .clickable-row { cursor: pointer; }
+        .selected { background-color: #e0e0e0; }
+        .menu-open #tableContainer {
+        margin-top: 76px; /* 하위 메뉴의 높이에 맞춰 조정하세요 */
+	    }
+	    #statusMenu {
+	        transition: all 0.3s ease-in-out;
+	        opacity: 0;
+	        transform: translateY(-10px);
+	    }
+	    #statusMenu.active {
+	        opacity: 1;
+	        transform: translateY(0);
+	    }
+	    * { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
+    </style>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -305,11 +335,9 @@
               <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
             </svg>
           </button>
-          <ul class="header-nav d-none d-md-flex">
-            <li class="nav-item"><a class="nav-link" href="#" data-coreui-i18n="dashboard">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-coreui-i18n="users">Users</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-coreui-i18n="settings">Settings</a></li>
-          </ul>
+          <ol class="breadcrumb my-0">
+              <li class="breadcrumb-item"><a href="/loginout/main" data-coreui-i18n="home">Home</a>
+            </ol>
           <ul class="header-nav d-none d-md-flex ms-auto">
             <li class="nav-item dropdown"><a class="nav-link" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 <svg class="icon icon-lg my-1 mx-2">
@@ -473,11 +501,6 @@
               <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
             </li>
             <li class="nav-item dropdown">
-              <button class="btn btn-link nav-link" type="button" aria-expanded="false" data-coreui-toggle="dropdown">
-                <svg class="icon icon-lg">
-                  <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-language"></use>
-                </svg>
-              </button>
               <ul class="dropdown-menu dropdown-menu-end" style="--cui-dropdown-min-width: 8rem;">
                 <li>
                   <button class="dropdown-item d-flex align-items-center" type="button" data-coreui-language-value="en" onclick="i18next.changeLanguage(&quot;en&quot;)">
@@ -536,7 +559,9 @@
               <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
             </li>
             <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                <div class="avatar avatar-md"><img class="avatar-img" src="#" alt="user@email.com"></div>
+            <div class="avatar avatar-md">
+			  <img src="https://cdn.pixabay.com/photo/2022/01/30/13/33/github-6980894_1280.png" alt="user@email.com">
+			</div>
               </a>
               <div class="dropdown-menu dropdown-menu-end pt-0">
                 <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2" data-coreui-i18n="account">Account</div><a class="dropdown-item" href="#">
@@ -584,21 +609,6 @@
               </div>
             </li>
           </ul>
-          <button class="header-toggler" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#aside')).show()" style="margin-inline-end: -12px">
-            <svg class="icon icon-lg">
-              <use xlink:href="/resources/vendors/@coreui/icons/svg/free.svg#cil-applications-settings"></use>
-            </svg>
-          </button>
-        </div>
-        <div class="container-fluid px-4">
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb my-0">
-              <li class="breadcrumb-item"><a href="/system/main" data-coreui-i18n="home">Home</a>
-              </li>
-              <li class="breadcrumb-item active"><span data-coreui-i18n="dashboard">Dashboard</span>
-              </li>
-            </ol>
-          </nav>
         </div>
       </header>
       

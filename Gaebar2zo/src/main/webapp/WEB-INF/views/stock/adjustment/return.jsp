@@ -4,39 +4,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <head>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Alpine.js -->
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-    <!-- Custom styles -->
-    <style>
-        [x-cloak] { display: none; }
-        .transition { transition: all 0.3s ease-out; }
-        .status-buttons { display: none; }
-        .modal-dialog { max-width: 80%; }
-        .search-container { display: flex; margin-bottom: 20px; }
-        .search-group { display: flex; align-items: center; }
-        .table-container { margin-top: 20px; }
-        .clickable-row { cursor: pointer; }
-        .selected { background-color: #e0e0e0; }
-        .menu-open #tableContainer {
-        margin-top: 76px; /* 하위 메뉴의 높이에 맞춰 조정하세요 */
-	    }
-	    #statusMenu {
-	        transition: all 0.3s ease-in-out;
-	        opacity: 0;
-	        transform: translateY(-10px);
-	    }
-	    #statusMenu.active {
-	        opacity: 1;
-	        transform: translateY(0);
-	    }
-    </style>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- CSRF Meta Tags -->
-    <meta name="_csrf" content="${_csrf.token}">
-    <meta name="_csrf_header" content="${_csrf.headerName}">
 </head>
 
 <body class="bg-gray-100 font-sans">
@@ -45,7 +14,7 @@
             <h1 class="text-2xl font-semibold text-gray-800 mb-6">재고 조정 반품</h1>
             
             <!-- Search Form -->
-            <form action="/stock/adjustment/return" method="get" class="mb-8">
+<form action="/stock/adjustment/return" method="get" class="mb-8">
     <div class="flex flex-wrap -mx-3 mb-4">
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <div class="input-group w-500">
@@ -62,22 +31,22 @@
                 <button class="btn btn-outline-secondary" type="submit">검색</button>
             </div>
         </div>
-        <div class="w-full md:w-1/2 px-3 flex justify-end items-center">
-            <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2" onclick="location.href='/stock/adjustment/returnAdd'">
+        <div class="w-full md:w-1/2 px-3 flex justify-end items-center space-x-2" style="margin-bottom:15px;">
+            <button type="button" class="btn btn-primary" onclick="location.href='/stock/adjustment/returnAdd'">
                 등록
             </button>
-            <button type="button" id="deleteItemBtn" name="deleteItemBtn" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2" value="삭제">
+            <button type="button" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
                 삭제
             </button>
             <div x-data="{ open: false }" class="relative inline-block text-left">
-                <button @click="toggleMenu()" type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+                <button @click="toggleMenu()" type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-3 inline-flex items-center">
                     <span>상태 변경</span>
                     <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                 </button>
-                <div id="statusMenu" class="hidden absolute right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-				    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                <div id="statusMenu" class="hidden absolute right-0 w-56 mt-2 origin-top-right bg-white rounded-3 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+				    <div class="py-2" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
 				        <a href="#" id="preReceiveBtn" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100 hover:text-gray-900" role="menuitem">반품 예정</a>
 				        <a href="#" id="completedReceiveBtn" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100 hover:text-gray-900" role="menuitem">반품 완료</a>
 				    </div>
@@ -86,9 +55,9 @@
         </div>
     </div>
 </form>
-<div id="tableContainer" class="transition-all duration-300 ease-in-out">
+<div id="tableContainer" class="transition-all duration-300 ease-in-out" >
             <!-- Table -->
-            <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative" style="height: 405px;">
+            <div class="overflow-x-hidden bg-white rounded-lg border overflow-y-hidden relative" style="height: 405px;">
                 <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
                     <thead>
                         <tr class="text-left">
@@ -157,7 +126,7 @@
             </div>
             </div>
             <!-- Pagination -->
-            <div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
+            <div>
                 <c:url var="pageUrl" value="/stock/adjustment/return">
                     <c:param name="searchType" value="${searchType}"/>
                     <c:param name="keyword" value="${keyword}"/>

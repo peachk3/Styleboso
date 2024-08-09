@@ -2,7 +2,6 @@
 <%@ include file="../include/header.jsp"%>
 
 <body>
-	<h1>/Styleboso/basicInfo/clientAdd.jsp</h1>
 
 	<div class="container-lg px-4">
 		<div class="row">
@@ -81,7 +80,7 @@
 									<input type="text" class="form-control" id="sample6_postcode" name="cli_postCode" readonly required>
 							</div>
 							<div class="col-md-2">
-								<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+								<button class="btn btn-primary" style="width: 100px; height: 30px;" onclick="sample6_execDaumPostcode()">우편번호 찾기</button>
 							</div>
 							<div class="col-md-3">
 								<label for="cli_add1" class="form-label">주소</label>

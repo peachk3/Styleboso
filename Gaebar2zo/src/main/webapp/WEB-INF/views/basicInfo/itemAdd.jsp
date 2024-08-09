@@ -2,8 +2,6 @@
 <%@ include file="../include/header.jsp" %>
 
 <body>
-	<h1>/Styleboso/basicInfo/itemAdd.jsp</h1>
-	
 	<div class="container-lg px-4">
 		<div class="row">
 			<div class="col-12">

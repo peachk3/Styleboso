@@ -8,7 +8,6 @@
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <body class="bg-gray-100 font-sans">
-	<div>
 		  <div class="container mx-auto px-4 py-8">
             <div class="bg-white rounded-lg shadow-lg p-6">
             <h1 class="text-2xl font-semibold text-gray-800 mb-6">직원 리스트</h1>
@@ -78,8 +77,8 @@
 		</tbody>
 		
    </table>
-                </div>
-            </div>
+    </div>
+</div>
 
 		
 	
@@ -113,7 +112,6 @@
         </nav>
 	</div>
 </div>  
-        </div>
 
 
 	<!-- 추가 버튼 모달창 -->

@@ -26,15 +26,6 @@
 		    width: 100%; /* 버튼이 부모 요소에 맞게 전체 너비를 가지도록 설정합니다 */
 		  }
 	</style> 
-	<style>
-		/* 두 번째 모달이 첫 번째 모달 오른쪽에 위치하도록 설정 */
-		.modal.right-modal .modal-dialog {
-			position: absolute;
-			right: -500px; /* 첫 번째 모달의 오른쪽에 위치하도록 설정 */
-			top: 50%;
-			transform: translateY(-50%);
-		}
-	</style>
  
 </head>  
    
@@ -75,7 +66,7 @@
 								<button class="btn btn-primary" type="button"
 									onclick="location.href='/basicInfo/clientAdd'">등록</button>
 								<button class="btn btn-primary" id="deleteClientBtn"
-									name="deleteClientBtn" type="button">삭제</button>
+									name="deleteClientBtn" style="background-color:white; color:black;" type="button">삭제</button>
 							</sec:authorize>
                    </div>
                 </div>
@@ -143,7 +134,7 @@
    </table>
 </div>
 </div>
-</div>
+
 
 
 	<div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
@@ -178,7 +169,7 @@
         </nav>
     </div>
 </div>
-    
+</div>
 
 <!-- Modal -->
 <!-- <div class="modal fade" id="exampleModalToggle" data-coreui-backdrop="static" data-coreui-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"> -->
@@ -229,7 +220,7 @@
                                 <td>
                                     <div class="d-flex">
                                         <input type="text" class="form-control" id="sample6_postcode" readonly>
-                                        <button type="button" id="postCodeButton" onclick="sample6_execDaumPostcode()" disabled>찾기</button>
+                                        <button type="button" style="border: 1px solid;" id="postCodeButton" onclick="sample6_execDaumPostcode()" disabled>찾기</button>
                                     </div>
                                 </td>
                             </tr>

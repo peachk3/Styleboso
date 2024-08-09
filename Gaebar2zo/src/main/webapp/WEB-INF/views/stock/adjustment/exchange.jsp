@@ -28,7 +28,10 @@
     <meta name="_csrf" content="${_csrf.token}">
     <meta name="_csrf_header" content="${_csrf.headerName}">
 </head>
-<body>
+<body class="bg-gray-100 font-sans">
+	<div class="container mx-auto px-4 py-8">
+		<div class="bg-white rounded-lg shadow-lg p-6">
+			<h1 class="text-2xl font-semibold text-gray-800 mb-6">교환 리스트</h1>
     <div class="container-fluid mt-5">
         <div class="row">
             <div class="col-md-3 mb-3">
@@ -107,7 +110,8 @@
             <button class="btn btn-outline-info" id="completedReceiveBtn">교환 완료</button>
         </div>
     </div>
-
+</div>
+</div>
     <!-- Modal -->
     <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -134,29 +138,29 @@
         <c:param name="keyword" value="${keyword}"/>
     </c:url>
 
-    <nav aria-label="Page navigation" class="pagination-container">
-        <ul class="pagination justify-content-center">
-            <c:if test="${pageVO.prev}">
-                <li class="page-item">
-                    <a class="page-link" href="${pageUrl}&page=${pageVO.startPage - 1}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-            </c:if>
-            <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
-                <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
-                    <a class="page-link" href="${pageUrl}&page=${i}">${i}</a>
-                </li>
-            </c:forEach>
-            <c:if test="${pageVO.next && pageVO.endPage > 0}">
-                <li class="page-item">
-                    <a class="page-link" href="${pageUrl}&page=${pageVO.endPage + 1}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </c:if>
-        </ul>
-    </nav>
+<!--     <nav aria-label="Page navigation" class="pagination-container"> -->
+<!--         <ul class="pagination justify-content-center"> -->
+<%--             <c:if test="${pageVO.prev}"> --%>
+<!--                 <li class="page-item"> -->
+<%--                     <a class="page-link" href="${pageUrl}&page=${pageVO.startPage - 1}" aria-label="Previous"> --%>
+<!--                         <span aria-hidden="true">&laquo;</span> -->
+<!--                     </a> -->
+<!--                 </li> -->
+<%--             </c:if> --%>
+<%--             <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1"> --%>
+<%--                 <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}"> --%>
+<%--                     <a class="page-link" href="${pageUrl}&page=${i}">${i}</a> --%>
+<!--                 </li> -->
+<%--             </c:forEach> --%>
+<%--             <c:if test="${pageVO.next && pageVO.endPage > 0}"> --%>
+<!--                 <li class="page-item"> -->
+<%--                     <a class="page-link" href="${pageUrl}&page=${pageVO.endPage + 1}" aria-label="Next"> --%>
+<!--                         <span aria-hidden="true">&raquo;</span> -->
+<!--                     </a> -->
+<!--                 </li> -->
+<%--             </c:if> --%>
+<!--         </ul> -->
+<!--     </nav> -->
     
     <%@ include file="../../include/footer.jsp" %>
 </body>

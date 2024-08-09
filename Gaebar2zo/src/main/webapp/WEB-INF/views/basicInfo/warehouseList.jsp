@@ -77,8 +77,9 @@
 				</div>
 				<div class="w-full md:w-1/2 px-3 flex justify-end items-center">
 					<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-						<input class="btn btn-primary" type="button" value="등록" onclick="location.href='/basicInfo/warehouseAdd'">
-						<input class="btn btn-primary" id="deleteWarehouseBtn" type="button" value="삭제">
+						<input class="btn btn-primary" style="margin-right: 10px;"type="button" value="등록" onclick="location.href='/basicInfo/warehouseAdd'">
+						
+						<input class="btn btn-primary" style="background-color:white; color:black;" id="deleteWarehouseBtn" type="button" value="삭제">
 					</sec:authorize>
 				</div>
 			</div>
@@ -143,7 +144,7 @@
 							name="registWhZoneBtn" type="button">Zone 등록</button>
 						<button class="btn btn-primary" id="registWhBtn"
 							name="registWhBtn" type="button">Rack 등록</button>
-						<button class="btn btn-primary" id="deleteClientBtn"
+						<button class="btn btn-primary" id="deleteClientBtn" style="background-color:white; color:black;"
 							name="deleteClientBtn" type="button">삭제</button>
 					</sec:authorize>
 				</div>
@@ -258,7 +259,7 @@
 													<div class="d-flex">
 														<input type="text" class="form-control"
 															id="sample6_postcode" name="wh_postCode" readonly>
-														<button type="button" id="postCodeButton"
+														<button type="button" id="postCodeButton" style="border: 1px solid;"
 															onclick="sample6_execDaumPostcode()" disabled>찾기</button>
 													</div>
 												</td>
@@ -911,7 +912,7 @@ $(document).ready(function(){
                      
                      var tableHtml = '<table class="table"><thead><tr><th>품목 번호</th><th>재고량</th></tr></thead><tbody>';
                      $.each(data, function(index, value) {
-                    	 tableHtml += '<tr><td>' + value.goods_num + '</td><td>' + value.inven_qty + '</td></tr>';
+                    	 tableHtml += '<tr><td>' + value.goods_num + '</td><td>'+ value.inven_qty + '</td></tr>';
 //                          $('#inventoryList').append('<table><thead><tr><th>'+ 품목 번호 + '</th><th>' + 재고량 + '</th></tr></thead><tbody><td>'
 //                         		  + value.goods_num + '</td><td>' + value.inven_qty + '</td></tbody></table>');
                      });

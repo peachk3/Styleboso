@@ -2,7 +2,7 @@
 <%@ include file="../include/header.jsp" %>
 
 <body>
-	<h1>/Styleboso/sales/shipmentList.jsp</h1>
+	<h1>출하</h1>
 
 <%@ include file="../include/footer.jsp" %>
 </body>

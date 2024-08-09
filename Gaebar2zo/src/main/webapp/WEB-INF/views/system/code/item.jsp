@@ -30,17 +30,20 @@
     String groupCode = request.getParameter("group_code");
 %>
 
-<body>
+<body class="bg-gray-100 font-sans">
+	<div class="container mx-auto px-4 py-8">
+		<div class="bg-white rounded-lg shadow-lg p-6">
+			<h1 class="text-2xl font-semibold text-gray-800 mb-6" ><strong style="color: red;">${param.group_code}</strong> 그룹코드의 품목코드 리스트</h1>
 	<div class="container mt-5">
 		<div class="row align-items-center mb-4" style="padding: 10px;">
 			<div class="col-md-8 offset-md-2 text-center">
-				<h2>
-					<strong style="color: red;">${param.group_code}</strong> 그룹코드의 품목코드 리스트
-				</h2>
+<!-- 				<h2> -->
+<%-- 					<strong style="color: red;">${param.group_code}</strong> 그룹코드의 품목코드 리스트 --%>
+<!-- 				</h2> -->
 			</div>
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right: 10px; padding: 10px;">
 				<button class="btn btn-primary" type="button" onclick="insertItemCode()">등록</button>
-				<button class="btn btn-primary" type="button" onclick="deleteSelectedItems()">삭제</button>
+				<button class="btn btn-primary" style="background-color:white; color:black;" type="button" onclick="deleteSelectedItems()">삭제</button>
 			</div>
 		</div>
 		<table class="table table-hover">
@@ -131,7 +134,8 @@
 			</tbody>
 		</table>
 	</div>
-
+</div>
+</div>
 	<!-- 모달 구조 -->
 	<div class="modal fade" id="itemModal" tabindex="-1" role="dialog"
 		aria-labelledby="itemModalLabel" aria-hidden="true">

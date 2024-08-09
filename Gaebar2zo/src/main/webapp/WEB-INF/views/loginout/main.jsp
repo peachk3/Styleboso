@@ -487,10 +487,13 @@
                       <tbody>
                         <tr class="align-middle">
                           <td class="text-center">
-                            <div class="avatar avatar-md"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
-                          </td>
+						    <div class="avatar avatar-md">
+						        <img class="avatar-img" src="https://imgcdn.stablediffusionweb.com/2024/4/28/46c59431-4ce6-4bd6-a578-00f81832cc84.jpg" alt="user@email.com">
+						        <span class="avatar-status bg-success"></span>
+						    </div>
+						</td>
                           <td>
-                            <div class="text-nowrap">Yiorgos Avraamu</div>
+                            <div class="text-nowrap">박도경</div>
                             <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="new">New</span> | <span data-coreui-i18n="registered">Registered: </span><span data-coreui-i18n-date="dateShortMonthName, { 'date': '2023, 1, 10'}">Jan 1, 2023</span></div>
                           </td>
                           <td class="text-center">
@@ -529,10 +532,13 @@
                         </tr>
                         <tr class="align-middle">
                           <td class="text-center">
-                            <div class="avatar avatar-md"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-danger-gradient"></span></div>
-                          </td>
+						    <div class="avatar avatar-md">
+						        <img class="avatar-img" src="https://imgcdn.stablediffusionweb.com/2024/4/28/46c59431-4ce6-4bd6-a578-00f81832cc84.jpg" alt="user@email.com">
+						        <span class="avatar-status bg-success"></span>
+						    </div>
+						</td>
                           <td>
-                            <div class="text-nowrap">Avram Tarasios</div>
+                            <div class="text-nowrap">홍여원</div>
                             <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="recurring">Recurring</span> | <span data-coreui-i18n="registered">Registered: </span><span data-coreui-i18n-date="dateShortMonthName, { 'date': '2023, 1, 10'}">Jan 1, 2023</span></div>
                           </td>
                           <td class="text-center">
@@ -571,10 +577,13 @@
                         </tr>
                         <tr class="align-middle">
                           <td class="text-center">
-                            <div class="avatar avatar-md"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-warning-gradient"></span></div>
-                          </td>
+						    <div class="avatar avatar-md">
+						        <img class="avatar-img" src="https://imgcdn.stablediffusionweb.com/2024/4/28/46c59431-4ce6-4bd6-a578-00f81832cc84.jpg" alt="user@email.com">
+						        <span class="avatar-status bg-success"></span>
+						    </div>
+						</td>
                           <td>
-                            <div class="text-nowrap">Quintin Ed</div>
+                            <div class="text-nowrap">조수영</div>
                             <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="new">New</span> | <span data-coreui-i18n="registered">Registered: </span><span data-coreui-i18n-date="dateShortMonthName, { 'date': '2023, 1, 10'}">Jan 1, 2023</span></div>
                           </td>
                           <td class="text-center">
@@ -613,10 +622,13 @@
                         </tr>
                         <tr class="align-middle">
                           <td class="text-center">
-                            <div class="avatar avatar-md"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-secondary-gradient"></span></div>
-                          </td>
+						    <div class="avatar avatar-md">
+						        <img class="avatar-img" src="https://imgcdn.stablediffusionweb.com/2024/4/28/46c59431-4ce6-4bd6-a578-00f81832cc84.jpg" alt="user@email.com">
+						        <span class="avatar-status bg-success"></span>
+						    </div>
+						</td>
                           <td>
-                            <div class="text-nowrap">Enéas Kwadwo</div>
+                            <div class="text-nowrap">이예진</div>
                             <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="new">New</span> | <span data-coreui-i18n="registered">Registered: </span><span data-coreui-i18n-date="dateShortMonthName, { 'date': '2023, 1, 10'}">Jan 1, 2023</span></div>
                           </td>
                           <td class="text-center">
@@ -655,10 +667,13 @@
                         </tr>
                         <tr class="align-middle">
                           <td class="text-center">
-                            <div class="avatar avatar-md"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-success"></span></div>
-                          </td>
+						    <div class="avatar avatar-md">
+						        <img class="avatar-img" src="https://imgcdn.stablediffusionweb.com/2024/4/28/46c59431-4ce6-4bd6-a578-00f81832cc84.jpg" alt="user@email.com">
+						        <span class="avatar-status bg-success"></span>
+						    </div>
+						</td>
                           <td>
-                            <div class="text-nowrap">Agapetus Tadeáš</div>
+                            <div class="text-nowrap">박경민</div>
                             <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="new">New</span> | <span data-coreui-i18n="registered">Registered: </span><span data-coreui-i18n-date="dateShortMonthName, { 'date': '2023, 1, 10'}">Jan 1, 2023</span></div>
                           </td>
                           <td class="text-center">
@@ -696,11 +711,14 @@
                           </td>
                         </tr>
                         <tr class="align-middle">
-                          <td class="text-center">
-                            <div class="avatar avatar-md"><img class="avatar-img" src="#" alt="user@email.com"><span class="avatar-status bg-danger-gradient"></span></div>
-                          </td>
+                         <td class="text-center">
+						    <div class="avatar avatar-md">
+						        <img class="avatar-img" src="https://imgcdn.stablediffusionweb.com/2024/4/28/46c59431-4ce6-4bd6-a578-00f81832cc84.jpg" alt="user@email.com">
+						        <span class="avatar-status bg-success"></span>
+						    </div>
+						</td>
                           <td>
-                            <div class="text-nowrap">Friderik Dávid</div>
+                            <div class="text-nowrap">강진석</div>
                             <div class="small text-body-secondary text-nowrap"><span data-coreui-i18n="new">New</span> | <span data-coreui-i18n="registered">Registered: </span><span data-coreui-i18n-date="dateShortMonthName, { 'date': '2023, 1, 10'}">Jan 1, 2023</span></div>
                           </td>
                           <td class="text-center">

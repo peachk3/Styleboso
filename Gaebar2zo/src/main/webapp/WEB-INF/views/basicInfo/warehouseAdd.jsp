@@ -197,7 +197,7 @@
 	                const data = Object.fromEntries(formData.entries());
 	                
 	             $.ajax({
-	            		url: '/basicInfo/warehouseInsert',
+	            		url: '/Styleboso/basicInfo/warehouseInsert',
 	            		beforeSend: function(xhr) {
 	                        xhr.setRequestHeader(header, token);
 	                     },
@@ -207,7 +207,7 @@
                             alert('등록되었습니다');
                             
                             form.reset();
-                            window.location.href = '/basicInfo/warehouseList';
+                            window.location.href = '/Styleboso/basicInfo/warehouseList';
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.error('AJAX Error:', textStatus, errorThrown);
@@ -293,7 +293,7 @@
 	    $('#modal2-table tbody tr').remove();
 	    
 	    $.ajax({
-	        url: "/common/managerList",
+	        url: "/Styleboso/common/managerList",
 	        type: "get",
 	        contentType: 'application/json; charset=utf-8',
 	        dataType: "json",

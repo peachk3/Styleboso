@@ -35,7 +35,7 @@
  	    }
     	
     	 $.ajax({
-    	        url: '/system/saveGroupCode',  // 실제 서버 URL로 변경
+    	        url: '/Styleboso/system/saveGroupCode',  // 실제 서버 URL로 변경
     	        beforeSend: function(xhr) {
     	        	xhr.setRequestHeader(header, token);
     	        },
@@ -118,7 +118,7 @@
         var groupName = document.getElementById('edit_group_name').value;
 
         $.ajax({
-            url: '/system/updateCode', // 실제 서버 측 URL
+            url: '/Styleboso/system/updateCode', // 실제 서버 측 URL
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ group_code: groupCode, group_name: groupName }),
@@ -182,7 +182,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/system/deleteCode',  // 서버 측 컨트롤러 매핑 URL
+                    url: '/Styleboso/system/deleteCode',  // 서버 측 컨트롤러 매핑 URL
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(selectedCodes),

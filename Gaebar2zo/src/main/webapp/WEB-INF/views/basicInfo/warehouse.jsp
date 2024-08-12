@@ -108,7 +108,7 @@ $(document).ready(function() {
         
         if (wh_code) {
             $.ajax({
-                url: '/basicInfo/addZone',
+                url: '/Styleboso/basicInfo/addZone',
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
                 },
@@ -153,7 +153,7 @@ $(document).ready(function() {
         
         if (wh_code && wh_zone) {
             $.ajax({
-                url: '/basicInfo/addRack',
+                url: '/Styleboso/basicInfo/addRack',
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
                 },
@@ -188,7 +188,7 @@ $(document).ready(function() {
     $('#warehouseSelect').change(function() {
         var wh_code = $(this).val();
         $.ajax({
-            url: '/basicInfo/getZones',
+            url: '/Styleboso/basicInfo/getZones',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
              },
@@ -211,7 +211,7 @@ $(document).ready(function() {
         var wh_code = $('#warehouseSelect').val();
         var wh_zone = $(this).val();
         $.ajax({
-            url: '/basicInfo/getRacks',
+            url: '/Styleboso/basicInfo/getRacks',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
              },
@@ -235,7 +235,7 @@ $(document).ready(function() {
         var wh_zone = $('#zoneSelect').val();
         var wh_rack = $(this).val();
         $.ajax({
-            url: '/basicInfo/getColumnRows',
+            url: '/Styleboso/basicInfo/getColumnRows',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
              },
@@ -282,7 +282,7 @@ $(document).ready(function() {
         var wh_num = wh_code + wh_zone + wh_rack + row + column
 
         $.ajax({
-            url: '/basicInfo/getInventory',
+            url: '/Styleboso/basicInfo/getInventory',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
              },

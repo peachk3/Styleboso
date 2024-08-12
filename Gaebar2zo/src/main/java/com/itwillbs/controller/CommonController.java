@@ -28,7 +28,7 @@ import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.domain.UsersVO;
 import com.itwillbs.service.CommonService;
 
-@RequestMapping(value="/common/*")
+@RequestMapping(value="/Styleboso/common/*")
 @Controller
 public class CommonController {
 

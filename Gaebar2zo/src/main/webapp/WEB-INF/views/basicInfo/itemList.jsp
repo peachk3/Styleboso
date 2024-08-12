@@ -27,7 +27,7 @@
 <!-- 		style="margin-right: 10px; padding: 10px;"> -->
 <%-- 		<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"> --%>
 <!-- 			<input type="button" class="btn btn-primary" value="등록" -->
-<!-- 				onclick="location.href='/basicInfo/itemAdd'"> -->
+<!-- 				onclick="location.href='/Styleboso/basicInfo/itemAdd'"> -->
 <!-- 			<input type="button" id="deleteItemBtn" name="deleteItemBtn" -->
 <!-- 				class="btn btn-primary" value="삭제"> -->
 <%-- 		</sec:authorize> --%>
@@ -40,7 +40,7 @@
 			<h1 class="text-2xl font-semibold text-gray-800 mb-6">품목 리스트</h1>
 
 			<!-- Search Form -->
-			<form action="/basicInfo/itemList" method="get" class="form-inline mt-3">
+			<form action="/Styleboso/basicInfo/itemList" method="get" class="form-inline mt-3">
 				<div class="flex flex-wrap -mx-3 mb-4 md:flex-nowrap">
 					<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 						<div class="input-group w-500">
@@ -64,7 +64,7 @@
 					</div>
 				<div class="w-full md:w-1/2 px-3 flex justify-end items-center space-x-2" >
 					<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-						<input type="button" class="btn btn-primary" value="등록" onclick="location.href='/basicInfo/itemAdd'">
+						<input type="button" class="btn btn-primary" value="등록" onclick="location.href='/Styleboso/basicInfo/itemAdd'">
 						<input type="button" class="btn btn-primary" style="background-color:white; color:black;" id="deleteItemBtn" name="deleteItemBtn" value="삭제">
 					</sec:authorize>
 				</div>
@@ -118,7 +118,7 @@
 		</div>
 
 		<div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
-			<c:url var="pageUrl" value="/basicInfo/itemList">
+			<c:url var="pageUrl" value="/Styleboso/basicInfo/itemList">
 				<c:param name="searchType" value="${searchType}" />
 				<c:param name="keyword" value="${keyword}" />
 			</c:url>
@@ -129,19 +129,19 @@
       <ul class="pagination justify-content-center">
          <c:if test="${pageVO.prev}">
             <li class="page-item">
-               <a class="page-link" href="/basicInfo/itemList?page=${pageVO.startPage - 1}" aria-label="Previous">
+               <a class="page-link" href="/Styleboso/basicInfo/itemList?page=${pageVO.startPage - 1}" aria-label="Previous">
                   <span aria-hidden="true">&laquo;</span>
                </a>
             </li>
          </c:if>
          <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
             <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
-               <a class="page-link" href="/basicInfo/itemList?page=${i}">${i}</a>
+               <a class="page-link" href="/Styleboso/basicInfo/itemList?page=${i}">${i}</a>
             </li>
          </c:forEach>
          <c:if test="${pageVO.next && pageVO.endPage > 0}">
             <li class="page-item">
-               <a class="page-link" href="/basicInfo/itemList?page=${pageVO.endPage + 1}" aria-label="Next">
+               <a class="page-link" href="/Styleboso/basicInfo/itemList?page=${pageVO.endPage + 1}" aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>
                </a>
             </li>
@@ -323,7 +323,7 @@ $(document).ready(function(){
    
         if (confirm('선택한 ' + item_nums.length + '개의 항목을 삭제하시겠습니까?')) {
           $.ajax({
-             url: '/basicInfo/deleteItem',
+             url: '/Styleboso/basicInfo/deleteItem',
              beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
                  },
@@ -351,7 +351,7 @@ $(document).ready(function(){
            currentItemNum = item_num;
            
            $.ajax({
-               url: '/basicInfo/itemDetails',
+               url: '/Styleboso/basicInfo/itemDetails',
                type: 'GET',
                data: { item_num: item_num },
                dataType: "json",
@@ -483,7 +483,7 @@ $(document).ready(function(){
                };
            
            $.ajax({
-              url: '/basicInfo/updateItem',
+              url: '/Styleboso/basicInfo/updateItem',
               beforeSend: function(xhr) {
                    xhr.setRequestHeader(header, token);
                 },
@@ -557,7 +557,7 @@ $(document).ready(function(){
           const cli_cate = "CLPT";
           
          $.ajax({
-            url : "/common/clientList2",
+            url : "/Styleboso/common/clientList2",
             type : "GET",
             data: {cli_cate: cli_cate},
             contentType : 'application/json; charset=utf-8',

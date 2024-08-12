@@ -46,7 +46,7 @@
  	    }
     	
     	 $.ajax({
-    	        url: '/system/saveItemCode',  // 실제 서버 URL로 변경
+    	        url: '/Styleboso/system/saveItemCode',  // 실제 서버 URL로 변경
     	        beforeSend: function(xhr) {
     	        	xhr.setRequestHeader(header, token);
     	        },
@@ -125,7 +125,7 @@
 //  		
 //
 //      $.ajax({
-//          url: '/system/checkItemCode',
+//          url: '/Styleboso/system/checkItemCode',
 //          type: 'GET',
 //          data: JSON.stringify({ s_cate_item_code: sCateItemCode }),
 //          contentType: 'application/json',
@@ -221,7 +221,7 @@
         const itemName = document.getElementById('s_cate_item_name').innerText;
 
         $.ajax({
-            url: "/system/updateItemCode",
+            url: "/Styleboso/system/updateItemCode",
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
             },
@@ -286,7 +286,7 @@
             if (result.isConfirmed) {
             	
                 $.ajax({
-                    url: "/system/deleteItemCode",
+                    url: "/Styleboso/system/deleteItemCode",
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader(header, token);
                     },

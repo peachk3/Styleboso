@@ -8,7 +8,7 @@
 			<div class="col-12">
 				<div class="card mb-4">
 					<div class="card-body">
-						<form class="row g-3 needs-validation" action="/Styleboso/purchaseOrderAdd" method="post" novalidate>
+						<form class="row g-3 needs-validation" action="/purchaseOrderAdd" method="post" novalidate>
 							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">			
 						
 							<div class="col-md-6">
@@ -250,7 +250,7 @@
 				
 				$.ajax({
                     type: 'POST',
-                    url: '/Styleboso/sales/purchaseOrderAdd', // 요청을 보낼 URL
+                    url: '/sales/purchaseOrderAdd', // 요청을 보낼 URL
                     beforeSend: function(xhr) {
                     	xhr.setRequestHeader(header, token);
                     },
@@ -261,7 +261,7 @@
                     }),
                     success: function(response) {
                         console.log('서버 응답:', response);
-                        window.location.href = 'http://localhost:8088/Styleboso/sales/purchaseOrderList';
+                        window.location.href = 'http://localhost:8088/sales/purchaseOrderList';
                     },
                     error: function(error) {
                         console.error('에러 발생:', error);
@@ -329,7 +329,7 @@
           $('#modal1-table tbody tr').remove();
           
           $.ajax({
-              url: "/Styleboso/common/clientList2",
+              url: "/common/clientList2",
               type: "get",
               contentType: 'application/json;',
               data: {cli_cate : "CLPT"},
@@ -357,7 +357,7 @@
           $('#modal2-table tbody tr').remove();
           
           $.ajax({
-              url: "/Styleboso/common/managerList",
+              url: "/common/managerList",
               type: "get",
               contentType: 'application/json; charset=utf-8',
               dataType: "json",
@@ -385,7 +385,7 @@
           $('#modal3-table tbody tr').remove();
           
           $.ajax({
-              url: "/Styleboso/common/goodsList",
+              url: "/common/goodsList",
               type: "get",
               contentType: 'application/json; charset=utf-8',
               dataType: "json",

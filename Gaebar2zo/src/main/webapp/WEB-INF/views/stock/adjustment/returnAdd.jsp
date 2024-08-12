@@ -7,7 +7,7 @@
          <div class="col-12">
             <div class="card mb-4">
                <div class="card-body">
-                  <form class="row g-3 needs-validation" action="/Styleboso/adjustment/returnAdd" method="post" novalidate>
+                  <form class="row g-3 needs-validation" action="/adjustment/returnAdd" method="post" novalidate>
                      <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">         
                   
                      <div class="col-md-6">
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (allFormsValid) {
         	$.ajax({
         	    type: 'POST',
-        	    url: '/Styleboso/stock/adjustment/returnAdd',
+        	    url: '/stock/adjustment/returnAdd',
         	    beforeSend: function(xhr) {
         	        xhr.setRequestHeader(header, token);
         	    },
@@ -249,7 +249,7 @@ $('#modal1-table tbody').on('click', 'tr', function() {
 
         // 거래 상세 정보 가져오기
         $.ajax({
-            url: '/Styleboso/common/transactionDetails',
+            url: '/common/transactionDetails',
             type: 'GET',
             data: { tran_num: tranList },
             contentType: 'application/json; charset=utf-8',
@@ -287,7 +287,7 @@ $('#modal1-table tbody').on('click', 'tr', function() {
         $('#modal0-table tbody tr').remove();
         
         $.ajax({
-        	 url: "/Styleboso/common/transactionList",
+        	 url: "/common/transactionList",
              type: "get",
              contentType: 'application/json; charset=utf-8',
              dataType: "json",
@@ -333,7 +333,7 @@ $('#modal1-table tbody').on('click', 'tr', function() {
 
     function loadInventoryData(rowIndex, goods_num) {
         $.ajax({
-            url: "/Styleboso/stock/invenList",
+            url: "/stock/invenList",
             type: "GET",
             data: { goods_num: goods_num },
             dataType: "json",

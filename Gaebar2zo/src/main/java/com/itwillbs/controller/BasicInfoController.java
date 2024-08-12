@@ -33,7 +33,7 @@ import com.itwillbs.service.BasicInfoService;
 import com.mysql.cj.xdevapi.Client;
 
 
-@RequestMapping(value="/Styleboso/basicInfo/*")
+@RequestMapping(value="/basicInfo/*")
 @Controller
 public class BasicInfoController {
 
@@ -43,7 +43,7 @@ public class BasicInfoController {
 	private BasicInfoService bService;
 	
 	// 품목 관리
-	//http://localhost:8088/Styleboso/basicInfo/itemList
+	//http://localhost:8088/basicInfo/itemList
 	@RequestMapping(value="/itemList", method=RequestMethod.GET)
 	public String itemList_GET(Criteria cri, Model model,
 	                           @RequestParam(value="searchType", required = false) String searchType,
@@ -77,7 +77,7 @@ public class BasicInfoController {
 	    model.addAttribute("searchType", searchType);
 	    model.addAttribute("keyword", keyword);
 
-	    return "/Styleboso/basicInfo/itemList";
+	    return "/basicInfo/itemList";
 	}
 	
 
@@ -151,7 +151,7 @@ public class BasicInfoController {
 	}
 
 	// ----------------------------------거래처 관리------------------------------------------------
-	//http://localhost:8088/Styleboso/basicInfo/clientList
+	//http://localhost:8088/basicInfo/clientList
 	@RequestMapping(value="/clientList",method=RequestMethod.GET)
 	public String clientList_GET(Criteria cri, Model model,
             @RequestParam(value="searchType", required = false) String searchType,
@@ -181,7 +181,7 @@ public class BasicInfoController {
 	    model.addAttribute("searchType", searchType);
 	    model.addAttribute("keyword", keyword);
 	    
-	    return "/Styleboso/basicInfo/clientList";
+	    return "/basicInfo/clientList";
 	}
 
 	// 거래처 추가 - 등록 페이지로 이동
@@ -272,7 +272,7 @@ public class BasicInfoController {
 	// ------------------------------------------------거래처 관리------------------------------
 
 	// -------------------------------------------------창고 관리-------------------------------
-	//http://localhost:8088/Styleboso/system/login
+	//http://localhost:8088/system/login
 	@RequestMapping(value="/warehouseList",method=RequestMethod.GET)
 	public void warehouseList_GET(Model model) throws Exception{
 		logger.debug(" warehouseList_GET() 실행 ");

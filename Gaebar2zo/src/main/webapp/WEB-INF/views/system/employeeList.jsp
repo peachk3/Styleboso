@@ -12,7 +12,7 @@
             <div class="bg-white rounded-lg shadow-lg p-6">
             <h1 class="text-2xl font-semibold text-gray-800 mb-6">직원 리스트</h1>
             
-                    <form action="/Styleboso/system/employeeList" method="get" class="form-inline mt-3">
+                    <form action="/system/employeeList" method="get" class="form-inline mt-3">
              		   <div class="flex flex-wrap -mx-3 mb-4 md:flex-nowrap">
              		   <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <div class="input-group w-500">
@@ -81,7 +81,7 @@
     </div>
 </div>
 
-	   <c:url var="pageUrl" value="/Styleboso/system/employeeList">
+	   <c:url var="pageUrl" value="/system/employeeList">
             <c:param name="searchType" value="${searchType}"/>
             <c:param name="keyword" value="${keyword}"/>
    	</c:url>

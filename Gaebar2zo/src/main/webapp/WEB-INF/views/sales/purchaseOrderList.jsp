@@ -21,7 +21,7 @@
 			
 	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
 	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-        <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/Styleboso/sales/purchaseOrderAdd'">
+        <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/sales/purchaseOrderAdd'">
         <input type="button" id="deleteItemBtn" style="background-color:white; color:black;" name="deleteItemBtn" class="btn btn-primary" value="삭제">
     </sec:authorize>
     </div>
@@ -84,19 +84,19 @@
 	   <ul class="pagination justify-content-center">
 	      <c:if test="${pageVO.prev}">
 	         <li class="page-item">
-	            <a class="page-link" href="/Styleboso/sales/purchaseOrderList?page=${pageVO.startPage - 1}" aria-label="Previous">
+	            <a class="page-link" href="/sales/purchaseOrderList?page=${pageVO.startPage - 1}" aria-label="Previous">
 	               <span aria-hidden="true">&laquo;</span>
 	            </a>
 	         </li>
 	      </c:if>
 	      <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
 	         <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
-	            <a class="page-link" href="/Styleboso/sales/purchaseOrderList?page=${i}">${i}</a>
+	            <a class="page-link" href="/sales/purchaseOrderList?page=${i}">${i}</a>
 	         </li>
 	      </c:forEach>
 	      <c:if test="${pageVO.next && pageVO.endPage > 0}">
 	         <li class="page-item">
-	            <a class="page-link" href="/Styleboso/sales/purchaseOrderList?page=${pageVO.endPage + 1}" aria-label="Next">
+	            <a class="page-link" href="/sales/purchaseOrderList?page=${pageVO.endPage + 1}" aria-label="Next">
 	               <span aria-hidden="true">&raquo;</span>
 	            </a>
 	         </li>
@@ -366,7 +366,7 @@
 				
 				$.ajax({
                     type: 'POST',
-                    url: '/Styleboso/sales/salesOrderUpdate', // 요청을 보낼 URL
+                    url: '/sales/salesOrderUpdate', // 요청을 보낼 URL
                     beforeSend: function(xhr) {
                     	xhr.setRequestHeader(header, token);
                     },
@@ -396,7 +396,7 @@
 		    $('#modal2-table tbody tr').remove();
 		    
 		    $.ajax({
-		        url: "/Styleboso/common/managerList",
+		        url: "/common/managerList",
 		        type: "get",
 		        contentType: 'application/json; charset=utf-8',
 		        dataType: "json",
@@ -464,7 +464,7 @@
 	
 	        $.ajax({
 	            type: 'POST',               // 요청 방식
-	            url: '/Styleboso/sales/purchaseOrderInfo',  // AJAX 요청을 보낼 URL
+	            url: '/sales/purchaseOrderInfo',  // AJAX 요청을 보낼 URL
 	            beforeSend: function(xhr) {
 	            	xhr.setRequestHeader(header, token);
 	            },
@@ -618,7 +618,7 @@
 	        }
 	
 	        $.ajax({
-	            url: '/Styleboso/common/updateStatus',
+	            url: '/common/updateStatus',
 	            type: 'POST',
 	            contentType: 'application/json',
 	            data: JSON.stringify({ tran_nums: tran_nums, pro_status: pro_status }),
@@ -657,7 +657,7 @@
 	    
 	        if (confirm('선택한 ' + tran_nums.length + '개의 항목을 삭제하시겠습니까?')) {
 	            $.ajax({
-	                url: '/Styleboso/common/deleteTran',
+	                url: '/common/deleteTran',
 	                beforeSend: function(xhr) {
 	                    xhr.setRequestHeader(header, token);
 	                },

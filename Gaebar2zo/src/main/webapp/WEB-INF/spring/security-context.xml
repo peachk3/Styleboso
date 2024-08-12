@@ -18,22 +18,22 @@
 
 <security:http>
     <!-- 로그인 페이지는 모든 사용자가 접근 가능하도록 설정 -->
-    <security:intercept-url pattern="/Styleboso/loginout/login" access="permitAll"/>
+    <security:intercept-url pattern="/loginout/login" access="permitAll"/>
     
     <!-- 메인 페이지는 인증된 사용자만 접근 가능하도록 설정 -->
-    <security:intercept-url pattern="/Styleboso/loginout/main" access="isAuthenticated()"/>
+    <security:intercept-url pattern="/loginout/main" access="isAuthenticated()"/>
     
     <!-- 나머지 URL 패턴은 이전 설정대로 유지 -->
-    <security:intercept-url pattern="/Styleboso/system/**" access="hasRole('ROLE_ADMIN')"/>
+    <security:intercept-url pattern="/system/**" access="hasRole('ROLE_ADMIN')"/>
     <security:intercept-url pattern="/**/*Add.jsp" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"/>
     <security:intercept-url pattern="/**/*List.jsp" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_MEMBER')"/>
     <security:intercept-url pattern="/**" access="isAuthenticated()"/>
 
     <security:form-login 
-        login-page="/Styleboso/loginout/login" 
+        login-page="/loginout/login" 
         authentication-success-handler-ref="customLoginSuccess"/>
     
-    <security:logout logout-url="/Styleboso/loginout/logout" invalidate-session="true"/>
+    <security:logout logout-url="/loginout/logout" invalidate-session="true"/>
     
     <security:access-denied-handler ref="customAccessDenied" />
 </security:http>

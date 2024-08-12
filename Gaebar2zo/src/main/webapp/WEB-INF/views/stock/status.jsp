@@ -28,7 +28,7 @@
         <div class="container-fluid mt-5">
             <div class="row">
                 <div class="col-md-3 mb-3">
-                    <form action="/Styleboso/stock/status" method="get" class="form-inline mt-3">
+                    <form action="/stock/status" method="get" class="form-inline mt-3">
                         <div class="input-group w-500">
                             <div class="input-group-prepend">
                                 <select class="form-select custom-select-radius custom-select-width" id="searchType" name="searchType">
@@ -87,7 +87,7 @@
 </div>
 </div>
 	<div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
-        <c:url var="pageUrl" value="/Styleboso/stock/status">
+        <c:url var="pageUrl" value="/stock/status">
             <c:param name="searchType" value="${searchType}"/>
             <c:param name="keyword" value="${keyword}"/>
         </c:url>

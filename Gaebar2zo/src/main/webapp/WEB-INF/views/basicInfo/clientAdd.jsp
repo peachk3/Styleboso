@@ -236,7 +236,7 @@
 	                const data = Object.fromEntries(formData.entries());
 
                 $.ajax({
-	                    url: '/Styleboso/basicInfo/clientInsert',
+	                    url: '/basicInfo/clientInsert',
 	                    beforeSend: function(xhr) {
 	                        xhr.setRequestHeader(header, token);
 	                     },
@@ -247,7 +247,7 @@
 	                            alert('등록되었습니다');
 	                            
 	                            form.reset();
-	                            window.location.href = '/Styleboso/basicInfo/clientList';
+	                            window.location.href = '/basicInfo/clientList';
 	                    },
 	                    error: function(jqXHR, textStatus, errorThrown) {
 	                        console.error('AJAX Error:', textStatus, errorThrown);
@@ -339,7 +339,7 @@
 
 	            // 서버에 중복 확인 요청
 	            $.ajax({
-	                url: '/Styleboso/basicInfo/check-crn',
+	                url: '/basicInfo/check-crn',
 	                type: 'GET',
 	                data: { cli_crn: crnValue },
 	                dataType: 'json',
@@ -366,7 +366,7 @@
 	   	$('#modal2-table tbody tr').remove();
 	    
 	    $.ajax({
-	        url: "/Styleboso/common/managerList",
+	        url: "/common/managerList",
 	        type: "get",
 	        contentType: 'application/json; charset=utf-8',
 	        dataType: "json",

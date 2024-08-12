@@ -86,6 +86,7 @@
         </table>
 </div>
 </div>
+	<div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
         <c:url var="pageUrl" value="/Styleboso/stock/status">
             <c:param name="searchType" value="${searchType}"/>
             <c:param name="keyword" value="${keyword}"/>

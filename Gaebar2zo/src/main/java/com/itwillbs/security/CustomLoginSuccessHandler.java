@@ -93,7 +93,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 	 logger.info("사용자 권한 정보 : " + authority.getAuthority()) );
 	 
 	 // 모든 사용자를 main.jsp 페이지로 리다이렉트
-	 response.sendRedirect(request.getContextPath()+ "/loginout/main"); }
+	 response.sendRedirect(request.getContextPath()+ "/Styleboso/loginout/main"); }
 	 
 	/*
 	 * @Override public void onAuthenticationSuccess(HttpServletRequest request,

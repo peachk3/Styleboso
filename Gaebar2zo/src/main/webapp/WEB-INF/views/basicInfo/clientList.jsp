@@ -32,7 +32,7 @@
 <!--     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;"> -->
 <!--       <button class="btn btn-primary" type="button" onclick="">검색</button> -->
 <%--     <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"> --%>
-<!--       <button class="btn btn-primary" type="button" onclick="location.href='/basicInfo/clientAdd'">등록</button> -->
+<!--       <button class="btn btn-primary" type="button" onclick="location.href='/Styleboso/basicInfo/clientAdd'">등록</button> -->
 <!--       <button class="btn btn-primary" id="deleteClientBtn" name="deleteClientBtn" type="button">삭제</button> -->
 <%--       </sec:authorize> --%>
 <!--    </div> -->
@@ -43,7 +43,7 @@
 			<h1 class="text-2xl font-semibold text-gray-800 mb-6">거래처 리스트</h1>
 			
 				<!-- Search Form -->
-                    <form action="/basicInfo/clientList" method="get" class="form-inline mt-3">
+                    <form action="/Styleboso/basicInfo/clientList" method="get" class="form-inline mt-3">
   				<div class="flex flex-wrap -mx-3 mb-4 md:flex-nowrap">
 					<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 						<div class="input-group w-500">
@@ -64,7 +64,7 @@
                        <div class="w-full md:w-1/2 px-3 flex justify-end items-center space-x-2" >
 							<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
 								<button class="btn btn-primary" type="button"
-									onclick="location.href='/basicInfo/clientAdd'">등록</button>
+									onclick="location.href='/Styleboso/basicInfo/clientAdd'">등록</button>
 								<button class="btn btn-primary" id="deleteClientBtn"
 									name="deleteClientBtn" style="background-color:white; color:black;" type="button">삭제</button>
 							</sec:authorize>
@@ -138,7 +138,7 @@
 
 
 	<div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
-		<c:url var="pageUrl" value="/basicInfo/clientList">
+		<c:url var="pageUrl" value="/Styleboso/basicInfo/clientList">
             <c:param name="searchType" value="${searchType}"/>
             <c:param name="keyword" value="${keyword}"/>
         </c:url>
@@ -417,7 +417,7 @@ $(document).ready(function() {
         
         if (confirm('선택한 ' + cli_nums.length + '개의 항목을 삭제하시겠습니까?')) {
 		$.ajax({
-			url: '/basicInfo/deleteClient',
+			url: '/Styleboso/basicInfo/deleteClient',
 			beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
              },
@@ -444,7 +444,7 @@ $(document).ready(function() {
         currentClientNum = cli_num;
         
         $.ajax({
-            url: '/basicInfo/clientDetails',
+            url: '/Styleboso/basicInfo/clientDetails',
             type: 'GET',
             data: { cli_num: cli_num },
             dataType: "json",
@@ -614,7 +614,7 @@ $(document).ready(function() {
             };
         
         $.ajax({
-        	url: '/basicInfo/updateClient',
+        	url: '/Styleboso/basicInfo/updateClient',
         	beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
              },
@@ -696,7 +696,7 @@ $(document).ready(function() {
 	   	$('#modal2-table tbody tr').remove();
 	    
 	    $.ajax({
-	        url: "/common/managerList",
+	        url: "/Styleboso/common/managerList",
 	        type: "get",
 	        contentType: 'application/json; charset=utf-8',
 	        dataType: "json",

@@ -6,19 +6,19 @@ import org.springframework.web.bind.annotation.GetMapping;
    @Controller
    public class LoginController {
 
-       @GetMapping("/loginout/login")
+       @GetMapping("/Styleboso/loginout/login")
        public String loginPage() {
-           return "loginout/login";
+           return "/Styleboso/loginout/login";
        }
 
-       @GetMapping("/loginout/main")
+       @GetMapping("/Styleboso/loginout/main")
        public String mainPage() {
-           return "loginout/main";
+           return "/Styleboso/loginout/main";
        }
        
-        @GetMapping("/loginout/accessErr")
+        @GetMapping("/Styleboso/loginout/accessErr")
            public String accessDenied() {
-               return "/loginout/accessErr";
+               return "/Styleboso/loginout/accessErr";
            }
        
 

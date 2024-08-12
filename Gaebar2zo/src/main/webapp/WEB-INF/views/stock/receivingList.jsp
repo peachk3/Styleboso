@@ -24,7 +24,7 @@
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
       <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-           <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/stock/receivingAdd'">
+           <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/Styleboso/stock/receivingAdd'">
            <input type="button" id="deleteItemBtn" style="background-color:white; color:black;" name="deleteItemBtn" class="btn btn-primary" value="삭제">
        </sec:authorize>
     </div>
@@ -83,19 +83,19 @@
       <ul class="pagination justify-content-center">
          <c:if test="${pageVO.prev}">
             <li class="page-item">
-               <a class="page-link" href="/stock/receivingList?page=${pageVO.startPage - 1}" aria-label="Previous">
+               <a class="page-link" href="/Styleboso/stock/receivingList?page=${pageVO.startPage - 1}" aria-label="Previous">
                   <span aria-hidden="true">&laquo;</span>
                </a>
             </li>
          </c:if>
          <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
             <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
-               <a class="page-link" href="/stock/receivingList?page=${i}">${i}</a>
+               <a class="page-link" href="/Styleboso/stock/receivingList?page=${i}">${i}</a>
             </li>
          </c:forEach>
          <c:if test="${pageVO.next && pageVO.endPage > 0}">
             <li class="page-item">
-               <a class="page-link" href="/stock/receivingList?page=${pageVO.endPage + 1}" aria-label="Next">
+               <a class="page-link" href="/Styleboso/stock/receivingList?page=${pageVO.endPage + 1}" aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>
                </a>
             </li>
@@ -246,7 +246,7 @@ $(document).ready(function() {
         var top_tran_num = $(this).closest("tr").find("td:nth-child(7)").text();
 
         $.ajax({
-            url: '/stock/getTransactionDetails',
+            url: '/Styleboso/stock/getTransactionDetails',
             type: 'GET',
             data: { 
                 tran_num: tran_num,
@@ -327,7 +327,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: '/stock/updateRecevingStatus',
+            url: '/Styleboso/stock/updateRecevingStatus',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ 
@@ -377,7 +377,7 @@ $(document).ready(function() {
 
         if (confirm('선택한 ' + tran_nums.length + '개의 항목을 삭제하시겠습니까?')) {
             $.ajax({
-                url: '/stock/deleteRC',
+                url: '/Styleboso/stock/deleteRC',
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
                 },
@@ -433,7 +433,7 @@ $(document).ready(function() {
         console.log("Updated Data: ", updatedData); // 확인용 로그 추가
         
         $.ajax({
-            url: '/stock/updateDetails',
+            url: '/Styleboso/stock/updateDetails',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(updatedData),
@@ -484,7 +484,7 @@ $(document).ready(function() {
           $('#modal2-table tbody tr').remove();
           
           $.ajax({
-              url: "/common/managerList",
+              url: "/Styleboso/common/managerList",
               type: "get",
               contentType: 'application/json; charset=utf-8',
               dataType: "json",

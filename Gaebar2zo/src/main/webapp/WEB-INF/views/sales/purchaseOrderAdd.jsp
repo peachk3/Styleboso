@@ -2,14 +2,13 @@
 <%@ include file="../include/header.jsp" %>
 
 <body>
-	<h1>/sales/purchaseOrderAdd.jsp</h1>
 	
 	<div class="container-lg px-4">
 		<div class="row">
 			<div class="col-12">
 				<div class="card mb-4">
 					<div class="card-body">
-						<form class="row g-3 needs-validation" action="/purchaseOrderAdd" method="post" novalidate>
+						<form class="row g-3 needs-validation" action="/Styleboso/purchaseOrderAdd" method="post" novalidate>
 							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">			
 						
 							<div class="col-md-6">
@@ -177,7 +176,6 @@
 				</div>
 			</div>
    
-	<h1>/sales/purchaseOrderAdd.jsp</h1>
 </body>
 
 <style>
@@ -252,7 +250,7 @@
 				
 				$.ajax({
                     type: 'POST',
-                    url: '/sales/purchaseOrderAdd', // 요청을 보낼 URL
+                    url: '/Styleboso/sales/purchaseOrderAdd', // 요청을 보낼 URL
                     beforeSend: function(xhr) {
                     	xhr.setRequestHeader(header, token);
                     },
@@ -263,7 +261,7 @@
                     }),
                     success: function(response) {
                         console.log('서버 응답:', response);
-                        window.location.href = 'http://localhost:8088/sales/purchaseOrderList';
+                        window.location.href = 'http://localhost:8088/Styleboso/sales/purchaseOrderList';
                     },
                     error: function(error) {
                         console.error('에러 발생:', error);
@@ -331,7 +329,7 @@
           $('#modal1-table tbody tr').remove();
           
           $.ajax({
-              url: "/common/clientList2",
+              url: "/Styleboso/common/clientList2",
               type: "get",
               contentType: 'application/json;',
               data: {cli_cate : "CLPT"},
@@ -359,7 +357,7 @@
           $('#modal2-table tbody tr').remove();
           
           $.ajax({
-              url: "/common/managerList",
+              url: "/Styleboso/common/managerList",
               type: "get",
               contentType: 'application/json; charset=utf-8',
               dataType: "json",
@@ -387,7 +385,7 @@
           $('#modal3-table tbody tr').remove();
           
           $.ajax({
-              url: "/common/goodsList",
+              url: "/Styleboso/common/goodsList",
               type: "get",
               contentType: 'application/json; charset=utf-8',
               dataType: "json",

@@ -14,7 +14,7 @@
             <h1 class="text-2xl font-semibold text-gray-800 mb-6">재고 조정 반품</h1>
             
             <!-- Search Form -->
-<form action="/stock/adjustment/return" method="get" class="mb-8">
+<form action="/Styleboso/stock/adjustment/return" method="get" class="mb-8">
     <div class="flex flex-wrap -mx-3 mb-4">
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <div class="input-group w-500">
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="w-full md:w-1/2 px-3 flex justify-end items-center space-x-2" style="margin-bottom:15px;">
-            <button type="button" class="btn btn-primary" onclick="location.href='/stock/adjustment/returnAdd'">
+            <button type="button" class="btn btn-primary" onclick="location.href='/Styleboso/stock/adjustment/returnAdd'">
                 등록
             </button>
             <button type="button" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
@@ -127,7 +127,7 @@
             </div>
             <!-- Pagination -->
             <div>
-                <c:url var="pageUrl" value="/stock/adjustment/return">
+                <c:url var="pageUrl" value="/Styleboso/stock/adjustment/return">
                     <c:param name="searchType" value="${searchType}"/>
                     <c:param name="keyword" value="${keyword}"/>
                 </c:url>
@@ -276,7 +276,7 @@ $(document).ready(function() {
         var top_tran_num = $(this).closest("tr").find("td:nth-child(7)").text().trim();
         
         $.ajax({
-            url: '/stock/getReturnDetails',
+            url: '/Styleboso/stock/getReturnDetails',
             type: 'GET',
             data: { 
                 tran_num: tran_num,
@@ -361,7 +361,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: '/stock/updateReturnStatus',
+            url: '/Styleboso/stock/updateReturnStatus',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ 
@@ -409,7 +409,7 @@ $(document).ready(function() {
 
         if (confirm('선택한 ' + tran_nums.length + '개의 항목을 삭제하시겠습니까?')) {
             $.ajax({
-                url: '/stock/deleteRE',
+                url: '/Styleboso/stock/deleteRE',
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
                 },
@@ -463,7 +463,7 @@ $(document).ready(function() {
         console.log("Updated Data: ", updatedData);
         
         $.ajax({
-            url: '/stock/updateDetails',
+            url: '/Styleboso/stock/updateDetails',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(updatedData),
@@ -514,7 +514,7 @@ $(document).ready(function() {
           $('#modal2-table tbody tr').remove();
           
           $.ajax({
-              url: "/common/managerList",
+              url: "/Styleboso/common/managerList",
               type: "get",
               contentType: 'application/json; charset=utf-8',
               dataType: "json",

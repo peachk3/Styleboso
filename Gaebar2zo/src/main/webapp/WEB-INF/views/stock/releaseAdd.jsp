@@ -8,7 +8,7 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						<form class="row g-3 needs-validation"
-							action="/stock/receivingAdd" method="post" novalidate>
+							action="/Styleboso/stock/receivingAdd" method="post" novalidate>
 							<input type="hidden" name="${_csrf.parameterName }"
 								value="${_csrf.token }">
 
@@ -196,7 +196,6 @@
 
 
 
-    <h1>/Styleboso/stock/receivingAdd.jsp</h1>
 </body>
 
 <style>
@@ -259,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (allFormsValid) {
             $.ajax({
                 type: 'POST',
-                url: '/stock/releaseAdd',
+                url: '/Styleboso/stock/releaseAdd',
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
                 },
@@ -270,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }),
                 success: function(response) {
                     console.log('서버 응답:', response);
-                    window.location.href = 'http://localhost:8088/stock/releaseList';
+                    window.location.href = 'http://localhost:8088/Styleboso/stock/releaseList';
                 },
                 error: function(error) {
                     console.error('에러 발생:', error);
@@ -322,7 +321,7 @@ $('#modal1-table tbody').on('click', 'tr', function() {
 
         // 거래 상세 정보 가져오기
         $.ajax({
-            url: '/common/transactionDetails',
+            url: '/Styleboso/common/transactionDetails',
             type: 'GET',
             data: { tran_num: tranList },
             contentType: 'application/json; charset=utf-8',
@@ -362,28 +361,6 @@ $('#modal1-table tbody').on('click', 'tr', function() {
         });
     });
 
-//     // 거래 리스트 가져오기
-//     function getTransactionList() {
-//         $('#modal0-table tbody tr').remove();
-        
-//         $.ajax({
-//             url: "/common/transactionList",
-//             type: "get",
-//             contentType: 'application/json; charset=utf-8',
-//             dataType: "json",
-//             success: function(data) {
-//                 console.log(data);
-//                 data.forEach(function(item, idx) {
-//                     var row = "<tr><th scope='row'>" + (parseInt(idx) + 1) + "</th><td>" + item.tran_num + "</td></tr>";
-//                     $('#modal0-table tbody').append(row);
-//                 });
-//             },
-//             error: function(jqXHR, textStatus, errorThrown) {
-//                 console.log("AJAX 요청 실패: " + jqXHR.status + ", " + jqXHR.statusText + ", " + textStatus + ", " + errorThrown);
-//                 alert("AJAX 요청 실패!");
-//             }
-//         });
-//     }
 
  // 재고번호와 창고명 입력 필드에 클릭 이벤트 추가
     $('.inventory-input, .warehouse-input').on('click', function() {
@@ -402,7 +379,7 @@ $('#modal1-table tbody').on('click', 'tr', function() {
 
     function loadInventoryData(rowIndex, goods_num) {
         $.ajax({
-            url: "/stock/invenList",
+            url: "/Styleboso/stock/invenList",
             type: "GET",
             data: { goods_num: goods_num },
             dataType: "json",

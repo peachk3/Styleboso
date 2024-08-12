@@ -31,7 +31,7 @@ import com.itwillbs.domain.StatusUpdateRequest;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.service.StockService;
 
-@RequestMapping(value="/stock/*")
+@RequestMapping(value="/Styleboso/stock/*")
 @Controller
 public class StockController {
 
@@ -73,7 +73,7 @@ public class StockController {
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("keyword", keyword);
 		
-		return "/stock/status";
+		return "/Styleboso/stock/status";
 
 	}
 

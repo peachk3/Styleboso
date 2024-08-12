@@ -27,7 +27,7 @@ import com.itwillbs.domain.TransactionGoodsVO;
 import com.itwillbs.domain.TransactionVO;
 import com.itwillbs.service.SalesService;
 
-@RequestMapping(value="/Styleboso/sales/*")
+@RequestMapping(value="/sales/*")
 @Controller
 public class SalesController {
 

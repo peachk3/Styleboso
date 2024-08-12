@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const data = Object.fromEntries(formData.entries());
                 
                 $.ajax({
-                    url: '/Styleboso/basicInfo/itemInsert',
+                    url: '/basicInfo/itemInsert',
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader(header, token);
                      },
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             alert('등록되었습니다');
                             
                             form.reset();
-                            window.location.href = '/Styleboso/basicInfo/itemList';
+                            window.location.href = '/basicInfo/itemList';
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.error('AJAX Error:', textStatus, errorThrown);
@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function() {
            const cli_cate = "CLPT"; 
            
            $.ajax({
-               url: "/Styleboso/common/clientList2",
+               url: "/common/clientList2",
                type: "get",
                data: {cli_cate: cli_cate},
                contentType: 'application/json; charset=utf-8',

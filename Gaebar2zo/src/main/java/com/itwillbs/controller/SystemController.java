@@ -31,7 +31,7 @@ import com.itwillbs.domain.UsersVO;
 import com.itwillbs.service.SystemService;
 
 
-@RequestMapping(value = "/Styleboso/system/*")
+@RequestMapping(value = "/system/*")
 @Controller
 public class SystemController {
 
@@ -56,7 +56,7 @@ public class SystemController {
 		logger.info("/loginPage -> loginPOST() 호출");
 		logger.info("로그인 정보"+ uvo );
 		
-		return "redirect:/Styleboso/system/main";
+		return "redirect:/system/main";
 		
 	}
 	
@@ -70,7 +70,7 @@ public class SystemController {
 		logger.debug("/logout -> logoutPOST() 호출");
 		session.invalidate(); // 세션 무효화
 
-		return "redirect:/Styleboso/loginout/login";
+		return "redirect:/loginout/login";
 	}
 	// -------------------------------------------------------------------------------------------
 	//이메일 중복 체크 
@@ -101,7 +101,7 @@ public class SystemController {
 	}
 	
 	// -------------------------------------------------------------------------------------------
-	// http://localhost:8088/Styleboso/system/main
+	// http://localhost:8088/system/main
 	// 대시보드 ( 메인 페이지 )
 	@RequestMapping(value="/main",method=RequestMethod.GET)
 
@@ -112,7 +112,7 @@ public class SystemController {
 	}
 
 	// -------------------------------------------------------------------------------------------
-	// http://localhost:8088/Styleboso/system/employeeList
+	// http://localhost:8088/system/employeeList
 	// 사용자 관리 - 사용자 전체 리스트 출력
 	@RequestMapping(value = "/employeeList", method = RequestMethod.GET)
 	public void employeeList_GET(Criteria cri,Model model, 

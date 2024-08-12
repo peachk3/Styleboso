@@ -47,7 +47,7 @@
 <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;"> -->
 
 <%-- 	    <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"> --%>
-<!-- 	<input class="btn btn-primary" type="button" value="등록" onclick="location.href='/Styleboso/basicInfo/warehouseAdd'" class="btn btn-primary"> -->
+<!-- 	<input class="btn btn-primary" type="button" value="등록" onclick="location.href='/basicInfo/warehouseAdd'" class="btn btn-primary"> -->
 <!-- 	<input class="btn btn-primary" id="deleteWarehouseBtn" type="button" value="삭제"> -->
 <%-- 	</sec:authorize> --%>
 
@@ -77,7 +77,7 @@
 				</div>
 				<div class="w-full md:w-1/2 px-3 flex justify-end items-center">
 					<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-						<input class="btn btn-primary" style="margin-right: 10px;"type="button" value="등록" onclick="location.href='/Styleboso/basicInfo/warehouseAdd'">
+						<input class="btn btn-primary" style="margin-right: 10px;"type="button" value="등록" onclick="location.href='/basicInfo/warehouseAdd'">
 						
 						<input class="btn btn-primary" style="background-color:white; color:black;" id="deleteWarehouseBtn" type="button" value="삭제">
 					</sec:authorize>
@@ -458,7 +458,7 @@ $(document).ready(function(){
         
         if (confirm('선택한 ' + s_cate_wh_codes.length + '개의 항목을 삭제하시겠습니까?')) {
 		$.ajax({
-			url: '/Styleboso/basicInfo/deleteWarehouse',
+			url: '/basicInfo/deleteWarehouse',
 			beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
              },
@@ -486,7 +486,7 @@ $(document).ready(function(){
         currentWhCode = s_cate_wh_code;
         
         $.ajax({
-            url: '/Styleboso/basicInfo/warehouseDetails',
+            url: '/basicInfo/warehouseDetails',
             type: 'GET',
             data: { s_cate_wh_code: s_cate_wh_code },
             dataType: "json",
@@ -643,7 +643,7 @@ $(document).ready(function(){
             };
         
         $.ajax({
-        	url: '/Styleboso/basicInfo/updateWhCode',
+        	url: '/basicInfo/updateWhCode',
         	beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
              },
@@ -723,7 +723,7 @@ $(document).ready(function(){
         
         if (wh_code) {
             $.ajax({
-                url: '/Styleboso/basicInfo/addZone',
+                url: '/basicInfo/addZone',
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
                 },
@@ -769,7 +769,7 @@ $(document).ready(function(){
         
         if (wh_code && wh_zone) {
             $.ajax({
-                url: '/Styleboso/basicInfo/addRack',
+                url: '/basicInfo/addRack',
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
                 },
@@ -804,7 +804,7 @@ $(document).ready(function(){
     $('#warehouseSelect').change(function() {
         var wh_code = $(this).val();
         $.ajax({
-            url: '/Styleboso/basicInfo/getZones',
+            url: '/basicInfo/getZones',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
              },
@@ -827,7 +827,7 @@ $(document).ready(function(){
         var wh_code = $('#warehouseSelect').val();
         var wh_zone = $(this).val();
         $.ajax({
-            url: '/Styleboso/basicInfo/getRacks',
+            url: '/basicInfo/getRacks',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
              },
@@ -851,7 +851,7 @@ $(document).ready(function(){
         var wh_zone = $('#zoneSelect').val();
         var wh_rack = $(this).val();
         $.ajax({
-            url: '/Styleboso/basicInfo/getColumnRows',
+            url: '/basicInfo/getColumnRows',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
              },
@@ -898,7 +898,7 @@ $(document).ready(function(){
         var wh_num = wh_code + wh_zone + wh_rack + row + column
 
         $.ajax({
-            url: '/Styleboso/basicInfo/getInventory',
+            url: '/basicInfo/getInventory',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
              },
@@ -946,7 +946,7 @@ $(document).ready(function(){
 	   	$('#modal2-table tbody tr').remove();
 	    
 	    $.ajax({
-	        url: "/Styleboso/common/managerList",
+	        url: "/common/managerList",
 	        type: "get",
 	        contentType: 'application/json; charset=utf-8',
 	        dataType: "json",

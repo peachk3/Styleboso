@@ -35,7 +35,7 @@
     <div class="container-fluid mt-5">
         <div class="row">
             <div class="col-md-3 mb-3">
-                <form action="/stock/adjustment/return" method="get" class="form-inline mt-3">
+                <form action="/Styleboso/stock/adjustment/return" method="get" class="form-inline mt-3">
                     <div class="input-group w-500">
                         <div class="input-group-prepend">
                             <select class="form-select custom-select-radius custom-select-width" id="searchType" name="searchType">
@@ -54,7 +54,7 @@
     </div>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;">
-        <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/stock/adjustment/returnAdd'">
+        <input type="button" class="btn btn-primary" value="등록" onclick="location.href='/Styleboso/stock/adjustment/returnAdd'">
         <input type="button" id="deleteItemBtn" name="deleteItemBtn" class="btn btn-primary" value="삭제">
     </div>
     
@@ -133,7 +133,7 @@
         </div>
     </div>
 
-    <c:url var="pageUrl" value="/stock/adjustment/return">
+    <c:url var="pageUrl" value="/Styleboso/stock/adjustment/return">
         <c:param name="searchType" value="${searchType}"/>
         <c:param name="keyword" value="${keyword}"/>
     </c:url>
@@ -186,7 +186,7 @@ $(document).ready(function() {
         var tran_num = $(this).closest("tr").find("td:nth-child(2)").text();
 
         $.ajax({
-            url: '/stock/getReturnDetails',
+            url: '/Styleboso/stock/getReturnDetails',
             type: 'GET',
             data: { 
                 tran_num: tran_num
@@ -229,7 +229,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: '/common/updateRecevingStatus',
+            url: '/Styleboso/common/updateRecevingStatus',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ tran_nums: tran_nums, pro_status: pro_status }),
@@ -268,7 +268,7 @@ $(document).ready(function() {
 
         if (confirm('선택한 ' + tran_nums.length + '개의 항목을 삭제하시겠습니까?')) {
             $.ajax({
-                url: '/stock/deleteRE',
+                url: '/Styleboso/stock/deleteRE',
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
                 },
@@ -311,7 +311,7 @@ $(document).ready(function() {
         console.log("Updated Data: ", updatedData);
         
         $.ajax({
-            url: '/stock/updateExchangeDetails',
+            url: '/Styleboso/stock/updateExchangeDetails',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(updatedData),
@@ -360,7 +360,7 @@ $(document).ready(function() {
           $('#modal2-table tbody tr').remove();
           
           $.ajax({
-              url: "/common/managerList",
+              url: "/Styleboso/common/managerList",
               type: "get",
               contentType: 'application/json; charset=utf-8',
               dataType: "json",

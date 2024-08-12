@@ -73,7 +73,7 @@ public class StockController {
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("keyword", keyword);
 		
-		return "/stock/status";
+		return "/Styleboso/stock/status";
 
 	}
 

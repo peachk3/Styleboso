@@ -63,6 +63,7 @@
 		<result property="goods_num" column="goods_num" />
 		<result property="inven_qty" column="inven_qty" />
 		<collection property="warehouseList" resultMap="wareMap"/>
+		<collection property="itemList" resultMap="itemMap"/>
 	</resultMap>
 
 	<resultMap type="com.itwillbs.domain.WarehouseVO" id="wareMap">
@@ -446,11 +447,19 @@
     
 	<!-- 창고 -> 재고 불러오기 -->
     <select id="getInventory" parameterType="String" resultMap="invenMap">
-   		select inv.inven_num, inv.wh_num, inv.goods_num, inv.inven_qty, wa.wh_name, wa.wh_zone, wa.wh_rack, wa.wh_row, wa.wh_column
-		from inventory inv
+	    select i.item_name, inv.goods_num, inv.inven_qty, inv.inven_num, inv.wh_num, wa.wh_name, wa.wh_zone, wa.wh_rack, wa.wh_row, wa.wh_column
+		from item i
+		join inventory inv
+		on SUBSTRING(inv.goods_num, 1, 6) = i.item_num
 		join warehouse wa on inv.wh_num = wa.wh_num
 		where inv.wh_num=#{wh_num};
-   	</select>
+	</select>
+<!--     <select id="getInventory" parameterType="String" resultMap="invenMap"> -->
+<!--    		select inv.inven_num, inv.wh_num, inv.goods_num, inv.inven_qty, wa.wh_name, wa.wh_zone, wa.wh_rack, wa.wh_row, wa.wh_column -->
+<!-- 		from inventory inv -->
+<!-- 		join warehouse wa on inv.wh_num = wa.wh_num -->
+<!-- 		where inv.wh_num=#{wh_num}; -->
+<!--    	</select> -->
    	
 	<!-- 창고 -> MaxZone 불러오기 -->
     <select id="getMaxZoneNumber" parameterType="map" resultType="Integer">

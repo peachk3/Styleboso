@@ -205,6 +205,7 @@ public class SystemController {
 		}else if(usersVo.getUser_pos().equals("사원")) {
 			authVo.setAuthority("ROLE_MEMBER");
 			logger.info("사원");
+			logger.info("ddd");
 		}
 		
 		logger.info("usersVo : "+usersVo);

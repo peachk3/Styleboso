@@ -2,6 +2,16 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
 
+<!-- 체크박스-->
+<style>
+.checkbox-custom {
+        border: 2px solid #000000; /* 검은색 테두리, 두께 2px */
+        width: 16px;
+        height: 16px;
+    }
+</style>
+
+
 <!-- sweet alert 추가 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -51,7 +61,8 @@
          </th>
 	         <th scope="col">사용자ID</th>
 	         <th scope="col">사용자명</th>
-	         <th scope="col">비밀번호</th>
+	         <!-- <th scope="col">비밀번호</th> -->
+	         <th></th>
 	         <th scope="col">직책</th>
 	         <th scope="col">E-MAIL</th>
 	         <th scope="col">전화번호</th>
@@ -62,12 +73,13 @@
 				<tr>
 					<td>
 				  		<div class="form-check">
-                  			<input class="form-check-input itemCheckbox" type="checkbox"> 
+                  			<input class="form-check-input checkbox-custom" type="checkbox"> 
                			</div>
                		</td>
                		<td>${emptbl.username }</td>
                		<td>${emptbl.user_per_name}</td>
-               		<td>${emptbl.password }</td>
+               		<%-- <td>${emptbl.password }</td> --%>
+               		<td></td>
                		<td>${emptbl.user_pos}</td>
                		<td>${emptbl.user_email  }</td>
                		<td>${emptbl.user_phone }</td>
@@ -232,4 +244,6 @@
     
 </body>
 <%@ include file="../include/footer.jsp" %>
+
+
 </html>

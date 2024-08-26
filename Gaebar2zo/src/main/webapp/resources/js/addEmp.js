@@ -18,7 +18,7 @@ $(document).ready(function() {
     const header = $("meta[name='_csrf_header']").attr("content");
     const name = $("#userName").val();
 
-    // 사용자 삭제 버튼 클릭 이벤트
+    // 사용자 삭제 버튼 클릭 이벤트-----------------------------------
     $("#deleteEmp").click(function() {
         const checkedCheckboxes = $('input[type="checkbox"].form-check-input:checked');
 //        console.log("선택된 체크박스 수:", checkedCheckboxes.length);
@@ -50,7 +50,7 @@ $(document).ready(function() {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/Styleboso/system/deleteEmp',  // 서버 측 컨트롤러 매핑 URL
+                    url: '/system/deleteEmp',  // 서버 측 컨트롤러 매핑 URL
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(usernames),
@@ -217,7 +217,8 @@ $(document).ready(function() {
     $('#user_phone').on('input', function() {
         validateCheckPhone();
     });
-
+    
+    //직원등록-----------------------------------------------------------------
     // 폼 제출 시 모든 유효성 검사 및 중복 체크 확인
     $('#registerForm').on('submit', function(event) {
         event.preventDefault(); // 폼 제출 막음
@@ -234,7 +235,7 @@ $(document).ready(function() {
         console.log("Collected formData:", formData); // 직렬화된 폼 데이터를 콘솔에 출력하여 확인
         
         $.ajax({
-            url: '/Styleboso/system/addEmp',
+            url: '/system/addEmp',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
             },

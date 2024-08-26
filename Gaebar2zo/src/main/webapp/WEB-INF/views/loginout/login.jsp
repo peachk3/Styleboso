@@ -105,7 +105,9 @@
                             <div class="card-body text-center">
                                 <div>
                                     <h2 style="text-align: center">Styleboso</h2> 
-                                   <!--  <p>"스타일보소! 도매로 싸게 퍼주니께, 요거 안 가져가믄 후회할끼라!"</p>  -->
+                                    <p>운영자 ID : US0001 || PW : us0001!! </p>
+                                    <p>관리자 ID : US0006 || PW : us0006!! </p>
+                                    <p>	사원 ID : US0016 || PW : us0016!!</p>
 <!--                                     <button class="btn btn-lg btn-outline-light mt-3" type="button">Register Now!</button> -->
                                 </div>
                             </div>

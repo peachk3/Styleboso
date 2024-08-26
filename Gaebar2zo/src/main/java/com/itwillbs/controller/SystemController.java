@@ -192,7 +192,7 @@ public class SystemController {
 	public ResponseEntity<String>updateEmp(@RequestBody UsersVO usersVo) throws Exception{
 		 logger.debug(" @@@ updateEmp() 실행");
 		 
-		 //권한
+		 //권한설정
 		 AuthoritiesVO authVo = new AuthoritiesVO();
 		authVo.setUsername(usersVo.getUsername());
 		
@@ -209,6 +209,7 @@ public class SystemController {
 		
 		logger.info("usersVo : "+usersVo);
 		
+//		usersVo.setAuthList(authVo);
 		usersVo.setAuthList(authVo);
 		
 		sService.updateEmp(usersVo);

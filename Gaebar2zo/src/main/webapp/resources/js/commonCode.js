@@ -35,7 +35,7 @@
  	    }
     	
     	 $.ajax({
-    	        url: '/Styleboso/system/saveGroupCode',  // 실제 서버 URL로 변경
+    	        url: '/system/saveGroupCode',  // 실제 서버 URL로 변경
     	        beforeSend: function(xhr) {
     	        	xhr.setRequestHeader(header, token);
     	        },
@@ -118,7 +118,7 @@
         var groupName = document.getElementById('edit_group_name').value;
 
         $.ajax({
-            url: '/Styleboso/system/updateCode', // 실제 서버 측 URL
+            url: '/system/updateCode', // 실제 서버 측 URL
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ group_code: groupCode, group_name: groupName }),
@@ -182,7 +182,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/Styleboso/system/deleteCode',  // 서버 측 컨트롤러 매핑 URL
+                    url: '/system/deleteCode',  // 서버 측 컨트롤러 매핑 URL
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(selectedCodes),
@@ -206,7 +206,7 @@
 //===================================================================
    // '전체 선택' 체크박스가 클릭될 때 호출되는 함수
    	function checkAll(source) {
-   	    const checkboxes = document.querySelectorAll('.item-checkbox'); // 모든 체크박스 요소를 선택
+   	    const checkboxes = document.querySelectorAll('.checkbox-custom'); // 모든 체크박스 요소를 선택
    	    for (var i = 0; i < checkboxes.length; i++) { // 선택된 모든 체크박스를 반복
    	        checkboxes[i].checked = source.checked; // '전체 선택' 체크박스의 상태에 따라 개별 체크박스의 체크 상태를 변경
    	    }

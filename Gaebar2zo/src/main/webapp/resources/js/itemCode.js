@@ -18,10 +18,10 @@
 	    }
     }
 
-
+/*
     function insertItemCode() { //버튼 onclick=insertItemCode()
     	$('#insertItemModal').modal('show');
-    }
+    }*/
     
     
     //등록기능 - 저장 onclick=saveNewItemCode()
@@ -46,7 +46,7 @@
  	    }
     	
     	 $.ajax({
-    	        url: '/Styleboso/system/saveItemCode',  // 실제 서버 URL로 변경
+    	        url: '/system/saveItemCode',  // 실제 서버 URL로 변경
     	        beforeSend: function(xhr) {
     	        	xhr.setRequestHeader(header, token);
     	        },
@@ -221,7 +221,7 @@
         const itemName = document.getElementById('s_cate_item_name').innerText;
 
         $.ajax({
-            url: "/Styleboso/system/updateItemCode",
+            url: "/system/updateItemCode",
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
             },
@@ -286,7 +286,7 @@
             if (result.isConfirmed) {
             	
                 $.ajax({
-                    url: "/Styleboso/system/deleteItemCode",
+                    url: "/system/deleteItemCode",
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader(header, token);
                     },
@@ -315,7 +315,7 @@
     //================================
     // '전체 선택' 체크박스가 클릭될 때 호출되는 함수
     function toggleAllCheckboxes(source) {
-        const checkboxes = document.querySelectorAll('.item-checkbox');
+        const checkboxes = document.querySelectorAll('.checkbox-custom');
         checkboxes.forEach(checkbox => checkbox.checked = source.checked);
     }
     

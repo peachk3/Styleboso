@@ -94,11 +94,12 @@ public class SystemDAOImpl implements SystemDAO{
 	
 		AuthoritiesVO authVo = usersVo.getAuthList();
 		
+		
 		authVo.setUsername(userPos);
 		usersVo.setUsername(userPos);
 		
 		sqlSession.update(NAMESPACE+"updateEmpAuth", authVo);
-		sqlSession.update(NAMESPACE +"updateEmp",usersVo);
+		sqlSession.update(NAMESPACE + "updateEmp", usersVo);
 		logger.info("dao -> 사용자 등록");
 		
 		

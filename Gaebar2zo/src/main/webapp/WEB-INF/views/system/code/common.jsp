@@ -4,6 +4,16 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="../../include/header.jsp" %>
 
+<!-- 체크박스 테두리 스타일 -->
+<style>
+    .checkbox-custom {
+        border: 2px solid #000000; /* 검은색 테두리, 두께 2px */
+        width: 16px;
+        height: 16px;
+        cursor: pointer; /* 마우스 커서 모양 변경 */
+    }
+</style>
+
 <!-- itemCode.js 연결 -->
 <script src="../../../../resources/js/commonCode.js"></script>
 
@@ -28,7 +38,7 @@
             <tr>
                 <th scope="col">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="checkAll" onclick="checkAll(this)">
+                        <input class="form-check-input " type="checkbox" value="" id="checkAll" onclick="checkAll(this)">
                     </div>
                 </th>
                 <th scope="col">그룹코드</th>
@@ -40,7 +50,7 @@
                 <tr>
                     <td>
                         <div class="form-check">  <!-- 체크박스의 value 속성을 codetbl.group_code로 설정 -->
-                            <input class="form-check-input item-checkbox" type="checkbox" id="checkAll" value="${codetbl.group_code}">
+                            <input class="form-check-input checkbox-custom" type="checkbox" id="checkAll" value="${codetbl.group_code}">
                         </div>
                     </td>
                     <td>

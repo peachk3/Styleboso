@@ -87,7 +87,7 @@
 		<div class="overflow-x-hidden bg-white border 1px solid overflow-y-hidden relative" style="height: 405px;">
 			<table class="table table-hover border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
 				<thead>
-					<tr class="text-left">
+					<tr class="text-left py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100">
 						<th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100">
 							<div class="form-check">
 								<input class="form-check-input focus:outline-none focus:shadow-outline" type="checkbox" value="" id="selectAll" onclick="toggleCheckboxes(this)">

@@ -29,14 +29,6 @@
  
 </head>  
    
-<!--     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right : 10px; padding : 10px;"> -->
-<!--       <button class="btn btn-primary" type="button" onclick="">검색</button> -->
-<%--     <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')"> --%>
-<!--       <button class="btn btn-primary" type="button" onclick="location.href='/basicInfo/clientAdd'">등록</button> -->
-<!--       <button class="btn btn-primary" id="deleteClientBtn" name="deleteClientBtn" type="button">삭제</button> -->
-<%--       </sec:authorize> --%>
-<!--    </div> -->
-   
 <body class="bg-gray-100 font-sans">
 	<div class="container mx-auto px-4 py-8">
 		<div class="bg-white rounded-lg shadow-lg p-6">
@@ -76,7 +68,7 @@
 	<div class="overflow-x-hidden bg-white border 1px solid overflow-y-auto relative" style="height: 405px;">
    <table class="table table-hover border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
       <thead>
-         <tr class="text-left">
+         <tr class="text-left py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100">
             <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100">
 				<div class="form-check">
                   <input class="form-check-input focus:outline-none focus:shadow-outline" type="checkbox" value="" id="selectAll" onclick = "toggleCheckboxes(this)"> 
@@ -138,31 +130,42 @@
 
 
 	<div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
-		<c:url var="pageUrl" value="/basicInfo/clientList">
-            <c:param name="searchType" value="${searchType}"/>
-            <c:param name="keyword" value="${keyword}"/>
-        </c:url>
-
-<!--         <nav aria-label="Page navigation" class="pagination-container"> -->
-	<nav class="pagination-container" aria-label="Pagination">
+		<nav class="pagination-container" aria-label="Pagination">
             <ul class="pagination justify-content-center">
                 <c:if test="${pageVO.prev}">
                     <li class="page-item">
-                        <a class="page-link" href="${pageUrl}&page=${pageVO.startPage - 1}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
+             			<c:url var="prevUrl" value="/basicInfo/clientList">
+							<c:param name="page" value="${pageVO.startPage - 1}" />
+							<c:param name="searchType" value="${searchType}" />
+							<c:param name="keyword" value="${keyword}" />
+						</c:url> 
+				        <a class="page-link" href="${prevUrl}" aria-label="Previous">
+				          <span aria-hidden="true">&laquo;</span>
+				        </a>
                     </li>
                 </c:if>
-                <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
-                    <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
-                        <a class="page-link" href="${pageUrl}&page=${i}">${i}</a>
-                    </li>
-                </c:forEach>
+                
+               <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+		       		<c:url var="pageUrl" value="/basicInfo/clientList">
+				        <c:param name="page" value="${i}" />
+				        <c:param name="searchType" value="${searchType}" />
+				        <c:param name="keyword" value="${keyword}" />
+		     		 </c:url>
+		      
+		      		<li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
+						<a class="page-link" href="${pageUrl}">${i}</a>
+					</li>
+				</c:forEach>
                 <c:if test="${pageVO.next && pageVO.endPage > 0}">
-                    <li class="page-item">
-                        <a class="page-link" href="${pageUrl}&page=${pageVO.endPage + 1}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
+		           <li class="page-item">
+			        <c:url var="nextUrl" value="/basicInfo/clientList">
+			          <c:param name="page" value="${pageVO.endPage + 1}" />
+			          <c:param name="searchType" value="${searchType}" />
+			          <c:param name="keyword" value="${keyword}" />
+			        </c:url>
+		        <a class="page-link" href="${nextUrl}" aria-label="Next">
+		          <span aria-hidden="true">&raquo;</span>
+		        </a>
                     </li>
                 </c:if>
             </ul>

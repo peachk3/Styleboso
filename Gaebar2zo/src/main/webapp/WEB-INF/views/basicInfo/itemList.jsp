@@ -74,13 +74,11 @@
 	<div id="tableContainer" class="transition-all duration-300 ease-in-out">
 		<div class="overflow-x-hidden bg-white border 1px solid overflow-y-auto relative" style="height: 405px;">
              <table class="table table-hover border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
-<!-- 			<table class="table table-hover"> -->
 				<thead>
-					<tr class="text-left">
+					<tr class="text-left py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100">
 						<th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100">
 							<div class="form-check">
                   <input class="form-check-input focus:outline-none focus:shadow-outline" type="checkbox" value="" id="selectAll" onclick = "toggleCheckboxes(this)"> 
-                     <!-- <label class="form-check-label" for="flexCheckDisabled"> Disabled checkbox </label> -->
             	</div>
 						</th>
 						<th scope="col">품목 코드</th>
@@ -117,40 +115,51 @@
 			</div>
 		</div>
 
-		<div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
-			<c:url var="pageUrl" value="/basicInfo/itemList">
-				<c:param name="searchType" value="${searchType}" />
-				<c:param name="keyword" value="${keyword}" />
-			</c:url>
 
-<!-- 			<nav aria-label="Page navigation" class="pagination-container"> -->
-<!-- 				<ul class="pagination justify-content-center"> -->
-				<nav aria-label="Page navigation" class="pagination-container">
-      <ul class="pagination justify-content-center">
-         <c:if test="${pageVO.prev}">
-            <li class="page-item">
-               <a class="page-link" href="/basicInfo/itemList?page=${pageVO.startPage - 1}" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-               </a>
-            </li>
-         </c:if>
-         <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
-            <li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
-               <a class="page-link" href="/basicInfo/itemList?page=${i}">${i}</a>
-            </li>
-         </c:forEach>
-         <c:if test="${pageVO.next && pageVO.endPage > 0}">
-            <li class="page-item">
-               <a class="page-link" href="/basicInfo/itemList?page=${pageVO.endPage + 1}" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-               </a>
-            </li>
-         </c:if>
-      </ul>
-   </nav>
-			</div>
-		</div>
+		<div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
+			<nav aria-label="Page navigation" class="pagination-container">
+		      <ul class="pagination justify-content-center">
+		         <c:if test="${pageVO.prev}">
+		            <li class="page-item">
+		         <c:url var="prevUrl" value="/basicInfo/itemList">
+		          <c:param name="page" value="${pageVO.startPage - 1}" />
+		          <c:param name="searchType" value="${searchType}" />
+		          <c:param name="keyword" value="${keyword}" />
+		        </c:url>
+		        <a class="page-link" href="${prevUrl}" aria-label="Previous">
+		          <span aria-hidden="true">&laquo;</span>
+		        </a>
+		          </li>
+		         </c:if>
+		         
+		         <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1">
+		            <c:url var="pageUrl" value="/basicInfo/itemList">
+		        <c:param name="page" value="${i}" />
+		        <c:param name="searchType" value="${searchType}" />
+		        <c:param name="keyword" value="${keyword}" />
+		      </c:url>
+		
+					<li class="page-item ${pageVO.cri.page == i ? 'active' : ''}">
+						<a class="page-link" href="${pageUrl}">${i}</a>
+					</li>
+				</c:forEach>
+		         <c:if test="${pageVO.next && pageVO.endPage > 0}">
+		           <li class="page-item">
+			        <c:url var="nextUrl" value="/basicInfo/itemList">
+			          <c:param name="page" value="${pageVO.endPage + 1}" />
+			          <c:param name="searchType" value="${searchType}" />
+			          <c:param name="keyword" value="${keyword}" />
+			        </c:url>
+		        <a class="page-link" href="${nextUrl}" aria-label="Next">
+		          <span aria-hidden="true">&raquo;</span>
+		        </a>
+		            </li>
+		         </c:if>
+		      </ul>
+		   </nav>
+		</div> <!-- 페이징처리 div -->
 	</div>
+</div>
 
 
 	<!-- 상세보기 모달창-->

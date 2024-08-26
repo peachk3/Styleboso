@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ include file="../include/header.jsp"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
@@ -104,8 +105,12 @@
 							<td class="clickable-cell">${itl.item_cli_code }</td>
 							<td class="clickable-cell">${itl.item_name }</td>
 							<td class="clickable-cell">${itl.group_name }</td>
-							<td class="clickable-cell">${itl.item_purchase_price }</td>
-							<td class="clickable-cell">${itl.item_sale_price }</td>
+							<td class="clickable-cell">
+							    <fmt:formatNumber value="${itl.item_purchase_price}" type="number" pattern="#,###"/>
+							</td>
+							<td class="clickable-cell">
+							    <fmt:formatNumber value="${itl.item_sale_price}" type="number" pattern="#,###"/>
+							</td>
 							<td class="clickable-cell">${itl.item_mat }</td>
 							<td class="clickable-cell">${itl.comm }</td>
 						</tr>
